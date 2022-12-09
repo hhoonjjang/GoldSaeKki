@@ -8,14 +8,14 @@ import { Link, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <div>
-      <HomeComponet />
+      {/* <HomeComponet /> */}
       <UserComponet />
-      <CommunityComponet />
+      {/* <CommunityComponet />
       <Link to={"/Support"}>고객지원</Link>
       <Routes>
         <Route path="/Support" element={<SupportComponet />}></Route>
       </Routes>
-      <AdministratorComponet />
+      <AdministratorComponet /> */}
     </div>
   );
 }

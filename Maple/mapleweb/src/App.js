@@ -19,6 +19,9 @@ function App() {
         <Route path="/Support" element={<SupportComponet />}></Route>
       </Routes>
       <AdministratorComponet />
+      {/* <UserComponet /> */}
+      {/* <CommunityComponet /> */}
+      {/* <AdministratorComponet /> */}
     </div>
   );
 }

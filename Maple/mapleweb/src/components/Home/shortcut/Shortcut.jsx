@@ -5,18 +5,23 @@ import twitter from "../Img/shortcut_twitter.png";
 import youtube from "../Img/shortcut_youtube.png";
 
 import "../CSS/shortcut.css";
+
 const Shortcut = () => {
   return (
     <ShortcutComponent>
       <div className={"shortcut_innerBox"}>
-        <div>
+        <div className="flexBox">
           <img src={hanz} />{" "}
-          <a href="#" target={"_blank"}>
-            <span className="shortcut_smallLink">Android</span>
-          </a>{" "}
-          <a href="#" target={"_blank"}>
-            <span className="shortcut_smallLink">ios</span>
-          </a>
+          <HorizontalCenterBox>
+            <a href="#" target={"_blank"}>
+              <span className="shortcut_smallLink">Android</span>
+            </a>
+          </HorizontalCenterBox>{" "}
+          <HorizontalCenterBox>
+            <a href="#" target={"_blank"}>
+              <span className="shortcut_smallLink">ios</span>
+            </a>
+          </HorizontalCenterBox>
         </div>
         <div>
           <img src={facebook} />
@@ -39,4 +44,11 @@ const ShortcutComponent = styled.div`
   justify-content: center;
   padding-top: 10px;
   padding-bottom: 10px;
+`;
+const HorizontalCenterBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 5px;
 `;

@@ -11,7 +11,7 @@ import { Link, Routes, Route } from "react-router-dom";
 function App() {
   return (
     <div>
-      {/* <HomeComponet /> */}
+      <HomeComponet />
       {/* <UserComponet /> */}
 
       {/* 나중에 합칠 때 홈 안에 커뮤니티 컴포넌트를 넣어야 한다. */}

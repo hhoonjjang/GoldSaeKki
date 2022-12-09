@@ -6,10 +6,10 @@ import CommunityComponet from "./components/Community";
 function App() {
   return (
     <div>
-      <HomeComponet />
+      {/* <HomeComponet /> */}
       <UserComponet />
-      <CommunityComponet />
-      <AdministratorComponet />
+      {/* <CommunityComponet /> */}
+      {/* <AdministratorComponet /> */}
     </div>
   );
 }

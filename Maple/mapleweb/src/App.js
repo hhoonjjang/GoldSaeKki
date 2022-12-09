@@ -9,8 +9,9 @@ function App() {
   return (
     <div>
       {/* <HomeComponet /> */}
-      {/* <UserComponet /> */}
-      {/* <CommunityComponet /> */}
+
+      <UserComponet />
+
       <Link to={"/Support"}>고객지원</Link>
       <Routes>
         <Route path="/Support/*" element={<SupportComponet />}></Route>
@@ -19,6 +20,7 @@ function App() {
           element={<BugReportContainer />}
         ></Route> */}
       </Routes>
+
       {/* <AdministratorComponet /> */}
     </div>
   );

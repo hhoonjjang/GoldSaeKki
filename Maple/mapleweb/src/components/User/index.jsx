@@ -4,8 +4,7 @@ import LoginContainer from "../User/Login/Container";
 const UserComponent = () => {
   return (
     <div>
-      {/* <RegistContainer /> */}
-      <LoginContainer />
+      <RegistContainer />
     </div>
   );
 };

@@ -1,6 +1,11 @@
+import { useState } from "react";
 import styled from "styled-components";
 import "../CSS/footer.css";
 const Footer = () => {
+  const [familySite, setFamilySite] = useState("false");
+  const toggleFamilySite = () => {
+    setFamilySite((state) => !state);
+  };
   return (
     <FooterComponent>
       <div className="footer_innerBox">
@@ -46,21 +51,51 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer_familySite">
-          <div className="footer_familySite_title">Family Site</div>
-          <div className="footer_familySite_items">
+          <div
+            className="footer_familySite_title"
+            onClick={() => {
+              toggleFamilySite();
+            }}
+          >
+            Family Site
+          </div>
+          <div
+            id="footer_familySite_items"
+            className={
+              familySite
+                ? "footer_familySite_items_off"
+                : "footer_familySite_items_on"
+            }
+          >
             <div className="footer_familySite_item_1">
-              <span>Global</span>
-              <span>Japan</span>
-              <span>China</span>
-              <span>Taiwan</span>
+              <a href="#" target="_blank">
+                <span>Global</span>
+              </a>
+              <a href="#" target="_blank">
+                <span>Japan</span>
+              </a>
+              <a href="#" target="_blank">
+                <span>China</span>
+              </a>
+              <a href="#" target="_blank">
+                <span>Taiwan</span>
+              </a>
             </div>
             <div className="footer_familySite_item_2">
-              <span>S.E.A</span>
-              <span>North America</span>
-              <span>Thailand</span>
+              <a href="#" target="_blank">
+                <span>S.E.A</span>
+              </a>
+              <a href="#" target="_blank">
+                <span>North America</span>
+              </a>
+              <a href="#" target="_blank">
+                <span>Thailand</span>
+              </a>
             </div>
             <div className="footer_familySite_item_3">
-              <span>Maple Tester</span>
+              <a href="#" target="_blank">
+                <span>Maple Tester</span>
+              </a>
             </div>
           </div>
         </div>
@@ -78,6 +113,6 @@ const FooterComponent = styled.div`
   width: 100%;
   height: 220px;
   position: absolute;
-  bottom: 0;
+  bottom: 1;
   left: 0;
 `;

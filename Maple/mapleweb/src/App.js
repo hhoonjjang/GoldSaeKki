@@ -1,6 +1,3 @@
-import logo from "./logo.svg";
-import "./App.css";
-
 import AdministratorComponet from "./components/Administrator";
 import HomeComponet from "./components/Home";
 import UserComponet from "./components/User";

@@ -1,0 +1,15 @@
+.main {
+  background-image: url("../Img/regist-img.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+.regist-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

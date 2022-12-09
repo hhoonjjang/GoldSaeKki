@@ -1,17 +1,16 @@
-import styled from "styled-components";
-import headerImg from "./images/캡처.PNG";
-import homeImg from "./images/캡처2.PNG";
+import Menubar from "./menubar/Menubar";
+import MainInfo from "./mainInfo/MainInfo";
+import MainSlide from "./mainSlide/MainSlide";
+import Shortcut from "./shortcut/Shortcut";
 
 const HomeComponet = () => {
   return (
-    <TempBox>
-      <TempHeaderBox>
-        <img src={headerImg} alt={"임시 헤더"} />
-      </TempHeaderBox>
-      <TempHomeBox>
-        <img src={homeImg} alt={"임시 홈"} />
-      </TempHomeBox>
-    </TempBox>
+    <div>
+      <Menubar></Menubar>
+      <MainSlide></MainSlide>
+      <MainInfo></MainInfo>
+      <Shortcut></Shortcut>
+    </div>
   );
 };
 
@@ -34,5 +33,3 @@ const TempHomeBox = styled.div`
   height: 310px;
   padding-top: 62px;
 `;
-
-

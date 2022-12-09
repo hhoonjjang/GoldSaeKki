@@ -1,0 +1,20 @@
+ul {
+  list-style: none;
+}
+
+.menubar_item {
+  position: absolute;
+}
+.menubar_item > ul {
+  display: flex;
+}
+/* .menubar_item .menubar_dropdown:hover {
+  background-color: rgb(0, 0, 0);
+  transition: background 1s ease-out;
+} */
+.menubar_dropdown {
+  display: none;
+}
+.menubar_dropdown:hover {
+  display: block;
+}

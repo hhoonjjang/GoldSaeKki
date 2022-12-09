@@ -1,6 +1,4 @@
-
 import "./App.css";
-
 
 import AdministratorComponet from "./components/Administrator";
 import HomeComponet from "./components/Home";
@@ -16,9 +14,11 @@ function App() {
       {/* <UserComponet /> */}
 
       {/* 나중에 합칠 때 홈 안에 커뮤니티 컴포넌트를 넣어야 한다. */}
-      
-      <Link to={"/"}>메인홈</Link>{" | "}
-      <Link to={"/Community/Free"}>커뮤니티</Link><br />
+
+      <Link to={"/"}>메인홈</Link>
+      {" | "}
+      <Link to={"/Community/Free"}>커뮤니티</Link>
+      <br />
       <Routes>
         <Route path="/Community/*" element={<CommunityComponet />}></Route>
       </Routes>
@@ -31,10 +31,8 @@ function App() {
           path="/Support/BugReport"
           element={<BugReportContainer />}
         ></Route>
-
       </Routes>
       <AdministratorComponet />
-
     </div>
   );
 }

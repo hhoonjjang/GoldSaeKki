@@ -5,15 +5,21 @@ a {
   min-width: 1200px;
   display: flex;
   justify-content: space-between;
+  /* padding-top: 10px; */
 }
 
-.shortcut_innerBox > div {
-  display: inline;
+.flexBox {
+  display: flex;
 }
 
 .shortcut_smallLink {
-  border-radius: 5px;
+  min-width: 65px;
+  display: inline-block;
+  border-radius: 30px;
   background-color: #fff;
   padding: 3px;
-  color: gray;
+  color: lightgray;
+  word-break: normal;
+  font-size: 14px;
+  text-align: center;
 }

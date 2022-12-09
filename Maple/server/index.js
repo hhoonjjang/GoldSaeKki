@@ -38,5 +38,5 @@ app.use(
 app.use("/api", routes);
 
 app.listen(app.get("port"), () => {
-  console.log("포트열어따리");
+  console.log(`${app.get("port")}`+"포트열어따리");
 });

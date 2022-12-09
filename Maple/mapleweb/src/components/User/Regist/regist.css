@@ -1,15 +1,74 @@
-.main {
-  background-image: url("../Img/regist-img.png");
+.regist-box {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  background-image: url("../Img/regist-header-img.jpg");
   background-repeat: no-repeat;
+  background-size: contain;
   background-position: center;
 }
 
 h2 {
+  padding-top: 20px;
   text-align: center;
+  margin-top: 0;
 }
 
 .regist-main {
+  /* width: 1200px; */
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.regist-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.regist-text p:first-child {
+  color: black;
+  font-weight: 600;
+}
+.regist-text p:last-child {
+  font-size: 12px;
+}
+
+.regist-text input {
+  width: 250px;
+  height: 25px;
+  border: 2px solid lightgray;
+  background-color: rgb(234, 240, 254);
+}
+
+.regist-text input:first-child {
+  margin-left: 10px;
+}
+
+.button-box {
+  padding: 20px;
+}
+.button-box button:first-child {
+  width: 100px;
+  height: 35px;
+  border: none;
+  background-color: pink;
+  margin-right: 10px;
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-box button:last-child {
+  width: 100px;
+  height: 35px;
+  background-color: white;
+  border: 2px solid lightgray;
+  margin-right: 10px;
+  color: pink;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
 }

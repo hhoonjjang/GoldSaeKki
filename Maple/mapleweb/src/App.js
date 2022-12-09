@@ -20,6 +20,7 @@ function App() {
           element={<BugReportContainer />}
         ></Route> */}
       </Routes>
+      <UserComponet />
 
       {/* <AdministratorComponet /> */}
     </div>

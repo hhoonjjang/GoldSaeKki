@@ -1,20 +1,67 @@
 ul {
   list-style: none;
 }
+.menubar_bgOn {
+  background-color: rgb(43, 43, 55);
+}
+.menubar_innerBox {
+  min-width: 1200px;
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+
+.menubar_logobox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+}
 
 .menubar_item {
   position: absolute;
-}
-.menubar_item > ul {
+  right: 0px;
+  flex: 1;
   display: flex;
+  justify-content: space-between;
 }
 /* .menubar_item .menubar_dropdown:hover {
   background-color: rgb(0, 0, 0);
   transition: background 1s ease-out;
 } */
+.menubar_item:hover .menubar_dropdown {
+  display: block;
+}
+
+.menubar_item:hover .menubar {
+  background-color: rgb(43, 43, 55);
+}
+
+.menubar_item_outsideLi {
+  width: 173px;
+  position: relative;
+  text-align: center;
+}
+.menubar_item_outsideLi a {
+  /* color: white; */
+  /* 배너를 지정해 준게 없어서 하얀색을 쓰면 안보인다..
+   배너를 완성하면 활성화시켜주자! */
+}
+.menubar_item_outsideLi a:hover {
+  color: #f68500;
+}
+
 .menubar_dropdown {
   display: none;
+  position: absolute;
+  font-size: 13px;
+  width: 100%;
+  padding-inline-start: 0px;
 }
-.menubar_dropdown:hover {
-  display: block;
+
+.menubar_dropdown li {
+  text-align: center;
+}
+.menubar_dropdown li a {
+  width: 100%;
 }

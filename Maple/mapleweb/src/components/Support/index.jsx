@@ -13,8 +13,8 @@ const SupportComponet = () => {
         <Link to={"./BugReport"}>버그악용/불법프로그램 신고</Link>
       </div>
       <Routes>
-        <Route path="./Service" element={<ServiceContainer />}></Route>
-        <Route path="./BugReport" element={<BugReportContainer />}></Route>
+        <Route path="/Service" element={<ServiceContainer />}></Route>
+        <Route path="/BugReport" element={<BugReportContainer />}></Route>
       </Routes>
     </SupportBox>
   );

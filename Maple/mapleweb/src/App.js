@@ -16,7 +16,8 @@ function App() {
       <CommunityComponet />
       <Link to={"/Support"}>고객지원</Link>
       <Routes>
-        <Route path="/Support" element={<SupportComponet />}></Route>
+        <Route path="/news"></Route>
+        <Route path="/Support/*" element={<SupportComponet />}></Route>
       </Routes>
       <AdministratorComponet />
     </div>

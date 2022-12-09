@@ -1,5 +1,11 @@
-const UserComponet = () => {
-  return <div>유저컴포넌트</div>;
+import RegistContainer from "../User/Regist/Container";
+
+const UserComponent = () => {
+  return (
+    <div>
+      <RegistContainer />
+    </div>
+  );
 };
 
-export default UserComponet;
+export default UserComponent;

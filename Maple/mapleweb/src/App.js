@@ -10,12 +10,12 @@ function App() {
     <div>
       {/* <HomeComponet /> */}
       <UserComponet />
-      <CommunityComponet />
+      {/* <CommunityComponet />
       <Link to={"/Support"}>고객지원</Link>
       <Routes>
         <Route path="/Support" element={<SupportComponet />}></Route>
       </Routes>
-      <AdministratorComponet />
+      <AdministratorComponet /> */}
     </div>
   );
 }

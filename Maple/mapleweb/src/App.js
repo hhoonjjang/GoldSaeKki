@@ -11,7 +11,7 @@ function App() {
       {/* <HomeComponet /> */}
 
       <UserComponet />
-
+      {/* <CommunityComponet />
       <Link to={"/Support"}>고객지원</Link>
       <Routes>
         <Route path="/Support/*" element={<SupportComponet />}></Route>
@@ -19,8 +19,7 @@ function App() {
           path="/Support/BugReport"
           element={<BugReportContainer />}
         ></Route> */}
-      </Routes>
-      <UserComponet />
+      {/* </Routes> */}
 
       {/* <AdministratorComponet /> */}
     </div>

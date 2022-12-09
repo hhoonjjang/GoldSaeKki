@@ -10,9 +10,9 @@ function App() {
   return (
     <div>
       <HomeComponet />
-      <UserComponet />
-      <CommunityComponet />
-      <AdministratorComponet />
+      {/* <UserComponet /> */}
+      {/* <CommunityComponet /> */}
+      {/* <AdministratorComponet /> */}
     </div>
   );
 }

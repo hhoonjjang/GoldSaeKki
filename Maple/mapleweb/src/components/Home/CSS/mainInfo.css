@@ -8,9 +8,22 @@
 }
 
 .mainInfo_intro {
-  font-weight: normal;
+  font-weight: lighter;
   font-size: 40px;
+  text-align: center;
+  position: relative;
 }
+
+.infoPlusSVG {
+  position: absolute;
+  right: 0px;
+  fill: lightgray;
+}
+
+.infoPlusSVG:hover {
+  fill: gray;
+}
+
 .mainInfo_innerBox {
   min-width: 1200px;
   display: flex;

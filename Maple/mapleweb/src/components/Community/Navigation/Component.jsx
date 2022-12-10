@@ -13,6 +13,17 @@ import { useEffect, useRef, useState } from 'react';
 //     { name: '메이플코디', label: "Coordination", link: "/Coordination" }
 // ];
 // # 어떤 컴포넌트를 불러올 지는 상위 컴포넌트의 Route를 통해 지정해준다.
+// <Routes>
+//   <Route path="/Free" element={
+//       <img src={FreeImg} alt="임시 자유게시판" />
+//   }></Route>
+//   ... 등등
+// </Routes>
+
+
+// 만약 호버하면
+// 어떤 놈을 호버했는지 번호를 알아내서..
+// 나머지 앞부분 놈들 위드를 알아내고, 얼만큼 떨어졌는지 알아내서
 // 
 
 const NavigationComponent = ({ categorys }) => {
@@ -24,33 +35,26 @@ const NavigationComponent = ({ categorys }) => {
     // 현재 몇 번째 카테고리인지 nowRouterIdx.current를 통해 가져올 수 있다.
     const nowRouterIdx = useRef(0);
 
-    // 페이지 리렌더링
+    // 페이지 리랜더링
     const [_, render] = useState(true);
 
     // 라우터 주소가 바뀌면 해당 라우터 이름을 반환한다.
     useEffect(() => {
-
         render(!_);
-
         const locationArr = location.pathname.split("/");
         locationName.current = locationArr[locationArr.length - 1];
+    }, [_, location])
 
-        // 현재 라우터 이름이 카테고리의 몇번째인지 알아낸다.
-        // locationName.current
-        categorys.map((category, index) => {
-
-            if (category.label === locationName.current) {
-                nowRouterIdx.current = index;
-            }
-
-        });
-
-    }, [location])
+    // 현재 라우터 이름이 카테고리의 몇번째인지 알아내 ref에 저장해준다.
+    categorys.forEach((category, index) => {
+        if (category.label === locationName.current) {
+            nowRouterIdx.current = index;
+        }
+    });
 
 
     return (
         <NavigationWrap className='mnb_wrap'>
-
             <NavigationBox className='div_inner2'>
 
                 {categorys.map((item, idx) => {
@@ -60,7 +64,7 @@ const NavigationComponent = ({ categorys }) => {
                                 key={`list-${item.label}`}
                                 // to : 해당 카테고리 라우터로 이동한다.
                                 to={`./${item.label}`}
-                                // className : 내가 선택한 카테고리(라우터에서 가져옴?)랑 같으면 띄우도록 해야한다.
+                                // className : 내가 선택한 카테고리(라우터에서 가져옴)랑 같으면 띄우도록 해야한다.
                                 className={`${idx === nowRouterIdx.current ? "active" : ""}`}>
                                 <CategoryLi key={`category-${item.label}`}>{item.name}</CategoryLi>
                             </Link>
@@ -70,49 +74,10 @@ const NavigationComponent = ({ categorys }) => {
                     )
                 })}
 
-                <span className='mnb_line'></span>
+                {/* 계산해서 width, left값 변경하기 */}
+                <CategoryLine className='mnb_line'></CategoryLine>
 
             </NavigationBox>
-
-            <style jsx>{`
-                .mnb_list{
-                    width:100%; 
-                    float:left; 
-                    margin-top:1px;
-                }
-                .mnb_list li{
-                    float:left; 
-                    height:64px; 
-                    vertical-align: middle; 
-                    line-height: 64px; 
-                    margin-left:54px; 
-                    font-size:16px; 
-                    color:#888888;
-                    position:relative;
-                }
-                .mnb_list li:first-child{
-                    margin-left:0;
-                }
-                .mnb_list a{
-                    color:#666; 
-                    width:100%; 
-                    height:100%; 
-                    float:left;
-                }
-                .mnb_list li.active a{
-                    color:#333; 
-                    font-weight:bold;
-                }
-                .mnb_line{
-                    position:absolute; 
-                    left:32px; 
-                    bottom:-1px; 
-                    height:5px; 
-                    background-color:#434343; width:20px;
-                }
-            `}</style>
-
-            {/* {mnb_setting()} */}
         </NavigationWrap>
 
     );
@@ -166,7 +131,7 @@ const LiBox = styled.div`
         }
         /* a중에서 active인 class를 가진 li */
         &.active li{
-            color: black;
+            color: #333;
             font-weight: 600;
         }
 
@@ -177,3 +142,18 @@ const CategoryLi = styled.li`
 
 `;
 
+const CategoryLine = styled.span`
+    position:absolute; 
+    bottom:-1px; 
+    height:5px; 
+    background-color:#434343; 
+
+    /* 현재는 이렇게 설정해놨음 */
+    /* left:32px;  */
+    left: 0px;
+
+
+    /* 기본 위드는 20px으로 설정해놨음 */
+    width:20px;
+    /* 현재 카테고리의 위드만큼으로 바꾸기 */
+`;

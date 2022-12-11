@@ -1,35 +1,71 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import registImg from "../Img/regist-header-img.jpg";
+import { useState } from "react";
 
-const RegistComponent = () => {
+const RegistComponent = ({ registClick }) => {
+  const [userId, setId] = useState("");
+  const [userPw, setPw] = useState("");
+  const [userName, setName] = useState("");
   return (
     <RegistBox>
       <h2>금쪽이스토리 회원 가입</h2>
       <RegistMain>
         <RegistText>
           <p>아이디 </p>
-          <input placeholder={"아이디"} />
+          <input
+            placeholder={"아이디"}
+            value={userId}
+            type={"text"}
+            onInput={(e) => {
+              setId(e.target.value);
+            }}
+          />
           <p>
             사용하실 <strong>아이디</strong>를 입력해주세요.
           </p>
         </RegistText>
         <RegistText>
           <p>비밀번호 </p>
-          <input placeholder={"비밀번호"} />
+          <input
+            placeholder={"비밀번호"}
+            value={userPw}
+            type={"password"}
+            onInput={(e) => {
+              setPw(e.target.value);
+            }}
+          />
           <p>
             사용하실 <strong>비밀번호</strong>를 입력해주세요.
           </p>
         </RegistText>
         <RegistText>
           <p>닉네임 </p>
-          <input placeholder={"닉네임"} />
+          <input
+            placeholder={"닉네임"}
+            value={userName}
+            type={"text"}
+            onInput={(e) => {
+              setName(e.target.value);
+            }}
+          />
           <p>
             사용하실 <strong>닉네임</strong>을 입력해주세요.
           </p>
         </RegistText>
         <ButtonBox>
-          <button>회원가입</button>
-          <button>취소</button>
+          <Link to={"/login"}>
+            <button
+              onClick={() => {
+                registClick(userId, userPw, userName);
+              }}
+            >
+              회원가입
+            </button>
+          </Link>
+          <Link to={"/login"}>
+            <button>취소</button>
+          </Link>
         </ButtonBox>
       </RegistMain>
     </RegistBox>
@@ -88,8 +124,8 @@ const RegistText = styled.div`
 const ButtonBox = styled.div`
   padding: 20px;
 
-  & button {
-    &:first-child {
+  & > a:first-child {
+    & > button {
       width: 100px;
       height: 35px;
       border: none;
@@ -100,8 +136,10 @@ const ButtonBox = styled.div`
       border-radius: 5px;
       cursor: pointer;
     }
+  }
 
-    &:last-child {
+  & > a:last-child {
+    & > button {
       width: 100px;
       height: 35px;
       background-color: white;

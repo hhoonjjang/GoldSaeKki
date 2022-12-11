@@ -28,6 +28,7 @@ const TempHeaderBox = styled.div`
   height: 62px;
   background-size: contain;
   position: fixed;
+  z-index: 1;
 `;
 const TempHomeBox = styled.div`
   height: 310px;

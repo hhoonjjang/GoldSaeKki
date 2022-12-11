@@ -10,11 +10,12 @@ import ArtImg from './images/아트.png';
 import CoordinationImg from './images/코디.png';
 
 const CATEGORY = [
-  { name: '자유게시판', label: "Free", link: "/Free" },
+  { name: '자유 게시판', label: "Free", link: "/Free" },
   { name: '정보게시판', label: "Information", link: "/Information" },
   { name: '토론게시판', label: "TopicDiscussion", link: "/TopicDiscussion" },
   { name: '메이플아트', label: "Art", link: "/Art" },
-  { name: '메이플코디', label: "Coordination", link: "/Coordination" }
+  // { name: '메이플코디', label: "Coordination", link: "/Coordination" }
+  { name: '코디', label: "Coordination", link: "/Coordination" }
 ];
 
 const CommunityComponet = () => {

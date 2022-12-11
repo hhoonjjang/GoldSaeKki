@@ -6,8 +6,8 @@ const UserComponent = () => {
   return (
     <div>
       <Routes>
-        <Route path={"/regist"} element={<RegistContainer />}></Route>
-        <Route path={"/"} element={<LoginContainer />}></Route>
+        <Route path={"/join/regist"} element={<RegistContainer />}></Route>
+        <Route path={"/login"} element={<LoginContainer />}></Route>
       </Routes>
     </div>
   );

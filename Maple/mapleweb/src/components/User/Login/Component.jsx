@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 import menuLogo from "../Img/menu-logo.png";
 import homeLogo from "../Img/home-logo.png";
 import mapleLogo from "../Img/goldsaekki-logo-remove.png";
@@ -12,14 +14,14 @@ const LoginComponent = () => {
       <LoginHeader>
         <div>
           <button>
-            <img src={menuLogo} />
+            <img src={menuLogo} alt={"메뉴"} />
           </button>
           <button>
-            <img src={homeLogo} />
+            <img src={homeLogo} alt={"홈"} />
           </button>
         </div>
         <button>
-          <img src={mapleLogo} />
+          <img src={mapleLogo} alt={"우측로고"} />
         </button>
       </LoginHeader>
       <LoginMain>
@@ -38,10 +40,19 @@ const LoginComponent = () => {
           </div>
           <button>로그인</button>
         </LoginText>
+        <LinkBox>
+          <Link to={"/join/regist"}>
+            <p>회원가입</p>
+          </Link>
+          <p> | </p>
+          <p>금쪽이ID 찾기</p>
+          <p> | </p>
+          <p> 비밀번호 찾기 </p>
+        </LinkBox>
       </LoginMain>
       <LoginFooter>
         <div>
-          <img src={footerLogo}></img>
+          <img src={footerLogo} alt={"하단로고"}></img>
         </div>
       </LoginFooter>
     </LoginBox>
@@ -92,7 +103,7 @@ const LoginMain = styled.div`
   background-position: bottom;
   height: 700px;
 
-  & p {
+  & > p {
     font-size: 50px;
     color: white;
     text-align: center;
@@ -197,4 +208,32 @@ const LoginFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const LinkBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 600px;
+  margin: 0 auto;
+
+  & > a > p {
+    font-size: 18px;
+    color: darkgray;
+    letter-spacing: -0.1rem;
+    padding: 5px;
+    margin: 0;
+  }
+
+  & > a {
+    text-decoration: none;
+  }
+
+  & > p {
+    font-size: 18px;
+    color: darkgray;
+    letter-spacing: -0.1rem;
+    padding: 5px;
+    margin: 0;
+    cursor: pointer;
+  }
 `;

@@ -43,7 +43,7 @@ const NavigationComponent = ({ categorys }) => {
         render(!_);
         const locationArr = location.pathname.split("/");
         locationName.current = locationArr[locationArr.length - 1];
-    }, [_, location])
+    }, [location])
 
     // 현재 라우터 이름이 카테고리의 몇번째인지 알아내 ref에 저장해준다.
     categorys.forEach((category, index) => {
@@ -94,7 +94,6 @@ const NavigationWrap = styled.div`
     top: 62px;
     border-top: 1px solid #ebebeb;
     border-bottom: 1px solid #ebebeb;
-
     
     width:100%; 
     float:left; 
@@ -110,7 +109,6 @@ const NavigationBox = styled.div`
 const LiBox = styled.div`
     height: inherit;
     display: inline-block;
-
     li{
         font-size: 16px;
         list-style: none;
@@ -124,7 +122,6 @@ const LiBox = styled.div`
     a{
         color: #666;
         text-decoration: none;
-
         // a 호버
         &:hover{
             color: #242424;
@@ -134,12 +131,10 @@ const LiBox = styled.div`
             color: #333;
             font-weight: 600;
         }
-
     }
 `;
 
 const CategoryLi = styled.li`
-
 `;
 
 const CategoryLine = styled.span`
@@ -147,12 +142,9 @@ const CategoryLine = styled.span`
     bottom:-1px; 
     height:5px; 
     background-color:#434343; 
-
     /* 현재는 이렇게 설정해놨음 */
     /* left:32px;  */
     left: 0px;
-
-
     /* 기본 위드는 20px으로 설정해놨음 */
     width:20px;
     /* 현재 카테고리의 위드만큼으로 바꾸기 */

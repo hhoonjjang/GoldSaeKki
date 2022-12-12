@@ -8,20 +8,18 @@ import BugReportContainer from "./components/Support/BugReport/Container";
 function App() {
   return (
     <div>
-      {/* <HomeComponet /> */}
-
+      <HomeComponet />
       <UserComponet />
-      {/* <CommunityComponet />
+      <CommunityComponet />
       <Link to={"/Support"}>고객지원</Link>
       <Routes>
         <Route path="/Support/*" element={<SupportComponet />}></Route>
-        {/* <Route
+        <Route
           path="/Support/BugReport"
           element={<BugReportContainer />}
-        ></Route> */}
-      {/* </Routes> */}
-
-      {/* <AdministratorComponet /> */}
+        ></Route>
+      </Routes>
+      <AdministratorComponet />
     </div>
   );
 }

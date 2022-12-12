@@ -3,6 +3,10 @@ ul {
 }
 .menubar_bgOn {
   background-color: rgb(43, 43, 55);
+  transition: background-color 0.2s linear;
+}
+.menubar_bgOff {
+  transition: background-color 0.2s linear;
 }
 .menubar_innerBox {
   min-width: 1200px;
@@ -23,12 +27,22 @@ ul {
   right: 0px;
   flex: 1;
   display: flex;
+  padding-top: 20px;
   justify-content: space-between;
 }
 /* .menubar_item .menubar_dropdown:hover {
   background-color: rgb(0, 0, 0);
   transition: background 1s ease-out;
 } */
+.menubar_item.on {
+  transform: translateY(-10px);
+  transition: transform 0.2s linear;
+}
+.menubar_item.off {
+  transform: translateY(10px);
+  transition: transform 0.2s linear;
+}
+
 .menubar_item:hover .menubar_dropdown {
   display: block;
 }
@@ -42,13 +56,15 @@ ul {
   position: relative;
   text-align: center;
 }
-.menubar_item_outsideLi a {
-  /* color: white; */
-  /* 배너를 지정해 준게 없어서 하얀색을 쓰면 안보인다..
-   배너를 완성하면 활성화시켜주자! */
-}
-.menubar_item_outsideLi a:hover {
+
+.menubar_item_outsideLi_text:hover {
   color: #f68500;
+}
+
+.menubar_item_outsideLi_text {
+  font-size: 22px;
+  color: white;
+  font-weight: bold;
 }
 
 .menubar_dropdown {
@@ -57,11 +73,18 @@ ul {
   font-size: 13px;
   width: 100%;
   padding-inline-start: 0px;
+  padding-top: 20px;
 }
 
 .menubar_dropdown li {
   text-align: center;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 .menubar_dropdown li a {
   width: 100%;
+  color: #a7acbc;
+}
+.menubar_dropdown li a:hover {
+  color: #f68500;
 }

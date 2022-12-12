@@ -1,0 +1,90 @@
+ul {
+  list-style: none;
+}
+.menubar_bgOn {
+  background-color: rgb(43, 43, 55);
+  transition: background-color 0.2s linear;
+}
+.menubar_bgOff {
+  transition: background-color 0.2s linear;
+}
+.menubar_innerBox {
+  min-width: 1200px;
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+
+.menubar_logobox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+}
+
+.menubar_item {
+  position: absolute;
+  right: 0px;
+  flex: 1;
+  display: flex;
+  padding-top: 20px;
+  justify-content: space-between;
+}
+/* .menubar_item .menubar_dropdown:hover {
+  background-color: rgb(0, 0, 0);
+  transition: background 1s ease-out;
+} */
+.menubar_item.on {
+  transform: translateY(-10px);
+  transition: transform 0.2s linear;
+}
+.menubar_item.off {
+  transform: translateY(10px);
+  transition: transform 0.2s linear;
+}
+
+.menubar_item:hover .menubar_dropdown {
+  display: block;
+}
+
+.menubar_item:hover .menubar {
+  background-color: rgb(43, 43, 55);
+}
+
+.menubar_item_outsideLi {
+  width: 173px;
+  position: relative;
+  text-align: center;
+}
+
+.menubar_item_outsideLi_text:hover {
+  color: #f68500;
+}
+
+.menubar_item_outsideLi_text {
+  font-size: 22px;
+  color: white;
+  font-weight: bold;
+}
+
+.menubar_dropdown {
+  display: none;
+  position: absolute;
+  font-size: 13px;
+  width: 100%;
+  padding-inline-start: 0px;
+  padding-top: 20px;
+}
+
+.menubar_dropdown li {
+  text-align: center;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+.menubar_dropdown li a {
+  width: 100%;
+  color: #a7acbc;
+}
+.menubar_dropdown li a:hover {
+  color: #f68500;
+}

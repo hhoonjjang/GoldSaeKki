@@ -17,12 +17,14 @@ const SupportComponet = () => {
       </div>
       <Routes>
 
+
         {/* <Route
           path="/Support/BugReport/Create"
           element={<CreateContainer />}
         ></Route> */}
         <Route path="/Service/*" element={<ServiceContainer />}></Route>
         <Route path="/BugReport/*" element={<BugReportContainer />}></Route>
+
 
       </Routes>
     </SupportBox>

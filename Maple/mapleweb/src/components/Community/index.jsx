@@ -21,6 +21,16 @@ import four from './images/4.png';
 import prev from './images/prev.png';
 import next from './images/next.png';
 import tag from './images/issueTag.png';
+import AddContainer from "./Board/Add/Container";
+
+const CATEGORY2 = [
+  { name: '자유 게시판', label: "Free", link: "/Free" },
+  { name: '정보게시판', label: "Information", link: "/Information" },
+  { name: '토론게시판', label: "TopicDiscussion", link: "/TopicDiscussion" },
+  { name: '메이플아트', label: "Art", link: "/Art" },
+  { name: '코디', label: "Coordination", link: "/Coordination" }
+
+]
 
 const CATEGORY = [
   // { name: '자유 게시판', label: "Free", link: "/Free" },
@@ -60,6 +70,7 @@ const CommunityComponet = () => {
     <CommunityBox className="communityBox">
 
       {/* 카테고리 네비게이션, 사용시 카데고리와 라우터 값을 보내준다. */}
+      {/* <NavigationComponent categorys={CATEGORY2} /> */}
       <NavigationComponent categorys={CATEGORY} />
 
       <AllWrap className="allWrap">
@@ -88,8 +99,14 @@ const CommunityComponet = () => {
                   <img src={CoordinationImg} alt="임시 토론게시판" />
               }></Route> */}
               {/* 컨테이너를 넣고 그 안에서 컴포넌트를 출력한다. */}
+
+              {/* <Route path="/BoardList" element={<ListContainer />} categorys={CATEGORY}></Route> */}
               <Route path="/BoardList" element={<ListContainer />} categorys={CATEGORY}></Route>
-              <Route path="/BoardAdd" element={"게시글등록"}></Route>
+
+
+              <Route path="/BoardAdd" element={<AddContainer />} categorys={CATEGORY}></Route>
+
+
               <Route path="/BoardUpdate" element={"게시글수정"}></Route>
               <Route path="/Board" element={"게시글상세"}></Route>
               <Route path="/CommentList" element={"댓글목록"}></Route>
@@ -314,15 +331,8 @@ const StyledSlide = styled(Slider)`
     /* 슬라이드 크기 조절 */
     .slick-list{ 
     	width: 230px;
-      /* height: 120px; */
       height: 145px;
       margin: 0 auto;
-      /* background-color: #59636d; */
-
-      &.img{
-        width: 50px; height: 50px;
-      }
-
 
       position: relative;
       display: block;

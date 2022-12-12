@@ -115,8 +115,8 @@ const MainSlide = () => {
     // const tempCount = parseInt((imgArr.length - 1) / 4) + 1;
     return imgArr.map((item, index) => {
       return (
-        <div key={`slideItem${index}`} className={"carousel_slide_item"}>
-          <img src={item.img} alt="" />
+        <div key={`slideItem-${index}`} className={"carousel_slide_item"}>
+          <img key={`img-${index}`} src={item.img} alt="" />
         </div>
       );
     });

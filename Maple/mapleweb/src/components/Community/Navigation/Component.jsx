@@ -88,7 +88,7 @@ export default NavigationComponent;
 
 const NavigationWrap = styled.div`
     font-size: 20px;
-    height: 64px;
+    height: 66px;
     background-color: white;
     position: sticky;
     top: 62px;

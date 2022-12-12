@@ -2,6 +2,7 @@ import "./App.css";
 
 import HeaderComponent from "./components/Home/header/header";
 
+// Componet -> Component 로 오타 수정하기
 import AdministratorComponet from "./components/Administrator";
 import HomeComponet from "./components/Home";
 // import UserComponet from "./components/User";

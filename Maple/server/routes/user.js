@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-import db from "../models/index.js";
+// import db from "../models/index.js";
 
 // router.post("/regist", (req, res) => {
 //     tempuserId = req.body.userId;

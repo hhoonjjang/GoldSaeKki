@@ -4,7 +4,7 @@ import logo from "../Img/maple_logo.png";
 import "../CSS/menubar.css";
 import { useMemo, useState } from "react";
 
-const Menubar = ({ props }) => {
+const Menubar = () => {
   const [BGColor, setBGColor] = useState(false);
   const changeColorOn = () => {
     setBGColor(true);
@@ -32,26 +32,27 @@ const Menubar = ({ props }) => {
   ];
 
   const routeAddress = [
-    "/news",
-    "/guide",
-    "/ranking",
-    "/community",
-    "/media",
-    "/support",
+    "News",
+    "Guide",
+    "Ranking",
+    "Community",
+    "Media",
+    "Support",
   ];
 
   const menuVersion2 = useMemo(() => {
     return menu.map((item, index) => {
       return (
-        <li className="menubar_item_outsideLi">
+        <li className="menubar_item_outsideLi" key={`outsideLi${index}`}>
           <Link to={routeAddress[index]}>
             <span className="menubar_item_outsideLi_text">{item}</span>
           </Link>
           <ul className="menubar_dropdown">
             {dropDownMenu.map((item2, index2) => {
               return (
-                <li>
+                <li key={`dropdown_${index}_${index2}`}>
                   <Link to={"/"}>{dropDownMenu[index][index2]}</Link>
+                  {/* 나중에 메뉴바의 상세한 하위 영역명이 정해지면 그 때 입력한다. */}
                 </li>
               );
             })}
@@ -210,7 +211,6 @@ const Menubar = ({ props }) => {
           {/* map()돌려서 짧게 나오는 것하고 깡으로 길게 박아넣는 것 중 원하는 것 선택합시다... */}
         </ul>
       </div>
-      {props}
     </MenubarComponent>
   );
 };

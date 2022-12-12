@@ -1,4 +1,5 @@
 import Menubar from "./menubar/Menubar";
+import Header from "./header/header";
 import MainInfo from "./mainInfo/MainInfo";
 import MainSlide from "./mainSlide/MainSlide";
 import Shortcut from "./shortcut/Shortcut";
@@ -9,7 +10,7 @@ const HomeComponet = () => {
   return (
     <div className="Home_wrapper">
       <div className="Home_content">
-        <Menubar></Menubar>
+        {/* <Header></Header> */}
         {/* <MainSlide></MainSlide> */}
         <TempDiv>ff</TempDiv>
         {/* 임시로 배너를 채워넣었습니다 */}

@@ -1,3 +1,4 @@
+
 import Menubar from "./menubar/Menubar";
 import Header from "./header/header";
 import MainInfo from "./mainInfo/MainInfo";
@@ -19,12 +20,15 @@ const HomeComponet = () => {
       </div>
       <Footer></Footer>
     </div>
+
   );
 };
 
 export default HomeComponet;
 
+
 const TempDiv = styled.div`
   // height: 420px;
   margin-top: 140px;
 `;
+

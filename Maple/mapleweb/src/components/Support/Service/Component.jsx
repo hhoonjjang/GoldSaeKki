@@ -1,7 +1,13 @@
 import styled from "styled-components";
-
+import LeftTabsExample from "../Tabs/Component";
 const ServiceComponent = () => {
-  return <div>서비스컴포넌트</div>;
+  return (
+    <ServiceBox>
+      <LeftTabsExample />
+    </ServiceBox>
+  );
 };
 
 export default ServiceComponent;
+
+const ServiceBox = styled.div``;

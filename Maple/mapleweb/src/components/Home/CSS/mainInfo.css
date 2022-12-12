@@ -1,0 +1,125 @@
+.mainInfo {
+  background: linear-gradient(to bottom, #f4f4f4 60%, #fff 62%, #fff);
+  display: flex;
+  justify-content: center;
+  padding-top: 90px;
+  padding-bottom: 90px;
+  border-top: 1px solid gainsboro;
+}
+
+.mainInfo_intro {
+  font-weight: lighter;
+  font-size: 40px;
+  text-align: center;
+  position: relative;
+}
+
+.infoPlusSVG {
+  position: absolute;
+  right: 0px;
+  fill: lightgray;
+}
+
+.infoPlusSVG:hover {
+  fill: gray;
+}
+
+.mainInfo_innerBox {
+  min-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mainInfo_item {
+  border-radius: 3px;
+}
+
+.mainInfo_item img:hover {
+  transform: scale(1.1);
+}
+.mainInfo_item > div {
+  width: 100;
+  overflow: hidden;
+}
+.mainInfo_item img {
+  display: block;
+  overflow: hidden;
+  z-index: 10;
+  transition: all 400ms linear;
+}
+.mainInfo_caption_1,
+.mainInfo_caption_2,
+.mainInfo_caption_3 {
+  text-align: center;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  font-family: "NanumBarunGothic", "Malgun Gothic", sans-serif;
+  z-index: 11;
+}
+
+.mainInfo_caption_1 {
+  background-color: rgb(53, 53, 77);
+  -webkit-box-reflect: below 3px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(rgba(53, 53, 77, 0.25)));
+}
+
+.mainInfo_caption_2 {
+  background-color: rgb(46, 59, 67);
+  -webkit-box-reflect: below 3px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(rgba(46, 59, 67, 0.25)));
+}
+
+.mainInfo_caption_3 {
+  background-color: rgb(39, 60, 103);
+  -webkit-box-reflect: below 3px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.7, transparent), to(rgba(39, 60, 103, 0.25)));
+}
+
+.mainInfo_title {
+  color: white;
+  font-size: 20px;
+}
+
+.mainInfo_text {
+  color: #cecece;
+  font-size: 13px;
+}
+@font-face {
+  font-family: "NanumBarunGothic";
+  font-style: normal;
+  font-weight: 400;
+  src: url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot");
+  src: url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix")
+      format("embedded-opentype"),
+    url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff")
+      format("woff"),
+    url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf")
+      format("truetype");
+}
+
+@font-face {
+  font-family: "NanumBarunGothic";
+  font-style: normal;
+  font-weight: 700;
+  src: url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot");
+  src: url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.eot?#iefix")
+      format("embedded-opentype"),
+    url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.woff")
+      format("woff"),
+    url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebBold.ttf")
+      format("truetype");
+}
+
+@font-face {
+  font-family: "NanumBarunGothic";
+  font-style: normal;
+  font-weight: 300;
+  src: url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot");
+  src: url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.eot?#iefix")
+      format("embedded-opentype"),
+    url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.woff")
+      format("woff"),
+    url("//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf")
+      format("truetype");
+}
+
+.nanumbarungothic * {
+  font-family: "NanumBarunGothic", sans-serif;
+}

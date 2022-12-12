@@ -6,6 +6,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import routes from "./routes/index.js";
 
+import db from "./models/index.js";
+
 dotenv.config();
 
 const app = express();
@@ -35,8 +37,17 @@ app.use(
   })
 );
 
+db.sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log("디비 연결!");
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
 app.use("/api", routes);
 
 app.listen(app.get("port"), () => {
-  console.log(`${app.get("port")}`+"포트열어따리");
+  console.log(`${app.get("port")}` + "포트열어따리");
 });

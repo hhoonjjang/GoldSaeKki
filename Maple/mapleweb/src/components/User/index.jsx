@@ -1,5 +1,16 @@
-const UserComponet = () => {
-  return <div>유저컴포넌트</div>;
+import RegistContainer from "../User/Regist/Container";
+import LoginContainer from "../User/Login/Container";
+import { Route, Routes } from "react-router-dom";
+
+const UserComponent = () => {
+  return (
+    <div>
+      <Routes>
+        <Route path={"/join/regist"} element={<RegistContainer />}></Route>
+        <Route path={"/login"} element={<LoginContainer />}></Route>
+      </Routes>
+    </div>
+  );
 };
 
-export default UserComponet;
+export default UserComponent;

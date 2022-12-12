@@ -43,7 +43,7 @@ const NavigationComponent = ({ categorys }) => {
         render(!_);
         const locationArr = location.pathname.split("/");
         locationName.current = locationArr[locationArr.length - 1];
-    }, [location])
+    }, [location]);
 
     // 현재 라우터 이름이 카테고리의 몇번째인지 알아내 ref에 저장해준다.
     categorys.forEach((category, index) => {

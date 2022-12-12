@@ -195,11 +195,11 @@ export default CommunityComponet;
 
 const CommunityBox = styled.div`
   min-height : 1600px;
-  background-color: #e6e6e6;
+  /* 머지 : 배경컬러 없애는게 맞음 */
+  /* background-color: #e6e6e6; */
 `;
 
 const AllWrap = styled.div`
-  background-color: #ebebeb;
   min-height: 1165px;
   /* padding: 20px 0; */
   width:100%; 
@@ -223,7 +223,7 @@ const ContentBox = styled.div`
   min-height: inherit;
   display: inline-block;
   width: 930px;
-  background-color: #a52a2a29;
+  /* background-color: #a52a2a29; */
 
 `;
 

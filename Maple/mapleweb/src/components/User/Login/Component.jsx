@@ -7,8 +7,11 @@ import mapleLogo from "../Img/goldsaekki-logo-remove.png";
 import loginChar from "../Img/login-char.png";
 import footerLogo from "../Img/login-footer.png";
 import backgroundImg from "../Img/login-background.png";
+import { useState } from "react";
 
-const LoginComponent = () => {
+const LoginComponent = ({ loginClick }) => {
+  const [loginId, setloginId] = useState("");
+  const [loginPw, setloginPw] = useState("");
   return (
     <LoginBox>
       <LoginHeader>
@@ -29,19 +32,39 @@ const LoginComponent = () => {
         <LoginText>
           <div>금쪽이ID</div>
           <div>
-            <input placeholder={"메이플ID"} />
+            <input
+              placeholder={"메이플ID"}
+              value={loginId}
+              type={"text"}
+              onInput={(e) => {
+                setloginId(e.target.value);
+              }}
+            />
             <span>
               <input type={"checkbox"} />
               ID 저장
             </span>
           </div>
           <div>
-            <input placeholder={"PW"} />
+            <input
+              placeholder={"PW"}
+              value={loginPw}
+              type={"password"}
+              onInput={(e) => {
+                setloginPw(e.target.value);
+              }}
+            />
           </div>
-          <button>로그인</button>
+          <button
+            onClick={() => {
+              loginClick(loginId, loginPw);
+            }}
+          >
+            로그인
+          </button>
         </LoginText>
         <LinkBox>
-          <Link to={"/join/regist"}>
+          <Link to={"/regist"}>
             <p>회원가입</p>
           </Link>
           <p> | </p>

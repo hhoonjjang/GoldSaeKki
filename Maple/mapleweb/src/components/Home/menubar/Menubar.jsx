@@ -4,7 +4,7 @@ import logo from "../Img/maple_logo.png";
 import "../CSS/menubar.css";
 import { useMemo, useState } from "react";
 
-const Menubar = () => {
+const Menubar = ({ icon, text }) => {
   const [BGColor, setBGColor] = useState(false);
   const changeColorOn = () => {
     setBGColor(true);
@@ -62,27 +62,28 @@ const Menubar = () => {
     });
   }, []);
   return (
-    <MenubarComponent className={BGColor ? "menubar_bgOn" : "menubar_bgOff"}>
-      <div className="menubar_innerBox">
-        <div className="menubar_logobox">
-          <Link to={"/"}>
-            <img src={logo} alt="Logo" />
-            {/* 임시로 놓는 로고입니다. 제대로 된 로고를 넣을 예정 */}
-          </Link>
-          {/* 로고 */}
-        </div>
+    <>
+      <MenubarComponent className={BGColor ? "menubar_bgOn" : "menubar_bgOff"}>
+        <div className="menubar_innerBox">
+          <div className="menubar_logobox">
+            <Link to={"/"}>
+              <img src={logo} alt="Logo" />
+              {/* 임시로 놓는 로고입니다. 제대로 된 로고를 넣을 예정 */}
+            </Link>
+            {/* 로고 */}
+          </div>
 
-        <ul
-          className={BGColor ? "menubar_item on" : "menubar_item off"}
-          onMouseOver={() => {
-            changeColorOn();
-          }}
-          onMouseLeave={() => {
-            changeColorOff();
-          }}
-        >
-          {menuVersion2}
-          {/* <li className="menubar_item_outsideLi">
+          <ul
+            className={BGColor ? "menubar_item on" : "menubar_item off"}
+            onMouseOver={() => {
+              changeColorOn();
+            }}
+            onMouseLeave={() => {
+              changeColorOff();
+            }}
+          >
+            {menuVersion2}
+            {/* <li className="menubar_item_outsideLi">
             <Link to={"/"}>
               <span className="menubar_item_outsideLi_text">뉴스</span>
             </Link>
@@ -208,10 +209,29 @@ const Menubar = () => {
               </li>
             </ul>
           </li> */}
-          {/* map()돌려서 짧게 나오는 것하고 깡으로 길게 박아넣는 것 중 원하는 것 선택합시다... */}
-        </ul>
+            {/* map()돌려서 짧게 나오는 것하고 깡으로 길게 박아넣는 것 중 원하는 것 선택합시다... */}
+          </ul>
+        </div>
+      </MenubarComponent>
+      <div className="header_innerBox">
+        <div className="header_innderBox_center">
+          <div className="header_innerBox_center_left">
+            <span>
+              <img src={icon} />
+            </span>
+            <span>
+              <h2>{text}</h2>
+            </span>
+          </div>
+          <div className="header_innerBox_center_left">
+            <div></div>
+            <div>
+              <img></img>
+            </div>
+          </div>
+        </div>
       </div>
-    </MenubarComponent>
+    </>
   );
 };
 export default Menubar;

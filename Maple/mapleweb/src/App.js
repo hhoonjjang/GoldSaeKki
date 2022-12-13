@@ -18,7 +18,9 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<Menubar />}></Route>
+        {/* 기타 등등 헤더 */}
         <Route path="/*" element={<HeaderContainer />}></Route>
+        {/* 메인페이지 헤더 */}
       </Routes>
       <UserComponent />
 

@@ -33,17 +33,17 @@ export const reducer = (state = initialize, action) => {
     case TYPE.HEADER:
       switch (payload.category) {
         case "News":
-          return headerBanner1;
+          return { banner: headerBanner1, icon: headericon1, text: "뉴스" };
         case "Guide":
-          return headerBanner2;
+          return { banner: headerBanner2, icon: headericon2, text: "가이드" };
         case "Ranking":
-          return headerBanner3;
+          return { banner: headerBanner3, icon: headericon3, text: "랭킹" };
         case "Community":
-          return headerBanner4;
+          return { banner: headerBanner4, icon: headericon4, text: "커뮤니티" };
         case "Media":
-          return headerBanner5;
+          return { banner: headerBanner5, icon: headericon5, text: "미디어" };
         case "Support":
-          return headerBanner6;
+          return { banner: headerBanner6, icon: headericon6, text: "고객지원" };
         default:
           return state;
       }

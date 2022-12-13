@@ -36,7 +36,7 @@ ul {
   position: absolute;
 }
 .headerScroll_on .menubar_logobox {
-  top: -15px;
+  top: -12px;
 }
 .headerScroll_off .menubar_logobox img {
   width: 110px;
@@ -60,10 +60,10 @@ ul {
   padding-top: 20px;
 }
 
-/* .menubar_item .menubar_dropdown:hover {
+.menubar_item .menubar_dropdown:hover {
   background-color: rgb(0, 0, 0);
   transition: background 1s ease-out;
-} */
+}
 .headerScroll_off.menubar_item.on {
   transform: translateY(-10px);
   transition: transform 0.2s linear;

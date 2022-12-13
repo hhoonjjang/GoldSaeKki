@@ -6,7 +6,7 @@ import archive from "./Img/main_archive.png";
 import Shortcut from "./shortcut/Shortcut";
 import Footer from "./footer/Footer";
 import styled from "styled-components";
-import "./CSS/home.css";
+// import "./CSS/home.css";
 import MainCommunity from "./mainCommunity/MainCommunity";
 const HomeComponet = () => {
   return (
@@ -15,10 +15,10 @@ const HomeComponet = () => {
         {/* <Header></Header> */}
         {/* <MainSlide></MainSlide> */}
         {/* 임시로 배너를 채워넣었습니다 */}
-        <MainCommunity></MainCommunity>
-        <div className="main_archive">
+        <MainCommunity />
+        <MainArchive>
           <img src={archive} />
-        </div>
+        </MainArchive>
         <MainInfo></MainInfo>
         <Shortcut></Shortcut>
       </div>
@@ -29,7 +29,9 @@ const HomeComponet = () => {
 
 export default HomeComponet;
 
-const TempDiv = styled.div`
-  // height: 420px;
-  margin-top: 140px;
+const MainArchive = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
 `;

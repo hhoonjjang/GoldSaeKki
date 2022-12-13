@@ -137,4 +137,125 @@ const MenubarComponent = styled.div`
   display: flex;
   justify-content: center;
   z-index: 999999;
+
+  ul {
+    list-style: none;
+  }
+  .headerScroll_on {
+    position: fixed;
+    background-color: rgb(47, 47, 59);
+    height: 64px;
+  }
+
+  .menubar_bgOn {
+    background-color: rgb(43, 43, 55);
+    transition: background-color 0.2s linear;
+    z-index: 999999;
+    height: 310px;
+  }
+  .menubar_bgOff {
+    transition: background-color 0.2s linear;
+    z-index: 1;
+  }
+
+  .headerScroll_off {
+    position: absolute;
+  }
+
+  .menubar_innerBox {
+    min-width: 1200px;
+    height: 100%;
+    display: flex;
+    position: relative;
+  }
+
+  .menubar_logobox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+  }
+  .headerScroll_on .menubar_logobox {
+    top: -12px;
+  }
+  .headerScroll_off .menubar_logobox img {
+    width: 110px;
+    border-radius: 50%;
+  }
+
+  .headerScroll_on .menubar_logobox img {
+    width: 50px;
+    border-radius: 50%;
+  }
+
+  .menubar_item {
+    position: absolute;
+    right: 0px;
+    flex: 1;
+    display: flex;
+
+    justify-content: space-between;
+  }
+  .headerScroll_off .menubar_item {
+    padding-top: 20px;
+  }
+
+  //  .menubar_item .menubar_dropdown:hover {
+  //   background-color: rgb(0, 0, 0);
+  //   transition: background 1s ease-out;
+  // }
+  .headerScroll_off.menubar_item.on {
+    transform: translateY(-10px);
+    transition: transform 0.2s linear;
+  }
+  .headerScroll_off.menubar_item.off {
+    transform: translateY(10px);
+    transition: transform 0.2s linear;
+  }
+
+  .menubar_item:hover .menubar_dropdown {
+    display: block;
+  }
+
+  .menubar_item:hover .menubar {
+    background-color: rgb(43, 43, 55);
+  }
+
+  .menubar_item_outsideLi {
+    width: 173px;
+    position: relative;
+    text-align: center;
+  }
+
+  .menubar_item_outsideLi_text:hover {
+    color: #f68500;
+  }
+
+  .menubar_item_outsideLi_text {
+    font-size: 22px;
+    color: white;
+    font-weight: bold;
+  }
+
+  .menubar_dropdown {
+    display: none;
+    position: absolute;
+    font-size: 13px;
+    width: 100%;
+    padding-inline-start: 0px;
+    padding-top: 20px;
+  }
+
+  .menubar_dropdown li {
+    text-align: center;
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+  .menubar_dropdown li a {
+    width: 100%;
+    color: #a7acbc;
+  }
+  .menubar_dropdown li a:hover {
+    color: #f68500;
+  }
 `;

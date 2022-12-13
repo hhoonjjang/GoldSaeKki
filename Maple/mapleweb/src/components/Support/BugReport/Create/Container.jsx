@@ -11,9 +11,13 @@ const CreateContainer = () => {
     let formData = new FormData();
     let img = imgFile[0];
     console.log(img);
+    console.log(contentsText);
+    if (reportSelect == "program") {
+      reportSelect = "불법프로그램 신고";
+    } else reportSelect = "버그악용 신고";
     formData.append("reportTitle", reportTitle);
     formData.append("reportSelect", reportSelect);
-    formData.append("itemimg", img);
+    formData.append("reportFile", img);
 
     formData.append("contentsText", contentsText);
     console.log(formData);
@@ -23,6 +27,7 @@ const CreateContainer = () => {
     axios.post(
       "http://localhost:8080/api/report/uploadBugReport",
 
+      // formData
       formData
     );
   };

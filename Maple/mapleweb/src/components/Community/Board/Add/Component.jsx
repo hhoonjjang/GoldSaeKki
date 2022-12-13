@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link, Routes, Route, useLocation } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 import { useEffect, useRef, useState } from 'react';
 
 // CKEditor 이미지 업로드를 위한 multer 기본 세팅
@@ -12,54 +13,66 @@ const AddComponent = ({ categorys }) => {
 
     const CKHeight = useRef();
 
+    const [contentData, setContentData] = useState("");
+
+
+    // {/* 폼 태그로 감싸주기, 데이터 값 받아서 보낼 수 있도록 꺼내오기(onChange, onInput 등등) */ }
 
 
     return (
-        <ContentBox>
-            <CategoryTitle>게시글등록</CategoryTitle>
 
-            <TitleWrap>
-                <CategorySelector name='serverName'>
-                    <option value="스카니아">스카니아</option>
-                    <option value="오로라">오로라</option>
-                    <option value="홀리랜드">홀리랜드</option>
-                </CategorySelector>
-                <TitleInput type={'text'} placeholder={"제목을 입력해주세요."} />
-            </TitleWrap>
+        <>
+            <CategoryTitle>현재 게시판 이름</CategoryTitle>
 
-            <CKEditor
-                editor={ClassicEditor}
-                data="<p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>"
-                onReady={(editor) => {
-                    console.log("Editor is ready to use!", editor);
-                }}
-                onChange={(event, editor) => {
-                    const data = editor.getData();
-                    console.log({ event, editor, data });
-                }}
-                onBlur={(event, editor) => {
-                    console.log("Blur.", editor);
-                }}
-                onFocus={(event, editor) => {
-                    console.log("Focus.", editor);
-                }}
+            <ContentBox>
+                <TitleWrap>
+                    <CategorySelector name='serverName'>
+                        <option value="스카니아">스카니아</option>
+                        <option value="오로라">오로라</option>
+                        <option value="홀리랜드">홀리랜드</option>
+                    </CategorySelector>
+                    <TitleInput type={'text'} placeholder={"제목을 입력해주세요."} />
+                </TitleWrap>
 
-            >
+                <CKEditor
+                    editor={ClassicEditor}
+                    data="<p>&nbsp;</p>"
+                    onReady={(editor) => {
+                        // console.log("Editor is ready to use!", editor);
+                        console.log("저는 준비 되었습니다 주인님! -Editor", editor);
+                    }}
+                    onChange={(event, editor) => {
+                        const data = editor.getData();
+                        console.log({ event, editor, data });
+                        setContentData(data);
+                    }}
+                    onBlur={(event, editor) => {
+                        console.log("Blur.", editor);
+                    }}
+                    onFocus={(event, editor) => {
+                        console.log("Focus.", editor);
+                    }}
 
-            </CKEditor>
-            <TagWrap>
-                <TagSpan>태그 달기</TagSpan>
-                <TagInput type={"text"} placeholder={"태그와 태그는 #으로 구분하며, 15개까지 입력하실 수 있습니다."}></TagInput>
-            </TagWrap>
+                >
 
-            {/* 취소, 등록 버튼 */}
-            {/*  */}
-            <ButtonBox>
-                <a href="/Community/Update" class="btn03_g">취소</a>
-                <a href="/Community/Add" class="btn03_g">등록</a>
-            </ButtonBox>
-        </ContentBox>
+                </CKEditor>
+                <TagWrap>
+                    <TagSpan>태그 달기</TagSpan>
+                    <TagInput type={"text"} placeholder={"태그와 태그는 #으로 구분하며, 15개까지 입력하실 수 있습니다."}></TagInput>
+                </TagWrap>
 
+                {/* 취소, 등록 버튼 */}
+                <ButtonBox>
+                    <CancelBtn href="/Community/Update" class="btn03_g">취소</CancelBtn>
+                    <RegistBtn href="/Community/Add" class="btn03_g" onClick={(e) => {
+                        // console.log(`CKEditor4 loaded data : `, e.editor.getData());
+                    }}>등록</RegistBtn>
+                </ButtonBox>
+                {/* 값을 보기 위해 임시로 만듬 : 일단 값 잘 받아와짐 */}
+                {/* 나중에 이미지도 추가할 수 있게 하기 */}
+                {/* <div>내용 : {contentData}</div> */}
+            </ContentBox>
+        </>
     );
 };
 
@@ -67,8 +80,25 @@ export default AddComponent;
 
 const ContentBox = styled.div`
 
+    &>div{
+        float: left;
+    }
+    & input:focus, & div:focus{
+        outline: none;
+    }
+
+    /* ckEditor css 설정 */
     & .ck-content{
         height: 500px;
+    }
+    & .ck-rounded-corners{
+        width: 100%;
+    }
+    & .ck-editor__editable{
+        padding: 0 15px;
+    }
+    & .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable){
+        border: 1px solid #CCCED1;
     }
 
 `;
@@ -86,7 +116,7 @@ const TitleWrap = styled.div`
     border : none;
     border-top: 1px solid #7E7E7E;
     /* border-bottom: 1px solid #CCCED1; */
-    border-bottom: 1px solid #CCCED1;
+    /* border-bottom: 1px solid #CCCED1; */
 `;
 const CategorySelector = styled.select`
     font-size: 13px;
@@ -94,6 +124,7 @@ const CategorySelector = styled.select`
     padding: 0 42px 0 20px;
     margin-right: 10px;
     border : 1px solid #CCCED1;
+    cursor: pointer;
 `;
 const TitleInput = styled.input`
     height: 32px;
@@ -110,8 +141,8 @@ const CategoryTitle = styled.h1`
     font-weight: 500;
     width: 100%;
     float: left;
-    margin-bottom: 30px;
     height: 40px;
+    margin-bottom: 80px;
 `;
 
 
@@ -147,27 +178,44 @@ const TagInput = styled.input`
 `;
 
 const ButtonBox = styled.div`
-min-width: 53px;
-font-size: 16px;
-color: #fff;
-text-align: center;
-background-color: #747a86;
-border-radius: 2px;
-padding: 12px 14px 12px 14px;
-border: 1px solid #747a86;
-display: inline-block;
-line-height: 1;
+    width: 100%;
+    float: left;
+    margin: 16px 0;
+    display: flex;
+    justify-content: center;
 
 `;
-
-// const 인서트, 인풋, 취소 등등...
-// min-width: 53px;
-// font-size: 16px;
-// color: #fff;
-// text-align: center;
-// background-color: #747a86;
-// border-radius: 2px;
-// padding: 12px 14px 12px 14px;
-// border: 1px solid #747a86;
-// display: inline-block;
-// line-height: 1;
+const CancelBtn = styled.a`
+    min-width: 53px;
+    font-size: 15px;
+    color: #fff;
+    text-align: center;
+    background-color: #747a86;
+    border-radius: 2px;
+    padding: 12px 24px;
+    border: 1px solid #747a86;
+    display: inline-block;
+    line-height: 1;
+    margin: 0 5px;
+    &:hover{
+        color: white;
+        background-color: #636872;
+    }
+`;
+const RegistBtn = styled.a`
+    min-width: 53px;
+    font-size: 15px;
+    color: #fff;
+    text-align: center;
+    background-color: #485F9C;
+    border-radius: 2px;
+    padding: 12px 24px;
+    border: 1px solid #747a86;
+    display: inline-block;
+    line-height: 1;
+    margin: 0 5px;
+    &:hover{
+        color: white;
+        background-color: #324B90;
+    }
+`;

@@ -5,13 +5,12 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import routes from "./routes/index.js";
-
+import multer from "multer";
 import db from "./models/index.js";
 
 dotenv.config();
 
 const app = express();
-
 
 // CKEditor 이미지 업로드를 위한 multer 기본 세팅
 let storage = multer.diskStorage({
@@ -22,19 +21,19 @@ let storage = multer.diskStorage({
     let ext = file.originalname.split(".");
     ext = ext[ext.length - 1];
     cb(null, `${Date.now()}.${ext}`);
-  }
+  },
 });
 const upload = multer({ storage: storage });
 let corsOptions = {
   origin: "http://localhost:3000",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  credentials: true
+  credentials: true,
 };
 app.use([
   express.static("public"),
   express.json(),
   cors(corsOptions),
-  upload.array("files")
+  upload.array("files"),
 ]);
 app.post("/upload_files", (req, res) => {
   // console.log(req.body);
@@ -42,8 +41,6 @@ app.post("/upload_files", (req, res) => {
     res.json(req.files[0]);
   }
 });
-
-
 
 app.set("port", process.env.PORT || 8080);
 

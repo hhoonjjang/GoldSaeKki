@@ -1,6 +1,6 @@
 import "./App.css";
 
-import HeaderComponent from "./components/Home/header/header";
+import HeaderContainer from "./components/Home/header/HeaderContainer";
 
 // Componet -> Component 로 오타 수정하기
 import AdministratorComponet from "./components/Administrator";
@@ -17,7 +17,12 @@ import Menubar from "./components/Home/menubar/Menubar";
 function App() {
   return (
     <div>
-      <HeaderComponent />
+      <Routes>
+        <Route path="/" element={<Menubar />}></Route>
+        {/* 기타 등등 헤더 */}
+        <Route path="/*" element={<HeaderContainer />}></Route>
+        {/* 메인페이지 헤더 */}
+      </Routes>
       <UserComponent />
 
       {/* 나중에 합칠 때 홈 안에 커뮤니티 컴포넌트를 넣어야 한다. */}
@@ -36,10 +41,7 @@ function App() {
         <Route path="/news"></Route>
         <Route path="/Support/*" element={<SupportComponet />}></Route>
 
-        <Route
-          path="/Support/BugReport"
-          element={<BugReportContainer />}
-        ></Route>
+        <Route path="/Support/*" element={<BugReportContainer />}></Route>
       </Routes>
       <AdministratorComponet />
 

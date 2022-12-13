@@ -4,10 +4,12 @@ import { Route, Routes } from "react-router-dom";
 
 const BugReportContainer = () => {
   return (
-    <Routes>
-      <Route path="/Create" element={<CreateContainer />}></Route>
-      <Route path="/" element={<BugReportComponent />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/Create" element={<CreateContainer />}></Route>
+        <Route path="/" element={<BugReportComponent />} />
+      </Routes>
+    </>
   );
 };
 

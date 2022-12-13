@@ -1,17 +1,22 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import logo from "../Img/maple_logo.png";
+import { Link, useLocation } from "react-router-dom";
+import logo from "../Img/goldsaekki-logo.png";
+
 import "../CSS/menubar.css";
 import { useMemo, useState } from "react";
 
-const Menubar = ({ icon, text }) => {
+import { Routes, Route } from "react-router-dom";
+
+const Menubar = () => {
   const [BGColor, setBGColor] = useState(false);
+  const [headerScroll, setHeaderScroll] = useState(false);
   const changeColorOn = () => {
     setBGColor(true);
   };
   const changeColorOff = () => {
     setBGColor(false);
   };
+  const location = useLocation();
 
   const menu = ["뉴스", "가이드", "랭킹", "커뮤니티", "미디어", "고객지원"];
 
@@ -40,11 +45,20 @@ const Menubar = ({ icon, text }) => {
     "Support",
   ];
 
+  window.onscroll = () => {
+    if (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1) {
+      setHeaderScroll(true);
+    } else {
+      setHeaderScroll(false);
+    }
+  };
+
   const menuVersion2 = useMemo(() => {
     return menu.map((item, index) => {
       return (
         <li className="menubar_item_outsideLi" key={`outsideLi${index}`}>
-          <Link to={routeAddress[index]}>
+          <Link to={`/${routeAddress[index]}`}>
+            {/* /가 붙으면 root부터 찾는다. */}
             <span className="menubar_item_outsideLi_text">{item}</span>
           </Link>
           <ul className="menubar_dropdown">
@@ -62,28 +76,31 @@ const Menubar = ({ icon, text }) => {
     });
   }, []);
   return (
-    <>
-      <MenubarComponent className={BGColor ? "menubar_bgOn" : "menubar_bgOff"}>
-        <div className="menubar_innerBox">
-          <div className="menubar_logobox">
-            <Link to={"/"}>
-              <img src={logo} alt="Logo" />
-              {/* 임시로 놓는 로고입니다. 제대로 된 로고를 넣을 예정 */}
-            </Link>
-            {/* 로고 */}
-          </div>
+    <MenubarComponent
+      className={`${BGColor ? "menubar_bgOn" : "menubar_bgOff"} ${
+        headerScroll ? "headerScroll_on" : "headerScroll_off"
+      }`}
+    >
+      <div className="menubar_innerBox">
+        <div className="menubar_logobox">
+          <Link to={"/"}>
+            <img src={logo} alt="Logo" />
+            {/* 임시로 놓는 로고입니다. 제대로 된 로고를 넣을 예정 */}
+          </Link>
+          {/* 로고 */}
+        </div>
 
-          <ul
-            className={BGColor ? "menubar_item on" : "menubar_item off"}
-            onMouseOver={() => {
-              changeColorOn();
-            }}
-            onMouseLeave={() => {
-              changeColorOff();
-            }}
-          >
-            {menuVersion2}
-            {/* <li className="menubar_item_outsideLi">
+        <ul
+          className={BGColor ? "menubar_item on" : "menubar_item off"}
+          onMouseOver={() => {
+            changeColorOn();
+          }}
+          onMouseLeave={() => {
+            changeColorOff();
+          }}
+        >
+          {menuVersion2}
+          {/* <li className="menubar_item_outsideLi">
             <Link to={"/"}>
               <span className="menubar_item_outsideLi_text">뉴스</span>
             </Link>
@@ -105,140 +122,19 @@ const Menubar = ({ icon, text }) => {
               </li>
             </ul>
           </li>
-          <li className="menubar_item_outsideLi">
-            <Link to={"/"}>
-              <span className="menubar_item_outsideLi_text">가이드</span>
-            </Link>
-            <ul className="menubar_dropdown">
-              <li>
-                <Link to={"/"}>게임정보</Link>
-              </li>
-              <li>
-                <Link to={"/"}>퀘스트정보</Link>
-              </li>
-              <li>
-                <Link to={"/"}>직업소개</Link>
-              </li>
-              <li>
-                <Link to={"/"}>확률형 아이템</Link>
-              </li>
-              <li>
-                <Link to={"/"}>확률형 아이템 결과</Link>
-              </li>
-              <li>
-                <Link to={"/"}>NEXON NOW</Link>
-              </li>
-            </ul>
-          </li>
-          <li className="menubar_item_outsideLi">
-            <Link to={"/"}>
-              <span className="menubar_item_outsideLi_text">랭킹</span>
-            </Link>
-            <ul className="menubar_dropdown">
-              <li>
-                <Link to={"/"}>월드 랭킹</Link>
-              </li>
-              <li>
-                <Link to={"/"}>유니온 랭킹</Link>
-              </li>
-              <li>
-                <Link to={"/"}>업적 랭킹</Link>
-              </li>
-              <li>
-                <Link to={"/"}>명예의 전당</Link>
-              </li>
-              <li>
-                <Link to={"/"}>유니온 아레나</Link>
-              </li>
-            </ul>
-          </li>
-          <li className="menubar_item_outsideLi">
-            <Link to={"/"}>
-              <span className="menubar_item_outsideLi_text">커뮤니티</span>
-            </Link>
-            <ul className="menubar_dropdown">
-              <li>
-                <Link to={"/"}>자유게시판</Link>
-              </li>
-              <li>
-                <Link to={"/"}>정보게시판</Link>
-              </li>
-              <li>
-                <Link to={"/"}>토론게시판</Link>
-              </li>
-              <li>
-                <Link to={"/"}>메이플 아트</Link>
-              </li>
-              <li>
-                <Link to={"/"}>메이플 코디</Link>
-              </li>
-            </ul>
-          </li>
-          <li className="menubar_item_outsideLi">
-            <Link to={"/"}>
-              <span className="menubar_item_outsideLi_text">미디어</span>
-            </Link>
-            <ul className="menubar_dropdown">
-              <li>
-                <Link to={"/"}>웹툰</Link>
-              </li>
-              <li>
-                <Link to={"/"}>영상</Link>
-              </li>
-              <li>
-                <Link to={"/"}>음악</Link>
-              </li>
-              <li>
-                <Link to={"/"}>아트웍</Link>
-              </li>
-            </ul>
-          </li>
-          <li className="menubar_item_outsideLi">
-            <Link to={"/"}>
-              <span className="menubar_item_outsideLi_text">고객지원</span>
-            </Link>
-            <ul className="menubar_dropdown">
-              <li>
-                <Link to={"/"}>도움말/1:1문의</Link>
-              </li>
-              <li>
-                <Link to={"/"}>아이템 봉인해제</Link>
-              </li>
-              <li>
-                <Link to={"/"}>버그악용/불법프로그램 신고</Link>
-              </li>
-            </ul>
-          </li> */}
-            {/* map()돌려서 짧게 나오는 것하고 깡으로 길게 박아넣는 것 중 원하는 것 선택합시다... */}
-          </ul>
-        </div>
-      </MenubarComponent>
-      <div className="header_innerBox">
-        <div className="header_innderBox_center">
-          <div className="header_innerBox_center_left">
-            <span>
-              <img src={icon} />
-            </span>
-            <span>
-              <h2>{text}</h2>
-            </span>
-          </div>
-          <div className="header_innerBox_center_left">
-            <div></div>
-            <div>
-              <img></img>
-            </div>
-          </div>
-        </div>
+          */}
+          {/* map()돌려서 짧게 나오는 것하고 깡으로 길게 박아넣는 것 중 원하는 것 선택합시다... */}
+        </ul>
       </div>
-    </>
+    </MenubarComponent>
   );
 };
 export default Menubar;
 
 const MenubarComponent = styled.div`
+  padding-top: 20px;
+  width: 100%;
   display: flex;
   justify-content: center;
-  height: 310px;
-  padding-top: 20px;
+  z-index: 999999;
 `;

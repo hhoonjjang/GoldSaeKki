@@ -5,12 +5,19 @@ body {
   height: 100%;
 }
 
-#Home-wrapper {
+#Home_wrapper {
   min-height: 100%;
   position: relative;
 }
 
-#Home-content {
+#Home_content {
   margin-top: 100px;
   padding-bottom: 220px;
+}
+
+.main_archive {
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }

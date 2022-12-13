@@ -1,8 +1,7 @@
 import crypto from "crypto-js";
-import axios from "axios";
 
 const TYPE = {
-  REGIST: "/regist",
+  REGIST: "/user/regist",
 };
 
 const regist = (userId, userPw, userName) => {
@@ -21,18 +20,13 @@ export const reducer = (state = initialize, action) => {
   switch (type) {
     case TYPE.REGIST:
       payload.userPw = crypto.SHA256(payload.userPw).toString();
-      axios
-        .post("/api/join/regist", payload)
-        .then((data) => {
-          return [...state, payload];
-        })
-        .catch((err) => {
-          return console.error(err);
-        });
-    // 서버에 연결해서 데이터 저장할 때
-    // payload.userPw = crypto.SHA256(payload.userPw).toString();
-    // return [...state, payload];
+      return [...state, payload];
+
     default:
       return state;
   }
 };
+
+// 서버에 연결해서 데이터 저장할 때
+// payload.userPw = crypto.SHA256(payload.userPw).toString();
+// return [...state, payload];

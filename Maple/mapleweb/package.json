@@ -5,7 +5,6 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^35.3.2",
     "@ckeditor/ckeditor5-react": "^5.0.3",
-    "@ckeditor/ckeditor5-upload": "^35.3.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",

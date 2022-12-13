@@ -3,6 +3,6 @@ import user from "./user.js";
 
 const router = Router();
 
-router.use("/join", user);
+router.use("/user", user);
 
 export default router;

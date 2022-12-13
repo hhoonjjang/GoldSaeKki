@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 app.set("port", process.env.PORT || 8080);
 
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 app.use((req, res, next) => {
   if (process.env.NODE_ENV === "production") morgan("combined")(req, res, next);

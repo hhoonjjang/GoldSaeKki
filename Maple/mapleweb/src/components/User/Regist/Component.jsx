@@ -1,12 +1,26 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import registImg from "../Img/regist-header-img.jpg";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
-const RegistComponent = ({ registClick }) => {
+const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
   const [userId, setId] = useState("");
   const [userPw, setPw] = useState("");
   const [userName, setName] = useState("");
+
+  const idMemo = useMemo(() => {
+    return idcheck(userId);
+  }, [userId]);
+  // return값에 있는 idcheck가 돌아가고, 그 해당 idcheck는 container쪽에 있는
+  // idcheckFunc을 가르키며, 해당 함수가 돌아가면서 도출되는 return 객체값(현재는)이 idmemo값이된다.
+
+  const pwMemo = useMemo(() => {
+    return pwcheck(userPw);
+  }, [userPw]);
+
+  const nameMemo = useMemo(() => {
+    return namecheck(userName);
+  }, [userName]);
   return (
     <RegistBox>
       <h2>금쪽이스토리 회원 가입</h2>
@@ -18,12 +32,12 @@ const RegistComponent = ({ registClick }) => {
             value={userId}
             type={"text"}
             onInput={(e) => {
+              // setId(idcheck(e.target.value)); match방식
               setId(e.target.value);
+              // idcheck(userId);
             }}
           />
-          <p>
-            사용하실 <strong>아이디</strong>를 입력해주세요.
-          </p>
+          <p className={idMemo.class}>{idMemo.text}</p>
         </RegistText>
         <RegistText>
           <p>비밀번호 </p>
@@ -33,11 +47,10 @@ const RegistComponent = ({ registClick }) => {
             type={"password"}
             onInput={(e) => {
               setPw(e.target.value);
+              // pwcheck(userPw);
             }}
           />
-          <p>
-            사용하실 <strong>비밀번호</strong>를 입력해주세요.
-          </p>
+          <p className={pwMemo.class}>{pwMemo.text}</p>
         </RegistText>
         <RegistText>
           <p>닉네임 </p>
@@ -47,25 +60,43 @@ const RegistComponent = ({ registClick }) => {
             type={"text"}
             onInput={(e) => {
               setName(e.target.value);
+              // namecheck(userName);
             }}
           />
-          <p>
-            사용하실 <strong>닉네임</strong>을 입력해주세요.
-          </p>
+          <p className={nameMemo.class}>{nameMemo.text}</p>
         </RegistText>
         <ButtonBox>
-          <Link to={"/login"}>
-            <button
-              onClick={() => {
-                registClick(userId, userPw, userName);
-              }}
-            >
-              회원가입
-            </button>
-          </Link>
-          <Link to={"/login"}>
-            <button>취소</button>
-          </Link>
+          {userId && userPw && userName ? (
+            <>
+              <Link to={"/login"}>
+                <button
+                  onClick={() => {
+                    registClick(userId, userPw, userName);
+                  }}
+                >
+                  회원가입
+                </button>
+              </Link>
+              <Link to={"/login"}>
+                <button>취소</button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to={"#"}>
+                <button
+                  onClick={() => {
+                    registClick(userId, userPw, userName);
+                  }}
+                >
+                  회원가입
+                </button>
+              </Link>
+              <Link to={"/login"}>
+                <button> 취소</button>
+              </Link>
+            </>
+          )}
         </ButtonBox>
       </RegistMain>
     </RegistBox>
@@ -100,6 +131,7 @@ const RegistMain = styled.div`
 const RegistText = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
 
   & p:first-child {
     color: black;
@@ -118,6 +150,14 @@ const RegistText = styled.div`
   }
   & input:first-child {
     margin-left: 10px;
+  }
+
+  .green {
+    color: green;
+  }
+
+  .red {
+    color: red;
   }
 `;
 

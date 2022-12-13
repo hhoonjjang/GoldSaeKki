@@ -1,6 +1,5 @@
-
 import Menubar from "./menubar/Menubar";
-import Header from "./header/header";
+import Header from "./header/HeaderComponent";
 import MainInfo from "./mainInfo/MainInfo";
 import MainSlide from "./mainSlide/MainSlide";
 import Shortcut from "./shortcut/Shortcut";
@@ -13,22 +12,18 @@ const HomeComponet = () => {
       <div className="Home_content">
         {/* <Header></Header> */}
         {/* <MainSlide></MainSlide> */}
-        <TempDiv>ff</TempDiv>
         {/* 임시로 배너를 채워넣었습니다 */}
         <MainInfo></MainInfo>
         <Shortcut></Shortcut>
       </div>
       <Footer></Footer>
     </div>
-
   );
 };
 
 export default HomeComponet;
 
-
 const TempDiv = styled.div`
   // height: 420px;
   margin-top: 140px;
 `;
-

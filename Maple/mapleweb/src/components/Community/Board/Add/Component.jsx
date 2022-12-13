@@ -208,15 +208,18 @@ const RegistBtn = styled.a`
     font-size: 15px;
     color: #fff;
     text-align: center;
-    background-color: #485F9C;
+    /* background-color: #485F9C; */
+    /* background-color: #D271A8; */
+    background-color: #da63a6;
     border-radius: 2px;
     padding: 12px 24px;
-    border: 1px solid #747a86;
+    /* border: 1px solid #747a86; */
     display: inline-block;
     line-height: 1;
     margin: 0 5px;
     &:hover{
         color: white;
-        background-color: #324B90;
+        /* background-color: #324B90; */
+        background-color: #CA5196;
     }
 `;

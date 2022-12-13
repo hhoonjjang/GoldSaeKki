@@ -511,12 +511,14 @@ const IssueTag = styled.span`
   font-size: 12px;
   border-radius: 3px;
   /* background-color: #7ca5c2; */
-  background-color: #DC7EB3;
+  /* background-color: #DC7EB3; */
+  background-color: #f1b4d1;
   margin-right: 6px;
   margin-bottom: 6px;
   &>a{
     /* color: #dde9f2; */
-    color: #edf1f3;
+    /* color: #edf1f3; */
+    color: white;
     width: 100%;
     height: 100%;
     float: left;
@@ -524,6 +526,7 @@ const IssueTag = styled.span`
   &:hover{
     /* background-color: #3d7094; */
     background-color: #CA5196;
+    color: #edf1f3;
     border: none;
   }
 `;

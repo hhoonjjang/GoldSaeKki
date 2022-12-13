@@ -22,7 +22,7 @@ const BugReportComponent = () => {
             게임에 영향이 큰 문제를 제보할수록 더 좋은 보상이 지급되니 적극적인
             신고 부탁드립니다.
           </div>
-          <Link to={"Create"}>
+          <Link to={"./Create"}>
             <button>버그악용/불법프로그램 신고하러 가기</button>
           </Link>
         </div>
@@ -83,12 +83,12 @@ const BugReportBox = styled.div`
     height: 306px;
     /* background-color: black; */
     /* color: red; */
-    padding: 30px 30px;
+    padding: 20px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 20px solid #42f59e;
-    box-shadow: 5px 5px 5px 5px lightgreen;
+    border: 20px solid #d0d0d0;
+    /* box-shadow: 5px 5px 5px 5px #664e37; */
     /* border: 1px solid #000; */
     /* background-clip: content-box; */
     margin-bottom: 30px;
@@ -96,8 +96,9 @@ const BugReportBox = styled.div`
   & .imgBox {
     width: 15%;
     & img {
-      border: 3px solid #42f59e;
-      box-shadow: 3px 3px 3px 3px lightgreen;
+      /* border: 1px solid #000000; */
+      /* box-shadow: 3px 3px 3px 3px lightgreen; */
+      border-radius: 10px;
 
       width: 100%;
       height: 100%;
@@ -107,15 +108,19 @@ const BugReportBox = styled.div`
   button {
     border: none;
     padding: 10px 20px;
-    background-color: #42f59e;
+    background-color: gray;
     color: white;
     font-size: 15px;
     font: bold;
     cursor: pointer;
   }
   button:hover {
+    background-color: #664e37;
+  }
+  button:active {
     background-color: #13814c;
   }
+
   .text {
     color: #646464;
     margin-left: 30px;
@@ -137,12 +142,15 @@ const BugReportBox = styled.div`
 
   .describe div:first-child {
     padding: 40px 30px;
-    width: 200px;
+    width: 230px;
     font-size: 18px;
     font-weight: bold;
     color: black;
   }
   hr {
     background-color: #646464;
+  }
+  li {
+    list-style-type: disc;
   }
 `;

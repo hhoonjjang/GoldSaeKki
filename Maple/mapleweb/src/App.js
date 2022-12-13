@@ -40,10 +40,7 @@ function App() {
         <Route path="/news"></Route>
         <Route path="/Support/*" element={<SupportComponet />}></Route>
 
-        <Route
-          path="/Support/BugReport"
-          element={<BugReportContainer />}
-        ></Route>
+        <Route path="/Support/*" element={<BugReportContainer />}></Route>
       </Routes>
       <AdministratorComponet />
     </div>

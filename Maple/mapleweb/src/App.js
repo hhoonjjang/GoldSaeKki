@@ -2,6 +2,7 @@ import "./App.css";
 
 import HeaderContainer from "./components/Home/header/HeaderContainer";
 
+// Componet -> Component 로 오타 수정하기
 import AdministratorComponet from "./components/Administrator";
 import HomeComponet from "./components/Home";
 // import UserComponet from "./components/User";
@@ -43,6 +44,7 @@ function App() {
         <Route path="/Support/*" element={<BugReportContainer />}></Route>
       </Routes>
       <AdministratorComponet />
+
     </div>
   );
 }

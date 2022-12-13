@@ -8,67 +8,54 @@ import "slick-carousel/slick/slick-theme.css";
 import NavigationComponent from "./Navigation/Component";
 import ListContainer from "./Board/List/Container";
 
-import FreeImg from "./images/자유.png";
-import InformationImg from "./images/정보.png";
-import TopicDiscussionImg from "./images/토론.png";
-import ArtImg from "./images/아트.png";
-import CoordinationImg from "./images/코디.png";
+import FreeImg from './images/자유.png';
+import InformationImg from './images/정보.png';
+import TopicDiscussionImg from './images/토론.png';
+import ArtImg from './images/아트.png';
+import CoordinationImg from './images/코디.png';
 
-import one from "./images/1.png";
-import two from "./images/2.png";
-import three from "./images/3.png";
-import four from "./images/4.png";
-import prev from "./images/prev.png";
-import next from "./images/next.png";
-import tag from "./images/issueTag.png";
-import { useDispatch } from "react-redux";
-import { action } from "../../modules/header";
+import one from './images/1.png';
+import two from './images/2.png';
+import three from './images/3.png';
+import four from './images/4.png';
+import prev from './images/prev.png';
+import next from './images/next.png';
+import tag from './images/issueTag.png';
+import AddContainer from "./Board/Add/Container";
 
-const CATEGORY = [
-  // { name: '자유 게시판', label: "Free", link: "/Free" },
-  // { name: '정보게시판', label: "Information", link: "/Information" },
-  // { name: '토론게시판', label: "TopicDiscussion", link: "/TopicDiscussion" },
-  // { name: '메이플아트', label: "Art", link: "/Art" },
-  // { name: '코디', label: "Coordination", link: "/Coordination" }
-  { name: "<게시판 목록>", label: "BoardList", link: "/BoardList" },
-  { name: "<게시글 등록>", label: "BoardAdd", link: "/BoardAdd" },
-  { name: "/게시글 수정", label: "BoardUpdate", link: "/BoardUpdate" },
-  { name: "<게시글 상세 페이지>", label: "Board", link: "/Board" },
-  { name: "-댓글 목록", label: "CommentList", link: "/CommentList" },
-  { name: "-댓글 등록", label: "CommentAdd", link: "/CommentAdd" },
-  { name: "/댓글 수정", label: "CommentUpdate", link: "/CommentUpdate" },
-  { name: "<페이징 처리>", label: "Pagination", link: "/Pagination" },
-];
+// 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
+import { CATEGORY, CATEGORY2 } from "../../modules/community";
 
 const CommunityComponet = () => {
-  // 리듀서에 넣어서 리듀서에서 가져오기..?
 
-  const dispatch = useDispatch();
-  dispatch(action.header("Community"));
-  // head 배경을 위해 다른 카테고리에도 기본적으로 이걸 넣어줬으면 좋겠네
+  // 슬라이드 세팅 : 슬라이드의 기능 조정
+    const settings = {
+    dots: true,  // 점 보이게
+    infinite: true, // 무한으로 돌리게
+    speed: 1000, // 클릭시 1초에 걸쳐서 넘어가게
+    autoplay: true, // 자동으로 넘길 것인지(중요)
 
-  // 슬라이드 세팅 : 슬라이더의 기능을 조정할 수 있다.
-  const settings = {
-    dots: true, // 점 보이게
-    infinite: true, // 무한으로 즐기게
-    speed: 1000, // 1초에 걸쳐서 넘어가게
-    autoplay: true, // 자동을 넘길건지
     autoplaySpeed: 4000, //4초마다 자동 넘김
-    slidesToShow: 1, //1장씩 보이게 해주세요
-    slidesToScroll: 1, //1장씩 넘어가세요
+    slidesToShow: 1, //1장씩 보이게 해줌
+    slidesToScroll: 1, //1장씩 넘어가게 해줌
     // centerMode: true,
     // centerPadding: "20px"
   };
 
   return (
     <CommunityBox className="communityBox">
-      {/* 카테고리 네비게이션, 사용시 카데고리와 라우터 값을 보내준다. */}
-      <NavigationComponent categorys={CATEGORY} />
+
+      <NavigationComponent categorys={CATEGORY2} />
+
 
       <AllWrap className="allWrap">
         <AllBox className="allBox">
           <ContentBox className="contentBox">
-            {/* 여기에 나머지 라우터를 띄움 */}
+
+
+
+            {/* 여기에 나머지 라우터를 띄움 : 여기는 일단 map 돌리지 말라고 함 */}
+
             <Routes>
               {/* <Route path="/Free" element={
                   <img src={FreeImg} alt="임시 자유게시판" />
@@ -86,12 +73,13 @@ const CommunityComponet = () => {
                   <img src={CoordinationImg} alt="임시 토론게시판" />
               }></Route> */}
               {/* 컨테이너를 넣고 그 안에서 컴포넌트를 출력한다. */}
-              <Route
-                path="/BoardList"
-                element={<ListContainer />}
-                categorys={CATEGORY}
-              ></Route>
-              <Route path="/BoardAdd" element={"게시글등록"}></Route>
+
+
+              <Route path="/BoardList" element={<ListContainer />} categorys={CATEGORY}></Route>
+              <Route path="/BoardAdd" element={<AddContainer />} categorys={CATEGORY}></Route>
+
+
+
               <Route path="/BoardUpdate" element={"게시글수정"}></Route>
               <Route path="/Board" element={"게시글상세"}></Route>
               <Route path="/CommentList" element={"댓글목록"}></Route>
@@ -183,12 +171,14 @@ const CommunityComponet = () => {
 export default CommunityComponet;
 
 const CommunityBox = styled.div`
-  min-height: 1600px;
-  background-color: #e6e6e6;
+
+  min-height : 1600px;
+  /* 머지 : 배경컬러 없애는게 맞음 */
+  /* background-color: #e6e6e6; */
+
 `;
 
 const AllWrap = styled.div`
-  background-color: #ebebeb;
   min-height: 1165px;
   /* padding: 20px 0; */
   width: 100%;
@@ -212,7 +202,7 @@ const ContentBox = styled.div`
   min-height: inherit;
   display: inline-block;
   width: 930px;
-  background-color: #a52a2a29;
+
 `;
 
 const NewsBox = styled.div`
@@ -316,14 +306,27 @@ const StyledSlide = styled(Slider)`
   /* 슬라이드 크기 조절 */
   .slick-list {
     width: 230px;
-    /* height: 120px; */
-    height: 145px;
-    margin: 0 auto;
-    /* background-color: #59636d; */
+    min-height: 120px;
 
-    &.img {
-      width: 50px;
-      height: 50px;
+    /* 슬라이드 크기 조절 */
+    .slick-list{ 
+    	width: 230px;
+      height: 145px;
+      margin: 0 auto;
+
+      position: relative;
+      display: block;
+      box-sizing: border-box;
+      -webkit-user-select: none;
+        -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+      -webkit-touch-callout: none;
+      -khtml-user-select: none;
+      -ms-touch-action: pan-y;
+          touch-action: pan-y;
+      -webkit-tap-highlight-color: transparent;
+
     }
 
     position: relative;

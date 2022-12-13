@@ -3,7 +3,13 @@ import jwt from "jsonwebtoken";
 
 const router = Router();
 
-// import db from "../models/index.js";
+import db from "../models/index.js";
+
+router.post("/getUser", (req, res) => {
+  db.User.findAll().then((data) => {
+    res.send(data);
+  });
+});
 
 router.post("/regist", (req, res) => {
   db.User.create({

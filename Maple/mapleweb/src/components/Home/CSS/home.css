@@ -4,13 +4,3 @@ body {
   padding: 0;
   height: 100%;
 }
-
-#Home-wrapper {
-  min-height: 100%;
-  position: relative;
-}
-
-#Home-content {
-  margin-top: 100px;
-  padding-bottom: 220px;
-}

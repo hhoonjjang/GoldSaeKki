@@ -8,29 +8,33 @@ import "slick-carousel/slick/slick-theme.css";
 import NavigationComponent from "./Navigation/Component";
 import ListContainer from "./Board/List/Container";
 
-import FreeImg from './images/자유.png';
-import InformationImg from './images/정보.png';
-import TopicDiscussionImg from './images/토론.png';
-import ArtImg from './images/아트.png';
-import CoordinationImg from './images/코디.png';
+import FreeImg from "./images/자유.png";
+import InformationImg from "./images/정보.png";
+import TopicDiscussionImg from "./images/토론.png";
+import ArtImg from "./images/아트.png";
+import CoordinationImg from "./images/코디.png";
 
-import one from './images/1.png';
-import two from './images/2.png';
-import three from './images/3.png';
-import four from './images/4.png';
-import prev from './images/prev.png';
-import next from './images/next.png';
-import tag from './images/issueTag.png';
+import one from "./images/1.png";
+import two from "./images/2.png";
+import three from "./images/3.png";
+import four from "./images/4.png";
+import prev from "./images/prev.png";
+import next from "./images/next.png";
+import tag from "./images/issueTag.png";
 import AddContainer from "./Board/Add/Container";
 
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
 import { CATEGORY, CATEGORY2 } from "../../modules/community";
+import { useDispatch } from "react-redux";
+import { action } from "../../modules/header";
 
 const CommunityComponet = () => {
+  const dispatch = useDispatch();
+  dispatch(action.header("Community"));
 
   // 슬라이드 세팅 : 슬라이드의 기능 조정
-    const settings = {
-    dots: true,  // 점 보이게
+  const settings = {
+    dots: true, // 점 보이게
     infinite: true, // 무한으로 돌리게
     speed: 1000, // 클릭시 1초에 걸쳐서 넘어가게
     autoplay: true, // 자동으로 넘길 것인지(중요)
@@ -44,16 +48,11 @@ const CommunityComponet = () => {
 
   return (
     <CommunityBox className="communityBox">
-
       <NavigationComponent categorys={CATEGORY2} />
-
 
       <AllWrap className="allWrap">
         <AllBox className="allBox">
           <ContentBox className="contentBox">
-
-
-
             {/* 여기에 나머지 라우터를 띄움 : 여기는 일단 map 돌리지 말라고 함 */}
 
             <Routes>
@@ -74,11 +73,16 @@ const CommunityComponet = () => {
               }></Route> */}
               {/* 컨테이너를 넣고 그 안에서 컴포넌트를 출력한다. */}
 
-
-              <Route path="/BoardList" element={<ListContainer />} categorys={CATEGORY}></Route>
-              <Route path="/BoardAdd" element={<AddContainer />} categorys={CATEGORY}></Route>
-
-
+              <Route
+                path="/BoardList"
+                element={<ListContainer />}
+                categorys={CATEGORY}
+              ></Route>
+              <Route
+                path="/BoardAdd"
+                element={<AddContainer />}
+                categorys={CATEGORY}
+              ></Route>
 
               <Route path="/BoardUpdate" element={"게시글수정"}></Route>
               <Route path="/Board" element={"게시글상세"}></Route>
@@ -171,11 +175,9 @@ const CommunityComponet = () => {
 export default CommunityComponet;
 
 const CommunityBox = styled.div`
-
-  min-height : 1600px;
+  min-height: 1600px;
   /* 머지 : 배경컬러 없애는게 맞음 */
   /* background-color: #e6e6e6; */
-
 `;
 
 const AllWrap = styled.div`
@@ -202,7 +204,6 @@ const ContentBox = styled.div`
   min-height: inherit;
   display: inline-block;
   width: 930px;
-
 `;
 
 const NewsBox = styled.div`
@@ -309,8 +310,8 @@ const StyledSlide = styled(Slider)`
     min-height: 120px;
 
     /* 슬라이드 크기 조절 */
-    .slick-list{ 
-    	width: 230px;
+    .slick-list {
+      width: 230px;
       height: 145px;
       margin: 0 auto;
 
@@ -318,15 +319,14 @@ const StyledSlide = styled(Slider)`
       display: block;
       box-sizing: border-box;
       -webkit-user-select: none;
-        -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
       -webkit-touch-callout: none;
       -khtml-user-select: none;
       -ms-touch-action: pan-y;
-          touch-action: pan-y;
+      touch-action: pan-y;
       -webkit-tap-highlight-color: transparent;
-
     }
 
     position: relative;

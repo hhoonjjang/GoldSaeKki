@@ -27,6 +27,7 @@ const AddComponent = ({ categorys }) => {
             <ContentBox>
                 <TitleWrap>
                     <CategorySelector name='serverName'>
+                        {/* 서버 이름 module에서 가져와 map으로 띄우기 */}
                         <option value="스카니아">스카니아</option>
                         <option value="오로라">오로라</option>
                         <option value="홀리랜드">홀리랜드</option>
@@ -58,7 +59,7 @@ const AddComponent = ({ categorys }) => {
                 </CKEditor>
                 <TagWrap>
                     <TagSpan>태그 달기</TagSpan>
-                    <TagInput type={"text"} placeholder={"태그와 태그는 #으로 구분하며, 15개까지 입력하실 수 있습니다."}></TagInput>
+                    <TagInput type={"text"} placeholder={"태그와 태그는 #으로 구분하며, 10개까지 입력하실 수 있습니다."}></TagInput>
                 </TagWrap>
 
                 {/* 취소, 등록 버튼 */}

@@ -25,11 +25,12 @@ import AddContainer from "./Board/Add/Container";
 
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
 import { CATEGORY, CATEGORY2 } from "../../modules/community";
+import CommentContainer from "./Pagination/Container";
 
 const CommunityComponet = () => {
 
   // 슬라이드 세팅 : 슬라이드의 기능 조정
-    const settings = {
+  const settings = {
     dots: true,  // 점 보이게
     infinite: true, // 무한으로 돌리게
     speed: 1000, // 클릭시 1초에 걸쳐서 넘어가게
@@ -68,20 +69,21 @@ const CommunityComponet = () => {
               <Route path="/Coordination" element={
                   <img src={CoordinationImg} alt="임시 토론게시판" />
               }></Route> */}
+
               {/* 컨테이너를 넣고 그 안에서 컴포넌트를 출력한다. */}
-
-
-              <Route path="/BoardList" element={<ListContainer />} categorys={CATEGORY}></Route>
-              <Route path="/BoardAdd" element={<AddContainer />} categorys={CATEGORY}></Route>
-
-
-
-              <Route path="/BoardUpdate" element={"게시글수정"}></Route>
+              {/* 카테고리 : 일단 안 쓰이는데 나중에 현재 카테고리 출력할때 사용할듯 */}
+              <Route path="/BoardList" element={<ListContainer categorys={CATEGORY} />}></Route>
+              <Route path="/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route>
+              <Route path="/BoardUpdate" element={"게시글수정"}></Route> {/* 수정은 필요없을듯 */}
               <Route path="/Board" element={"게시글상세"}></Route>
+
               <Route path="/CommentList" element={"댓글목록"}></Route>
               <Route path="/CommentAdd" element={"댓글 등록"}></Route>
               <Route path="/CommentUpdate" element={"댓글 수정"}></Route>
-              <Route path="/Pagination" element={"페이징 처리"}></Route>
+
+              <Route path="/Pagination" element={<CommentContainer />}></Route>
+
+
             </Routes>
           </ContentBox>
 
@@ -99,28 +101,28 @@ const CommunityComponet = () => {
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  버그/불법프로그램 신고
+                  버그악용/불법프로그램 신고 보상 지급 안내
                 </NewsItem>
                 <NewsItem className="newsItem">
                   {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  버그/불법프로그램 신고버그/불법프로그램 신고
+                  12/9(금) 운영정책위반 단속결과
                 </NewsItem>
                 <NewsItem className="newsItem">
                   {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  버그/불법프로그램 신고
+                  넥슨플레이 "게임 접속 이벤트" 진행 안내
                 </NewsItem>
                 <NewsItem className="newsItem">
                   {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  버그/불법프로그램 신고
+                  12월 지속 가능한 보안캠페인 진행 안내
                 </NewsItem>
               </NewsContent>
             </NewsContentWrap>
@@ -250,14 +252,19 @@ const NewsItem = styled.div`
 
   color: #333;
   font-size: 13px;
-  /* margin-left: 5px; */
   margin-bottom: 10px;
   cursor: pointer;
 
   &:hover {
     text-decoration: underline;
-    /* background-color: red; */
   }
+
+  /* 넘침 처리 */
+  /* overflow: hidden;
+  height: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis; */
+
 `;
 const NewsItemTitle = styled.span`
   color: #3e67ae;

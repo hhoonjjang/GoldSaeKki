@@ -14,6 +14,10 @@ import TopicDiscussionImg from './images/토론.png';
 import ArtImg from './images/아트.png';
 import CoordinationImg from './images/코디.png';
 
+import TagBackImg from './images/issueTag.png';
+import TagSImg from './images/issueTag2.png';
+import TagSearchImg from './images/issueTag3.png';
+
 import one from './images/1.png';
 import two from './images/2.png';
 import three from './images/3.png';
@@ -21,6 +25,7 @@ import four from './images/4.png';
 import prev from './images/prev.png';
 import next from './images/next.png';
 import tag from './images/issueTag.png';
+import tag2 from './images/issueTag2.png';
 import AddContainer from "./Board/Add/Container";
 
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
@@ -157,7 +162,59 @@ const CommunityComponet = () => {
             </BannerBox>
 
             <TagSearchBox>
-              <TagImg src={tag}></TagImg>
+              <TagContentBox>
+                {/* 태그 검색 인풋 영역 */}
+                <TagInputWrap>
+                  <TagInput />
+                  <TagSerachBtnSpan>
+                    {/* a 태그 :나중에 Link to로 바꾸기 */}
+                    <a href="/Community/Free">
+                      <SearchImg src="https://cdn.imweb.me/upload/S2020090710444c43a5dc5/255f6640fbc87.png" alt="검색 이미지" />
+                    </a>
+                  </TagSerachBtnSpan>
+                </TagInputWrap>
+                {/* 태그들이 들어있는 영역 */}
+                <TagListBox>
+                  {/* 여기서 이 놈을 map 돌리면 된다. 태그 개수는 최대 7개까지만 */}
+                  <IssueTag>
+                    {/* a 태그 : 나중에 Link to로 바꾸기 */}
+                    {/* <a href="/Common/Search?t=어쩌구저쩌구#$23#$" title="메이플스토리"></a> */}
+                    <a href="/" title="검색어">
+                      {/* 텍스트 앞의 #은 map에서 돌려 붙여줘야 한다. */}
+                      #던파모바일
+                    </a>
+                  </IssueTag>
+
+                  <IssueTag>
+                    <a href="/Community/Free" title="검색어">
+                      #메이플스토리
+                    </a>
+                  </IssueTag>
+                  <IssueTag>
+                    <a href="/Community/Free" title="검색어">
+                      #데미지스킨끄기
+                    </a>
+                  </IssueTag>
+                  <IssueTag>
+                    <a href="/Community/Free" title="검색어">
+                      #정재훈
+                    </a>
+                  </IssueTag>
+                  <IssueTag>
+                    <a href="/Community/Free" title="검색어">
+                      #월드리프
+                    </a>
+                  </IssueTag>
+                  <IssueTag>
+                    <a href="/Community/Free" title="검색어">
+                      #반뉴비
+                    </a>
+                  </IssueTag>
+
+                </TagListBox>
+
+
+              </TagContentBox>
             </TagSearchBox>
           </NewsBox>
         </AllBox>
@@ -267,7 +324,8 @@ const NewsItem = styled.div`
 
 `;
 const NewsItemTitle = styled.span`
-  color: #3e67ae;
+  /* color: #3e67ae; */
+  color: #CA5196;
 `;
 
 const BannerBox = styled.div`
@@ -386,7 +444,86 @@ const StyledSlide = styled(Slider)`
 const TagSearchBox = styled.div`
   float: left;
   margin-top: 30px;
-`;
-const TagImg = styled.img`
+  /* 스타일드 컴포넌트에서는 이미지를 이렇게 가져오면 된다.  */
+  background: url(${TagBackImg}) left top no-repeat;
+  background-color: aliceblue;
   height: 229px;
+  width: 100%;
+
+`;
+const TagContentBox = styled.div`
+  width: 190px;
+  /* background-color: aliceblue; */
+  margin: 0 auto;
+  height: 100%;
+`;
+const TagInputWrap = styled.div`
+  width: 100%;
+  float: left;
+  position: relative;
+  margin-top: 48px;
+`;
+const TagInput = styled.input`
+  width: 100%;
+  float: left;
+  height: 38px;
+  border-radius: 3px;
+  /* border: 1px solid #46799e; */
+  border: 1px solid #CA5196;
+  padding-left: 30px;
+  line-height: 38px;
+  /* background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/issu_hash.png") #46799e 13px center no-repeat; */
+  background: url("https://cdn.imweb.me/upload/S2020090710444c43a5dc5/59a4716f5c1b6.png") #CA5196 8px center no-repeat;
+  padding-right: 30px;
+  font-size: 12px;
+  color: #fff;
+`;
+const TagSerachBtnSpan = styled.span`
+  position: absolute;
+  right: 12px;
+  top: 5px;
+  &>a{
+    text-decoration: none;
+  }
+`;
+const SearchImg = styled.img`
+  /* 배경 이미지는 src로 넣었다. */
+
+`;
+
+const TagListBox = styled.div`
+  /* background-color: aliceblue; */
+  width: 100%;
+  float: left;
+  margin-top: 10px;
+  height: 120px;
+  overflow: hidden;
+  list-style: none;
+  
+`;
+const IssueTag = styled.span`
+  float: left;
+  padding: 0 9px;
+  height: 25px;
+  line-height: 25px;
+  /* color: #dde9f2; */
+  color: #F9F5F7;
+  font-size: 12px;
+  border-radius: 3px;
+  /* background-color: #7ca5c2; */
+  background-color: #DC7EB3;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  &>a{
+    /* color: #dde9f2; */
+    color: #edf1f3;
+    width: 100%;
+    height: 100%;
+    float: left;
+  }
+  &:hover{
+    /* background-color: #3d7094; */
+    background-color: #CA5196;
+    border: none;
+  }
 `;

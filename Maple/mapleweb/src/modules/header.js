@@ -4,6 +4,7 @@ import headerBanner3 from "../components/Home/Img/header_banner/header_banner_ra
 import headerBanner4 from "../components/Home/Img/header_banner/header_banner_community.png";
 import headerBanner5 from "../components/Home/Img/header_banner/header_banner_media.png";
 import headerBanner6 from "../components/Home/Img/header_banner/header_banner_support.png";
+import headerBanner7 from "../components/Home/Img/header_banner/header_banner_support.png";
 
 import headericon1 from "../components/Home/Img/header_banner/header_icon_news.png";
 import headericon2 from "../components/Home/Img/header_banner/header_icon_guide.png";
@@ -11,6 +12,7 @@ import headericon3 from "../components/Home/Img/header_banner/header_icon_rankin
 import headericon4 from "../components/Home/Img/header_banner/header_icon_community.png";
 import headericon5 from "../components/Home/Img/header_banner/header_icon_media.png";
 import headericon6 from "../components/Home/Img/header_banner/header_icon_support.png";
+import headericon7 from "../components/Home/Img/header_banner/header_icon_support.png";
 
 const TYPE = {
   HEADER: "/header",
@@ -44,6 +46,9 @@ export const reducer = (state = initialize, action) => {
           return { banner: headerBanner5, icon: headericon5, text: "미디어" };
         case "Support":
           return { banner: headerBanner6, icon: headericon6, text: "고객지원" };
+        case "Administrator":
+          return { banner: headerBanner7, icon: headericon7, text: "고객지원" };
+
         default:
           return state;
       }

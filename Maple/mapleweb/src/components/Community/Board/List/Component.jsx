@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { WORLDLIST } from "../../../../modules/community";
 // import { Link, Routes, Route } from "react-router-dom";
+import Pagination from 'react-js-pagination'
 
 import eyeImg from "../../images/info_eye_new.png";
-// import eyeImg from "../../images/illuminati.png";
-// import eyeImg from "../../images/cartoon-eyes.png";
-// import eyeImg from "../../images/cartoon-eyes.png";
 import heartImg from "../../images/info_heart2_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
+import { useState } from "react";
 
 const tempArr = [
   { text: 1, img: "heart2_new" },
@@ -16,25 +16,26 @@ const tempArr = [
 ];
 
 const ListComponent = () => {
+
+  // https://velog.io/@dltmdwls15/pagination-Library%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%AA%A9%EB%A1%9D-%EA%B5%AC%ED%98%84
+  // const [page, setPage] = useState(1);
+  // const handlePageChange = (page) => { setPage(page); };
+
   return (
     <>
       {/* 현재 게시판 이름을 가져와 띄운다. */}
-      <CategoryTitle>자유게시판</CategoryTitle>
+      <CategoryTitle>무슨무슨게시판</CategoryTitle>
       <ContentBox>
         {/* 월드 선택 */}
         <WorldBox>
-          <WorldSpan className="active">전체월드</WorldSpan>
-          <WorldSpan>임시월드</WorldSpan>
-          <WorldSpan>목록먼저</WorldSpan>
-          <WorldSpan>만들기</WorldSpan>
-          <WorldSpan>만들기</WorldSpan>
-          <WorldSpan>만들기</WorldSpan>
-          <WorldSpan>만들기</WorldSpan>
-          <WorldSpan>만들기</WorldSpan>
-          <WorldSpan>만들기</WorldSpan>
-          <WorldSpan>만들기</WorldSpan>
-          <WorldSpan>만들기</WorldSpan>
-          <WorldSpan>만들기</WorldSpan>
+          {WORLDLIST.map((item, idx) => {
+            return (
+              <WorldSpan key={`world-${idx}`}>
+                <WorldImg src={item.img} alt={"월드 이미지"} />{" "}
+                <WorldNameSpan>{item.name}</WorldNameSpan>
+              </WorldSpan>
+            );
+          })}
         </WorldBox>
 
         {/* 게시글 목록 */}
@@ -112,11 +113,25 @@ const ListComponent = () => {
           {/* Free 부분을 해당 카테고리 가져와서 넣어준다. */}
           {/* 수정해야할 사항 : href 대신 Link to를 통해 해당 카테고리의 글 작성 라우터로 보낸다.  */}
           <Link to={"/Community/Free/BoardAdd"}>
-            <RegistBtn className="btn03_g" onClick={(e) => {}}>
+            <RegistBtn className="btn03_g" onClick={(e) => {
+              // 글 작성 버튼 클릭시 해당 요청 보내도록 코드 추가하기
+            }}>
               글작성
             </RegistBtn>
           </Link>
         </ButtonBox>
+
+        {/* 페이지 */}
+        {/* <PaginationBox>
+          <Pagination
+            activePage={1}
+            itemsCountPerPage={5}
+            totalItemsCount={300}
+            pageRangeDisplayed={5}
+            onChange={handlePageChange}>
+          </Pagination>
+        </PaginationBox> */}
+
       </ContentBox>
     </>
   );
@@ -142,10 +157,8 @@ const CategoryTitle = styled.h1`
 
 const ContentBox = styled.div`
   width: 100%;
-  /* min-height: 800px; */
   background-color: #ffffff;
   box-sizing: border-box;
-  /* border: 1px solid lightgray; */
   float: left;
   & > div {
     float: left;
@@ -156,7 +169,6 @@ const WorldBox = styled.div`
   width: 100%;
   min-height: 130px;
   border: 1px solid #e9eaee;
-  /* background-color: #f9f9fb; */
   background-color: #fbf9fa;
   margin-bottom: 30px;
   padding: 26px 0 0 26px;
@@ -165,11 +177,8 @@ const WorldSpan = styled.span`
   float: left;
   width: 90px;
   height: 34px;
-  /* border: 1px solid #ebf2f8; */
-  border: 1px solid #fbdcedcc;
-  /* background-color: #ebf2f8; */
-  /* background-color: #f8ebf2cc; */
-  background-color: #fbdcedcc;
+  border: 1px solid #ffebf6cc;
+  background-color: #ffebf6cc;
   border-radius: 3px;
   margin-right: 6px;
   margin-bottom: 6px;
@@ -179,20 +188,27 @@ const WorldSpan = styled.span`
   font-size: 13px;
   position: relative;
   cursor: pointer;
-  padding-left: 10px;
+  padding-left: 8px;
   &.active,
   &:hover {
+    transition: all 0.2s;
     background-color: #ca5196;
     border: 1px solid #ca5196;
     color: #f3f1f1;
   }
 `;
+const WorldImg = styled.img`
+  position: absolute;
+  top: 10px;
+`;
+const WorldNameSpan = styled.span`
+  position: absolute;
+  left: 27px;
+`;
 
 const ListBox = styled.div`
   float: left;
   width: 100%;
-  /* min-height: 800px; */
-  /* background-color: rgb(245,245,245); */
   border-top: 1px solid #c8c8d5;
 `;
 const OneBoardList = styled.div`
@@ -262,18 +278,13 @@ const IconInfo = styled.div`
   line-height: 1.2;
   margin-left: 15px;
   min-width: 53px;
-  /* max-width: 300px; */
-  /* text-overflow: ellipsis; */
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   padding-left: 18px;
 
   /* 보통은 그냥 바로 안띄우고 예외처리도 해준다(ex. 이미지가 안 들어왔을 때 무엇을 띄울 것인지) */
-  background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(
-      props
-    ) => props.iconImg}.png")
-    left 0px no-repeat;
+  background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(props) => props.iconImg}.png") left 0px no-repeat;
   max-width: ${(props) => {
     // 무엇을 기준으로 나눌건지
     switch (props.iconImg) {
@@ -312,18 +323,37 @@ const RegistBtn = styled.a`
   font-size: 15px;
   color: #fff;
   text-align: center;
-  /* background-color: #485F9C; */
-  /* background-color: #D271A8; */
   background-color: #da63a6;
   border-radius: 2px;
   padding: 12px 24px;
-  /* border: 1px solid #747a86; */
   display: inline-block;
   line-height: 1;
   margin: 0 5px;
   &:hover {
     color: white;
-    /* background-color: #324B90; */
     background-color: #ca5196;
   }
 `;
+
+
+// const PaginationBox = styled.div`
+//   .pagination { display: flex; justify-content: center; margin-top: 15px;}
+//   ul { list-style: none; padding: 0; }
+//   ul.pagination li {
+//     display: inline-block;
+//     width: 30px;
+//     height: 30px;
+//     border: 1px solid #e2e2e2;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     font-size: 1rem; 
+//   }
+//   ul.pagination li:first-child{ border-radius: 5px 0 0 5px; }
+//   ul.pagination li:last-child{ border-radius: 0 5px 5px 0; }
+//   ul.pagination li a { text-decoration: none; color: #337ab7; font-size: 1rem; }
+//   ul.pagination li.active a { color: white; }
+//   ul.pagination li.active { background-color: #337ab7; }
+//   ul.pagination li a:hover,
+//   ul.pagination li a.active { color: blue; }
+// `;

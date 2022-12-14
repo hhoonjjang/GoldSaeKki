@@ -4,6 +4,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { useEffect, useRef, useState } from 'react';
+import { WORLDLIST } from '../../../../modules/community';
 
 // CKEditor 이미지 업로드를 위한 multer 기본 세팅
 // const API_URL = "http://localhost:8080";
@@ -23,15 +24,17 @@ const AddComponent = ({ categorys }) => {
 
         <>  
             {/* 현재 게시판 이름을 가져와 띄운다. */}
-            <CategoryTitle>자유게시판</CategoryTitle>
+            <CategoryTitle>무슨무슨게시판</CategoryTitle>
 
             <ContentBox>
                 <TitleWrap>
                     <CategorySelector name='serverName'>
                         {/* 서버 이름 module에서 가져와 map으로 띄우기 */}
-                        <option value="스카니아">스카니아</option>
-                        <option value="오로라">오로라</option>
-                        <option value="홀리랜드">홀리랜드</option>
+                        {WORLDLIST.map((item, idx)=>{
+                            if(idx===0) return;
+                            // 만약 유저의 서버이름과 같은게 있으면 그것을 선택시켜줌
+                            return <option key={`world-${idx}`} value={`${item.name}`}>{item.name}</option>
+                        })}
                     </CategorySelector>
                     <TitleInput type={'text'} placeholder={"제목을 입력해주세요."} />
                 </TitleWrap>
@@ -65,8 +68,8 @@ const AddComponent = ({ categorys }) => {
 
                 {/* 취소, 등록 버튼 */}
                 <ButtonBox>
-                    <CancelBtn href="/Community/Update" class="btn03_g">취소</CancelBtn>
-                    <RegistBtn href="/Community/Add" class="btn03_g" onClick={(e) => {
+                    <CancelBtn href="/Community/Update" className="btn03_g">취소</CancelBtn>
+                    <RegistBtn href="/Community/Add" className="btn03_g" onClick={(e) => {
                         // console.log(`CKEditor4 loaded data : `, e.editor.getData());
                     }}>등록</RegistBtn>
                 </ButtonBox>

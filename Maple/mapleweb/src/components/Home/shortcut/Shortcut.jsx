@@ -4,8 +4,6 @@ import facebook from "../Img/shortcut_facebook.png";
 import twitter from "../Img/shortcut_twitter.png";
 import youtube from "../Img/shortcut_youtube.png";
 
-import "../CSS/shortcut.css";
-
 const Shortcut = () => {
   return (
     <ShortcutComponent>

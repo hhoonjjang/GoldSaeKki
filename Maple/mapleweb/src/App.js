@@ -27,7 +27,7 @@ function App() {
         <Route path="/Support/*" element={<HeaderContainer />}></Route>
         {/* 기타 등등 헤더 */}
       </Routes>
-      {/* <UserComponent /> */}
+      <UserComponent />
 
       {/* 나중에 합칠 때 홈 안에 커뮤니티 컴포넌트를 넣어야 한다. */}
 

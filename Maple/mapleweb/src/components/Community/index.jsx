@@ -429,7 +429,13 @@ const StyledSlide = styled(Slider)`
     width: 120px;
     margin-left: 54px;
     position: absolute;
-    top: 151px;
+    top: 152px;
+    &.slick-active{
+
+    }
+    & li button:before{
+      color: #CA5196;
+    }
   }
 
   .slick-prev:before,
@@ -440,7 +446,8 @@ const StyledSlide = styled(Slider)`
     font-weight: 500;
     line-height: 1;
     opacity: 0.8;
-    color: #646464;
+    /* color: #646464; */
+    color: #E6C6D5;
     -webkit-font-smoothing: antialiased;
   }
   .slick-prev:before {

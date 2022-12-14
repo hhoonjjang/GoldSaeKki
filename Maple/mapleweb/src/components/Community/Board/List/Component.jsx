@@ -2,6 +2,13 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 // import { Link, Routes, Route } from "react-router-dom";
 
+import eyeImg from "../../images/info_eye_new.png";
+// import eyeImg from "../../images/illuminati.png";
+// import eyeImg from "../../images/cartoon-eyes.png";
+// import eyeImg from "../../images/cartoon-eyes.png";
+import heartImg from "../../images/info_heart2_new.png";
+import dateImg from "../../images/info_sub_date_new.png";
+
 const tempArr = [{ text: 1, img: "heart2_new" }, { text: "날짜디비", img: "sub_date_new" }, { text: "2222", img: "eye_new" }];
 
 const ListComponent = () => {
@@ -149,9 +156,10 @@ const WorldSpan = styled.span`
     width: 90px;
     height: 34px;
     /* border: 1px solid #ebf2f8; */
-    border: 1px solid #f8ebf2cc;
+    border: 1px solid #fbdcedcc;
     /* background-color: #ebf2f8; */
-    background-color: #f8ebf2cc;
+    /* background-color: #f8ebf2cc; */
+    background-color: #fbdcedcc;
     border-radius: 3px;
     margin-right: 6px;
     margin-bottom: 6px;
@@ -267,14 +275,14 @@ const IconInfo = styled.div`
         }
     }}px;
     &.heart{
-        background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/heart2_new.png) left 0px no-repeat;
+        background: url(${heartImg}) left 0px no-repeat;
     }
     &.date{
-        background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/sub_date_new.png) left 0px no-repeat;
+        background: url(${dateImg}) left 0px no-repeat;
         min-width: 80px !important;
     }
     &.eyeCount{
-        background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/eye_new.png) left 0px no-repeat;
+        background: url(${eyeImg}) left 0px no-repeat;
         min-width: 45px;
     }
 `;

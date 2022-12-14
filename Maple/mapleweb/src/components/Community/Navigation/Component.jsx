@@ -58,8 +58,8 @@ const NavigationComponent = ({ categorys }) => {
             <NavigationBox className='div_inner2'>
 
                 {categorys.map((item, idx) => {
-                    return (<>
-                        <LiBox key={`listbox-${item.label}`}>
+                    return (
+                        <LiBox className='liBox' key={`listbox-${item.label}`}>
                             <Link
                                 key={`list-${item.label}`}
                                 // to : 해당 카테고리 라우터로 이동한다.
@@ -70,7 +70,7 @@ const NavigationComponent = ({ categorys }) => {
                             </Link>
 
                         </LiBox>
-                    </>
+                    
                     )
                 })}
 

@@ -42,10 +42,6 @@ function App() {
         <Route path="/news"></Route>
         <Route path="/Support/*" element={<SupportComponet />}></Route>
         <Route path="/Community/*" element={<CommunityComponet />}></Route>
-        <Route
-          path="/Support/BugReport"
-          element={<BugReportContainer />}
-        ></Route>
       </Routes>
       <AdministratorComponet />
     </div>

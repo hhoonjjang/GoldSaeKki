@@ -26,17 +26,19 @@ import prev from './images/prev.png';
 import next from './images/next.png';
 import tag from './images/issueTag.png';
 import tag2 from './images/issueTag2.png';
+
 import AddContainer from "./Board/Add/Container";
 
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
 import { CATEGORY, CATEGORY2 } from "../../modules/community";
 import CommentContainer from "./Pagination/Container";
 
-const CommunityComponet = () => {
 
   // 슬라이드 세팅 : 슬라이드의 기능 조정
   const settings = {
+
     dots: true,  // 점 보이게
+
     infinite: true, // 무한으로 돌리게
     speed: 1000, // 클릭시 1초에 걸쳐서 넘어가게
     autoplay: true, // 자동으로 넘길 것인지(중요)
@@ -50,9 +52,11 @@ const CommunityComponet = () => {
 
   return (
     <CommunityBox className="communityBox">
+
       {/* 카테고리 네비게이션, 사용시 카데고리와 라우터 값을 보내준다. */}
       {/* <NavigationComponent categorys={CATEGORY2} /> */}
       <NavigationComponent categorys={CATEGORY} />
+
 
       <AllWrap className="allWrap">
         <AllBox className="allBox">
@@ -83,6 +87,7 @@ const CommunityComponet = () => {
                   <img src={CoordinationImg} alt="임시 토론게시판" />
               }></Route> */}
 
+
               {/* 카테고리에 게시글 추가 컴포넌트 라우터를 임시로 띄움 */}
               <Route path="/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route>
 
@@ -91,6 +96,7 @@ const CommunityComponet = () => {
               {/* <Route path="/BoardList" element={<ListContainer categorys={CATEGORY} />}></Route>
               <Route path="/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route>
               <Route path="/BoardUpdate" element={"게시글수정"}></Route> 필요없을듯
+
               <Route path="/Board" element={"게시글상세"}></Route>
               <Route path="/CommentList" element={"댓글목록"}></Route>
               <Route path="/CommentAdd" element={"댓글 등록"}></Route>
@@ -235,11 +241,9 @@ const CommunityComponet = () => {
 export default CommunityComponet;
 
 const CommunityBox = styled.div`
-
-  min-height : 1600px;
+  min-height: 1600px;
   /* 머지 : 배경컬러 없애는게 맞음 */
   /* background-color: #e6e6e6; */
-
 `;
 
 const AllWrap = styled.div`
@@ -379,8 +383,8 @@ const StyledSlide = styled(Slider)`
     min-height: 120px;
 
     /* 슬라이드 크기 조절 */
-    .slick-list{ 
-    	width: 230px;
+    .slick-list {
+      width: 230px;
       height: 145px;
       margin: 0 auto;
 
@@ -388,15 +392,14 @@ const StyledSlide = styled(Slider)`
       display: block;
       box-sizing: border-box;
       -webkit-user-select: none;
-        -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
       -webkit-touch-callout: none;
       -khtml-user-select: none;
       -ms-touch-action: pan-y;
-          touch-action: pan-y;
+      touch-action: pan-y;
       -webkit-tap-highlight-color: transparent;
-
     }
 
     position: relative;

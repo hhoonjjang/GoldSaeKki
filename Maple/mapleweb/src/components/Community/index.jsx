@@ -31,6 +31,8 @@ const CommunityComponet = () => {
   const dispatch = useDispatch();
   dispatch(action.header("Community"));
 
+  
+
   // 슬라이드 세팅 : 슬라이드의 기능 조정
   const settings = {
     dots: true, // 점 보이게
@@ -63,8 +65,8 @@ const CommunityComponet = () => {
               <Route path="/Art" element={<ListContainer />}></Route>
               <Route path="/Coordination" element={<ListContainer />}></Route>
 
-              {/* 카테고리에 게시글 추가 컴포넌트 라우터를 임시로 띄움 : 지움 */}
-              {/* <Route path="/Free/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route> */}
+              {/* 카테고리에 게시글 추가 컴포넌트 라우터를 만듬 */}
+              <Route path="/Free/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route>
               
               {/* 카테고리에 게시글 상세 컴포넌트 임시 띄움 : 라우터 카테고리에 따라 다르게 수정해야 한다. */}
               <Route path="/Free/Board" element={<DetailContainer categorys={CATEGORY} />} ></Route>

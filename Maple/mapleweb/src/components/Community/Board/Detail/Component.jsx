@@ -36,12 +36,12 @@ const DetailComponent = () => {
                         <div>조회수, 등록시간</div>{" | "}
                         <IconBox>
                             <IconWrap>
-                                <BoardOtherIcon src={LinkIcon} alt='링크 아이콘' onClick={()=>{
+                                <BoardOtherIcon src={LinkIcon} alt='링크 아이콘' onClick={() => {
                                     window.prompt("이 글의 트랙백 주소입니다. Ctrl+C를 눌러 클립보드로 복사하세요", window.location.href);
                                 }} />
                             </IconWrap>
                             <IconWrap>
-                                <BoardOtherIcon src={AlarmIcon} alt='신고 아이콘' onClick={()=>{
+                                <BoardOtherIcon src={AlarmIcon} alt='신고 아이콘' onClick={() => {
                                     window.location.href = 'https://ecrm.police.go.kr/minwon/main';
                                 }} />
                             </IconWrap>
@@ -66,12 +66,32 @@ const DetailComponent = () => {
 
 
                 {/* 댓글 영역 */}
-                <CommentWrap>
+                <CommentInfo>
                     {/* 몇개인지,색깔바꾸기 */}
                     댓글{" "}
                     <CommentCount>0</CommentCount>
-                </CommentWrap>
+                </CommentInfo>
+                <CommentBox>
+                    <CommentWrap>
+                        {/* 댓글 개수에 맞게 map 돌린다. */}
+                        <Comment>
+                            댓글댓글추가... (닉네임 등등)
+                        </Comment>
 
+                    </CommentWrap>
+                </CommentBox>
+
+                {/* 댓글 입력 */}
+                <CommentAddWrap>
+                    <CommentAdd>
+                        <CommentTextArea name='comment'></CommentTextArea>
+                        <CommentBtnWrap>
+                            <div style={{fontSize:"25px", marginLeft:"5px"}}>🦢</div>
+                            <CommentAddBtn>등록</CommentAddBtn>
+                        </CommentBtnWrap>
+
+                    </CommentAdd>
+                </CommentAddWrap>
             </ContentBox>
         </>
     );
@@ -230,7 +250,7 @@ const LikeCheck = styled.div`
 `;
 
 
-const CommentWrap = styled.div`
+const CommentInfo = styled.div`
     float: left;
     width: 100%;
     height: 55px;
@@ -259,4 +279,72 @@ const BoardOtherIcon = styled.img`
     cursor: pointer;
     /* width: 20px;
     height: 20px; */
+`;
+
+const CommentBox = styled.div`
+    float: left;
+    width: 100%;
+`;
+const CommentWrap = styled.div`
+    float: left;
+    width: 100%;
+    padding: 30px 27px 25px 27px;
+    border-bottom: 1px solid #e3e3e3;
+`;
+const Comment = styled.div`
+
+`;
+
+const CommentAddWrap = styled.div`
+    float: left;
+    margin-top: 40px;
+    width: 100%;
+    height: 205px;
+`;
+const CommentAdd = styled.div`
+    height: 203px;
+    background-color: #e8eaee;
+    border: 1px solid #dcdde1;
+`;
+const CommentTextArea = styled.textarea`
+    float: left;
+    padding: 20px;
+    width: 908px;
+    height: 135px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: #fff;
+    resize: none;
+    overflow: hidden;
+    overflow-y: auto;
+    border: none;
+`;
+const CommentBtnWrap = styled.div`
+    position: relative;
+    float: left;
+    margin-top: 6px;
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &>div{
+        display: inline-block;
+        cursor: pointer;
+    }
+`;
+const CommentAddBtn = styled.div`
+    min-width: 53px;
+    font-size: 16px;
+    color: #fff !important;
+    text-align: center;
+    background-color: #747a86;
+    border-radius: 2px;
+    padding: 9px 24px;
+    border: 1px solid #747a86;
+    display: inline-block;
+    line-height: 1;
+    /* float: left; */
 `;

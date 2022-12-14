@@ -3,12 +3,17 @@ import styled from 'styled-components';
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from 'react';
 
-// #1. 컴포넌트를 import한다.
+// 카테고리 저장을 위한 Redux
+import { useDispatch } from "react-redux";
+import { action } from '../../../modules/community';
+
+// ##. 네비게이션 컴포넌트 사용 방법
+// #1. 사용하고 싶은 파일에서 컴포넌트를 import한다.
 // import NavigationComponent from "./Navigation/Component";
-// #2. 네비게이션을 사용하고 싶은 곳에 컴포넌트를 넣어준다.
+// #2. 네비게이션을 사용하고 싶은 부분에 컴포넌트를 넣어준다.
 // <NavigationComponent categorys={CATEGORY} />
-// #3. 네비게이션 컴포넌트 사용을 위해 상위 컴포넌트에서 이처럼 카테고리와  
-// 라우터 주소를 작성하고, categorys라는 이름의 props로 보내주면 된다.
+// #3. 네비게이션 컴포넌트 사용을 위해 상위 컴포넌트(이 컴포넌트를 사용하는 곳)에서 
+// 이처럼 카테고리와 라우터 주소를 작성하고, categorys라는 이름의 props로 보내주면 된다.
 // const CATEGORY = [
 //     { name: '자유게시판', label: "Free", link: "/Free" },
 //     { name: '정보게시판', label: "Information", link: "/Information" },
@@ -32,6 +37,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const NavigationComponent = ({ categorys }) => {
 
+    const dispatch = useDispatch();
     const location = useLocation();
 
     // 주소 이름은 locationName.current를 통해 가져올 수 있다.
@@ -69,7 +75,11 @@ const NavigationComponent = ({ categorys }) => {
                                 // to : 해당 카테고리 라우터로 이동한다.
                                 to={`./${item.label}`}
                                 // className : 내가 선택한 카테고리(라우터에서 가져옴)랑 같으면 띄우도록 해야한다.
-                                className={`${idx === nowRouterIdx.current ? "active" : ""}`}>
+                                className={`${idx === nowRouterIdx.current ? "active" : ""}`} 
+                                // onClick={()=>{
+                                //     return dispatch(action.category(`${item.label}`));
+                                // }}
+                                >
                                 <CategoryLi key={`category-${item.label}`}>{item.name}</CategoryLi>
                             </Link>
 

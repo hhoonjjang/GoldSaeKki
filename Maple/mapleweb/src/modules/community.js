@@ -41,19 +41,66 @@ export const CATEGORY2 = [
 
 // 서버(월드) 목록
 export const WORLDLIST = [
-    { name : '전체월드', img : world1Img },
-    { name : '리부트2', img : world2Img },
-    { name : '리부트', img : world3Img },
-    { name : '오로라', img : world4Img },
-    { name : '레드', img : world5Img },
-    { name : '이노시스', img : world6Img },
-    { name : '유니온', img : world7Img },
-    { name : '스카니아', img : world8Img },
-    { name : '루나', img : world9Img },
-    { name : '제니스', img : world10Img },
-    { name : '크로아', img : world11Img },
-    { name : '베라', img : world12Img },
-    { name : '엘리시움', img : world13Img },
-    { name : '아케인', img : world14Img },
-    { name : '노바', img : world15Img },
+    { name: '전체월드', img: world1Img },
+    { name: '리부트2', img: world2Img },
+    { name: '리부트', img: world3Img },
+    { name: '오로라', img: world4Img },
+    { name: '레드', img: world5Img },
+    { name: '이노시스', img: world6Img },
+    { name: '유니온', img: world7Img },
+    { name: '스카니아', img: world8Img },
+    { name: '루나', img: world9Img },
+    { name: '제니스', img: world10Img },
+    { name: '크로아', img: world11Img },
+    { name: '베라', img: world12Img },
+    { name: '엘리시움', img: world13Img },
+    { name: '아케인', img: world14Img },
+    { name: '노바', img: world15Img },
 ];
+
+
+const TYPE = {
+    CATEGORY: "/category",
+    // FREE: "category/Free",
+    // INFORMATION: "category/Information",
+    // TOPICDISCUSSION: "category/TopicDiscussion",
+    // ART: "category/Art",
+    // COORDINATION: "category/Coordination",
+}
+
+const category = ({ category }) => {
+    console.log(category);
+    return {
+        type: TYPE.CATEGORY,
+        payload: { category }
+    };
+};
+
+// export const action = { free, information, topicDiscussion, art, coordination };
+export const action = { category };
+
+export const initialize = "";
+
+// 리듀서를 만들어준다. 그리고 state 초기값을 설정해준다.
+export const reducer = (state = initialize, action) => {
+    const { type, payload } = action;
+    switch (type) {
+        case TYPE.CATEGORY:
+            switch (payload.category) {
+                case "Free":
+                    return { category: "Free", text: "자유게시판" };
+                case "Information":
+                    return { category: "Information", text: "정보게시판" };
+                case "TopicDiscussion":
+                    return { category: "TopicDiscussion", text: "토론게시판" };
+                case "Art":
+                    return { category: "Art", text: "금쪽이아트" };
+                case "Coordination":
+                    return { category: "Coordination", text: "금쪽이코디" };
+                default:
+                    return state;
+            }
+        default:
+            return state;
+    }
+}

@@ -2,26 +2,12 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { WORLDLIST } from "../../../../modules/community";
 // import { Link, Routes, Route } from "react-router-dom";
+import Pagination from 'react-js-pagination'
 
 import eyeImg from "../../images/info_eye_new.png";
 import heartImg from "../../images/info_heart2_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
-
-// import world1Img from "../../images/worlds/icon_1.png";
-// import world2Img from "../../images/worlds/icon_2.png";
-// import world3Img from "../../images/worlds/icon_3.png";
-// import world4Img from "../../images/worlds/icon_4.png";
-// import world5Img from "../../images/worlds/icon_5.png";
-// import world6Img from "../../images/worlds/icon_6.png";
-// import world7Img from "../../images/worlds/icon_7.png";
-// import world8Img from "../../images/worlds/icon_8.png";
-// import world9Img from "../../images/worlds/icon_9.png";
-// import world10Img from "../../images/worlds/icon_10.png";
-// import world11Img from "../../images/worlds/icon_11.png";
-// import world12Img from "../../images/worlds/icon_12.png";
-// import world13Img from "../../images/worlds/icon_13.png";
-// import world14Img from "../../images/worlds/icon_14.png";
-// import world15Img from "../../images/worlds/icon_15.png";
+import { useState } from "react";
 
 const tempArr = [
   { text: 1, img: "heart2_new" },
@@ -30,10 +16,15 @@ const tempArr = [
 ];
 
 const ListComponent = () => {
+
+  // https://velog.io/@dltmdwls15/pagination-Library%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%AA%A9%EB%A1%9D-%EA%B5%AC%ED%98%84
+  // const [page, setPage] = useState(1);
+  // const handlePageChange = (page) => { setPage(page); };
+
   return (
     <>
       {/* 현재 게시판 이름을 가져와 띄운다. */}
-      <CategoryTitle>자유게시판</CategoryTitle>
+      <CategoryTitle>무슨무슨게시판</CategoryTitle>
       <ContentBox>
         {/* 월드 선택 */}
         <WorldBox>
@@ -129,6 +120,18 @@ const ListComponent = () => {
             </RegistBtn>
           </Link>
         </ButtonBox>
+
+        {/* 페이지 */}
+        {/* <PaginationBox>
+          <Pagination
+            activePage={1}
+            itemsCountPerPage={5}
+            totalItemsCount={300}
+            pageRangeDisplayed={5}
+            onChange={handlePageChange}>
+          </Pagination>
+        </PaginationBox> */}
+
       </ContentBox>
     </>
   );
@@ -185,9 +188,10 @@ const WorldSpan = styled.span`
   font-size: 13px;
   position: relative;
   cursor: pointer;
-  padding-left: 10px;
+  padding-left: 8px;
   &.active,
   &:hover {
+    transition: all 0.2s;
     background-color: #ca5196;
     border: 1px solid #ca5196;
     color: #f3f1f1;
@@ -330,3 +334,26 @@ const RegistBtn = styled.a`
     background-color: #ca5196;
   }
 `;
+
+
+// const PaginationBox = styled.div`
+//   .pagination { display: flex; justify-content: center; margin-top: 15px;}
+//   ul { list-style: none; padding: 0; }
+//   ul.pagination li {
+//     display: inline-block;
+//     width: 30px;
+//     height: 30px;
+//     border: 1px solid #e2e2e2;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     font-size: 1rem; 
+//   }
+//   ul.pagination li:first-child{ border-radius: 5px 0 0 5px; }
+//   ul.pagination li:last-child{ border-radius: 0 5px 5px 0; }
+//   ul.pagination li a { text-decoration: none; color: #337ab7; font-size: 1rem; }
+//   ul.pagination li.active a { color: white; }
+//   ul.pagination li.active { background-color: #337ab7; }
+//   ul.pagination li a:hover,
+//   ul.pagination li a.active { color: blue; }
+// `;

@@ -51,7 +51,8 @@ const CommunityComponet = () => {
   return (
     <CommunityBox className="communityBox">
       {/* 카테고리 네비게이션, 사용시 카데고리와 라우터 값을 보내준다. */}
-      <NavigationComponent categorys={CATEGORY2} />
+      {/* <NavigationComponent categorys={CATEGORY2} /> */}
+      <NavigationComponent categorys={CATEGORY} />
 
       <AllWrap className="allWrap">
         <AllBox className="allBox">
@@ -59,10 +60,17 @@ const CommunityComponet = () => {
             {/* 여기에 나머지 라우터를 띄움 : 여기는 일단 map 돌리지 말라고 함 */}
 
             <Routes>
-              {/* <Route path="/Free" element={
-                  <img src={FreeImg} alt="임시 자유게시판" />
-              }></Route>
-              <Route path="/Information" element={
+              {/* UI가 같으니까 같은 컴포넌트로 보냄 */}
+              <Route path="/Free" element={<ListContainer/>}></Route>
+              <Route path="/Information" element={<ListContainer/>}></Route>
+
+              {/* 이놈들은 UI가 달라서 새로운 컴포넌트 만들어야함 */}
+              <Route path="/TopicDiscussion" element={<ListContainer/>}></Route>
+              <Route path="/Art" element={<ListContainer/>}></Route>
+              <Route path="/Coordination" element={<ListContainer/>}></Route>
+
+              {/* 게시판에 따라 다른 이름 띄우기 해야함 */}
+              {/* <Route path="/Information" element={
                   <img src={InformationImg} alt="임시 정보게시판" />
               }></Route>
               <Route path="/TopicDiscussion" element={
@@ -75,18 +83,19 @@ const CommunityComponet = () => {
                   <img src={CoordinationImg} alt="임시 토론게시판" />
               }></Route> */}
 
+              {/* 카테고리에 게시글 추가 컴포넌트 라우터를 임시로 띄움 */}
+              <Route path="/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route>
+
               {/* 컨테이너를 넣고 그 안에서 컴포넌트를 출력한다. */}
               {/* 카테고리 : 일단 안 쓰이는데 나중에 현재 카테고리 출력할때 사용할듯 */}
-              <Route path="/BoardList" element={<ListContainer categorys={CATEGORY} />}></Route>
+              {/* <Route path="/BoardList" element={<ListContainer categorys={CATEGORY} />}></Route>
               <Route path="/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route>
-              <Route path="/BoardUpdate" element={"게시글수정"}></Route> {/* 수정은 필요없을듯 */}
+              <Route path="/BoardUpdate" element={"게시글수정"}></Route> 필요없을듯
               <Route path="/Board" element={"게시글상세"}></Route>
-
               <Route path="/CommentList" element={"댓글목록"}></Route>
               <Route path="/CommentAdd" element={"댓글 등록"}></Route>
-              <Route path="/CommentUpdate" element={"댓글 수정"}></Route>
-
-              <Route path="/Pagination" element={<CommentContainer />}></Route>
+              <Route path="/CommentUpdate" element={"댓글 수정"}></Route> 필요없을듯
+              <Route path="/Pagination" element={<CommentContainer />}></Route> */}
 
 
             </Routes>
@@ -175,7 +184,7 @@ const CommunityComponet = () => {
                 </TagInputWrap>
                 {/* 태그들이 들어있는 영역 */}
                 <TagListBox>
-                  {/* 여기서 이 놈을 map 돌리면 된다. 태그 개수는 최대 7개까지만 */}
+                  {/* 여기서 이 놈을 map 돌리면 된다. 태그 개수는 최대 10개까지만 */}
                   <IssueTag>
                     {/* a 태그 : 나중에 Link to로 바꾸기 */}
                     {/* <a href="/Common/Search?t=어쩌구저쩌구#$23#$" title="메이플스토리"></a> */}
@@ -290,6 +299,7 @@ const NewsH2 = styled.h2`
   /* margin-left: 5px; */
   /* width: 225px; */
   float: left;
+  cursor: default;
 `;
 const NewsMoreSpan = styled.div`
   float: right;

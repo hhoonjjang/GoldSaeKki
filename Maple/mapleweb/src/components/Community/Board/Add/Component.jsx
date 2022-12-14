@@ -21,8 +21,9 @@ const AddComponent = ({ categorys }) => {
 
     return (
 
-        <>
-            <CategoryTitle>현재 게시판 이름</CategoryTitle>
+        <>  
+            {/* 현재 게시판 이름을 가져와 띄운다. */}
+            <CategoryTitle>자유게시판</CategoryTitle>
 
             <ContentBox>
                 <TitleWrap>
@@ -90,7 +91,7 @@ const ContentBox = styled.div`
 
     /* ckEditor css 설정 */
     & .ck-content{
-        height: 500px;
+        height: 560px;
     }
     & .ck-rounded-corners{
         width: 100%;
@@ -136,14 +137,15 @@ const TitleInput = styled.input`
 `;
 
 const CategoryTitle = styled.h1`
-    font-size: 30px;
+    font-size: 28px;
     color: #333;
     margin-top: 60px;
-    font-weight: 500;
+    font-weight: 600;
     width: 100%;
     float: left;
     height: 40px;
     margin-bottom: 80px;
+    cursor: default;
 `;
 
 

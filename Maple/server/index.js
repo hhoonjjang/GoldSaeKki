@@ -13,6 +13,7 @@ dotenv.config();
 const app = express();
 
 // CKEditor 이미지 업로드를 위한 multer 기본 세팅
+
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/");
@@ -69,7 +70,7 @@ app.use(
 );
 
 db.sequelize
-  .sync({ force: false })
+  .sync({ force: true })
   .then(() => {
     console.log("디비 연결!");
   })

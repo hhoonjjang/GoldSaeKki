@@ -12,15 +12,7 @@ import { action } from "../../modules/header";
 import NavigationComponent from "./Navigation/Component";
 import ListContainer from "./Board/List/Container";
 
-import FreeImg from "./images/자유.png";
-import InformationImg from "./images/정보.png";
-import TopicDiscussionImg from "./images/토론.png";
-import ArtImg from "./images/아트.png";
-import CoordinationImg from "./images/코디.png";
-
 import TagBackImg from "./images/issueTag.png";
-import TagSImg from "./images/issueTag2.png";
-import TagSearchImg from "./images/issueTag3.png";
 
 import one from "./images/1.png";
 import two from "./images/2.png";
@@ -28,8 +20,6 @@ import three from "./images/3.png";
 import four from "./images/4.png";
 import prev from "./images/prev.png";
 import next from "./images/next.png";
-import tag from "./images/issueTag.png";
-import tag2 from "./images/issueTag2.png";
 import AddContainer from "./Board/Add/Container";
 
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
@@ -51,80 +41,44 @@ const CommunityComponet = () => {
     autoplaySpeed: 4000, //4초마다 자동 넘김
     slidesToShow: 1, //1장씩 보이게 해줌
     slidesToScroll: 1, //1장씩 넘어가게 해줌
-    // centerMode: true,
-    // centerPadding: "20px"
   };
 
   return (
     <CommunityBox className="communityBox">
-      {/* 카테고리 네비게이션, 사용시 카데고리와 라우터 값을 보내준다. */}
-      {/* <NavigationComponent categorys={CATEGORY2} /> */}
+      {/* 네비게이션 카테고리, 카데고리와 라우터 값을 리듀서에서 불러와 객체로 보내줌. */}
       <NavigationComponent categorys={CATEGORY} />
 
       <AllWrap className="allWrap">
         <AllBox className="allBox">
           <ContentBox className="contentBox">
-            {/* 여기에 나머지 라우터를 띄움 : 여기는 일단 map 돌리지 말라고 함 */}
+            {/* 여기에 나머지 라우터를 띄움(map 돌리지 않기) */}
 
             <Routes>
-              {/* UI가 같으니까 같은 컴포넌트로 보냄 */}
-              <Route path="/" element={<ListContainer />}></Route>
+              {/* UI가 같으니까 같은 컴포넌트로 보냄, 리스트 컴포넌트 카테고리 출력 부분 수정하기 */}
+              <Route path="/Free" element={<ListContainer />}></Route>
               <Route path="/Information" element={<ListContainer />}></Route>
 
-              {/* 이놈들은 UI가 달라서 새로운 컴포넌트 만들어야함 */}
-              <Route
-                path="/TopicDiscussion"
-                element={<ListContainer />}
-              ></Route>
+              {/* 이놈들은 UI가 달라서 새로운 컴포넌트 만들어야함 : 일단 안 만듦 */}
+              <Route path="/TopicDiscussion" element={<ListContainer />}></Route>
               <Route path="/Art" element={<ListContainer />}></Route>
               <Route path="/Coordination" element={<ListContainer />}></Route>
 
-              {/* 게시판에 따라 다른 이름 띄우기 해야함 */}
-              {/* <Route path="/Information" element={
-                  <img src={InformationImg} alt="임시 정보게시판" />
-              }></Route>
-              <Route path="/TopicDiscussion" element={
-                  <img src={TopicDiscussionImg} alt="임시 토론게시판" />
-              }></Route>
-              <Route path="/Art" element={
-                  <img src={ArtImg} alt="임시 토론게시판" />
-              }></Route>
-              <Route path="/Coordination" element={
-                  <img src={CoordinationImg} alt="임시 토론게시판" />
-              }></Route> */}
-
-              {/* 카테고리에 게시글 추가 컴포넌트 라우터를 임시로 띄움 */}
-              <Route
-                path="/Free/BoardAdd"
-                element={<AddContainer categorys={CATEGORY} />}
-              ></Route>
-              {/* 게시글 상세 */}
-              <Route
-                path="/Free/Board"
-                // 수정
-                element={<DetailContainer categorys={CATEGORY} />}
-              ></Route>
-
-              {/* 컨테이너를 넣고 그 안에서 컴포넌트를 출력한다. */}
-              {/* 카테고리 : 일단 안 쓰이는데 나중에 현재 카테고리 출력할때 사용할듯 */}
-              {/* <Route path="/BoardList" element={<ListContainer categorys={CATEGORY} />}></Route>
-              <Route path="/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route>
-              <Route path="/BoardUpdate" element={"게시글수정"}></Route> 필요없을듯
-              <Route path="/Board" element={"게시글상세"}></Route>
-              <Route path="/CommentList" element={"댓글목록"}></Route>
-              <Route path="/CommentAdd" element={"댓글 등록"}></Route>
-              <Route path="/CommentUpdate" element={"댓글 수정"}></Route> 필요없을듯
-              <Route path="/Pagination" element={<CommentContainer />}></Route> */}
+              {/* 카테고리에 게시글 추가 컴포넌트 라우터를 임시로 띄움 : 지움 */}
+              {/* <Route path="/Free/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route> */}
+              
+              {/* 카테고리에 게시글 상세 컴포넌트 임시 띄움 : 라우터 카테고리에 따라 다르게 수정해야 한다. */}
+              <Route path="/Free/Board" element={<DetailContainer categorys={CATEGORY} />} ></Route>
             </Routes>
           </ContentBox>
 
+          {/* 우측의 뉴스, 슬라이드, 이슈 태그 박스 */}
           <NewsBox className="newsBox">
             <NewsContentWrap className="newsContentWrap">
               <NewsTitle className="newsTitle">
                 <NewsH2 className="newsH2">뉴스</NewsH2>
                 <NewsMoreSpan className="newsMoreSpan">+</NewsMoreSpan>
               </NewsTitle>
-              {/* 가장 최근의 뉴스 4개를 띄운다. */}
+              {/* 시간이 된다면 가장 최근의 뉴스 4개를 띄운다. */}
               <NewsContent className="newsContent">
                 {/* 이 안의 아이템 Map으로 최근 공지사항 4개 가져와 띄우기 */}
                 <NewsItem className="newsItem">
@@ -158,9 +112,10 @@ const CommunityComponet = () => {
               </NewsContent>
             </NewsContentWrap>
 
+            {/* 뉴스 아래의 이벤트 슬라이드 부분 : 시간이 된다면 이벤트 목록에서 최근것을 가져온다. */}
             <BannerBox>
               <BannerImgBox>
-                {/* 슬라이더 사용 */}
+                {/* 슬라이더 라이브러리 사용 */}
                 <StyledSlide {...settings}>
                   <div>
                     <BannerImg
@@ -187,6 +142,7 @@ const CommunityComponet = () => {
               </BannerImgBox>
             </BannerBox>
 
+            {/* 슬라이드 아래의 태그 검색 부분 : 시간이 된다면 태그를 검색할 수 있게 한다.(중요) */}
             <TagSearchBox>
               <TagContentBox>
                 {/* 태그 검색 인풋 영역 */}
@@ -202,9 +158,9 @@ const CommunityComponet = () => {
                     </a>
                   </TagSerachBtnSpan>
                 </TagInputWrap>
-                {/* 태그들이 들어있는 영역 */}
+                {/* 태그들이 들어있는 영역 : 태그는 게시물의 하트가 많은 게시물 안에서 맨처음 한개만 가져온다.(시간이 된다면) */}
                 <TagListBox>
-                  {/* 여기서 이 놈을 map 돌리면 된다. 태그 개수는 최대 10개까지만 */}
+                  {/* 여기서 이 놈(IssueTag)을 map 돌리면 된다. 태그 개수는 최대 10개까지만 */}
                   <IssueTag>
                     {/* a 태그 : 나중에 Link to로 바꾸기 */}
                     {/* <a href="/Common/Search?t=어쩌구저쩌구#$23#$" title="메이플스토리"></a> */}
@@ -252,13 +208,10 @@ export default CommunityComponet;
 
 const CommunityBox = styled.div`
   min-height: 1600px;
-  /* 머지 : 배경컬러 없애는게 맞음 */
-  /* background-color: #e6e6e6; */
 `;
 
 const AllWrap = styled.div`
   min-height: 1165px;
-  /* padding: 20px 0; */
   width: 100%;
 
   border-top: 1px solid #ebebeb;
@@ -285,7 +238,6 @@ const ContentBox = styled.div`
 const NewsBox = styled.div`
   min-height: inherit;
   display: inline-block;
-  /* background-color: #00000022; */
   width: 230px;
 `;
 
@@ -310,8 +262,7 @@ const NewsH2 = styled.h2`
   font-weight: 500;
   color: #333;
   margin-top: 17px;
-  /* margin-left: 5px; */
-  /* width: 225px; */
+
   float: left;
   cursor: default;
 `;
@@ -339,25 +290,16 @@ const NewsItem = styled.div`
   &:hover {
     text-decoration: underline;
   }
-
-  /* 넘침 처리 */
-  /* overflow: hidden;
-  height: 20px;
-  white-space: nowrap;
-  text-overflow: ellipsis; */
 `;
 const NewsItemTitle = styled.span`
-  /* color: #3e67ae; */
   color: #ca5196;
 `;
 
 const BannerBox = styled.div`
-  /* background: coral; */
   box-sizing: border-box;
   width: 100%;
   height: 192px;
 
-  /* overflow: hidden; */
   float: left;
   border: 1px solid #e3e3e3;
   background-color: white;
@@ -391,26 +333,6 @@ const StyledSlide = styled(Slider)`
     width: 230px;
     min-height: 120px;
 
-    /* 슬라이드 크기 조절 */
-    .slick-list {
-      width: 230px;
-      height: 145px;
-      margin: 0 auto;
-
-      position: relative;
-      display: block;
-      box-sizing: border-box;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
-      -khtml-user-select: none;
-      -ms-touch-action: pan-y;
-      touch-action: pan-y;
-      -webkit-tap-highlight-color: transparent;
-    }
-
     position: relative;
     display: block;
     box-sizing: border-box;
@@ -440,13 +362,10 @@ const StyledSlide = styled(Slider)`
 
   .slick-prev:before,
   .slick-next:before {
-    //얘는 양옆 버튼. 커스텀 해줘야 보임
-    /* font-family: 'slick'; */
     font-size: 20px;
     font-weight: 500;
     line-height: 1;
     opacity: 0.8;
-    /* color: #646464; */
     color: #E6C6D5;
     -webkit-font-smoothing: antialiased;
   }
@@ -455,18 +374,12 @@ const StyledSlide = styled(Slider)`
     position: absolute;
     left: 60px;
     top: 91px;
-    /* &:hover{
-        color: #141414;
-      } */
   }
   .slick-next:before {
     content: ">";
     position: absolute;
     right: 60px;
     top: 91px;
-    /* &:hover{
-        color: #141414;
-      } */
   }
 `;
 
@@ -481,7 +394,6 @@ const TagSearchBox = styled.div`
 `;
 const TagContentBox = styled.div`
   width: 190px;
-  /* background-color: aliceblue; */
   margin: 0 auto;
   height: 100%;
 `;
@@ -496,11 +408,9 @@ const TagInput = styled.input`
   float: left;
   height: 38px;
   border-radius: 3px;
-  /* border: 1px solid #46799e; */
   border: 1px solid #ca5196;
   padding-left: 30px;
   line-height: 38px;
-  /* background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/issu_hash.png") #46799e 13px center no-repeat; */
   background: url("https://cdn.imweb.me/upload/S2020090710444c43a5dc5/59a4716f5c1b6.png")
     #ca5196 8px center no-repeat;
   padding-right: 30px;
@@ -520,7 +430,6 @@ const SearchImg = styled.img`
 `;
 
 const TagListBox = styled.div`
-  /* background-color: aliceblue; */
   width: 100%;
   float: left;
   margin-top: 10px;
@@ -533,25 +442,19 @@ const IssueTag = styled.span`
   padding: 0 9px;
   height: 25px;
   line-height: 25px;
-  /* color: #dde9f2; */
   color: #f9f5f7;
   font-size: 12px;
   border-radius: 3px;
-  /* background-color: #7ca5c2; */
-  /* background-color: #DC7EB3; */
   background-color: #f1b4d1;
   margin-right: 6px;
   margin-bottom: 6px;
   & > a {
-    /* color: #dde9f2; */
-    /* color: #edf1f3; */
     color: white;
     width: 100%;
     height: 100%;
     float: left;
   }
   &:hover {
-    /* background-color: #3d7094; */
     background-color: #ca5196;
     color: #edf1f3;
     border: none;

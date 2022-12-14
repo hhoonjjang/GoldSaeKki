@@ -141,7 +141,11 @@ const RegistContainer = () => {
         userName,
       })
       .then((data) => {
-        console.log("데이터가 DB에 잘 도착했어" + data.data);
+        console.log(
+          "데이터가 DB에 잘 도착했어" + data.userId,
+          data.userPw,
+          data.userName
+        );
       })
       .catch((err) => {
         console.error(err);

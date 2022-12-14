@@ -8,37 +8,34 @@ import "slick-carousel/slick/slick-theme.css";
 import NavigationComponent from "./Navigation/Component";
 import ListContainer from "./Board/List/Container";
 
-import FreeImg from './images/자유.png';
-import InformationImg from './images/정보.png';
-import TopicDiscussionImg from './images/토론.png';
-import ArtImg from './images/아트.png';
-import CoordinationImg from './images/코디.png';
+import FreeImg from "./images/자유.png";
+import InformationImg from "./images/정보.png";
+import TopicDiscussionImg from "./images/토론.png";
+import ArtImg from "./images/아트.png";
+import CoordinationImg from "./images/코디.png";
 
-import TagBackImg from './images/issueTag.png';
-import TagSImg from './images/issueTag2.png';
-import TagSearchImg from './images/issueTag3.png';
+import TagBackImg from "./images/issueTag.png";
+import TagSImg from "./images/issueTag2.png";
+import TagSearchImg from "./images/issueTag3.png";
 
-import one from './images/1.png';
-import two from './images/2.png';
-import three from './images/3.png';
-import four from './images/4.png';
-import prev from './images/prev.png';
-import next from './images/next.png';
-import tag from './images/issueTag.png';
-import tag2 from './images/issueTag2.png';
-
+import one from "./images/1.png";
+import two from "./images/2.png";
+import three from "./images/3.png";
+import four from "./images/4.png";
+import prev from "./images/prev.png";
+import next from "./images/next.png";
+import tag from "./images/issueTag.png";
+import tag2 from "./images/issueTag2.png";
 import AddContainer from "./Board/Add/Container";
 
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
 import { CATEGORY, CATEGORY2 } from "../../modules/community";
 import CommentContainer from "./Pagination/Container";
 
-
+const CommunityComponet = () => {
   // 슬라이드 세팅 : 슬라이드의 기능 조정
   const settings = {
-
-    dots: true,  // 점 보이게
-
+    dots: true, // 점 보이게
     infinite: true, // 무한으로 돌리게
     speed: 1000, // 클릭시 1초에 걸쳐서 넘어가게
     autoplay: true, // 자동으로 넘길 것인지(중요)
@@ -52,11 +49,9 @@ import CommentContainer from "./Pagination/Container";
 
   return (
     <CommunityBox className="communityBox">
-
       {/* 카테고리 네비게이션, 사용시 카데고리와 라우터 값을 보내준다. */}
       {/* <NavigationComponent categorys={CATEGORY2} /> */}
       <NavigationComponent categorys={CATEGORY} />
-
 
       <AllWrap className="allWrap">
         <AllBox className="allBox">
@@ -65,13 +60,16 @@ import CommentContainer from "./Pagination/Container";
 
             <Routes>
               {/* UI가 같으니까 같은 컴포넌트로 보냄 */}
-              <Route path="/Free" element={<ListContainer/>}></Route>
-              <Route path="/Information" element={<ListContainer/>}></Route>
+              <Route path="/Free" element={<ListContainer />}></Route>
+              <Route path="/Information" element={<ListContainer />}></Route>
 
               {/* 이놈들은 UI가 달라서 새로운 컴포넌트 만들어야함 */}
-              <Route path="/TopicDiscussion" element={<ListContainer/>}></Route>
-              <Route path="/Art" element={<ListContainer/>}></Route>
-              <Route path="/Coordination" element={<ListContainer/>}></Route>
+              <Route
+                path="/TopicDiscussion"
+                element={<ListContainer />}
+              ></Route>
+              <Route path="/Art" element={<ListContainer />}></Route>
+              <Route path="/Coordination" element={<ListContainer />}></Route>
 
               {/* 게시판에 따라 다른 이름 띄우기 해야함 */}
               {/* <Route path="/Information" element={
@@ -87,23 +85,22 @@ import CommentContainer from "./Pagination/Container";
                   <img src={CoordinationImg} alt="임시 토론게시판" />
               }></Route> */}
 
-
               {/* 카테고리에 게시글 추가 컴포넌트 라우터를 임시로 띄움 */}
-              <Route path="/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route>
+              <Route
+                path="/BoardAdd"
+                element={<AddContainer categorys={CATEGORY} />}
+              ></Route>
 
               {/* 컨테이너를 넣고 그 안에서 컴포넌트를 출력한다. */}
               {/* 카테고리 : 일단 안 쓰이는데 나중에 현재 카테고리 출력할때 사용할듯 */}
               {/* <Route path="/BoardList" element={<ListContainer categorys={CATEGORY} />}></Route>
               <Route path="/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route>
               <Route path="/BoardUpdate" element={"게시글수정"}></Route> 필요없을듯
-
               <Route path="/Board" element={"게시글상세"}></Route>
               <Route path="/CommentList" element={"댓글목록"}></Route>
               <Route path="/CommentAdd" element={"댓글 등록"}></Route>
               <Route path="/CommentUpdate" element={"댓글 수정"}></Route> 필요없을듯
               <Route path="/Pagination" element={<CommentContainer />}></Route> */}
-
-
             </Routes>
           </ContentBox>
 
@@ -184,7 +181,10 @@ import CommentContainer from "./Pagination/Container";
                   <TagSerachBtnSpan>
                     {/* a 태그 :나중에 Link to로 바꾸기 */}
                     <a href="/Community/Free">
-                      <SearchImg src="https://cdn.imweb.me/upload/S2020090710444c43a5dc5/255f6640fbc87.png" alt="검색 이미지" />
+                      <SearchImg
+                        src="https://cdn.imweb.me/upload/S2020090710444c43a5dc5/255f6640fbc87.png"
+                        alt="검색 이미지"
+                      />
                     </a>
                   </TagSerachBtnSpan>
                 </TagInputWrap>
@@ -225,10 +225,7 @@ import CommentContainer from "./Pagination/Container";
                       #반뉴비
                     </a>
                   </IssueTag>
-
                 </TagListBox>
-
-
               </TagContentBox>
             </TagSearchBox>
           </NewsBox>
@@ -237,7 +234,6 @@ import CommentContainer from "./Pagination/Container";
     </CommunityBox>
   );
 };
-
 export default CommunityComponet;
 
 const CommunityBox = styled.div`
@@ -335,11 +331,10 @@ const NewsItem = styled.div`
   height: 20px;
   white-space: nowrap;
   text-overflow: ellipsis; */
-
 `;
 const NewsItemTitle = styled.span`
   /* color: #3e67ae; */
-  color: #CA5196;
+  color: #ca5196;
 `;
 
 const BannerBox = styled.div`
@@ -462,7 +457,6 @@ const TagSearchBox = styled.div`
   background-color: aliceblue;
   height: 229px;
   width: 100%;
-
 `;
 const TagContentBox = styled.div`
   width: 190px;
@@ -482,11 +476,12 @@ const TagInput = styled.input`
   height: 38px;
   border-radius: 3px;
   /* border: 1px solid #46799e; */
-  border: 1px solid #CA5196;
+  border: 1px solid #ca5196;
   padding-left: 30px;
   line-height: 38px;
   /* background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/issu_hash.png") #46799e 13px center no-repeat; */
-  background: url("https://cdn.imweb.me/upload/S2020090710444c43a5dc5/59a4716f5c1b6.png") #CA5196 8px center no-repeat;
+  background: url("https://cdn.imweb.me/upload/S2020090710444c43a5dc5/59a4716f5c1b6.png")
+    #ca5196 8px center no-repeat;
   padding-right: 30px;
   font-size: 12px;
   color: #fff;
@@ -495,13 +490,12 @@ const TagSerachBtnSpan = styled.span`
   position: absolute;
   right: 12px;
   top: 5px;
-  &>a{
+  & > a {
     text-decoration: none;
   }
 `;
 const SearchImg = styled.img`
   /* 배경 이미지는 src로 넣었다. */
-
 `;
 
 const TagListBox = styled.div`
@@ -512,7 +506,6 @@ const TagListBox = styled.div`
   height: 120px;
   overflow: hidden;
   list-style: none;
-  
 `;
 const IssueTag = styled.span`
   float: left;
@@ -520,7 +513,7 @@ const IssueTag = styled.span`
   height: 25px;
   line-height: 25px;
   /* color: #dde9f2; */
-  color: #F9F5F7;
+  color: #f9f5f7;
   font-size: 12px;
   border-radius: 3px;
   /* background-color: #7ca5c2; */
@@ -528,7 +521,7 @@ const IssueTag = styled.span`
   background-color: #f1b4d1;
   margin-right: 6px;
   margin-bottom: 6px;
-  &>a{
+  & > a {
     /* color: #dde9f2; */
     /* color: #edf1f3; */
     color: white;
@@ -536,9 +529,9 @@ const IssueTag = styled.span`
     height: 100%;
     float: left;
   }
-  &:hover{
+  &:hover {
     /* background-color: #3d7094; */
-    background-color: #CA5196;
+    background-color: #ca5196;
     color: #edf1f3;
     border: none;
   }

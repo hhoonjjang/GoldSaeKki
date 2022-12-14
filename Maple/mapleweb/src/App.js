@@ -10,7 +10,7 @@ import SupportComponet from "./components/Support";
 import { Link, Routes, Route } from "react-router-dom";
 import UserComponent from "./components/User";
 import BugReportContainer from "./components/Support/BugReport/Container";
-
+import Footer from "./components/Home/footer/Footer";
 import Menubar from "./components/Home/menubar/Menubar";
 
 function App() {
@@ -44,6 +44,7 @@ function App() {
         <Route path="/Community/*" element={<CommunityComponet />}></Route>
       </Routes>
       <AdministratorComponet />
+      <Footer></Footer>
     </div>
   );
 }

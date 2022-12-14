@@ -61,12 +61,7 @@ const Footer = () => {
             Family Site
           </div>
           <div
-            id="footer_familySite_items"
-            className={
-              familySite
-                ? "footer_familySite_items_off"
-                : "footer_familySite_items_on"
-            }
+            className={`footer_familySite_items ${familySite ? "off" : "on"}`}
           >
             <div className="footer_familySite_item_1">
               <a href="#" target="_blank">
@@ -184,44 +179,47 @@ const FooterComponent = styled.div`
     padding-bottom: 10px;
   }
 
-  #footer_familySite_items {
+  .footer_familySite_items {
     padding-left: 10px;
     padding-right: 10px;
     width: 100%;
     border: 1px solid #474a51;
     position: absolute;
-  }
-  #footer_familySite_items > div {
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
-
-  .footer_familySite_items_off {
     display: none;
-    overflow: auto;
-    transition: 5s;
-    animation: fadeOutUp 1s;
-  }
-  .footer_familySite_items_on {
-    display: block;
-    overflow: auto;
-    transition: 5s;
-    position: relative;
-    animation: fadeInDown 1s;
+
+    & > div {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    & span {
+      padding-left: 5px;
+      padding-right: 5px;
+      font-size: 12px;
+    }
+
+    & span:hover {
+      color: #f68500;
+    }
+
+    &.off {
+      overflow: auto;
+      transition: 5s;
+      animation: fadeOutUp 1s;
+    }
+
+    &.on {
+      display: block;
+      overflow: auto;
+      transition: 5s;
+      position: relative;
+      animation: fadeInDown 1s;
+    }
   }
 
   .footer_familySite_item_2,
   .footer_familySite_item_3 {
     border-top: 1px solid #474a51;
-  }
-
-  #footer_familySite_items span {
-    padding-left: 5px;
-    padding-right: 5px;
-    font-size: 12px;
-  }
-  #footer_familySite_items span:hover {
-    color: #f68500;
   }
 
   @keyframes fadeInDown {
@@ -231,6 +229,17 @@ const FooterComponent = styled.div`
     }
     to {
       opacity: 1;
+      transform: translateZ(0);
+    }
+  }
+
+  @keyframes fadeOutUp {
+    0% {
+      opacity: 1;
+      transform: translate3d(0, 10%, 0);
+    }
+    to {
+      opacity: 0;
       transform: translateZ(0);
     }
   }

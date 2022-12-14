@@ -67,7 +67,7 @@ const CommunityComponet = () => {
 
             <Routes>
               {/* UI가 같으니까 같은 컴포넌트로 보냄 */}
-              <Route path="/Free" element={<ListContainer />}></Route>
+              <Route path="/" element={<ListContainer />}></Route>
               <Route path="/Information" element={<ListContainer />}></Route>
 
               {/* 이놈들은 UI가 달라서 새로운 컴포넌트 만들어야함 */}

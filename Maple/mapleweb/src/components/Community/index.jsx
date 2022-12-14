@@ -1,6 +1,10 @@
 import styled from "styled-components";
 // import { Link, Routes, Route } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+import { action } from "../../modules/header";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

@@ -191,21 +191,29 @@ const CreateBox = styled.div`
     display: flex;
     justify-content: end;
   }
-  .selectBtn button {
-    padding: 8px 25px;
-    margin-left: 10px;
+  .selectBtn a {
+    /* padding: 8px 25px;
+    margin-left: 10px; */
     color: white;
     border: none;
-    &:first-child {
+    &:first-child button {
       background-color: #42f59e;
+      padding: 8px 25px;
+      color: white;
+      border: none;
     }
-    &:first-child:hover {
+    &:first-child:hover button {
       background-color: #13814c;
     }
-    &:last-child {
+    &:last-child button {
+      margin-left: 10px;
+
       background-color: #664e37;
+      padding: 8px 25px;
+      color: white;
+      border: none;
     }
-    &:last-child:hover {
+    &:last-child:hover button {
       background-color: #453333;
     }
   }

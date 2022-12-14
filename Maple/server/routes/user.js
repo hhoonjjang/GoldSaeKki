@@ -29,24 +29,23 @@ router.post("/login", (req, res) => {
     .then((data) => {
       if (data) {
         if (data.userPw === req.body.loginPw) {
-          res.cookie(
-            "login",
-            jwt.sign(
-              {
-                id: data.userId,
-                name: data.userName,
-                pw: data.userPw,
-              },
-              process.env.JWT_KEY,
-              {
-                algorithm: "HS256",
-                expiresIn: "60m",
-                issuer: "goldsaekki",
-              }
-            )
+          const token = jwt.sign(
+            {
+              id: data.userId,
+              name: data.userName,
+              // pw: data.userPw,
+            },
+            process.env.JWT_KEY,
+            {
+              algorithm: "HS256",
+              expiresIn: "30m",
+              issuer: "goldsaekki",
+            }
           );
+          res.cookie("login", token, { httpOnly: true });
+          const decodeToken = jwt.verify(token, process.env.JWT_KEY);
           res.send({
-            name: data.userName,
+            userInfo: decodeToken,
             loginComplete: 1,
           });
           console.log("로그인 완료");

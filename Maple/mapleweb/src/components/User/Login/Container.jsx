@@ -4,9 +4,21 @@ import axios from "axios";
 import { action } from "../../../modules/user";
 import crypto from "crypto-js";
 
+let currUser = ""; // 현재 로그인한 아이디를 담을 변수
 const LoginContainer = () => {
   const dispatch = useDispatch();
+  // let tempCookie = document.cookie.split("=");
+  // let cookieJwt = tempCookie[1];
 
+  const loginCheck = () => {
+    if (document.cookie) {
+      axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
+        console.log("로그인정보를 받았다", data);
+        currUser = data.data.userInfo.name;
+        console.log(currUser);
+      });
+    }
+  };
   const loginClick = (loginId, loginPw) => {
     console.log("로그인버튼 클릭해따");
     dispatch(action.login(loginId, loginPw));
@@ -15,15 +27,17 @@ const LoginContainer = () => {
     axios
       .post("http://localhost:8080/api/user/login", { loginId, loginPw })
       .then((data) => {
-        console.log(data);
+        console.log(data.data.status);
+        loginCheck();
+        // console.log(data);
         // if(data.loginComplete === 1) {
-
         // }
       })
       .catch((err) => {
         console.error(err);
       });
   };
+
   return <LoginComponent loginClick={loginClick} />;
 };
 

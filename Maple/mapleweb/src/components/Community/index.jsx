@@ -35,6 +35,7 @@ import AddContainer from "./Board/Add/Container";
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
 import { CATEGORY, CATEGORY2 } from "../../modules/community";
 import CommentContainer from "./Pagination/Container";
+import DetailContainer from "./Board/Detail/Container";
 
 const CommunityComponet = () => {
   const dispatch = useDispatch();
@@ -94,8 +95,14 @@ const CommunityComponet = () => {
 
               {/* 카테고리에 게시글 추가 컴포넌트 라우터를 임시로 띄움 */}
               <Route
-                path="/BoardAdd"
+                path="/Free/BoardAdd"
                 element={<AddContainer categorys={CATEGORY} />}
+              ></Route>
+              {/* 게시글 상세 */}
+              <Route
+                path="/Free/Board"
+                // 수정
+                element={<DetailContainer categorys={CATEGORY} />}
               ></Route>
 
               {/* 컨테이너를 넣고 그 안에서 컴포넌트를 출력한다. */}
@@ -422,7 +429,13 @@ const StyledSlide = styled(Slider)`
     width: 120px;
     margin-left: 54px;
     position: absolute;
-    top: 151px;
+    top: 152px;
+    &.slick-active{
+
+    }
+    & li button:before{
+      color: #CA5196;
+    }
   }
 
   .slick-prev:before,
@@ -433,7 +446,8 @@ const StyledSlide = styled(Slider)`
     font-weight: 500;
     line-height: 1;
     opacity: 0.8;
-    color: #646464;
+    /* color: #646464; */
+    color: #E6C6D5;
     -webkit-font-smoothing: antialiased;
   }
   .slick-prev:before {

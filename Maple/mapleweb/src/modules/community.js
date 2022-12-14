@@ -1,11 +1,11 @@
 // 커뮤니티 카테고리 목록
 export const CATEGORY = [
-    { name: '자유 게시판', label: "Free", link: "/Free" },
+    { name: '자유게시판', label: "Free", link: "/Free" },
     { name: '정보게시판', label: "Information", link: "/Information" },
     { name: '토론게시판', label: "TopicDiscussion", link: "/TopicDiscussion" },
-    { name: '메이플아트', label: "Art", link: "/Art" },
-    { name: '코디', label: "Coordination", link: "/Coordination" },
-    { name: '자유게시판 게시글 등록(임시)', label: "BoardAdd", link: "/BoardAdd" },
+    { name: '금쪽이아트', label: "Art", link: "/Art" },
+    { name: '금쪽이코디', label: "Coordination", link: "/Coordination" },
+    { name: '자유게시판 게시글 상세 페이지(임시)', label: "Free/Board", link: "/Board" },
 ];
 
 // 개발용 임시 카테고리

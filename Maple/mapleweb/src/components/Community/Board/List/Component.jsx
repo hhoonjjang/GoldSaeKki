@@ -2,6 +2,13 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 // import { Link, Routes, Route } from "react-router-dom";
 
+import eyeImg from "../../images/info_eye_new.png";
+// import eyeImg from "../../images/illuminati.png";
+// import eyeImg from "../../images/cartoon-eyes.png";
+// import eyeImg from "../../images/cartoon-eyes.png";
+import heartImg from "../../images/info_heart2_new.png";
+import dateImg from "../../images/info_sub_date_new.png";
+
 const tempArr = [{ text: 1, img: "heart2_new" }, { text: "날짜디비", img: "sub_date_new" }, { text: "2222", img: "eye_new" }];
 
 const ListComponent = () => {
@@ -34,11 +41,11 @@ const ListComponent = () => {
                         <BoardTitle>
                             {/* a : Link to로 바꾼뒤 해당 게시물로 보내줘야 함 : 게시글 번호 */}
                             <a href="/Community/Free/354367?search=c%253d3" style={{ color: "rgb(51, 51, 51)" }}>
-                                <span class="server">[오로라]</span>{" "}
-                                <span class="title">나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임</span>
+                                <span className="server">[오로라]</span>{" "}
+                                <span className="title">나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임</span>
 
                                 {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
-                                {/* <img class="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
+                                {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
                             </a>
                         </BoardTitle>
                         <OtherBoardInfo>
@@ -59,8 +66,8 @@ const ListComponent = () => {
                     <OneBoardList>
                         <BoardTitle>
                             <a href="/Community/Free/354367?search=c%253d3" style={{ color: "rgb(51, 51, 51)" }}>
-                                <span class="server">[오로라]</span>{" "}
-                                <span class="title">나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임</span>
+                                <span className="server">[오로라]</span>{" "}
+                                <span className="title">나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임</span>
                             </a>
                         </BoardTitle>
                         <OtherBoardInfo>
@@ -92,9 +99,10 @@ const ListComponent = () => {
                 {/* 취소, 글작성 버튼 */}
                 <ButtonBox>
                     <div></div>
+                    {/* Free 부분을 해당 카테고리 가져와서 넣어준다. */}
                     {/* 수정해야할 사항 : href 대신 Link to를 통해 해당 카테고리의 글 작성 라우터로 보낸다.  */}
-                    <Link to={"/Community/BoardAdd"}>
-                        <RegistBtn class="btn03_g" onClick={(e) => {
+                    <Link to={"/Community/Free/BoardAdd"}>
+                        <RegistBtn className="btn03_g" onClick={(e) => {
 
                         }}>글작성</RegistBtn>
                     </Link>
@@ -148,9 +156,10 @@ const WorldSpan = styled.span`
     width: 90px;
     height: 34px;
     /* border: 1px solid #ebf2f8; */
-    border: 1px solid #f8ebf2cc;
+    border: 1px solid #fbdcedcc;
     /* background-color: #ebf2f8; */
-    background-color: #f8ebf2cc;
+    /* background-color: #f8ebf2cc; */
+    background-color: #fbdcedcc;
     border-radius: 3px;
     margin-right: 6px;
     margin-bottom: 6px;
@@ -266,14 +275,14 @@ const IconInfo = styled.div`
         }
     }}px;
     &.heart{
-        background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/heart2_new.png) left 0px no-repeat;
+        background: url(${heartImg}) left 0px no-repeat;
     }
     &.date{
-        background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/sub_date_new.png) left 0px no-repeat;
+        background: url(${dateImg}) left 0px no-repeat;
         min-width: 80px !important;
     }
     &.eyeCount{
-        background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/eye_new.png) left 0px no-repeat;
+        background: url(${eyeImg}) left 0px no-repeat;
         min-width: 45px;
     }
 `;

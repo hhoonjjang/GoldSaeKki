@@ -92,8 +92,9 @@ const ListComponent = () => {
                 {/* 취소, 글작성 버튼 */}
                 <ButtonBox>
                     <div></div>
+                    {/* Free 부분을 해당 카테고리 가져와서 넣어준다. */}
                     {/* 수정해야할 사항 : href 대신 Link to를 통해 해당 카테고리의 글 작성 라우터로 보낸다.  */}
-                    <Link to={"/Community/BoardAdd"}>
+                    <Link to={"/Community/Free/BoardAdd"}>
                         <RegistBtn class="btn03_g" onClick={(e) => {
 
                         }}>글작성</RegistBtn>

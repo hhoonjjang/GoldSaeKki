@@ -1,6 +1,9 @@
 ul {
   list-style: none;
 }
+a {
+  text-decoration: none;
+}
 .headerScroll_on {
   position: fixed;
   background-color: rgb(47, 47, 59);

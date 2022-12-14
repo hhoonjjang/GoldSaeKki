@@ -11,12 +11,6 @@ const SupportComponet = () => {
   dispatch(action.header("Support"));
   return (
     <SupportBox>
-      <div>
-        <Link to={"./Service"}>도움말/1:1문의</Link>
-      </div>
-      <div>
-        <Link to={"./BugReport"}>버그악용/불법프로그램 신고</Link>
-      </div>
       <Routes>
         <Route path="/Service/*" element={<ServiceContainer />}></Route>
         <Route path="/BugReport/*" element={<BugReportContainer />}></Route>

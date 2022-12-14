@@ -1,5 +1,8 @@
 import styled from 'styled-components';
-// import { Link, Routes, Route } from "react-router-dom";
+// import { Link, Routes, Route, useNavigate } from "react-router-dom";
+import LinkIcon from "../../images/link_btn.png";
+import AlarmIcon from "../../images/report_btn2.png";
+
 
 const DetailComponent = () => {
 
@@ -29,9 +32,20 @@ const DetailComponent = () => {
                         🈺 efforthye
                     </BoardUserName>
                     <BoardInfo>
-                        나머지정보들
+                        {/* 나머지정보들 */}
                         <div>조회수, 등록시간</div>{" | "}
-                        <div>링크, 신고</div>
+                        <IconBox>
+                            <IconWrap>
+                                <BoardOtherIcon src={LinkIcon} alt='링크 아이콘' onClick={()=>{
+                                    window.prompt("이 글의 트랙백 주소입니다. Ctrl+C를 눌러 클립보드로 복사하세요", window.location.href);
+                                }} />
+                            </IconWrap>
+                            <IconWrap>
+                                <BoardOtherIcon src={AlarmIcon} alt='신고 아이콘' onClick={()=>{
+                                    window.location.href = 'https://ecrm.police.go.kr/minwon/main';
+                                }} />
+                            </IconWrap>
+                        </IconBox>
                     </BoardInfo>
                 </BoardInfoBox>
 
@@ -158,6 +172,11 @@ const BoardInfo = styled.div`
     margin-right: 27px;
     font-size: 13px;
 
+    &>div{
+        display: inline;
+        /* background-color: rgb(245,245,245); */
+    }
+
 `;
 
 const BoardContent = styled.div`
@@ -219,7 +238,7 @@ const CommentWrap = styled.div`
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
     /* background-color: #F9F9F9; */
-    background-color: #FBF9FA;
+    /* background-color: #FBF9FA; */
     padding: 0 30px;
 `;
 const CommentCount = styled.div`
@@ -227,4 +246,17 @@ const CommentCount = styled.div`
     display: inline-block;
     font-size: 17px;
     font-weight: 600;
+`;
+const IconBox = styled.div`
+`;
+const IconWrap = styled.div`
+    display: inline;
+    width: 31px;
+    height: 31px;
+    margin: 0 5px;
+`;
+const BoardOtherIcon = styled.img`
+    cursor: pointer;
+    /* width: 20px;
+    height: 20px; */
 `;

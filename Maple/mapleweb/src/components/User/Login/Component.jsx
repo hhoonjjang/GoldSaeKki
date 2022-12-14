@@ -55,13 +55,15 @@ const LoginComponent = ({ loginClick }) => {
               }}
             />
           </div>
-          <button
-            onClick={() => {
-              loginClick(loginId, loginPw);
-            }}
-          >
-            로그인
-          </button>
+          <Link to={"/"}>
+            <button
+              onClick={() => {
+                loginClick(loginId, loginPw);
+              }}
+            >
+              로그인
+            </button>
+          </Link>
         </LoginText>
         <LinkBox>
           <Link to={"/regist"}>
@@ -142,7 +144,7 @@ const LoginText = styled.div`
   flex-direction: column;
   padding: 20px 0;
 
-  & > button {
+  & a > button {
     width: 600px;
     height: 80px;
     background-color: rgb(246, 133, 0);

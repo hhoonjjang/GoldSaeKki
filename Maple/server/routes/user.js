@@ -22,6 +22,15 @@ router.post("/regist", (req, res) => {
   });
 });
 
+router.post("/logincheck", (req, res) => {
+  console.log(req.cookies.login); // cookies.쿠키명
+  const decodeToken = jwt.verify(req.cookies.login, process.env.JWT_KEY);
+  res.send({
+    userInfo: decodeToken,
+    loginComplete: 1,
+  });
+});
+
 router.post("/login", (req, res) => {
   db.User.findOne({
     where: { userId: req.body.loginId },
@@ -42,12 +51,9 @@ router.post("/login", (req, res) => {
               issuer: "goldsaekki",
             }
           );
-          res.cookie("login", token, { httpOnly: true });
-          const decodeToken = jwt.verify(token, process.env.JWT_KEY);
-          res.send({
-            userInfo: decodeToken,
-            loginComplete: 1,
-          });
+          // res.cookie("login", token, { httpOnly: true });
+          res.cookie("login", token);
+          res.send({ status: "쿠키생성 완료" });
           console.log("로그인 완료");
         } else {
           res.send({ message: "잘못된 비밀번호입니다.", status: 500 });

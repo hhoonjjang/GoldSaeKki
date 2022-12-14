@@ -32,4 +32,11 @@ export default class Report extends Sequelize.Model {
       }
     );
   }
+  static associate(db) {
+    db.Report.belongsTo(db.User, {
+      foreignKey: "name",
+      targetKey: "userName",
+      //   타켓키와 소스키는 카멜로써야댐
+    });
+  }
 }

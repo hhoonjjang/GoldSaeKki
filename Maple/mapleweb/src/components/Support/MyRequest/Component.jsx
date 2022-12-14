@@ -36,45 +36,53 @@ const MyRequestComponent = ({ requestArr, onClick, isBoolen }) => {
         </thead>
         <tbody>
           {requestArr.map((item, idx) => (
-            <>
-              {" "}
-              <tr key={`requestBox-${idx}`} className="requestBox">
-                <td key={`reportidx-${idx}`}>
-                  <div>{idx + 1}</div>
-                </td>
-                <td key={`reportTitle-${idx}`}>
-                  <button
-                    onClick={() => {
-                      onClick(idx);
-                    }}
-                  >
-                    {item.reportTitle}
-                  </button>
-                </td>
-                <td key={`reportSelect-${idx}`}>
-                  <div>{item.reportSelect}</div>
-                </td>
-                <td key={`reportProcessing-${idx}`}>
-                  <div>
-                    {" "}
-                    {item.reportProcessing ? item.reportProcessing : "접수중"}
-                  </div>
-                </td>
-                <td key={`dateNow-${idx}`}>
-                  <div>{item.updatedAt.split("T")[0]}</div>
-                </td>
-              </tr>
-              {isBoolen == idx + 1 ? (
-                <td
-                  colSpan={5}
-                  className="contents"
-                  dangerouslySetInnerHTML={{ __html: item.contentsText }}
-                ></td>
-              ) : (
-                // <td>{item.contentsText}</td> react innerhtml
-                <></>
-              )}
-            </>
+            <Component
+              item={item}
+              idx={idx}
+              onClick={onClick}
+              isBoolen={isBoolen}
+              key={`Componet-${idx}`}
+            />
+            // <>
+            //   <tr key={`requestBox-${idx}`} className="requestBox">
+            //     <td key={`reportidx-${idx}`}>
+            //       <div>{idx + 1}</div>
+            //     </td>
+            //     <td key={`reportTitle-${idx}`}>
+            //       <button
+            //         onClick={() => {
+            //           onClick(idx);
+            //         }}
+            //       >
+            //         {item.reportTitle}
+            //       </button>
+            //     </td>
+            //     <td key={`reportSelect-${idx}`}>
+            //       <div>{item.reportSelect}</div>
+            //     </td>
+            //     <td key={`reportProcessing-${idx}`}>
+            //       <div>
+            //         {item.reportProcessing ? item.reportProcessing : "접수중"}
+            //       </div>
+            //     </td>
+            //     <td key={`dateNow-${idx}`}>
+            //       <div>{item.updatedAt.split("T")[0]}</div>
+            //     </td>
+            //   </tr>
+            //   <tr>
+            //     {isBoolen == idx + 1 ? (
+            //       <td
+            //         key={`contents-${idx + 1}`}
+            //         colSpan={5}
+            //         className="contents"
+            //         dangerouslySetInnerHTML={{ __html: item.contentsText }}
+            //       ></td>
+            //     ) : (
+            //       // <td>{item.contentsText}</td> react innerhtml
+            //       <></>
+            //     )}
+            //   </tr>
+            // </>
           ))}
         </tbody>
       </table>
@@ -83,6 +91,49 @@ const MyRequestComponent = ({ requestArr, onClick, isBoolen }) => {
 };
 
 export default MyRequestComponent;
+
+const Component = ({ item, idx, onClick, isBoolen }) => {
+  return (
+    <>
+      <tr key={`requestBox-${idx}`} className="requestBox">
+        <td key={`reportidx-${idx}`}>
+          <div>{idx + 1}</div>
+        </td>
+        <td key={`reportTitle-${idx}`}>
+          <button
+            onClick={() => {
+              onClick(idx);
+            }}
+          >
+            {item.reportTitle}
+          </button>
+        </td>
+        <td key={`reportSelect-${idx}`}>
+          <div>{item.reportSelect}</div>
+        </td>
+        <td key={`reportProcessing-${idx}`}>
+          <div>{item.reportProcessing ? item.reportProcessing : "접수중"}</div>
+        </td>
+        <td key={`dateNow-${idx}`}>
+          <div>{item.updatedAt.split("T")[0]}</div>
+        </td>
+      </tr>
+      <tr>
+        {isBoolen == idx + 1 ? (
+          <td
+            key={`contents-${idx + 1}`}
+            colSpan={5}
+            className="contents"
+            dangerouslySetInnerHTML={{ __html: item.contentsText }}
+          ></td>
+        ) : (
+          // <td>{item.contentsText}</td> react innerhtml
+          <></>
+        )}
+      </tr>
+    </>
+  );
+};
 
 const MyRequestBox = styled.div`
   table {

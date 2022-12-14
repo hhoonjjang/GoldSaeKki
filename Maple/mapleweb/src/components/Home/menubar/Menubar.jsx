@@ -16,7 +16,6 @@ const Menubar = () => {
   const changeColorOff = () => {
     setBGColor(false);
   };
-  const location = useLocation();
 
   const menu = ["뉴스", "가이드", "랭킹", "커뮤니티", "미디어", "고객지원"];
 
@@ -33,16 +32,31 @@ const Menubar = () => {
     ["월드 랭킹", "유니온 랭킹", "업적 랭킹", "명예의 전당", "유니온 아레나"],
     ["자유게시판", "정보게시판", "토론게시판", "메이플 아트", "메이플 코디"],
     ["웹툰", "메이플스토리 서체", "영상", "음악", "아트웍"],
-    ["도움말/1:1문의", "아이템 봉인해제", "버그악용/불법프로그램 신고"],
+    ["도움말/1:1문의", "버그악용/불법프로그램 신고"],
   ];
 
   const routeAddress = [
     "News",
     "Guide",
     "Ranking",
-    "Community",
+    "Community/Free",
     "Media",
-    "Support",
+    "Support/Service",
+  ];
+
+  const routeAddressSubGroup = [
+    ["/", "/", "/", "/", "/"],
+    ["/", "/", "/", "/", "/", "/"],
+    ["/", "/", "/", "/", "/"],
+    [
+      "/Community/Free",
+      "/Community/Information",
+      "/Community/TopicDiscussion",
+      "/Community/Art",
+      "/Community/Coordination",
+    ],
+    ["/", "/", "/", "/", "/"],
+    ["/Support/Service", "/Support/BugReport"],
   ];
 
   window.onscroll = () => {
@@ -65,7 +79,9 @@ const Menubar = () => {
             {dropDownMenu.map((item2, index2) => {
               return (
                 <li key={`dropdown_${index}_${index2}`}>
-                  <Link to={"/"}>{dropDownMenu[index][index2]}</Link>
+                  <Link to={routeAddressSubGroup[index][index2]}>
+                    {dropDownMenu[index][index2]}
+                  </Link>
                   {/* 나중에 메뉴바의 상세한 하위 영역명이 정해지면 그 때 입력한다. */}
                 </li>
               );
@@ -75,6 +91,9 @@ const Menubar = () => {
       );
     });
   }, []);
+
+  const location = useLocation();
+  console.log(location);
   return (
     <MenubarComponent
       className={`${BGColor ? "menubar_bgOn" : "menubar_bgOff"} ${
@@ -82,13 +101,15 @@ const Menubar = () => {
       }`}
     >
       <div className="menubar_innerBox">
-        <div className="menubar_logobox">
-          <Link to={"/"}>
-            <img src={logo} alt="Logo" />
-            {/* 임시로 놓는 로고입니다. 제대로 된 로고를 넣을 예정 */}
-          </Link>
-          {/* 로고 */}
-        </div>
+        {location.pathname == "/login" || location.pathname == "/regist" ? (
+          <></>
+        ) : (
+          <div className="menubar_logobox">
+            <Link to={"/"}>
+              <img src={logo} alt="Logo" />
+            </Link>
+          </div>
+        )}
 
         <ul
           className={BGColor ? "menubar_item on" : "menubar_item off"}

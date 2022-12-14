@@ -3,7 +3,11 @@ import styled from 'styled-components';
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from 'react';
 
-// # 네비게이션 컴포넌트 사용을 위해 상위 컴포넌트에서 이처럼 카테고리와  
+// #1. 컴포넌트를 import한다.
+// import NavigationComponent from "./Navigation/Component";
+// #2. 네비게이션을 사용하고 싶은 곳에 컴포넌트를 넣어준다.
+// <NavigationComponent categorys={CATEGORY} />
+// #3. 네비게이션 컴포넌트 사용을 위해 상위 컴포넌트에서 이처럼 카테고리와  
 // 라우터 주소를 작성하고, categorys라는 이름의 props로 보내주면 된다.
 // const CATEGORY = [
 //     { name: '자유게시판', label: "Free", link: "/Free" },
@@ -12,7 +16,7 @@ import { useEffect, useRef, useState } from 'react';
 //     { name: '메이플아트', label: "Art", link: "/Art" },
 //     { name: '메이플코디', label: "Coordination", link: "/Coordination" }
 // ];
-// # 어떤 컴포넌트를 불러올 지는 상위 컴포넌트의 Route를 통해 지정해준다.
+// #4. 어떤 컴포넌트를 불러올 지는 상위 컴포넌트의 Route를 통해 지정해준다.
 // <Routes>
 //   <Route path="/Free" element={
 //       <img src={FreeImg} alt="임시 자유게시판" />

@@ -36,5 +36,12 @@ export default class User extends Sequelize.Model {
     );
   }
 
-  static associate(db) {}
+  static associate(db) {
+    db.User.hasMany(db.Report, {
+      foreignKey: "name",
+      sourceKey: "userName",
+      as: "Report",
+      //   타켓키와 소스키는 카멜로써야댐
+    });
+  }
 }

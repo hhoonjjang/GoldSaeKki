@@ -2,6 +2,8 @@ import multer from "multer";
 import fs from "fs";
 import { Router } from "express";
 import db from "../models/index.js";
+import jwt from "jsonwebtoken";
+
 const router = Router();
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -14,21 +16,30 @@ let storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
 router.post(
   "/uploadBugReport",
   upload.fields([{ name: "reportFile" }]),
   async (req, res) => {
     try {
+      const tempUserInfo = jwt.verify(req.cookies.login, process.env.JWT_KEY);
+      global.userName = tempUserInfo.name;
+      const tempUser = await db.User.findOne({
+        where: {
+          userName: global.userName,
+        },
+      });
+
       const reportFile = req.files.reportFile[0].filename;
       const { reportTitle, reportSelect, contentsText } = req.body;
-      console.log(req.files.reportFile[0].filename);
       const tempReport = await db.Report.create({
         reportFile: reportFile,
         reportTitle: reportTitle,
         reportSelect: reportSelect,
         contentsText: contentsText,
       });
-      console.log(req.body);
+      tempUser.addReport(tempReport);
+
       res.send(req.body);
     } catch (err) {
       console.error(err);
@@ -38,11 +49,27 @@ router.post(
 );
 
 router.post("/request", async (req, res) => {
+  const tempUserInfo = jwt.verify(req.cookies.login, process.env.JWT_KEY);
+  global.userName = tempUserInfo.name;
+
+  console.log(tempUserInfo);
+  console.log("글로벌" + global.userName);
+
   const tempRequest = await db.Report.findAll({
+    where: { name: global.userName },
     order: [["id", "DESC"]],
   });
+  console.log("템프리퀘스트");
   console.log(tempRequest);
+
   res.send(tempRequest);
+});
+
+router.post("/bugcs", async (req, res) => {
+  const tempBugcs = await db.Report.findAll({
+    include: { model: db.User },
+  });
+  res.send(tempBugcs);
 });
 
 export default router;

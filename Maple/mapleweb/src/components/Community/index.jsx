@@ -9,6 +9,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import { useDispatch } from "react-redux";
+import { action } from "../../modules/header";
+
 import NavigationComponent from "./Navigation/Component";
 import ListContainer from "./Board/List/Container";
 
@@ -36,7 +39,10 @@ import AddContainer from "./Board/Add/Container";
 import { CATEGORY, CATEGORY2 } from "../../modules/community";
 import CommentContainer from "./Pagination/Container";
 
+
+
 const CommunityComponet = () => {
+
   const dispatch = useDispatch();
   dispatch(action.header("Community"));
 

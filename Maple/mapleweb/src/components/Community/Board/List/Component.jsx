@@ -1,5 +1,8 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 // import { Link, Routes, Route } from "react-router-dom";
+
+const tempArr = [{ text: 1, img: "heart2_new" }, { text: "날짜디비", img: "sub_date_new" }, { text: "2222", img: "eye_new" }];
 
 const ListComponent = () => {
 
@@ -65,9 +68,12 @@ const ListComponent = () => {
                                 🈺 냐냐냔냐
                             </UserName>
                             <IconInfoWrap>
-                                <IconInfo className='heart'>1</IconInfo>
+                                {tempArr.map((item, idx) => {
+                                    return <IconInfo key={`icon-${idx}`} iconImg={item.img}>{item.text}</IconInfo>;
+                                })}
+                                {/* <IconInfo className='heart'>1</IconInfo>
                                 <IconInfo className='date'>날짜디비</IconInfo>
-                                <IconInfo className='eyeCount'>2222</IconInfo>
+                                <IconInfo className='eyeCount'>2222</IconInfo> */}
                             </IconInfoWrap>
                         </OtherBoardInfo>
                     </OneBoardList>
@@ -82,6 +88,17 @@ const ListComponent = () => {
                     <OneBoardList>ㅎ</OneBoardList>
 
                 </ListBox>
+
+                {/* 취소, 글작성 버튼 */}
+                <ButtonBox>
+                    <div></div>
+                    {/* 수정해야할 사항 : href 대신 Link to를 통해 해당 카테고리의 글 작성 라우터로 보낸다.  */}
+                    <Link to={"/Community/BoardAdd"}>
+                        <RegistBtn class="btn03_g" onClick={(e) => {
+
+                        }}>글작성</RegistBtn>
+                    </Link>
+                </ButtonBox>
             </ContentBox>
         </>
     );
@@ -228,34 +245,64 @@ const IconInfo = styled.div`
     min-width: 53px;
     /* max-width: 300px; */
     /* text-overflow: ellipsis; */
-    white-space: nowrap;
-    overflow: hidden;
-
-    &.heart{
-        background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/heart2_new.png) left 0px no-repeat;
-        padding-left: 18px;
-        /* min-width: 35px; */
-        max-width: 55px;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+        padding-left: 18px;
+        
+        /* 보통은 그냥 바로 안띄우고 예외처리도 해준다(ex. 이미지가 안 들어왔을 때 무엇을 띄울 것인지) */
+        background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(props) => (props.iconImg)}.png") left 0px no-repeat;
+        max-width: ${(props) => {
+        // 무엇을 기준으로 나눌건지
+        switch (props.iconImg) {
+            case "heart2_new":
+                return 55;
+            case "sub_date_new":
+                return 100;
+            case "eye_new":
+                return 70;
+            default:
+                break;
+        }
+    }}px;
+    &.heart{
+        background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/heart2_new.png) left 0px no-repeat;
     }
     &.date{
         background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/sub_date_new.png) left 0px no-repeat;
-        padding-left: 18px;
         min-width: 80px !important;
-        max-width: 100px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
     }
     &.eyeCount{
         background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/eye_new.png) left 0px no-repeat;
-        padding-left: 18px;
         min-width: 45px;
-        max-width: 70px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+    }
+`;
+
+
+const ButtonBox = styled.div`
+    width: 100%;
+    float: left;
+    margin: 16px 0;
+    display: flex;
+    justify-content: space-between;
+`;
+const RegistBtn = styled.a`
+    min-width: 53px;
+    font-size: 15px;
+    color: #fff;
+    text-align: center;
+    /* background-color: #485F9C; */
+    /* background-color: #D271A8; */
+    background-color: #da63a6;
+    border-radius: 2px;
+    padding: 12px 24px;
+    /* border: 1px solid #747a86; */
+    display: inline-block;
+    line-height: 1;
+    margin: 0 5px;
+    &:hover{
+        color: white;
+        /* background-color: #324B90; */
+        background-color: #CA5196;
     }
 `;

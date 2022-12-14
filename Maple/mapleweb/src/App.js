@@ -10,7 +10,7 @@ import SupportComponet from "./components/Support";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
 import UserComponent from "./components/User";
 import BugReportContainer from "./components/Support/BugReport/Container";
-
+import Footer from "./components/Home/footer/Footer";
 import Menubar from "./components/Home/menubar/Menubar";
 import { useEffect } from "react";
 
@@ -56,6 +56,9 @@ function App() {
         ></Route>
         <Route path="/Community/*" element={<CommunityComponet />}></Route>
       </Routes>
+
+      <Footer></Footer>
+
     </div>
   );
 }

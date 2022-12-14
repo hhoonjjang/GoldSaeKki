@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../Img/goldsaekki-logo.png";
 
-import "../CSS/menubar.css";
 import { useMemo, useState } from "react";
 
 import { Routes, Route } from "react-router-dom";
@@ -153,34 +152,68 @@ const Menubar = () => {
 export default Menubar;
 
 const MenubarComponent = styled.div`
-  padding-top: 20px;
   width: 100%;
   display: flex;
   justify-content: center;
   z-index: 999999;
+  padding-top: 20px;
 
   ul {
     list-style: none;
   }
-  .headerScroll_on {
+
+  a {
+    text-decoration: none;
+  }
+
+  &.headerScroll_on {
     position: fixed;
     background-color: rgb(47, 47, 59);
     height: 64px;
+
+    .menubar_logobox {
+      top: -12px;
+    }
+
+    .menubar_logobox img {
+      width: 50px;
+      border-radius: 50%;
+    }
   }
 
-  .menubar_bgOn {
+  &.headerScroll_off {
+    position: absolute;
+
+    .menubar_logobox img {
+      width: 110px;
+      border-radius: 50%;
+    }
+
+    .menubar_item {
+      padding-top: 20px;
+    }
+  }
+
+  &.headerScroll_off .menubar_item.on {
+    transform: translateY(-10px);
+    transition: transform 0.2s linear;
+  }
+
+  &.headerScroll_off .menubar_item.off {
+    transform: translateY(10px);
+    transition: transform 0.2s linear;
+  }
+
+  &.menubar_bgOn {
     background-color: rgb(43, 43, 55);
     transition: background-color 0.2s linear;
     z-index: 999999;
     height: 310px;
   }
-  .menubar_bgOff {
+
+  &.menubar_bgOff {
     transition: background-color 0.2s linear;
     z-index: 1;
-  }
-
-  .headerScroll_off {
-    position: absolute;
   }
 
   .menubar_innerBox {
@@ -196,42 +229,13 @@ const MenubarComponent = styled.div`
     justify-content: center;
     position: absolute;
   }
-  .headerScroll_on .menubar_logobox {
-    top: -12px;
-  }
-  .headerScroll_off .menubar_logobox img {
-    width: 110px;
-    border-radius: 50%;
-  }
-
-  .headerScroll_on .menubar_logobox img {
-    width: 50px;
-    border-radius: 50%;
-  }
 
   .menubar_item {
     position: absolute;
     right: 0px;
     flex: 1;
     display: flex;
-
     justify-content: space-between;
-  }
-  .headerScroll_off .menubar_item {
-    padding-top: 20px;
-  }
-
-  //  .menubar_item .menubar_dropdown:hover {
-  //   background-color: rgb(0, 0, 0);
-  //   transition: background 1s ease-out;
-  // }
-  .headerScroll_off.menubar_item.on {
-    transform: translateY(-10px);
-    transition: transform 0.2s linear;
-  }
-  .headerScroll_off.menubar_item.off {
-    transform: translateY(10px);
-    transition: transform 0.2s linear;
   }
 
   .menubar_item:hover .menubar_dropdown {

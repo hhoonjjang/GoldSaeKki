@@ -34,11 +34,11 @@ const ListComponent = () => {
                         <BoardTitle>
                             {/* a : Link to로 바꾼뒤 해당 게시물로 보내줘야 함 : 게시글 번호 */}
                             <a href="/Community/Free/354367?search=c%253d3" style={{ color: "rgb(51, 51, 51)" }}>
-                                <span class="server">[오로라]</span>{" "}
-                                <span class="title">나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임</span>
+                                <span className="server">[오로라]</span>{" "}
+                                <span className="title">나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임</span>
 
                                 {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
-                                {/* <img class="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
+                                {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
                             </a>
                         </BoardTitle>
                         <OtherBoardInfo>
@@ -59,8 +59,8 @@ const ListComponent = () => {
                     <OneBoardList>
                         <BoardTitle>
                             <a href="/Community/Free/354367?search=c%253d3" style={{ color: "rgb(51, 51, 51)" }}>
-                                <span class="server">[오로라]</span>{" "}
-                                <span class="title">나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임</span>
+                                <span className="server">[오로라]</span>{" "}
+                                <span className="title">나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임</span>
                             </a>
                         </BoardTitle>
                         <OtherBoardInfo>
@@ -95,7 +95,7 @@ const ListComponent = () => {
                     {/* Free 부분을 해당 카테고리 가져와서 넣어준다. */}
                     {/* 수정해야할 사항 : href 대신 Link to를 통해 해당 카테고리의 글 작성 라우터로 보낸다.  */}
                     <Link to={"/Community/Free/BoardAdd"}>
-                        <RegistBtn class="btn03_g" onClick={(e) => {
+                        <RegistBtn className="btn03_g" onClick={(e) => {
 
                         }}>글작성</RegistBtn>
                     </Link>

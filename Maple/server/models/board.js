@@ -10,6 +10,9 @@ export default class Board extends Sequelize.Model {
                 world: {
                     type: Sequelize.STRING(255),
                 },
+                category: {
+                    type: Sequelize.STRING(255),
+                },
                 tags: {
                     type: Sequelize.STRING(255),
                     allowNull: true,

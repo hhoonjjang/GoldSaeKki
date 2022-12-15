@@ -66,14 +66,14 @@ const CommunityComponet = () => {
               <Route path="/Coordination" element={<ListContainer category={"금쪽이코디"} route={"Coordination"} />}></Route>
 
               {/* 카테고리에 게시글 추가 컴포넌트 라우터를 만듬 */}
-              <Route path="/Free/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"자유게시판"} />}></Route>
-              <Route path="/Information/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"정보게시판"} />}></Route>
-              <Route path="/TopicDiscussion/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"토론게시판"} />}></Route>
-              <Route path="/Art/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이아트"} />}></Route>
-              <Route path="/Coordination/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이코디"} />}></Route>
+              <Route path="/Free/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"자유게시판"} route={"Free"}  />}></Route>
+              <Route path="/Information/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"정보게시판"} route={"Information"} />}></Route>
+              <Route path="/TopicDiscussion/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"토론게시판"} route={"TopicDiscussion"} />}></Route>
+              <Route path="/Art/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이아트"} route={"Art"} />}></Route>
+              <Route path="/Coordination/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이코디"} route={"Coordination"} />}></Route>
               
               {/* 카테고리에 게시글 상세 컴포넌트 임시 띄움 : 라우터 카테고리에 따라 다르게 수정해야 한다. */}
-              <Route path="/Free/Board" element={<DetailContainer categorys={CATEGORY} category={"자유게시판"} />} ></Route>
+              <Route path="/Free/Board" element={<DetailContainer categorys={CATEGORY} category={"자유게시판"}/>} ></Route>
             </Routes>
           </ContentBox>
 

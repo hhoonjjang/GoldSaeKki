@@ -6,6 +6,8 @@ import AlarmIcon from "../../images/report_btn2.png";
 
 const DetailComponent = ({categorys, category}) => {
 
+    
+
     return (
         <>
             {/* 게시글 목록, 게시글 등록도 이런 식으로 추가하기 */}

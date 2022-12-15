@@ -25,8 +25,12 @@ const BugCSContainer = () => {
     else setBoolen(idx + 1);
     console.log(idx + 1);
   };
-  const onAnswer = (answer) => {
+  const onAnswer = async (answer, idx) => {
     console.log(answer);
+    console.log(idx);
+    const data = { answer: answer, id: idx };
+    console.log(data);
+    await axios.post("http://localhost:8080/api/report/buganswer", data);
   };
 
   return (

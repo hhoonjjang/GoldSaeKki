@@ -135,28 +135,31 @@ const RegistContainer = () => {
     }
   };
 
-  const registClick = (userId, userPw, userName) => {
+  const registClick = (userId, userPw, userName, server) => {
     console.log("우선 해보자");
-    if (!userId || !userPw || !userName) return alert("정보를 입력해주세요!");
+    if (!userId || !userPw || !userName || !server)
+      return alert("정보를 입력해주세요!");
     userPw = crypto.SHA256(userPw).toString();
     axios
       .post("http://localhost:8080/api/user/regist", {
         userId,
         userPw,
         userName,
+        server,
       })
       .then((data) => {
         console.log(
           "데이터가 DB에 잘 도착했어" + data.userId,
           data.userPw,
-          data.userName
+          data.userName,
+          data.server
         );
       })
       .catch((err) => {
         console.error(err);
       });
 
-    dispatch(action.regist(userId, userPw, userName));
+    dispatch(action.regist(userId, userPw, userName, server));
     alert("회원가입에 성공하셨습니다!");
   };
   return (

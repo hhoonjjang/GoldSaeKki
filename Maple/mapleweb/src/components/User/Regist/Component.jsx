@@ -7,6 +7,7 @@ const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
   const [userId, setId] = useState("");
   const [userPw, setPw] = useState("");
   const [userName, setName] = useState("");
+  const [server, setServer] = useState("");
 
   const idMemo = useMemo(() => {
     return idcheck(userId);
@@ -65,13 +66,39 @@ const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
           />
           <p className={nameMemo.class}>{nameMemo.text}</p>
         </RegistText>
+        <SelectBox>
+          <select
+            name="server"
+            className="select"
+            onChange={(e) => {
+              setServer(e.target.value);
+              console.log(e.target.value);
+            }}
+          >
+            <option>서버 선택</option>
+            <option value="리부트">리부트</option>
+            <option value="리부트2">리부트2</option>
+            <option value="오로라">오로라</option>
+            <option value="레드">레드</option>
+            <option value="이노시스">이노시스</option>
+            <option value="유니온">유니온</option>
+            <option value="스카니아">스카니아</option>
+            <option value="루나">루나</option>
+            <option value="제니스">제니스</option>
+            <option value="크로아">크로아</option>
+            <option value="베라">베라</option>
+            <option value="엘리시움">엘리시움</option>
+            <option value="아케인">아케인</option>
+            <option value="노바">노바</option>
+          </select>
+        </SelectBox>
         <ButtonBox>
           {userId && userPw && userName ? (
             <>
               <Link to={"/login"}>
                 <button
                   onClick={() => {
-                    registClick(userId, userPw, userName);
+                    registClick(userId, userPw, userName, server);
                   }}
                 >
                   회원가입
@@ -86,7 +113,7 @@ const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
               <Link to={"#"}>
                 <button
                   onClick={() => {
-                    registClick(userId, userPw, userName);
+                    registClick(userId, userPw, userName, server);
                   }}
                 >
                   회원가입
@@ -111,7 +138,7 @@ const RegistBox = styled.div`
   margin: 0;
   background-image: url(${registImg});
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: center;
 
   & > h2 {
@@ -190,5 +217,14 @@ const ButtonBox = styled.div`
       border-radius: 5px;
       cursor: pointer;
     }
+  }
+`;
+
+const SelectBox = styled.div`
+  .select {
+    width: 150px;
+    height: 35px;
+    border-radius: 3px;
+    border: 2px solid lightgray;
   }
 `;

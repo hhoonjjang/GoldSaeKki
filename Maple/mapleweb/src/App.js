@@ -27,7 +27,7 @@ function App() {
   const loginCheck = () => {
     if (document.cookie) {
       axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
-        dispatch(action.check(data.data.userInfo.name));
+        dispatch(action.check(data.data.userInfo));
         console.log("로그인정보를 받았다", data);
         // currUser = data.data.userInfo.name;
         // console.log(currUser);

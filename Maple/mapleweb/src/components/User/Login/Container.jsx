@@ -5,7 +5,6 @@ import { action } from "../../../modules/user";
 import crypto from "crypto-js";
 import { useNavigate } from "react-router-dom";
 
-
 // let currUser = "";
 const LoginContainer = () => {
   const dispatch = useDispatch();
@@ -26,15 +25,15 @@ const LoginContainer = () => {
 
   const loginClick = (loginId, loginPw) => {
     console.log("로그인버튼 클릭해따");
-    dispatch(action.login(loginId, loginPw));
 
     loginPw = crypto.SHA256(loginPw).toString();
     axios
       .post("http://localhost:8080/api/user/login", { loginId, loginPw })
       .then((data) => {
-        console.log(data.data.status);
+        console.log(data.data.data);
         if (data.data.status == 200) {
           alert("로그인 성공");
+          dispatch(action.login(data.data.data));
           // loginCheck();
           navigate("/");
         } else {
@@ -43,7 +42,6 @@ const LoginContainer = () => {
           } else alert("잘못된 비밀번호입니다.");
         }
       })
-
       .catch((err) => {
         console.error(err);
       });

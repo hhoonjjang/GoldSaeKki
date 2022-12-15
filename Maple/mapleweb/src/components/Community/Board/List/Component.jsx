@@ -15,11 +15,14 @@ const tempArr = [
   { text: "2222", img: "eye_new" },
 ];
 
-const ListComponent = ({categorys, category}) => {
+const ListComponent = ({categorys, category, route}) => {
 
   // https://velog.io/@dltmdwls15/pagination-Library%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%AA%A9%EB%A1%9D-%EA%B5%AC%ED%98%84
   // const [page, setPage] = useState(1);
   // const handlePageChange = (page) => { setPage(page); };
+
+  console.log(category);
+  console.log(route);
 
   return (
     <>
@@ -112,7 +115,8 @@ const ListComponent = ({categorys, category}) => {
           <div></div>
           {/* Free 부분을 해당 카테고리 가져와서 넣어준다. */}
           {/* 수정해야할 사항 : href 대신 Link to를 통해 해당 카테고리의 글 작성 라우터로 보낸다.  */}
-          <Link to={"/Community/Free/BoardAdd"}>
+          {/* <Link to={"/Community/Free/BoardAdd"}> */}
+          <Link to={`/Community/${route}/BoardAdd`}>
             <RegistBtn className="btn03_g" onClick={(e) => {
               // 글 작성 버튼 클릭시 해당 요청 보내도록 코드 추가하기
             }}>
@@ -284,6 +288,7 @@ const IconInfo = styled.div`
   padding-left: 18px;
 
   /* 보통은 그냥 바로 안띄우고 예외처리도 해준다(ex. 이미지가 안 들어왔을 때 무엇을 띄울 것인지) */
+  /* 이놈 뭔지 모르겠는데 조금 수정해야 할듯? */
   background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(props) => props.iconImg}.png") left 0px no-repeat;
   max-width: ${(props) => {
     // 무엇을 기준으로 나눌건지

@@ -10,7 +10,7 @@ import { WORLDLIST } from '../../../../modules/community';
 // const API_URL = "http://localhost:8080";
 // const UPLOAD_ENDPOINT = "upload_files";
 
-const AddComponent = ({ categorys }) => {
+const AddComponent = ({ categorys, category }) => {
 
     const CKHeight = useRef();
 
@@ -24,7 +24,7 @@ const AddComponent = ({ categorys }) => {
 
         <>  
             {/* 현재 게시판 이름을 가져와 띄운다. */}
-            <CategoryTitle>무슨무슨게시판</CategoryTitle>
+            <CategoryTitle>{category}</CategoryTitle>
 
             <ContentBox>
                 <TitleWrap>

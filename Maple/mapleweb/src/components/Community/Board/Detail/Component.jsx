@@ -4,13 +4,15 @@ import LinkIcon from "../../images/link_btn.png";
 import AlarmIcon from "../../images/report_btn2.png";
 
 
-const DetailComponent = () => {
+const DetailComponent = ({categorys, category}) => {
+
+    
 
     return (
         <>
             {/* 게시글 목록, 게시글 등록도 이런 식으로 추가하기 */}
             <CategoryTItleBox>
-                <CategoryTitle>무슨무슨게시판</CategoryTitle>
+                <CategoryTitle>{category}</CategoryTitle>
                 {/* 목록 : 이놈 수정 */}
                 {/* Link to로 해당 카테고리 리스트로 이동하도록 한다. */}
                 <CategoryRight>

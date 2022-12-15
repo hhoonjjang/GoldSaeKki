@@ -1,10 +1,10 @@
 import ListComponent from "./Component";
 
-const ListContainer = ({category}) =>{
+const ListContainer = ({categorys, category, route}) =>{
     // console.log(category);
 
     return (
-        <ListComponent category={category} />
+        <ListComponent categorys={categorys} category={category} route={route} />
     );
 }
 

@@ -15,7 +15,7 @@ const tempArr = [
   { text: "2222", img: "eye_new" },
 ];
 
-const ListComponent = () => {
+const ListComponent = ({categorys, category}) => {
 
   // https://velog.io/@dltmdwls15/pagination-Library%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%AA%A9%EB%A1%9D-%EA%B5%AC%ED%98%84
   // const [page, setPage] = useState(1);
@@ -24,7 +24,7 @@ const ListComponent = () => {
   return (
     <>
       {/* 현재 게시판 이름을 가져와 띄운다. */}
-      <CategoryTitle>무슨무슨게시판</CategoryTitle>
+      <CategoryTitle>{category}</CategoryTitle>
       <ContentBox>
         {/* 월드 선택 */}
         <WorldBox>

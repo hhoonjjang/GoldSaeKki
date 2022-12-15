@@ -57,13 +57,13 @@ const CommunityComponet = () => {
 
             <Routes>
               {/* UI가 같으니까 같은 컴포넌트로 보냄, 리스트 컴포넌트 카테고리 출력 부분 수정하기 */}
-              <Route path="/Free" element={<ListContainer />}></Route>
-              <Route path="/Information" element={<ListContainer />}></Route>
+              <Route path="/Free" element={<ListContainer categorys={CATEGORY} category={"자유게시판"} />}></Route>
+              <Route path="/Information" element={<ListContainer category={"정보게시판"} />}></Route>
 
               {/* 이놈들은 UI가 달라서 새로운 컴포넌트 만들어야함 : 일단 안 만듦 */}
-              <Route path="/TopicDiscussion" element={<ListContainer />}></Route>
-              <Route path="/Art" element={<ListContainer />}></Route>
-              <Route path="/Coordination" element={<ListContainer />}></Route>
+              <Route path="/TopicDiscussion" element={<ListContainer category={"토론게시판"} />}></Route>
+              <Route path="/Art" element={<ListContainer category={"금쪽이아트"} />}></Route>
+              <Route path="/Coordination" element={<ListContainer category={"금쪽이코디"} />}></Route>
 
               {/* 카테고리에 게시글 추가 컴포넌트 라우터를 만듬 */}
               <Route path="/Free/BoardAdd" element={<AddContainer categorys={CATEGORY} />}></Route>

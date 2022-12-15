@@ -17,7 +17,7 @@ const MainGamestartContainer = () => {
   // useEffect(() => {
   // loginCheck(setCurrUserName);
   // });
-
+  const currUserName = useSelector((state) => state.user.currUserName);
   const logout = () => {
     document.cookie = "login" + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     setRender((state) => !state);
@@ -25,6 +25,7 @@ const MainGamestartContainer = () => {
 
   return (
     <MainGamestartComponent
+      currUserName={currUserName}
       // currUserName={currUserName}
       logout={logout}
     ></MainGamestartComponent>

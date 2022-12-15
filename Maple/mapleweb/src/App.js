@@ -13,12 +13,28 @@ import BugReportContainer from "./components/Support/BugReport/Container";
 import Footer from "./components/Home/footer/Footer";
 import Menubar from "./components/Home/menubar/Menubar";
 import { useEffect } from "react";
+import MypageContainer from "./components/User/MyPage/Container";
+import axios from "axios";
+import { action } from "./modules/user";
+import { useDispatch } from "react-redux";
 
 function App() {
   // const location = useLocation();
   // useEffect(() => {
   //   console.log(location.pathname);
   // }, [location]);
+  const dispatch = useDispatch();
+  const loginCheck = () => {
+    if (document.cookie) {
+      axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
+        dispatch(action.check(data.data.userInfo.name));
+        console.log("로그인정보를 받았다", data);
+        // currUser = data.data.userInfo.name;
+        // console.log(currUser);
+      });
+    }
+  };
+  loginCheck();
   return (
     <div>
       {/* {(location.pathname = "/Adminstrator" ? <></> : <Menubar />)} */}
@@ -32,7 +48,7 @@ function App() {
         <Route path="/Media/*" element={<HeaderContainer />}></Route>
         <Route path="/Support/*" element={<HeaderContainer />}></Route>
         <Route path="/Administrator/*" element={<HeaderContainer />}></Route>
-
+        <Route path="/Mypage/*" element={<HeaderContainer />}></Route>
         {/* 기타 등등 헤더 */}
       </Routes>
       <UserComponent />
@@ -54,11 +70,11 @@ function App() {
           path="/Administrator/*"
           element={<AdministratorComponet />}
         ></Route>
+        {/* <Route path="/Mypage/*" element={<MypageContainer />}></Route> */}
         <Route path="/Community/*" element={<CommunityComponet />}></Route>
       </Routes>
 
       <Footer></Footer>
-
     </div>
   );
 }

@@ -3,13 +3,13 @@ import gameStartBackground from "../Img/main_gamestart_banner.png";
 
 import gameStart from "../Img/game-start.png";
 import download from "../Img/header_game_down.png";
-import { Link, useAsyncError } from "react-router-dom";
+import { Link } from "react-router-dom";
 import HomeComponet from "..";
 
 import UserComponent from "../../User";
 
 import badge from "../Img/main_gamestart_badge.png";
-import MypageContainer from "../../User/MyPage/container";
+import MypageContainer from "../../User/MyPage/Container";
 import { useEffect, useState } from "react";
 
 const MainGamestartComponent = ({ logout }) => {

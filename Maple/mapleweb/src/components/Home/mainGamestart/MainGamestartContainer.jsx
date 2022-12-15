@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import MainGamestartComponent from "./MainGamestartComponent";
-import { useAsync } from "react-async";
 import axios from "axios";
 // const loginCheck = (setCurrUserName) => {
 // if (document.cookie) {

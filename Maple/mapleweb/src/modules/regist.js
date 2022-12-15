@@ -4,10 +4,10 @@ const TYPE = {
   REGIST: "/user/regist",
 };
 
-const regist = (userId, userPw, userName) => {
+const regist = (userId, userPw, userName, serverName) => {
   return {
     type: TYPE.REGIST,
-    payload: { userId, userPw, userName },
+    payload: { userId, userPw, userName, serverName },
   };
 };
 

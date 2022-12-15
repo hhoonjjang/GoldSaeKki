@@ -4,10 +4,10 @@ const TYPE = {
   CHECK: "/user/check",
 };
 
-const login = (loginId, loginPw) => {
+const login = (payload) => {
   return {
     type: TYPE.LOGIN,
-    payload: { loginId, loginPw },
+    payload,
   };
 };
 
@@ -18,30 +18,28 @@ const logout = () => {
   };
 };
 
-const check = (currUserName) => {
+const check = (userInfo) => {
   return {
     type: TYPE.CHECK,
-    payload: { currUserName },
+    payload: { currServerName: userInfo.server, currUserName: userInfo.name },
   };
 };
 
 export const action = { login, logout, check };
 
-
 export const initialize = {};
-
 
 export const reducer = (state = initialize, action) => {
   const { type, payload } = action;
   switch (type) {
     case TYPE.LOGIN:
-      return { ...state, loginId: payload.loginId, loginPw: payload.loginPw };
+      return payload;
 
     case TYPE.LOGOUT:
       return state;
 
     case TYPE.CHECK:
-      return { ...state, currUserName: payload.currUserName };
+      return payload;
 
     default:
       return state;

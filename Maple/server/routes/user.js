@@ -16,6 +16,7 @@ router.post("/regist", (req, res) => {
     userId: req.body.userId,
     userPw: req.body.userPw,
     userName: req.body.userName,
+    serverName: req.body.server,
     profileImg: "catimg.png",
   }).then((data) => {
     res.send(req.body);
@@ -40,9 +41,8 @@ router.post("/login", (req, res) => {
         if (data.userPw === req.body.loginPw) {
           const token = jwt.sign(
             {
-              id: data.userId,
+              server: data.serverName,
               name: data.userName,
-              // pw: data.userPw,
             },
             process.env.JWT_KEY,
             {
@@ -54,8 +54,15 @@ router.post("/login", (req, res) => {
           // res.cookie("login", token, { httpOnly: true });
           res.cookie("login", token, { maxAge: 1800000 });
           // res.cookie("login", token, { maxAge: 5000 });
-
-          res.send({ message: "쿠키생성 완료", status: 200 });
+          const { serverName, userName } = data;
+          res.send({
+            message: "쿠키생성 완료",
+            status: 200,
+            data: {
+              currServerName: serverName,
+              currUserName: userName,
+            },
+          });
           console.log("로그인 완료");
         } else {
           res.send({ message: "잘못된 비밀번호입니다.", status: 501 });

@@ -4,18 +4,65 @@ import profileimg from "../Img/catimg.png";
 import NavigateComp from "../../Community/Navigation/Component";
 import { useDispatch } from "react-redux";
 import { action } from "../../../modules/header";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ImgChangeContainer from "./ImgChange/Container";
+import NicknameChangeContainer from "./NicknameChange/Container";
+import MyBoardEditContainer from "./MyBoardEdit/Container";
+import MyCommentEditContainer from "./MyCommentEdit/Container";
+import UserOutContainer from "./UserOut/Container";
+
 const MypageComponent = () => {
   const dispatch = useDispatch();
+  const route = useParams();
+
+  console.log(route);
   dispatch(action.header("Mypage"));
   const CATEGORY = [
     {
       name: "내정보 관리",
-      label: "",
+      label: "../",
       link: "/mypage",
     },
   ];
+
+  const myDiv = () => {
+    switch (route.route) {
+      case "userInfo1":
+        return <ImgChangeContainer />;
+
+      case "userInfo2":
+        return <NicknameChangeContainer />;
+
+      case "userInfo3":
+        return <MyBoardEditContainer />;
+
+      case "userInfo4":
+        return <MyCommentEditContainer />;
+
+      case "userInfo5":
+        return <UserOutContainer />;
+      default:
+        return (
+          <ul>
+            <Link to={"/mypage/userInfo1"}>
+              <li>- 대표이미지 변경</li>
+            </Link>
+            <Link to={"/mypage/userInfo2"}>
+              <li>- 닉네임 변경</li>
+            </Link>
+            <Link to={"/mypage/userInfo3"}>
+              <li>- 내가 쓴 글 관리</li>
+            </Link>
+            <Link to={"/mypage/userInfo4"}>
+              <li>- 내가 쓴 댓글 관리</li>
+            </Link>
+            <Link to={"/mypage/userInfo5"}>
+              <li>- 회원탈퇴</li>
+            </Link>
+          </ul>
+        );
+    }
+  };
 
   return (
     <>
@@ -30,15 +77,8 @@ const MypageComponent = () => {
             <div>
               <p>내정보 관리</p>
             </div>
-            <ul>
-              <Link to={"/Mypage/userInfo1"}>
-                <li>- 대표이미지 변경</li>
-              </Link>
-              <li>- 닉네임 변경</li>
-              <li>- 내가 쓴 글 관리</li>
-              <li>- 내가 쓴 댓글 관리</li>
-              <li>- 회원탈퇴</li>
-            </ul>
+            {myDiv()}
+            {/* {route.route == "userInfo1" ? <div>유저인포1이다.</div> : <></>} */}
           </RightContent>
         </MypageContents>
       </MypageBox>

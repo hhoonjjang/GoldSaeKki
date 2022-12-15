@@ -115,7 +115,7 @@ const Component = ({ item, idx, onClick, isBoolen }) => {
           <div>{item.reportProcessing ? item.reportProcessing : "접수중"}</div>
         </td>
         <td key={`dateNow-${idx}`}>
-          <div>{item.updatedAt.split("T")[0]}</div>
+          <div>{item.createdAt.split("T")[0]}</div>
         </td>
       </tr>
       <tr>
@@ -131,6 +131,26 @@ const Component = ({ item, idx, onClick, isBoolen }) => {
           <></>
         )}
       </tr>
+      {item.reportProcessing ? (
+        <tr>
+          {isBoolen == idx + 1 ? (
+            <>
+              <td key={`Answer-${idx + 1}`} colSpan={4} className="contents">
+                <div>{item.reportProcessing ? item.reportAnswer : ""}</div>
+              </td>
+              <td>
+                <div>답변날짜</div>
+                {item.updatedAt.split("T")[0]}
+              </td>
+            </>
+          ) : (
+            // <td>{item.contentsText}</td> react innerhtml
+            <></>
+          )}
+        </tr>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

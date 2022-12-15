@@ -19,6 +19,9 @@ export default class Report extends Sequelize.Model {
         reportProcessing: {
           type: Sequelize.STRING(255),
         },
+        reportAnswer: {
+          type: Sequelize.STRING(255),
+        },
       },
       {
         sequelize,

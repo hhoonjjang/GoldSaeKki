@@ -3,6 +3,7 @@ import fs from "fs";
 import { Router } from "express";
 import db from "../models/index.js";
 import jwt from "jsonwebtoken";
+import Report from "../models/report.js";
 
 const router = Router();
 let storage = multer.diskStorage({
@@ -50,26 +51,36 @@ router.post(
 
 router.post("/request", async (req, res) => {
   const tempUserInfo = jwt.verify(req.cookies.login, process.env.JWT_KEY);
-  global.userName = tempUserInfo.name;
-
-  console.log(tempUserInfo);
-  console.log("글로벌" + global.userName);
 
   const tempRequest = await db.Report.findAll({
-    where: { name: global.userName },
+    where: { name: tempUserInfo.name },
     order: [["id", "DESC"]],
   });
   console.log("템프리퀘스트");
-  console.log(tempRequest);
 
   res.send(tempRequest);
 });
 
 router.post("/bugcs", async (req, res) => {
   const tempBugcs = await db.Report.findAll({
-    include: { model: db.User },
+    // include: { model: db.User },
   });
   res.send(tempBugcs);
 });
 
+router.post("/buganswer", async (req, res) => {
+  const answer = req.body;
+  await db.Report.update(
+    {
+      reportAnswer: answer.answer,
+      reportProcessing: "답변완료",
+    },
+    {
+      where: {
+        id: answer.id,
+      },
+    }
+  );
+  console.log(answer);
+});
 export default router;

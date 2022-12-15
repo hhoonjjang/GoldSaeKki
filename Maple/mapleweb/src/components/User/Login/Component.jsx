@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
 import menuLogo from "../Img/menu-logo.png";
 import homeLogo from "../Img/home-logo.png";
 import mapleLogo from "../Img/goldsaekki-logo-remove.png";
@@ -55,15 +54,15 @@ const LoginComponent = ({ loginClick }) => {
               }}
             />
           </div>
-          <Link to={"/"}>
-            <button
-              onClick={() => {
-                loginClick(loginId, loginPw);
-              }}
-            >
-              로그인
-            </button>
-          </Link>
+          {/* <Link to={"/"}> */}
+          <button
+            onClick={() => {
+              loginClick(loginId, loginPw);
+            }}
+          >
+            로그인
+          </button>
+          {/* </Link> */}
         </LoginText>
         <LinkBox>
           <Link to={"/regist"}>
@@ -144,7 +143,7 @@ const LoginText = styled.div`
   flex-direction: column;
   padding: 20px 0;
 
-  & a > button {
+  & button {
     width: 600px;
     height: 80px;
     background-color: rgb(246, 133, 0);

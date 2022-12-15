@@ -16,7 +16,7 @@ router.post("/regist", (req, res) => {
     userId: req.body.userId,
     userPw: req.body.userPw,
     userName: req.body.userName,
-    profileImg: "catimg.jpg",
+    profileImg: "catimg.png",
   }).then((data) => {
     res.send(req.body);
   });
@@ -52,14 +52,16 @@ router.post("/login", (req, res) => {
             }
           );
           // res.cookie("login", token, { httpOnly: true });
-          res.cookie("login", token);
-          res.send({ status: "쿠키생성 완료" });
+          res.cookie("login", token, { maxAge: 1800000 });
+          // res.cookie("login", token, { maxAge: 5000 });
+
+          res.send({ message: "쿠키생성 완료", status: 200 });
           console.log("로그인 완료");
         } else {
-          res.send({ message: "잘못된 비밀번호입니다.", status: 500 });
+          res.send({ message: "잘못된 비밀번호입니다.", status: 501 });
         }
       } else {
-        res.send({ message: "존재하지 않는 ID입니다.", status: 500 });
+        res.send({ message: "존재하지 않는 ID입니다.", status: 502 });
       }
     })
     .catch((err) => {
@@ -67,8 +69,9 @@ router.post("/login", (req, res) => {
     });
 });
 
-export default router;
+router.post("/logout", (req, res) => {
+  res.clearCookie("login");
+  res.send({ message: "쿠키 삭제 완료", status: 200 });
+});
 
-// .then((data) => {
-//   console.log("로그인성공");
-// });
+export default router;

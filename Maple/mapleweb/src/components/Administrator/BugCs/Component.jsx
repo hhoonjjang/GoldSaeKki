@@ -150,7 +150,7 @@ const Component = ({ item, idx, onClick, isBoolen, onAnswer }) => {
             <td key={`answerBtn-${idx + 1}`}>
               <button
                 onClick={() => {
-                  onAnswer(answer);
+                  onAnswer(answer, idx + 1);
                 }}
               >
                 답변달기

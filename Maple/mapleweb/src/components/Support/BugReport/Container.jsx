@@ -3,11 +3,13 @@ import CreateContainer from "./Create/Container";
 import { Route, Routes } from "react-router-dom";
 
 const BugReportContainer = () => {
+  console.log(document.cookie);
+  const isCookie = document.cookie;
   return (
     <>
       <Routes>
         <Route path="/Create" element={<CreateContainer />}></Route>
-        <Route path="/" element={<BugReportComponent />} />
+        <Route path="/" element={<BugReportComponent isCookie={isCookie} />} />
       </Routes>
     </>
   );

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import catImag from "../imgs/cat_4.png";
 import { Link } from "react-router-dom";
-const BugReportComponent = () => {
+const BugReportComponent = ({ isCookie }) => {
   return (
     <BugReportBox>
       <h1>버그악용/불법프로그램 신고</h1>
@@ -22,9 +22,15 @@ const BugReportComponent = () => {
             게임에 영향이 큰 문제를 제보할수록 더 좋은 보상이 지급되니 적극적인
             신고 부탁드립니다.
           </div>
-          <Link to={"./Create"}>
-            <button>버그악용/불법프로그램 신고하러 가기</button>
-          </Link>
+          {isCookie ? (
+            <Link to={"Create"}>
+              <button>버그악용/불법프로그램 신고하러 가기</button>
+            </Link>
+          ) : (
+            <Link to={"/login"}>
+              <button>버그악용/불법프로그램 신고하러 가기</button>
+            </Link>
+          )}
         </div>
       </div>
       <hr />

@@ -27,7 +27,10 @@ const check = (currUserName) => {
 
 export const action = { login, logout, check };
 
-export const initialize = [];
+
+export const initialize = {};
+
+
 export const reducer = (state = initialize, action) => {
   const { type, payload } = action;
   switch (type) {
@@ -39,6 +42,7 @@ export const reducer = (state = initialize, action) => {
 
     case TYPE.CHECK:
       return { ...state, currUserName: payload.currUserName };
+
     default:
       return state;
   }

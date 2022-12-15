@@ -5,6 +5,7 @@ import { action } from "../../../modules/user";
 import crypto from "crypto-js";
 import { useNavigate } from "react-router-dom";
 
+
 // let currUser = "";
 const LoginContainer = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const LoginContainer = () => {
   // });
   // }
   // };
+
   const loginClick = (loginId, loginPw) => {
     console.log("로그인버튼 클릭해따");
     dispatch(action.login(loginId, loginPw));

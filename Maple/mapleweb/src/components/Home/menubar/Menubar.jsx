@@ -92,7 +92,6 @@ const Menubar = () => {
   }, []);
 
   const location = useLocation();
-  console.log(location);
   return (
     <MenubarComponent
       className={`${BGColor ? "menubar_bgOn" : "menubar_bgOff"} ${

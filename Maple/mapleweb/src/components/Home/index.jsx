@@ -1,5 +1,5 @@
 import MainSlide from "./mainSlide/MainSlide";
-import MainGamestart from "./mainGamestart/MainGamestart";
+import MainGamestartContainer from "./mainGamestart/MainGamestartContainer";
 import MainNotice from "./mainNotice/MainNotice";
 import MainCommunity from "./mainCommunity/MainCommunity";
 import MainInfo from "./mainInfo/MainInfo";
@@ -18,7 +18,7 @@ const HomeComponet = () => {
         {/* 임시로 배너를 채워넣었습니다 */}
         {/* <MainSlide></MainSlide> */}
         <TempSlide></TempSlide>
-        <MainGamestart></MainGamestart>
+        <MainGamestartContainer></MainGamestartContainer>
         <MainNotice />
         <MainCommunity />
         <MainArchive>

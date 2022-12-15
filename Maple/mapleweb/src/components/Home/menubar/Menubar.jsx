@@ -212,7 +212,7 @@ const MenubarComponent = styled.div`
 
   &.menubar_bgOff {
     transition: background-color 0.2s linear;
-    z-index: 1;
+    z-index: 100000;
   }
 
   .menubar_innerBox {

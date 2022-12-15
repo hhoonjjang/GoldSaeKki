@@ -12,7 +12,7 @@ import badge from "../Img/main_gamestart_badge.png";
 import MypageContainer from "../../User/MyPage/Container";
 import { useEffect, useState } from "react";
 
-const MainGamestartComponent = ({ logout }) => {
+const MainGamestartComponent = ({ currUserName, logout }) => {
   return (
     <MainGamestart bgImg={gameStartBackground}>
       <div className="mainGamestart">
@@ -72,7 +72,7 @@ const MainGamestartComponent = ({ logout }) => {
                         console.log(document.cookie.split("=")[0]);
                       }}
                     >
-                      {/* {currUserName} */}
+                      {currUserName}
                     </div>
                   </Link>
                   <div className="mainGamestart_logged_innerBox_briefProfile_Logout">

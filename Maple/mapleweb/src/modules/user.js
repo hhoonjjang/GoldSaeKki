@@ -27,7 +27,9 @@ const check = (currUserName) => {
 
 export const action = { login, logout, check };
 
+
 export const initialize = {};
+
 
 export const reducer = (state = initialize, action) => {
   const { type, payload } = action;

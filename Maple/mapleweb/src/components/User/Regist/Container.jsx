@@ -1,20 +1,25 @@
 import RegistComponent from "./Component";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { action } from "../../../modules/regist";
 import crypto from "crypto-js";
 import axios from "axios";
 
 const tempUserArr = [];
 
-axios.post("http://localhost:8080/api/user/getUser").then((data) => {
-  console.log(data.data);
-  data?.data?.map((item) => {
-    tempUserArr.push(item);
-  });
-  console.log(tempUserArr);
+axios
+  .post("http://localhost:8080/api/user/getUser")
+  .then((data) => {
+    console.log(data);
+    data?.data?.map((item) => {
+      tempUserArr.push(item);
+    });
+    console.log(tempUserArr);
 
-  // data.data.userId, data.data.userName
-});
+    // data.data.userId, data.data.userName
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 const RegistContainer = () => {
   const dispatch = useDispatch();
   // component쪽에서 가져올 데이터들 세팅

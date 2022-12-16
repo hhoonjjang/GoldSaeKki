@@ -48,18 +48,22 @@ export default class User extends Sequelize.Model {
       //   타켓키와 소스키는 카멜로써야댐
     });
 
-    // 유저가 댓글들을 가짐 : 댓글에 유저 아이디를 추가해준다.
+    // 유저가 댓글들을 가짐 : 댓글에 유저 이름을 추가해준다.
     db.User.hasMany(db.Comment, {
-      as: "Comment", // 메서드명
-      sourceKey: "id", // 위에서 userId를 불러오겠다
-      foreignKey: "userId", // 생성 컬럼 이름
+      // 사용할 메서드명
+      as: "Comment", 
+      // 위에서 userName을 불러오겠다. 
+      sourceKey: "userName", 
+      // 생성 컬럼 이름 : User 테이블엔 컬럼이 생기지 않지만 
+      // 연결된 놈에 만들어줄 컬럼 이름을 같게 적어주어 연결한다.
+      foreignKey: "userName", 
     });
 
-    // 유저가 게시물들을 가짐 : 게시물에 유저 아이디를 추가해준다.
+    // 유저가 게시물들을 가짐 : 게시물에 유저 이름을 추가해준다.
     db.User.hasMany(db.Board, {
       as: "Board", // 메서드명
-      sourceKey: "id", // 위에서 userId를 불러오겠다
-      foreignKey: "userId", // 생성 컬럼 이름
+      sourceKey: "userName", // 위에서 userName을 불러오겠다.
+      foreignKey: "userName", // 생성 컬럼 이름
     });
   }
 }

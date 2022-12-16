@@ -14,6 +14,7 @@ const AdministratorComponet = () => {
       {!isCookie ? (
         <>
           <AdminLoginContainer />
+          <AccountContainer />
         </>
       ) : (
         <>

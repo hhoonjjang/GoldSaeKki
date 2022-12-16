@@ -7,7 +7,7 @@ const login = (name) => {
   console.log(name);
   return {
     type: TYPE.LOGIN,
-    payload: { name: name },
+    payload: { name },
   };
 };
 
@@ -23,10 +23,10 @@ export const initialize = {};
 
 export const reducer = (state = initialize, action) => {
   const { type, payload } = action;
-  console.log(payload);
+  console.log(payload.name);
   switch (type) {
     case TYPE.LOGIN:
-      return { name: payload.name };
+      return payload.name;
     default:
       return state;
   }

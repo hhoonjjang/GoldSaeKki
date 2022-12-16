@@ -32,13 +32,17 @@ const AdminLoginContainer = () => {
 
   axios.post("http://localhost:8080/api/admin/login", accountInfo).then(
     function (data) {
-      window.location.reload();
+      console.log("하이");
+      dispatch(action.login(data.data));
+
+      // window.location.reload();
+      console.log("하이");
     },
     (error) => {
       console.error("에러");
     }
   );
-  const tempAdmin = useSelector((state) => state?.admin?.name);
+  const tempAdmin = useSelector((state) => state?.admin);
   console.log(tempAdmin);
   return (
     <AdminLoginComponent

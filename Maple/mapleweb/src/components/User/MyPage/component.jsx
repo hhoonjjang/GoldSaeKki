@@ -8,8 +8,10 @@ import { Link, useParams } from "react-router-dom";
 import ImgChangeContainer from "./ImgChange/Container";
 import NicknameChangeContainer from "./NicknameChange/Container";
 import MyBoardEditContainer from "./MyBoardEdit/Container";
+
+import UserOutContainer from "./UserOut/Container";
 import MyCommentEditContainer from "./MyCommentEdit/Container";
-import UserOutContainer from "./UserOut/Container"; 
+
 
 const MypageComponent = () => {
   const dispatch = useDispatch();

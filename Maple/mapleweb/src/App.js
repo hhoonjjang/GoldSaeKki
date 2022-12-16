@@ -17,13 +17,31 @@ import MypageContainer from "./components/User/MyPage/Container";
 import axios from "axios";
 import { action } from "./modules/user";
 import { useDispatch } from "react-redux";
-
+import { action as adminaction } from "./modules/admin";
 function App() {
   // const location = useLocation();
   // useEffect(() => {
   //   console.log(location.pathname);
   // }, [location]);
+
   const dispatch = useDispatch();
+
+  const adminLogin = () => {
+    if (document.cookie) {
+      axios.post("http://localhost:8080/api/admin/admincheck").then(
+        function (data) {
+          console.log(data);
+          // window.location.reload();
+          dispatch(adminaction.login(data.data));
+          console.log(data.data);
+        },
+        (error) => {
+          console.error("에러");
+        }
+      );
+    }
+  };
+
   const loginCheck = () => {
     if (document.cookie) {
       axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
@@ -34,7 +52,8 @@ function App() {
       });
     }
   };
-  loginCheck();
+  console.log();
+  document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck();
   return (
     <div>
       {/* {(location.pathname = "/Adminstrator" ? <></> : <Menubar />)} */}

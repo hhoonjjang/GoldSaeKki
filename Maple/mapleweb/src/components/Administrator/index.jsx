@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { action } from "../../modules/header";
 import styled from "styled-components";
 import BugCSContainer from "./BugCs/Container";
@@ -7,11 +7,26 @@ import AdminLoginContainer from "./AdminLogin/Container";
 const AdministratorComponet = () => {
   const dispatch = useDispatch();
   dispatch(action.header("Administrator"));
+  const isCookie = document.cookie;
+  const tempAdmin = useSelector((state) => state.admin);
+  console.log(tempAdmin);
   return (
     <AdminBox>
-      <AdminLoginContainer />
+      {!isCookie ? (
+        <>
+          <AdminLoginContainer />
+        </>
+      ) : (
+        <>
+          {tempAdmin.name == "정재훈" ? <AccountContainer /> : <></>}
+
+          <AdminLoginContainer />
+          <BugCSContainer />
+        </>
+      )}
+      {/* <AdminLoginContainer />
       <AccountContainer />
-      <BugCSContainer />
+      <BugCSContainer /> */}
     </AdminBox>
   );
 };

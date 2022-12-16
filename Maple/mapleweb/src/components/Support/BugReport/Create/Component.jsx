@@ -121,17 +121,15 @@ const CreateComponent = ({ onClick }) => {
 
           <hr />
           <div className="selectBtn">
-            <Link to={"/Support/BugReport"}>
-              <button
-                onClick={() => {
-                  // e.preventDefault();
-                  console.log("작동해");
-                  onClick(reportTitle, reportSelect, imgFile, contentsText);
-                }}
-              >
-                확인
-              </button>
-            </Link>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                console.log("작동해");
+                onClick(reportTitle, reportSelect, imgFile, contentsText);
+              }}
+            >
+              확인
+            </button>
             <Link to={"/Support/BugReport"}>
               <button>취소</button>
             </Link>
@@ -190,21 +188,23 @@ const CreateBox = styled.div`
   .selectBtn {
     display: flex;
     justify-content: end;
-  }
-  .selectBtn a {
-    /* padding: 8px 25px;
-    margin-left: 10px; */
-    color: white;
-    border: none;
-    &:first-child button {
+    & button {
       background-color: #42f59e;
       padding: 8px 25px;
       color: white;
       border: none;
     }
-    &:first-child:hover button {
+    & button:hover {
       background-color: #13814c;
     }
+  }
+
+  .selectBtn a {
+    /* padding: 8px 25px;
+    margin-left: 10px; */
+    color: white;
+    border: none;
+
     &:last-child button {
       margin-left: 10px;
 

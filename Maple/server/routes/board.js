@@ -46,6 +46,7 @@ router.post("/findAll", async (req, res) => {
       where: {
         category: req.body.category,
       },
+      order: [['id', 'DESC']],
     });
 
     // 값을 뽑아오려면 tempBoards[해당번호].dataValues로 가져와야 한다.

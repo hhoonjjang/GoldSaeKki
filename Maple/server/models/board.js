@@ -53,12 +53,9 @@ export default class Board extends Sequelize.Model {
 
         // 게시물들을 유저에 연결시켜줌
         db.Board.belongsTo(db.User, {
-            targetKey: "id",
-            foreignKey: "boardId", // 생성 컬럼 이름
+            targetKey: "userName",  // id -> userName (관계 맺었을때 가져오는 값)
+            foreignKey: "userName", // 생성 컬럼 이름
         });
-
-
-
 
     }
 }

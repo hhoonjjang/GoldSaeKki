@@ -1,10 +1,16 @@
 import { useState } from "react";
-const AdminLoginComponent = ({ setAccount, accountInfo }) => {
+const AdminLoginComponent = ({
+  setAccount,
+  accountInfo,
+  isCookie,
+  onClick,
+  tempAdmin,
+}) => {
   const [values, setValues] = useState({
     id: "",
     password: "",
   });
-
+  console.log(tempAdmin);
   const handleChange = (e) => {
     setValues({
       ...values,
@@ -19,21 +25,40 @@ const AdminLoginComponent = ({ setAccount, accountInfo }) => {
   return (
     <div>
       <div>관리자로그인하기</div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type={"text"}
-          name="id"
-          placeholder={"아이디"}
-          onChange={handleChange}
-        ></input>
-        <input
-          type={"password"}
-          name="password"
-          placeholder={"비밀번호"}
-          onChange={handleChange}
-        ></input>
-        <button type="submit">관리자등록</button>
-      </form>
+      {!isCookie ? (
+        <form onSubmit={handleSubmit}>
+          <input
+            type={"text"}
+            name="id"
+            placeholder={"아이디"}
+            onChange={handleChange}
+          ></input>
+          <input
+            type={"password"}
+            name="password"
+            placeholder={"비밀번호"}
+            onChange={handleChange}
+          ></input>
+
+          <button type="submit">로그인하기</button>
+        </form>
+      ) : (
+        <>
+          {tempAdmin == "정재훈" ? (
+            <div>"{tempAdmin}" 최고관리자님 어서오세요</div>
+          ) : (
+            <div>"{tempAdmin}" 관리자님 어서오세요</div>
+          )}
+
+          <button
+            onClick={() => {
+              onClick();
+            }}
+          >
+            로그아웃하기
+          </button>
+        </>
+      )}
     </div>
   );
 };

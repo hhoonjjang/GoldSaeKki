@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 const BugCSComponent = ({ reportArr, onClick, isBoolen, onAnswer }) => {
   return (
     <BugCSBox>

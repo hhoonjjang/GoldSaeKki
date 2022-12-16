@@ -60,46 +60,27 @@ export const WORLDLIST = [
 
 
 const TYPE = {
-    CATEGORY: "/category",
-    // FREE: "category/Free",
-    // INFORMATION: "category/Information",
-    // TOPICDISCUSSION: "category/TopicDiscussion",
-    // ART: "category/Art",
-    // COORDINATION: "category/Coordination",
+    LIST : "/community/list",
 }
 
-const category = ({ category }) => {
-    console.log(category);
+const list = (list) => {
+    // console.log(list);
     return {
-        type: TYPE.CATEGORY,
-        payload: { category }
+        type: TYPE.LIST,
+        payload: { list }
     };
 };
 
-// export const action = { free, information, topicDiscussion, art, coordination };
-export const action = { category };
+export const action = { list };
 
-export const initialize = "";
+export const initialize = {};
 
 // 리듀서를 만들어준다. 그리고 state 초기값을 설정해준다.
 export const reducer = (state = initialize, action) => {
     const { type, payload } = action;
     switch (type) {
-        case TYPE.CATEGORY:
-            switch (payload.category) {
-                case "Free":
-                    return { category: "Free", text: "자유게시판" };
-                case "Information":
-                    return { category: "Information", text: "정보게시판" };
-                case "TopicDiscussion":
-                    return { category: "TopicDiscussion", text: "토론게시판" };
-                case "Art":
-                    return { category: "Art", text: "금쪽이아트" };
-                case "Coordination":
-                    return { category: "Coordination", text: "금쪽이코디" };
-                default:
-                    return state;
-            }
+        case TYPE.LIST:
+            return payload;
         default:
             return state;
     }

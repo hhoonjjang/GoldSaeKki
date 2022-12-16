@@ -38,18 +38,20 @@ const ListComponent = ({ categorys, category, route }) => {
   // Promise {<pending>} 형태로 값이 뽑아와 진다.
   console.log(boardsReq);
 
-  // 계속된 리랜더링 문제로 useEffect()로 감싸주었다.
+  // 계속된 리랜더링 문제로 useEffect()로 감싸주었다. 
+  // 카테고리가 변경될 때 Redux에 값을 저장해준다.
   useEffect(() => {
     // 배열의 객체로 값이 잘 뽑아와진다. Redux에 해당 리스트를 저장해 준다.
     boardsReq.then(boards => {
-      console.log(boards.data);
       dispatch(action.list(boards.data));
     });
-  }, []);
+  }, [category]);
 
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
   const boardList = useSelector(state => state);
   const boards = boardList.community.list;
+  // console.log(boards[0].id);
+  console.log(boards);
 
   return (
     <>
@@ -70,10 +72,39 @@ const ListComponent = ({ categorys, category, route }) => {
 
         {/* 게시글 목록 */}
         <ListBox>
+          {console.log(boards[0])}
+
           {/* 여기서 map 돌리기 */}
-          {boards.map(()=>{
-            
+          {boards && boards.map((board, idx) => {
+            return (
+              <Link to={`/Community/${route}/${board.id}`}>
+                <OneBoardList>
+                  <BoardTitle>
+                    <span className="server">[{board.world}]</span>{" "}
+                    <span className="title">
+                      {board.title}
+                    </span>
+                    {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
+                    {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
+
+                  </BoardTitle>
+                  <OtherBoardInfo>
+                    {/* 유저 서버 아이콘도 될수있으면 띄우기 : 이름/아이콘 누르면 해당 캐릭터 정보로 이동함 */}
+                    {/* 유저 이름은 제목의 오른쪽에 붙이는 게 나을 것 같다. */}
+                    <UserName>🎂 {board.userName}</UserName>
+                    <IconInfoWrap>
+                      <IconInfo className="heart">{board.likeCount}</IconInfo>
+                      {/* 이놈 예외처리 하기(오늘이면 시간만, 어제면 날짜만 출력, 작년이면 년도~일까지 출력) */}
+                      <IconInfo className="date">{board.createdAt.substr(0, 10)}</IconInfo>
+                      <IconInfo className="eyeCount">{board.eyeCount}</IconInfo>
+                    </IconInfoWrap>
+                  </OtherBoardInfo>
+                </OneBoardList>
+              </Link>
+            );
           })}
+          {/* 여기까지 map 돌림 */}
+
           <OneBoardList>
             <BoardTitle>
               {/* a : Link to로 바꾼뒤 해당 게시물로 보내줘야 함 : 게시글 번호 */}
@@ -123,21 +154,9 @@ const ListComponent = ({ categorys, category, route }) => {
                     </IconInfo>
                   );
                 })}
-                {/* <IconInfo className='heart'>1</IconInfo>
-                                <IconInfo className='date'>날짜디비</IconInfo>
-                                <IconInfo className='eyeCount'>2222</IconInfo> */}
               </IconInfoWrap>
             </OtherBoardInfo>
           </OneBoardList>
-
-          <OneBoardList>ㅎ</OneBoardList>
-          <OneBoardList>ㅎ</OneBoardList>
-          <OneBoardList>ㅎ</OneBoardList>
-          <OneBoardList>ㅎ</OneBoardList>
-          <OneBoardList>ㅎ</OneBoardList>
-          <OneBoardList>ㅎ</OneBoardList>
-          <OneBoardList>ㅎ</OneBoardList>
-          <OneBoardList>ㅎ</OneBoardList>
         </ListBox>
 
         {/* 취소, 글작성 버튼 */}
@@ -267,11 +286,18 @@ const OneBoardList = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
 `;
 const BoardTitle = styled.div`
   font-size: 16px;
   color: #333;
   float: left;
+  &>span:first-child{
+    color: #CA5196;
+  }
+  & > a{
+    color : rgb(51,51,51);
+  }
   & > a .server {
     font-size: 16px;
     margin-right: 5px;

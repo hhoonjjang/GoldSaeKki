@@ -70,8 +70,6 @@ const ListComponent = ({ categorys, category, route }) => {
 
         {/* 게시글 목록 */}
         <ListBox>
-          {/* {console.log(boards[0])} */}
-
           {/* 여기서 map 돌리기 */}
           {boards &&
             boards.map((board, idx) => {
@@ -85,10 +83,16 @@ const ListComponent = ({ categorys, category, route }) => {
                       {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
                     </BoardTitle>
                     <OtherBoardInfo>
-                      {/* 유저 서버 아이콘도 될수있으면 띄우기 : 이름/아이콘 누르면 해당 캐릭터 정보로 이동함 */}
-                      {/* 유저 이름은 제목의 오른쪽에 붙이는 게 나을 것 같다. */}
-                      {/* 유저 아이콘 띄우기 : 일단 모듈에서 가져와서 map 돌리고 해당하는 서버의 아이콘을 가져와 띄운다.  */}
-                      <UserName>🎂 {board.userName}</UserName>
+
+                      {/* 게시글 작성 유저 월드 아이콘 띄우기 */}
+                      {WORLDLIST.map((world, idx)=>{
+                        if(world.name == board.world){
+                          return <UserName><UserWorldImg src={`${world.img}`} /> {board.userName}</UserName>;
+                        }else{
+                          return;
+                        }
+                      })}
+
                       <IconInfoWrap>
                         <IconInfo className="heart">{board.likeCount}</IconInfo>
                         {/* 이놈 예외처리 하기(오늘이면 시간만, 어제면 날짜만 출력, 작년이면 년도~일까지 출력) */}
@@ -105,59 +109,6 @@ const ListComponent = ({ categorys, category, route }) => {
               );
             })}
           {/* 여기까지 map 돌림 */}
-
-          <OneBoardList>
-            <BoardTitle>
-              {/* a : Link to로 바꾼뒤 해당 게시물로 보내줘야 함 : 게시글 번호 */}
-              <a
-                href="/Community/Free/354367?search=c%253d3"
-                style={{ color: "rgb(51, 51, 51)" }}
-              >
-                <span className="server">[오로라]</span>{" "}
-                <span className="title">
-                  나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임
-                </span>
-                {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
-                {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
-              </a>
-            </BoardTitle>
-            <OtherBoardInfo>
-              {/* 유저 서버 아이콘도 될수있으면 띄우기 : 이름/아이콘 누르면 해당 캐릭터 정보로 이동함 */}
-              {/* 유저 이름은 제목의 오른쪽에 붙이는 게 나을 것 같다. */}
-              <UserName>🎂 하이하이</UserName>
-              <IconInfoWrap>
-                <IconInfo className="heart">11</IconInfo>
-                <IconInfo className="date">날짜디비</IconInfo>
-                <IconInfo className="eyeCount">0</IconInfo>
-              </IconInfoWrap>
-            </OtherBoardInfo>
-          </OneBoardList>
-
-          <OneBoardList>
-            <BoardTitle>
-              <a
-                href="/Community/Free/354367?search=c%253d3"
-                style={{ color: "rgb(51, 51, 51)" }}
-              >
-                <span className="server">[오로라]</span>{" "}
-                <span className="title">
-                  나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임
-                </span>
-              </a>
-            </BoardTitle>
-            <OtherBoardInfo>
-              <UserName>🈺 냐냐냔냐</UserName>
-              <IconInfoWrap>
-                {tempArr.map((item, idx) => {
-                  return (
-                    <IconInfo key={`icon-${idx}`} iconImg={item.img}>
-                      {item.text}
-                    </IconInfo>
-                  );
-                })}
-              </IconInfoWrap>
-            </OtherBoardInfo>
-          </OneBoardList>
         </ListBox>
 
         {/* 취소, 글작성 버튼 */}
@@ -408,6 +359,10 @@ const RegistBtn = styled.a`
     color: white;
     background-color: #ca5196;
   }
+`;
+
+const UserWorldImg = styled.img`
+
 `;
 
 // const PaginationBox = styled.div`

@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import MypageContainer from "../../User/MyPage/Container";
 
 const Header = ({ paint, icon, text, currUserName, logout }) => {
-  const [_, setRender] = useState(false);
   return (
     <HeaderComponent paint={paint} icon={icon} text={text}>
       <div className="header_innerBox">

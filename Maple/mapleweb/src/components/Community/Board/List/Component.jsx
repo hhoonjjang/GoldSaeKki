@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { WORLDLIST } from "../../../../modules/community";
+import { action, WORLDLIST } from "../../../../modules/community";
 // import { Link, Routes, Route } from "react-router-dom";
 import Pagination from 'react-js-pagination'
 
 import eyeImg from "../../images/info_eye_new.png";
 import heartImg from "../../images/info_heart2_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const tempArr = [
   { text: 1, img: "heart2_new" },
@@ -15,14 +17,39 @@ const tempArr = [
   { text: "2222", img: "eye_new" },
 ];
 
-const ListComponent = ({categorys, category, route}) => {
 
+const ListComponent = ({ categorys, category, route }) => {
+
+  const dispatch = useDispatch();
+
+  // 페이징 처리 라이브러리
   // https://velog.io/@dltmdwls15/pagination-Library%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%AA%A9%EB%A1%9D-%EA%B5%AC%ED%98%84
   // const [page, setPage] = useState(1);
   // const handlePageChange = (page) => { setPage(page); };
 
-  console.log(category);
-  console.log(route);
+  // 현재 유저 
+  const userName = useSelector((state) => state.user.currUserName);
+
+  // 해당 카테고리 목록을 가져오는 요청을 보낸다.
+  const boardsReq = axios.post("http://localhost:8080/api/board/findAll", {
+    category: category
+  });
+
+  // Promise {<pending>} 형태로 값이 뽑아와 진다.
+  console.log(boardsReq);
+
+  // 계속된 리랜더링 문제로 useEffect()로 감싸주었다.
+  useEffect(() => {
+    // 배열의 객체로 값이 잘 뽑아와진다. Redux에 해당 리스트를 저장해 준다.
+    boardsReq.then(boards => {
+      console.log(boards.data);
+      dispatch(action.list(boards.data));
+    });
+  }, []);
+
+  // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
+  const boardList = useSelector(state => state);
+  const boards = boardList.community.list;
 
   return (
     <>
@@ -44,6 +71,9 @@ const ListComponent = ({categorys, category, route}) => {
         {/* 게시글 목록 */}
         <ListBox>
           {/* 여기서 map 돌리기 */}
+          {boards.map(()=>{
+            
+          })}
           <OneBoardList>
             <BoardTitle>
               {/* a : Link to로 바꾼뒤 해당 게시물로 보내줘야 함 : 게시글 번호 */}
@@ -113,16 +143,27 @@ const ListComponent = ({categorys, category, route}) => {
         {/* 취소, 글작성 버튼 */}
         <ButtonBox>
           <div></div>
-          {/* Free 부분을 해당 카테고리 가져와서 넣어준다. */}
-          {/* 수정해야할 사항 : href 대신 Link to를 통해 해당 카테고리의 글 작성 라우터로 보낸다.  */}
-          {/* <Link to={"/Community/Free/BoardAdd"}> */}
-          <Link to={`/Community/${route}/BoardAdd`}>
-            <RegistBtn className="btn03_g" onClick={(e) => {
-              // 글 작성 버튼 클릭시 해당 요청 보내도록 코드 추가하기
+
+
+          {/* 로그인 유저 있으면 띄우고 없으면 로그인 페이지로 이동하는 Link to 띄우기 */}
+
+          {userName ?
+            <Link to={`/Community/${route}/BoardAdd`}>
+              <RegistBtn onClick={(e) => {
+                // 글 작성 버튼 클릭시 해당 요청 보내도록 코드 추가하기
+              }}>
+                글작성
+              </RegistBtn>
+            </Link>
+            :
+            <RegistBtn onClick={(e) => {
+              alert("로그인이 필요합니다.");
+              return;
             }}>
               글작성
             </RegistBtn>
-          </Link>
+          }
+
         </ButtonBox>
 
         {/* 페이지 */}
@@ -334,6 +375,7 @@ const RegistBtn = styled.a`
   display: inline-block;
   line-height: 1;
   margin: 0 5px;
+  cursor: pointer;
   &:hover {
     color: white;
     background-color: #ca5196;
@@ -352,7 +394,7 @@ const RegistBtn = styled.a`
 //     display: flex;
 //     justify-content: center;
 //     align-items: center;
-//     font-size: 1rem; 
+//     font-size: 1rem;
 //   }
 //   ul.pagination li:first-child{ border-radius: 5px 0 0 5px; }
 //   ul.pagination li:last-child{ border-radius: 0 5px 5px 0; }

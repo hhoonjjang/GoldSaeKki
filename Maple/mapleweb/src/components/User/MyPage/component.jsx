@@ -8,13 +8,17 @@ import { Link, useParams } from "react-router-dom";
 import ImgChangeContainer from "./ImgChange/Container";
 import NicknameChangeContainer from "./NicknameChange/Container";
 import MyBoardEditContainer from "./MyBoardEdit/Container";
-import MyCommentEditContainer from "./MyCommentEdit/Container";
+
 import UserOutContainer from "./UserOut/Container";
+import { useSelector } from "react-redux";
+import MyCommentEditContainer from "./MyCommentEdit/Container";
+
 
 const MypageComponent = () => {
   const dispatch = useDispatch();
   const route = useParams();
-
+  const currUserName = useSelector((state) => state.user.currUserName);
+  const currUserWorld = useSelector((state) => state.user.currServerName);
   console.log(route);
   dispatch(action.header("Mypage"));
   const CATEGORY = [
@@ -71,14 +75,14 @@ const MypageComponent = () => {
         <MypageContents>
           <LeftContent>
             <img src={profileimg} alt="프로필사진" />
-            <p>여기에 로그인된 닉네임</p>
+            <p>닉네임 : {currUserName}</p>
+            <p> 월드 : {currUserWorld}</p>
           </LeftContent>
           <RightContent>
             <div>
               <p>내정보 관리</p>
             </div>
             {myDiv()}
-            {/* {route.route == "userInfo1" ? <div>유저인포1이다.</div> : <></>} */}
           </RightContent>
         </MypageContents>
       </MypageBox>
@@ -106,7 +110,6 @@ const LeftContent = styled.div`
   padding: 20px;
   & > img {
     width: 200px;
-    margin: 20px;
   }
 
   & > p {
@@ -118,7 +121,7 @@ const RightContent = styled.div`
   padding: 20px;
   width: 100%;
 
-  & > div {
+  & div:first-child {
     background-color: #5e7bcb;
   }
 

@@ -1,9 +1,19 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
+import multer from "multer";
+import db from "../models/index.js";
 
 const router = Router();
 
-import db from "../models/index.js";
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./upload/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const uploader = multer({ storage: storage });
 
 router.post("/getUser", (req, res) => {
   db.User.findAll().then((data) => {
@@ -79,6 +89,57 @@ router.post("/login", (req, res) => {
 router.post("/logout", (req, res) => {
   res.clearCookie("login");
   res.send({ message: "쿠키 삭제 완료", status: 200 });
+});
+router.post("/clearCookie", (req, res) => {
+  db.User.update(
+    {
+      userName: req.body.changeName,
+    },
+    { where: { userName: req.body.currUserName } }
+  ).then(() => {
+    console.log("then안이다", req.body);
+    db.User.findOne({ where: { userName: req.body.changeName } }).then(
+      (data) => {
+        console.log("뭐냐", data);
+        res.clearCookie("login");
+        res.send({
+          message: "쿠키 삭제 완료",
+          changeName: req.body.changeName,
+          serverName: data.serverName,
+        });
+      }
+    );
+  });
+});
+
+router.post("/changename", (req, res) => {
+  console.log(req.body.changeName);
+
+  {
+    const token = jwt.sign(
+      {
+        server: req.body.serverName,
+        name: req.body.changeName,
+      },
+      process.env.JWT_KEY,
+      {
+        algorithm: "HS256",
+        expiresIn: "30m",
+        issuer: "goldsaekki",
+      }
+    );
+    res.cookie("login", token, { maxAge: 1800000 });
+    const { serverName, changeName } = req.body;
+    console.log("쿠키생성시", serverName, changeName);
+    res.send({
+      message: "쿠키생성 완료",
+      status: 200,
+      data: {
+        currServerName: serverName,
+        currUserName: changeName,
+      },
+    });
+  }
 });
 
 export default router;

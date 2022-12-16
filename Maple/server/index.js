@@ -63,6 +63,8 @@ db.sequelize
 
 app.use("/api", routes);
 
+app.use("/upload", express.static("upload"));
+
 app.post("/upload_files", (req, res) => {
   // console.log(req.body);
   if (req.files.length > 0) {

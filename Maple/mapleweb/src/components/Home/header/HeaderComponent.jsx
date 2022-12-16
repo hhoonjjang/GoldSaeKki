@@ -19,6 +19,7 @@ const Header = ({
   logout,
   setLogoutState,
 }) => {
+
   return (
     <HeaderComponent paint={paint} icon={icon} text={text}>
       <div className="header_innerBox">

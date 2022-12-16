@@ -1,6 +1,8 @@
 import MypageComponent from "./Component";
 import axios from "axios";
-import { Routes, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+
 const MypageContainer = () => {
   return <MypageComponent />;
 };

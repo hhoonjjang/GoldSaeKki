@@ -81,6 +81,7 @@ router.post("/buganswer", async (req, res) => {
       },
     }
   );
+  res.send();
   console.log(answer);
 });
 export default router;

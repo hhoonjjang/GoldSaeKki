@@ -19,6 +19,7 @@ const logout = () => {
 };
 
 const check = (userInfo) => {
+  console.log(userInfo);
   return {
     type: TYPE.CHECK,
     payload: { currServerName: userInfo.server, currUserName: userInfo.name },
@@ -39,8 +40,15 @@ export const reducer = (state = initialize, action) => {
       return state;
 
     case TYPE.CHECK:
-      return payload;
-
+      console.log(state, payload);
+      return {
+        currServerName: payload.currServerName
+          ? payload.currServerName
+          : state.currServerName,
+        currUserName: payload.currUserName
+          ? payload.currUserName
+          : state.currUserName,
+      };
     default:
       return state;
   }

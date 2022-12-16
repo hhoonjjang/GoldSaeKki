@@ -34,7 +34,7 @@ function App() {
       });
     }
   };
-  loginCheck();
+  // loginCheck();
   return (
     <div>
       {/* {(location.pathname = "/Adminstrator" ? <></> : <Menubar />)} */}

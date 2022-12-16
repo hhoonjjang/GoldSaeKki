@@ -12,7 +12,12 @@ import badge from "../Img/main_gamestart_badge.png";
 import MypageContainer from "../../User/MyPage/Container";
 import { useEffect, useState } from "react";
 
-const MainGamestartComponent = ({ currUserName, logout }) => {
+const MainGamestartComponent = ({
+  currUserName,
+  currUserWorld,
+  logout,
+  setLogoutState,
+}) => {
   return (
     <MainGamestart bgImg={gameStartBackground}>
       <div className="mainGamestart">
@@ -75,12 +80,15 @@ const MainGamestartComponent = ({ currUserName, logout }) => {
                       {currUserName}
                     </div>
                   </Link>
+                  <div className="mainGamestart_logged_innerBox_briefProfile_server">
+                    {currUserWorld}
+                  </div>
                   <div className="mainGamestart_logged_innerBox_briefProfile_Logout">
                     <Link to="/" element={<HomeComponet />}>
                       <button
                         className="mainGamestart_logged_innerBox_briefProfile_LogoutButton"
                         onClick={() => {
-                          logout();
+                          setLogoutState((state) => !state);
                         }}
                       >
                         로그아웃
@@ -232,8 +240,14 @@ const MainGamestart = styled.div`
           .mainGamestart_logged_innerBox_briefProfile_name {
             margin-top: 9px;
             margin-bottom: 10px;
+            color: white;
           }
-
+          .mainGamestart_logged_innerBox_briefProfile_server {
+            color: white;
+            margin-top: 9px;
+            margin-bottom: 10px;
+            font-size: 11px;
+          }
           .mainGamestart_logged_innerBox_briefProfile_LogoutButton {
             color: white;
             background-color: rgb(59, 117, 210);

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import Login from "../../User";
-
 import logo from "../Img/goldsaekki-logo.png";
 import gameStart from "../Img/game-start.png";
 import download from "../Img/header_game_down.png";
@@ -12,9 +11,14 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import MypageContainer from "../../User/MyPage/Container";
 
-const Header = ({ paint, icon, text, currUserName, logout }) => {
-  const [_, setRender] = useState(false);
-  useEffect(() => setRender((state) => !state));
+const Header = ({
+  paint,
+  icon,
+  text,
+  currUserName,
+  logout,
+  setLogoutState,
+}) => {
   return (
     <HeaderComponent paint={paint} icon={icon} text={text}>
       <div className="header_innerBox">
@@ -34,27 +38,34 @@ const Header = ({ paint, icon, text, currUserName, logout }) => {
             />
             {document.cookie.split("=")[0] == "login" ? (
               <div className="header_innerBox_center_loggedin_innerBox">
-                <Link
-                  to="/Mypage"
-                  element={<MypageContainer />}
-                  className="header_innerBox_center_loggedin_Link"
-                >
-                  <div>
+                <div>
+                  <Link
+                    to="/Mypage"
+                    element={<MypageContainer />}
+                    className="header_innerBox_center_loggedin_Mypage"
+                  >
                     <div className="header_innerBox_center_loggedin_logo">
                       <img src={logo} alt="Logo" />
                     </div>
-                    <div className="header_innerBox_center_loggedin_text">
+                  </Link>
+                  <div className="header_innerBox_center_loggedin_text">
+                    <Link
+                      to="/Mypage"
+                      element={<MypageContainer />}
+                      className="header_innerBox_center_loggedin_name"
+                    >
                       <span>{currUserName}</span>
-                      <span
-                        onClick={() => {
-                          logout();
-                        }}
-                      >
-                        로그아웃
-                      </span>
-                    </div>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        setLogoutState((state) => !state);
+                        // logout();
+                      }}
+                    >
+                      로그아웃
+                    </button>
                   </div>
-                </Link>
+                </div>
               </div>
             ) : (
               <div className="header_innerBox_center_login_innerBox">
@@ -104,6 +115,7 @@ const HeaderComponent = styled.div`
   background-image: url(${(props) =>
     props.paint || "../Img/header_banner/header_banner_community.png"});
   background-repeat: no-repeat;
+  background-position: center;
 
   .header_innerBox {
     display: flex;
@@ -162,7 +174,7 @@ const HeaderComponent = styled.div`
   .header_innerBox_center_login_innerBox {
     position: relative;
     justify-content: end;
-    bottom: 0px;
+    bottom: -20px;
     right: 50px;
     display: flex;
     width: 200px;
@@ -251,9 +263,9 @@ const HeaderComponent = styled.div`
   }
 
   .header_innerBox_center_loggedin_logo {
-    /* position: absolute; */
-    /* bottom: 20px; */
-    /* left: -140px; */
+    position: absolute;
+    bottom: 0px;
+    left: -140px;
     z-index: 4;
   }
 
@@ -263,26 +275,26 @@ const HeaderComponent = styled.div`
     border-radius: 50%;
   }
   .header_innerBox_center_loggedin_text {
-    /* position: absolute; */
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
     z-index: 4;
-    /* bottom: 20px;
-    left: -80px; */
+    bottom: 0px;
+    left: -70px;
   }
 
-  .header_innerBox_center_loggedin_text > span {
-  }
-
-  .header_innerBox_center_loggedin_text > span:first-child {
+  .header_innerBox_center_loggedin_text span {
     font-size: 14px;
     color: white;
   }
 
-  .header_innerBox_center_loggedin_text > span:last-child {
-    font-size: 20px;
-    color: orange;
+  .header_innerBox_center_loggedin_name {
+  }
+  .header_innerBox_center_loggedin_text button {
+    background-color: orange;
+    color: white;
+    border: none;
   }
 
   .header_innerBox_center_startDownload {

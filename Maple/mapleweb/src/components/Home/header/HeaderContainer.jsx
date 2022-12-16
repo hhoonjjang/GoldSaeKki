@@ -1,7 +1,18 @@
 import HeaderComponent from "./HeaderComponent";
 
 import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const logout = () => {
+  try {
+    axios.post("http://localhost:8080/api/user/logout").then((data) => {});
+  } catch (error) {
+    console.error(error);
+  }
+  // document.cookie = "login" + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+};
 
 const HeaderContainer = () => {
   const headerBanner = useSelector((state) => state.header.banner);
@@ -9,10 +20,17 @@ const HeaderContainer = () => {
   const headerText = useSelector((state) => state.header.text);
   const currUserName = useSelector((state) => state.user.currUserName);
   const [_, setRender] = useState(false);
-  const logout = () => {
-    document.cookie = "login" + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-    setRender((state) => !state);
-  };
+  const navigate = useNavigate();
+  const [logoutState, setLogoutState] = useState(false);
+  const onlyHeaderLogoutUpdate = useRef(false);
+
+  useEffect(() => {
+    if (onlyHeaderLogoutUpdate.current) {
+      logout();
+      navigate("/");
+    } else onlyHeaderLogoutUpdate.current = true;
+  }, [logoutState]);
+
   return (
     <HeaderComponent
       paint={headerBanner}
@@ -20,6 +38,7 @@ const HeaderContainer = () => {
       text={headerText}
       currUserName={currUserName}
       logout={logout}
+      setLogoutState={setLogoutState}
     ></HeaderComponent>
   );
 };

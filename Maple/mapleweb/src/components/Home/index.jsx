@@ -1,7 +1,6 @@
 import MainSlide from "./mainSlide/MainSlide";
 import MainGamestartContainer from "./mainGamestart/MainGamestartContainer";
 import MainNotice from "./mainNotice/MainNotice";
-import MainCommunity from "./mainCommunity/MainCommunity";
 import MainInfo from "./mainInfo/MainInfo";
 
 import Shortcut from "./shortcut/Shortcut";
@@ -9,6 +8,7 @@ import Shortcut from "./shortcut/Shortcut";
 import archive from "./Img/main_archive.png";
 
 import styled from "styled-components";
+import MainCommunityContainer from "./mainCommunity/MainCommunityContainer";
 
 const HomeComponet = () => {
   return (
@@ -20,7 +20,7 @@ const HomeComponet = () => {
         <TempSlide></TempSlide>
         <MainGamestartContainer></MainGamestartContainer>
         <MainNotice />
-        <MainCommunity />
+        <MainCommunityContainer></MainCommunityContainer>
         <MainArchive>
           <img src={archive} />
         </MainArchive>

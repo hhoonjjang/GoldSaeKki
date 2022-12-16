@@ -38,7 +38,7 @@ const AdminLoginContainer = () => {
       console.error("에러");
     }
   );
-  const tempAdmin = useSelector((state) => state.admin.name);
+  const tempAdmin = useSelector((state) => state?.admin?.name);
   console.log(tempAdmin);
   return (
     <AdminLoginComponent

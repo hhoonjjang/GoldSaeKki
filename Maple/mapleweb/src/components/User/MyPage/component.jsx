@@ -13,7 +13,6 @@ import UserOutContainer from "./UserOut/Container";
 import { useSelector } from "react-redux";
 import MyCommentEditContainer from "./MyCommentEdit/Container";
 
-
 const MypageComponent = () => {
   const dispatch = useDispatch();
   const route = useParams();

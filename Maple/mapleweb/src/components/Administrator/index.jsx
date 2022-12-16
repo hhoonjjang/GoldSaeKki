@@ -8,8 +8,7 @@ const AdministratorComponet = () => {
   const dispatch = useDispatch();
   dispatch(action.header("Administrator"));
   const isCookie = document.cookie;
-  const tempAdmin = useSelector((state) => state.admin);
-  console.log(tempAdmin);
+  const tempAdmin = useSelector((state) => state?.admin);
   return (
     <AdminBox>
       {!isCookie ? (
@@ -18,7 +17,7 @@ const AdministratorComponet = () => {
         </>
       ) : (
         <>
-          {tempAdmin.name == "정재훈" ? <AccountContainer /> : <></>}
+          {tempAdmin?.name == "정재훈" ? <AccountContainer /> : <></>}
 
           <AdminLoginContainer />
           <BugCSContainer />

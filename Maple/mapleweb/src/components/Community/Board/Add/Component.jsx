@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { WORLDLIST } from '../../../../modules/community';
 
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 // CKEditor 이미지 업로드를 위한 multer 기본 세팅
 // const API_URL = "http://localhost:8080";
@@ -23,6 +24,10 @@ const AddComponent = ({ categorys, category, route }) => {
     const handleSelect = (e) => {
         setSelected(e.target.value);
     };
+
+    // 현재 로그인한 유저 정보 가져오기
+    const userWorldName = useSelector((state) => state.user.currServerName);
+    const userName = useSelector((state) => state.user.currUserName);
 
 
     // {/* 폼 태그로 감싸주기, 데이터 값 받아서 보낼 수 있도록 꺼내오기(onChange, onInput 등등) */ }
@@ -108,8 +113,8 @@ const AddComponent = ({ categorys, category, route }) => {
                             category : category,
                             contents : contentData,
                             tags : tags,
-                            // 유저 아이디 로그인 정보에서 가져오기
-                            userId : "efforthye" //임시
+                            // 유저 아이디 로그인 정보에서 가져옴
+                            userName : userName,
                         });
                     }}>등록</RegistBtn>
                 </ButtonBox>

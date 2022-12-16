@@ -9,10 +9,12 @@ router.post("/create", async (req, res) => {
     console.log(req.body);
 
     try {
-        // 유저 db에서 아이디를 찾아 관계 맺은 키값을 가져와서 
+        // 유저 db에서 userName을 찾아 관계 맺은 키값을 가져와서
+        // User 테이블에 유저가 보낸 해당 이름이 있으면 가져온다.
+        // 해당 유저 이름이 없으면 에러 출력해도 될듯
         const tempUser = await db.User.findOne({
             where: {
-                userId: req.body.userId,
+                userName: req.body.userName,
             },
         });
 

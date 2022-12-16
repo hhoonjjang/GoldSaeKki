@@ -47,8 +47,29 @@ router.post("/findAll", async (req, res) => {
       },
     });
 
-    // 값을 뽑아오려면 tempBoards[해당번호].dataValues로 가져와야 한다.
-    console.log(tempBoards);
+    // 게시글 목록
+    router.post("/findAll", async (req, res) => {
+      try {
+        // 게시판 db의 category가 유저가 보낸 category와 같은 것을 모두 찾아온다.
+        const tempBoards = await db.Board.findAll({
+          where: {
+            category: req.body.category,
+          },
+        });
+
+        // 값을 뽑아오려면 tempBoards[해당번호].dataValues로 가져와야 한다.
+        console.log(tempBoards);
+
+        res.send(tempBoards);
+      } catch (error) {
+        console.error(error);
+        res.send(error);
+      }
+    });
+
+    // 게시글 한개
+    // 게시글 수정
+    // 게시글 삭제
 
     res.send(tempBoards);
   } catch (error) {

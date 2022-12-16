@@ -4,7 +4,7 @@ import { initialize as headerIni, reducer as headerReducer } from "./header";
 import { initialize as registIni, reducer as registReducer } from "./regist";
 
 import { initialize as userIni, reducer as userReducer } from "./user";
-import { initialize as categoryIni, reducer as categoryReducer } from "./community";
+import { initialize as communityIni, reducer as communityReducer } from "./community";
 
 import { initialize as reportIni, reducer as reportReducer } from "./support";
 const store = createStore(
@@ -13,9 +13,9 @@ const store = createStore(
     report: reportReducer,
     user: userReducer,
     header: headerReducer,
-    category: categoryReducer
+    community: communityReducer
   }),
-  { regist: registIni, report: reportIni, header: headerIni, user: userIni, category: categoryIni },
+  { regist: registIni, report: reportIni, header: headerIni, user: userIni, community: communityIni },
 
   composeWithDevTools()
 );

@@ -7,20 +7,18 @@ import db from "../models/index.js";
 // 게시글 추가
 router.post("/create", async (req, res) => {
     console.log(req.body);
-
     try {
-        // 유저 db에서 userName을 찾아 관계 맺은 키값을 가져와서
-        // User 테이블에 유저가 보낸 해당 이름이 있으면 가져온다.
-        // 해당 유저 이름이 없으면 에러 출력해도 될듯
+        // 유저 db에서 userName이 유저가 보낸 userName과 같은 것을 찾아온다.
         const tempUser = await db.User.findOne({
             where: {
                 userName: req.body.userName,
             },
         });
-
-        // 유저 테이블 전체가 출력된다.
-        // console.log(tempUser);
-
+        // 해당 로그인 유저 없으면 리턴
+        if (!tempUser) {
+            res.send({ status: 401 });
+            return;
+        };
         // 일단 게시판 DB에 값을 집어넣고
         const tempBoard = await db.Board.create({
             title: req.body.title,
@@ -29,24 +27,41 @@ router.post("/create", async (req, res) => {
             contents: req.body.contents,
             tags: req.body.tags,
         });
-
-        // 연결관계 맺은 놈에도 같이 값 집어넣어 준다.
+        // 연결관계 맺은 놈으로 같이 값 집어넣어 연결해준다.
         tempUser.addBoard(tempBoard);
-
-        res.send({status : 200});
-
+        res.send({ status: 200 });
     } catch (error) {
         console.log(error);
-        res.send({status : 400});
+        res.send({ status: 400 });
     }
-
-    // 유저 아이디는 데이더베이스 관계 맺은 것 때문에 
-    // 컬럼 이름이 user_Id 이므로 user_Id로 적어줘야 함
-    // 유저 아이디 : 로그인 정보에서 받아오기
-    // 근데 유저 아이디 값이 db에 안 들어가는 상태이다.
-
 });
 
+
+// 게시글 목록
+router.post("/findAll", async (req, res) => {
+    try {
+        // 게시판 db의 category가 유저가 보낸 category와 같은 것을 모두 찾아온다.
+        const tempBoards = await db.Board.findAll({
+            where: {
+                category: req.body.category,
+            },
+        });
+
+        // 값을 뽑아오려면 tempBoards[해당번호].dataValues로 가져와야 한다.
+        console.log(tempBoards);
+
+        res.send(tempBoards);
+
+    } catch (error) {
+        console.error(error);
+        res.send(error);
+    }
+});
+
+
+// 게시글 한개
+// 게시글 수정
+// 게시글 삭제
 
 
 

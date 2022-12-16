@@ -27,7 +27,10 @@ export default class Board extends Sequelize.Model {
                 likeCount: {
                     type: Sequelize.INTEGER,
                     defaultValue: 0,
-                }
+                },
+                userWorld: {
+                    type: Sequelize.STRING(255),
+                },
             },
             {
                 sequelize,

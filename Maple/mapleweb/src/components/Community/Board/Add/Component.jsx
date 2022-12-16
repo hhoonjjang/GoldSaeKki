@@ -24,7 +24,7 @@ const AddComponent = ({ categorys, category, route }) => {
     };
 
     // 현재 로그인 유저 정보
-    const userWorldName = useSelector((state) => state.user.currServerName);
+    const userWorld = useSelector((state) => state.user.currServerName);
     const userName = useSelector((state) => state.user.currUserName);
 
     // 이미지 등록 시 폼 태그로 감싸주기
@@ -99,6 +99,7 @@ const AddComponent = ({ categorys, category, route }) => {
                             contents: contentData,
                             tags: tags,
                             userName: userName,
+                            userWorld: userWorld,
                         });
 
                         // 응답 받아오기

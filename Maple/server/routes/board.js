@@ -27,6 +27,7 @@ router.post("/create", async (req, res) => {
       category: req.body.category,
       contents: req.body.contents,
       tags: req.body.tags,
+      userWorld : req.body.userWorld,
     });
     // 연결관계 맺은 놈으로 같이 값 집어넣어 연결해준다.
     tempUser.addBoard(tempBoard);
@@ -56,6 +57,7 @@ router.post("/findAll", async (req, res) => {
     res.send(error);
   }
 });
+
 
 router.post("/mainCommunity", async (req, res) => {
   try {

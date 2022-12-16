@@ -84,9 +84,9 @@ const ListComponent = ({ categorys, category, route }) => {
                     </BoardTitle>
                     <OtherBoardInfo>
 
-                      {/* 게시글 작성 유저 월드 아이콘 띄우기 */}
                       {WORLDLIST.map((world, idx)=>{
-                        if(world.name == board.world){
+
+                        if(world.name == board.userWorld){
                           return <UserName><UserWorldImg src={`${world.img}`} /> {board.userName}</UserName>;
                         }else{
                           return;

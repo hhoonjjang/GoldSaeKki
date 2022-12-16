@@ -23,8 +23,6 @@ router.post("/login", async (req, res) => {
     const tempAdmin = await db.Admin.findOne({
       where: { adminId: req.body.id },
     });
-    console.log(tempAdmin.dataValues.adminPw);
-    console.log(Cryptojs.SHA256(req.body.password).toString());
     if (
       tempAdmin.dataValues.adminPw ==
       Cryptojs.SHA256(req.body.password).toString()
@@ -41,15 +39,29 @@ router.post("/login", async (req, res) => {
             algorithm: "HS256",
             issuer: "jjh",
           }
-        )
+        ),
+        { maxAge: 1800000 }
       );
+      const name = tempAdmin.dataValues.adminName;
       res.send({
-        name: tempAdmin.dataValues.adminName,
+        name: name,
       });
     }
   } catch (err) {
     console.error(err);
   }
+});
+
+router.post("/admincheck", (req, res) => {
+  const tempAdmin = jwt.verify(req.cookies.admin, process.env.JWT_KEY);
+  console.log("템프어드민");
+  console.log(tempAdmin);
+  res.send(tempAdmin.name);
+});
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("admin");
+  res.send({ message: "로그아웃" });
 });
 
 export default router;

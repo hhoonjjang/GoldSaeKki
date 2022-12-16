@@ -3,9 +3,11 @@ import { Router } from "express";
 const router = Router();
 
 import db from "../models/index.js";
+import { Op } from "sequelize";
 
 // 게시글 추가
 router.post("/create", async (req, res) => {
+
     console.log(req.body);
     try {
         // 유저 db에서 userName이 유저가 보낸 userName과 같은 것을 찾아온다.
@@ -58,11 +60,46 @@ router.post("/findAll", async (req, res) => {
     }
 });
 
+    // 연결관계 맺은 놈에도 같이 값 집어넣어 준다.
+    tempUser.addBoard(tempBoard);
 
-// 게시글 한개
-// 게시글 수정
-// 게시글 삭제
+    res.send({ status: 200 });
+  } catch (error) {
+    console.log(error);
+    res.send({ status: 400 });
+  }
 
 
+  // 유저 아이디는 데이더베이스 관계 맺은 것 때문에
+  // 컬럼 이름이 user_Id 이므로 user_Id로 적어줘야 함
+  // 유저 아이디 : 로그인 정보에서 받아오기
+  // 근데 유저 아이디 값이 db에 안 들어가는 상태이다.
+});
+
+router.post("/mainCommunity", async (req, res) => {
+  try {
+    const tempBoard = await db.Board.findAll({
+      order: [
+        ["createdAt", "DESC"],
+        ["category", "DESC"],
+      ],
+      group: "category",
+      where: {
+        [Op.or]: [
+          { category: "자유게시판" },
+          { category: "정보게시판" },
+          { category: "토론게시판" },
+        ],
+      },
+    });
+    res.send({
+      status: 200,
+      result: tempBoard,
+    });
+  } catch (error) {
+    console.error(error);
+    res.send({ status: 400 });
+  }
+});
 
 export default router;

@@ -7,14 +7,13 @@ import { useEffect, useRef, useState } from 'react';
 import { WORLDLIST } from '../../../../modules/community';
 
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 // CKEditor 이미지 업로드를 위한 multer 기본 세팅
 // const API_URL = "http://localhost:8080";
 // const UPLOAD_ENDPOINT = "upload_files";
 
 const AddComponent = ({ categorys, category, route }) => {
-
-    const CKHeight = useRef();
 
     const [titleText, setTitleText] = useState("");
     const [contentData, setContentData] = useState("");
@@ -24,9 +23,11 @@ const AddComponent = ({ categorys, category, route }) => {
         setSelected(e.target.value);
     };
 
+    // 현재 로그인 유저 정보
+    const userWorldName = useSelector((state) => state.user.currServerName);
+    const userName = useSelector((state) => state.user.currUserName);
 
-    // {/* 폼 태그로 감싸주기, 데이터 값 받아서 보낼 수 있도록 꺼내오기(onChange, onInput 등등) */ }
-
+    // 이미지 등록 시 폼 태그로 감싸주기
 
     return (
 
@@ -37,8 +38,11 @@ const AddComponent = ({ categorys, category, route }) => {
                 <TitleWrap>
                     <CategorySelector name='serverName' onChange={handleSelect} value={selected}>
                         {/* 서버 이름 module에서 가져와 map으로 띄우기 */}
+
+                        {/* 유저의 서버와 같으면 해당 선택해주기 */}
+
                         {WORLDLIST.map((item, idx) => {
-                            if (idx === 0) return;
+                            if (idx === 0) return null;
                             // 만약 유저의 서버이름과 같은게 있으면 그것을 선택시켜줌
                             return <option key={`world-${idx}`} value={`${item.name}`}>{item.name}</option>
                         })}
@@ -76,7 +80,7 @@ const AddComponent = ({ categorys, category, route }) => {
                 </CKEditor>
                 <TagWrap>
                     <TagSpan>태그 달기</TagSpan>
-                    <TagInput type={"text"} placeholder={"태그와 태그는 #으로 구분하며, 10개까지 입력하실 수 있습니다."} onInput={(e)=>{
+                    <TagInput type={"text"} placeholder={"태그와 태그는 #으로 구분하며, 10개까지 입력하실 수 있습니다."} onInput={(e) => {
                         setTags(e.target.value)
                     }}></TagInput>
                 </TagWrap>
@@ -85,37 +89,41 @@ const AddComponent = ({ categorys, category, route }) => {
                 <ButtonBox>
                     {/* 이놈 href 말고 Link to로 보내야 한다. ! */}
                     <CancelBtn href={`/Community/${route}`} className="btn03_g">취소</CancelBtn>
-                    {/* <RegistBtn href="/Community/Add" className="btn03_g" onClick={(e) => { */}
-                    <RegistBtn className="btn03_g" onClick={(e) => {
-                        // 이제 axios로 서버쪽에 요청을 보내주고, 서버쪽에 요청받아 처리하는 코드 작성하기
-                        console.log(`title : ${titleText}`);
-                        console.log(`world : ${selected}`);
-                        console.log(`category : ${category}`);
-                        console.log(`category : ${route}`);
-                        console.log(`contents : ${contentData}`);
-                        console.log(`tags : ${tags}`);
-                        // 로그인 유저 정보도 받아와서 넣어줘야 한다.
-                        // 로그인 유저가 없으면 게시글등록 페이지에 못들어오게 한다.
-                        // 유저 로그인 컨테이너에 들어있다.
-                        // 쿠키에서 가져옴
-                        // 일단 로그인 유저 아이디를 efforthye로 보낸다.
-                        console.log(`userId : efforthye`);
+                    <RegistBtn className="btn03_g" onClick={async (e) => {
 
-                        // 서버쪽에 요청을 보낸다.
-                        axios.post("http://localhost:8080/api/board/create", {
-                            title : titleText,
-                            world : selected,
-                            category : category,
-                            contents : contentData,
-                            tags : tags,
-                            // 유저 아이디 로그인 정보에서 가져오기
-                            userId : "efforthye" //임시
+                        // 서버쪽에 등록 요청을 보낸다.
+                        const regist = await axios.post("http://localhost:8080/api/board/create", {
+                            title: titleText,
+                            world: selected,
+                            category: category,
+                            contents: contentData,
+                            tags: tags,
+                            userName: userName,
                         });
+
+                        // 응답 받아오기
+                        switch (regist.data.status) {
+                            case 200:
+                                // 성공 알람, 게시물 상세 페이지로 리턴
+                                alert("게시글 등록됨");
+                                return;
+                            case 400:
+                                alert("게시글 등록 에러");
+                                return;
+                            case 401:
+                                alert("유저 정보가 없습니다.");
+                                return;
+                            default:
+                                break;
+                        }
+
                     }}>등록</RegistBtn>
                 </ButtonBox>
+
                 {/* 값을 보기 위해 임시로 만듬 : 일단 값 잘 받아와짐 */}
                 {/* 나중에 이미지도 추가할 수 있게 하기 */}
                 {/* <div>내용 : {contentData}</div> */}
+
             </ContentBox>
         </>
     );
@@ -191,8 +199,6 @@ const CategoryTitle = styled.h1`
     cursor: default;
 `;
 
-
-
 const TagWrap = styled.div`
     border : 1px solid #CCCED1;
     /* margin-top: 30px; */
@@ -220,7 +226,6 @@ const TagInput = styled.input`
     border: 1px solid #CCCED1;
     font-size: 15px;
     padding: 0 10px;
-
 `;
 
 const ButtonBox = styled.div`
@@ -229,7 +234,6 @@ const ButtonBox = styled.div`
     margin: 16px 0;
     display: flex;
     justify-content: center;
-
 `;
 const CancelBtn = styled.a`
     min-width: 53px;

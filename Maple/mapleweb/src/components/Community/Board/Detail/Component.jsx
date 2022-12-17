@@ -1,12 +1,26 @@
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { WORLDLIST } from '../../../../modules/community';
 // import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import LinkIcon from "../../images/link_btn.png";
 import AlarmIcon from "../../images/report_btn2.png";
 
+import eyeImg from "../../images/info_eye_new.png";
+import heartImg from "../../images/info_heart2_new.png";
+import dateImg from "../../images/info_sub_date_new.png";
+import lineImg from "../../images/btn_line_img.png";
 
-const DetailComponent = ({categorys, category}) => {
+import moment from 'moment';
 
-    
+const DetailComponent = ({ categorys, category }) => {
+
+    // 라우터 상단의 번호를 가져와 그 번호를 아래 보드 번호로 맞춰준다.
+
+    // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
+    const boardList = useSelector((state) => state);
+    const boards = boardList.community.list;
+    const board = boards[0];
+    console.log(board);
 
     return (
         <>
@@ -23,19 +37,27 @@ const DetailComponent = ({categorys, category}) => {
             {/* 여기서부터 게시글 상세 페이지 내용 시작 */}
             <ContentBox>
                 <BoardTitle>
-                    <BoardTitleSpan>[오로라]</BoardTitleSpan>{" "}
-                    <BoardTitleText>"그의 노력을 폄하하려는 의도는 아니었다."</BoardTitleText>
+                    <BoardTitleSpan>[{board.world}]</BoardTitleSpan>{" "}
+                    <BoardTitleText>{board.title}</BoardTitleText>
                 </BoardTitle>
 
                 {/* BoardInfo */}
                 <BoardInfoBox>
                     <BoardUserName>
-                        {/* 서버(월드)아이콘과 닉네임 map으로 출력하기 */}
-                        🈺 efforthye
+                        {WORLDLIST.map((world, idx) => {
+                            if (world.name == board.userWorld) {
+                                return <UserName key={`userName-${idx}`}><UserWorldImg key={`userWorldImg-${idx}`} src={`${world.img}`} style={{ marginRight: "1px" }} /> {board.userName}</UserName>;
+                            } else {
+                                return;
+                            }
+                        })}
                     </BoardUserName>
                     <BoardInfo>
                         {/* 나머지정보들 */}
-                        <div>조회수, 등록시간</div>{" | "}
+                        <IconInfo>
+                            <span style={{margin : "0px 10px"}}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board.eyeCount}{" "}{" "}</span>
+                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString()}</span>
+                        </IconInfo><img src={lineImg} alt={"구분선 이미지"} style={{margin : "0px 10px"}} />
                         <IconBox>
                             <IconWrap>
                                 <BoardOtherIcon src={LinkIcon} alt='링크 아이콘' onClick={() => {
@@ -51,23 +73,18 @@ const DetailComponent = ({categorys, category}) => {
                     </BoardInfo>
                 </BoardInfoBox>
 
-                {/* 내용 영역 */}
-                <BoardContent>
-                    <p>내용내용</p><p>내용내용</p><p>크크크</p><p>내용내용</p><p>내용내용</p><p>내용내용</p>
+                {/* 내용 영역 : innerHTML으로 넣었다. */}
+                <BoardContent dangerouslySetInnerHTML={{ __html: board.contents }}>
                 </BoardContent>
 
                 {/* 공감영역 */}
                 <LikeWrap>
                     <LikeBtn><span>❤ 공감하기</span></LikeBtn>
-                    <LikeCheck><span>0 명</span></LikeCheck>
+                    <LikeCheck><span>{board.likeCount} 명</span></LikeCheck>
                 </LikeWrap>
-                {/* <LikeWrap>
-                    <LikeBtn>공감하기</LikeBtn>
-                    <LikeCheck>12121212명</LikeCheck>
-                </LikeWrap> */}
-
 
                 {/* 댓글 영역 */}
+                {/* 여기서부터 댓글 컴포넌트 만들어진 이후에 작업 */}
                 <CommentInfo>
                     {/* 몇개인지,색깔바꾸기 */}
                     댓글{" "}
@@ -88,7 +105,7 @@ const DetailComponent = ({categorys, category}) => {
                     <CommentAdd>
                         <CommentTextArea name='comment'></CommentTextArea>
                         <CommentBtnWrap>
-                            <div style={{fontSize:"25px", marginLeft:"5px"}}>🦢</div>
+                            <div style={{ fontSize: "25px", marginLeft: "5px" }}>🦢</div>
                             <CommentAddBtn>등록</CommentAddBtn>
                         </CommentBtnWrap>
 
@@ -179,6 +196,8 @@ const BoardUserName = styled.div`
     margin-left: 27px;
     height: 100%;
     font-size: 13px;
+    display: flex;
+    align-items: center;
     &>a{
         float: left;
         color: #888;
@@ -349,4 +368,29 @@ const CommentAddBtn = styled.div`
     display: inline-block;
     line-height: 1;
     /* float: left; */
+`;
+
+const UserName = styled.span`
+  float: left;
+  width: 110px;
+  max-width: 110px;
+  color: #888888;
+  font-size: 12px;
+  font-family: "NanumBarunGothic", "Malgun Gothic", sans-serif;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+`;
+
+const UserWorldImg = styled.img`
+
+`;
+const IconInfo = styled.div`
+    color : #888;
+    &>span{
+        /* display: flex;
+        align-items: center; */
+    }
 `;

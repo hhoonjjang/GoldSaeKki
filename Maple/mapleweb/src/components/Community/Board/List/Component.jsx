@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { action, WORLDLIST } from "../../../../modules/community";
 // import { Link, Routes, Route } from "react-router-dom";
 import Pagination from "react-js-pagination";
-
-import eyeImg from "../../images/info_eye_new.png";
-import heartImg from "../../images/info_heart2_new.png";
-import dateImg from "../../images/info_sub_date_new.png";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
 import moment from "moment";
+
+import { action, WORLDLIST } from "../../../../modules/community";
+import eyeImg from "../../images/info_eye_new.png";
+import heartImg from "../../images/info_heart2_new.png";
+import dateImg from "../../images/info_sub_date_new.png";
 
 const tempArr = [
   { text: 1, img: "heart2_new" },
@@ -63,8 +62,8 @@ const ListComponent = ({ categorys, category, route }) => {
           {WORLDLIST.map((item, idx) => {
             return (
               <WorldSpan key={`world-${idx}`}>
-                <WorldImg src={item.img} alt={"월드 이미지"} />{" "}
-                <WorldNameSpan>{item.name}</WorldNameSpan>
+                <WorldImg key={`worldImg-${idx}`} src={item.img} alt={"월드 이미지"} />{" "}
+                <WorldNameSpan key={`worldName-${idx}`}>{item.name}</WorldNameSpan>
               </WorldSpan>
             );
           })}
@@ -76,11 +75,11 @@ const ListComponent = ({ categorys, category, route }) => {
           {boards &&
             boards.map((board, idx) => {
               return (
-                <Link to={`/Community/${route}/${board.id}`}>
-                  <OneBoardList>
-                    <BoardTitle>
-                      <span className="server">[{board.world}]</span>{" "}
-                      <span className="title">{board.title}</span>
+                <Link key={`boardIdLink-${idx}`} to={`/Community/${route}/${board.id}`}>
+                  <OneBoardList key={`oneBoard-${idx}`}>
+                    <BoardTitle key={`boardTitle-${idx}`}>
+                      <span key={`boardWorld-${idx}`} className="server">[{board.world}]</span>{" "}
+                      <span key={`boardTitleName-${idx}`} className="title">{board.title}</span>
                       {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
                       {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
                     </BoardTitle>
@@ -89,26 +88,26 @@ const ListComponent = ({ categorys, category, route }) => {
                       {WORLDLIST.map((world, idx) => {
 
                         if (world.name == board.userWorld) {
-                          return <UserName><UserWorldImg src={`${world.img}`} /> {board.userName}</UserName>;
+                          return <UserName key={`userName-${idx}`}><UserWorldImg key={`userWorldImg-${idx}`} src={`${world.img}`} style={{marginRight : "1px"}} /> {board.userName}</UserName>;
                         } else {
                           return;
                         }
                       })}
 
-                      <IconInfoWrap>
-                        <IconInfo className="heart">{board.likeCount}</IconInfo>
+                      <IconInfoWrap key={`iconInfoWrap-${idx}`}>
+                        <IconInfo key={`likeCount-${idx}`} className="heart">{board.likeCount}</IconInfo>
                         {/* 이놈 예외처리 하기(오늘이면 시간만, 어제면 날짜만 출력, 작년이면 년도~일까지 출력) */}
-                        <IconInfo className="date">
+                        <IconInfo key={`createDate-${idx}`} className="date">
 
                           {/* 현재 시간 */}
-                          {console.log(moment().toDate().toLocaleString())}
+                          {/* {console.log(moment().toDate().toLocaleString())} */}
                           {/* DB에서 가져온 시간 */}
-                          {console.log(moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString())}
+                          {/* {console.log(moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString())} */}
 
                           {/* 현재 시간 앞자리 */}
-                          {console.log(moment().toDate().toLocaleString().substr(0, 13))}
+                          {/* {console.log(moment().toDate().toLocaleString().substr(0, 13))} */}
                           {/* DB 시간 앞자리 */}
-                          {console.log(moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13))}
+                          {/* {console.log(moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13))} */}
 
                           {
                             // 현재 시간 앞자리와 DB 시간 앞자리가 다르면 다른 날이므로 날짜를 띄운다.
@@ -124,7 +123,7 @@ const ListComponent = ({ categorys, category, route }) => {
                           }
 
                         </IconInfo>
-                        <IconInfo className="eyeCount">
+                        <IconInfo key={`eyeCount-${idx}`} className="eyeCount">
                           {board.eyeCount}
                         </IconInfo>
                       </IconInfoWrap>
@@ -310,7 +309,7 @@ const UserName = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  cursor: default;
+  cursor: pointer;
 `;
 const IconInfoWrap = styled.div`
   float: left;

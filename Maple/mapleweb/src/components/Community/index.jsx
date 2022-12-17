@@ -73,7 +73,10 @@ const CommunityComponet = () => {
               <Route path="/Coordination/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이코디"} route={"Coordination"} />}></Route>
               
               {/* 카테고리에 게시글 상세 컴포넌트 임시 띄움 : 라우터 카테고리에 따라 다르게 수정해야 한다. */}
-              <Route path="/Free/Board" element={<DetailContainer categorys={CATEGORY} category={"자유게시판"}/>} ></Route>
+              <Route path="/Free/*" element={<DetailContainer categorys={CATEGORY} category={"자유게시판"} route={"Free"} />} ></Route>
+              {/* 게시글 리스트에 이 놈이 있어야 하며 누를 때 그 보드 번호가 전달되어야 한다. */}
+              {/* 일단 보드번호 1번이라고 치고 작업해보기 */}
+
             </Routes>
           </ContentBox>
 

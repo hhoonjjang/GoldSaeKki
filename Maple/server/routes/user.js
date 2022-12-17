@@ -142,4 +142,11 @@ router.post("/changename", (req, res) => {
   }
 });
 
+router.post("/signOut", (req, res) => {
+  console.log("나다", req.body.currUserName);
+  db.User.destroy({ where: { userName: req.body.currUserName } }).then(() => {
+    res.send();
+  });
+});
+
 export default router;

@@ -1,14 +1,20 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const UserOutComponent = () => {
+const UserOutComponent = ({ signOutBtn }) => {
   return (
     <UserOutBox>
       <p className="alert-msg">
         회원 탈퇴 후 복구가 불가능하니 신중하게 결정하시기 바랍니다.
       </p>
       <UserOutBtnBox>
-        <button>회원 탈퇴</button>
+        <button
+          onClick={() => {
+            signOutBtn();
+          }}
+        >
+          회원 탈퇴
+        </button>
         <Link to={"/mypage"}>
           <button>취소</button>
         </Link>

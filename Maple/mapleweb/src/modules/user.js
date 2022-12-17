@@ -2,6 +2,7 @@ const TYPE = {
   LOGIN: "/user/login",
   LOGOUT: "/user/logout",
   CHECK: "/user/check",
+  REFRESH: "/user/refresh",
 };
 
 const login = (payload) => {
@@ -22,11 +23,20 @@ const check = (userInfo) => {
   console.log(userInfo);
   return {
     type: TYPE.CHECK,
-    payload: { currServerName: userInfo.server, currUserName: userInfo.name },
+    payload: {
+      currServerName: userInfo ? userInfo.server : "",
+      currUserName: userInfo ? userInfo.name : "",
+    },
   };
 };
 
-export const action = { login, logout, check };
+const refresh = () => {
+  return {
+    type: TYPE.REFRESH,
+  };
+};
+
+export const action = { login, logout, check, refresh };
 
 export const initialize = {};
 
@@ -34,7 +44,7 @@ export const reducer = (state = initialize, action) => {
   const { type, payload } = action;
   switch (type) {
     case TYPE.LOGIN:
-      return payload;
+      return payload ? payload : initialize;
 
     case TYPE.LOGOUT:
       return state;
@@ -49,6 +59,9 @@ export const reducer = (state = initialize, action) => {
           ? payload.currUserName
           : state.currUserName,
       };
+
+    case TYPE.REFRESH:
+      return { currServerName: "", currUserName: "" };
     default:
       return state;
   }

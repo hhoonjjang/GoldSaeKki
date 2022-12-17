@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
+import moment from "moment";
+
 const tempArr = [
   { text: 1, img: "heart2_new" },
   { text: "날짜디비", img: "sub_date_new" },
@@ -84,11 +86,11 @@ const ListComponent = ({ categorys, category, route }) => {
                     </BoardTitle>
                     <OtherBoardInfo>
 
-                      {WORLDLIST.map((world, idx)=>{
+                      {WORLDLIST.map((world, idx) => {
 
-                        if(world.name == board.userWorld){
+                        if (world.name == board.userWorld) {
                           return <UserName><UserWorldImg src={`${world.img}`} /> {board.userName}</UserName>;
-                        }else{
+                        } else {
                           return;
                         }
                       })}
@@ -97,7 +99,30 @@ const ListComponent = ({ categorys, category, route }) => {
                         <IconInfo className="heart">{board.likeCount}</IconInfo>
                         {/* 이놈 예외처리 하기(오늘이면 시간만, 어제면 날짜만 출력, 작년이면 년도~일까지 출력) */}
                         <IconInfo className="date">
-                          {board.createdAt.substr(0, 10)}
+
+                          {/* 현재 시간 */}
+                          {console.log(moment().toDate().toLocaleString())}
+                          {/* DB에서 가져온 시간 */}
+                          {console.log(moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString())}
+
+                          {/* 현재 시간 앞자리 */}
+                          {console.log(moment().toDate().toLocaleString().substr(0, 13))}
+                          {/* DB 시간 앞자리 */}
+                          {console.log(moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13))}
+
+                          {
+                            // 현재 시간 앞자리와 DB 시간 앞자리가 다르면 다른 날이므로 날짜를 띄운다.
+                            // 같으면 DB 뒷자리 시간을 출력한다.
+                            moment().toDate().toLocaleString().substr(0, 13)
+                              !==
+                            moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)
+                            ?
+                              // `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)}`
+                              `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(2, 11)}`
+                            :
+                              `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(13, 8)}`
+                          }
+
                         </IconInfo>
                         <IconInfo className="eyeCount">
                           {board.eyeCount}

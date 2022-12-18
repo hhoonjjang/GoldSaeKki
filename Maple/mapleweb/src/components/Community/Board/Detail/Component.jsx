@@ -49,11 +49,15 @@ const DetailComponent = ({ categorys, category }) => {
 
     // 현재 라우터 값을 구한다.
     let route = "";
-    CATEGORY.forEach((item, idx)=>{
-        if(item.name == board.category){
+    CATEGORY.forEach((item, idx) => {
+        if (item.name == board.category) {
             route = item.label;
         }
     });
+
+    // 현재 로그인 유저 정보
+    const userWorld = useSelector((state) => state.user.currServerName);
+    const userName = useSelector((state) => state.user.currUserName);
 
     return (
         <>
@@ -113,6 +117,21 @@ const DetailComponent = ({ categorys, category }) => {
                     <LikeCheck><span>{board?.likeCount} 명</span></LikeCheck>
                 </LikeWrap>
 
+                {/* 태그 영역 */}
+
+                {/* 수정/삭제 영역 : 로그인 유저와 보드 유저가 같으면 띄운다. */}
+                {userName==board.userName ? (
+                    <UpDelBtnWrap>
+                        {/* 등록 창으로 보내고, props로 현재 수정 상태임도 보내준다. */}
+                        <Link to={`/Community/Free`}>
+                            <UpDelBtn>수정</UpDelBtn>
+                        </Link>
+                        <Link to={`/Community/Free`}>
+                            <UpDelBtn>삭제</UpDelBtn>
+                        </Link>
+                    </UpDelBtnWrap>
+                ) : ""}
+
                 {/* 댓글 영역 */}
                 {/* 여기서부터 댓글 컴포넌트 만들어진 이후에 작업 */}
                 <CommentInfo>
@@ -120,6 +139,8 @@ const DetailComponent = ({ categorys, category }) => {
                     댓글{" "}
                     <CommentCount>0</CommentCount>
                 </CommentInfo>
+
+                {/* 댓글 목록 */}
                 <CommentBox>
                     <CommentWrap>
                         {/* 댓글 개수에 맞게 map 돌린다. */}
@@ -423,4 +444,26 @@ const IconInfo = styled.div`
         /* display: flex;
         align-items: center; */
     }
+`;
+
+const UpDelBtnWrap = styled.div`
+    float: left;
+    width: 100%;
+    height: 60px;
+    padding-top: 15px;
+    border-top: 1px solid #cecece;
+    margin-bottom: 25px;
+`;
+const UpDelBtn = styled.div`
+    float: left;
+    margin-left: 7px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #747A86;
+    width: 90px;
+    height: 40px;
+    line-height: 40px;
+    color: #ececec;
+    border-radius: 2px;
 `;

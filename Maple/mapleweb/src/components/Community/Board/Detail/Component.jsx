@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { action as communityAction, WORLDLIST } from '../../../../modules/community';
+import { action as communityAction, CATEGORY, WORLDLIST } from '../../../../modules/community';
 // import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import LinkIcon from "../../images/link_btn.png";
 import AlarmIcon from "../../images/report_btn2.png";
@@ -10,11 +10,11 @@ import dateImg from "../../images/info_sub_date_new.png";
 import lineImg from "../../images/btn_line_img.png";
 
 import moment from 'moment';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-const DetailComponent = ({ categorys, category, route }) => {
+const DetailComponent = ({ categorys, category }) => {
 
     const dispatch = useDispatch();
 
@@ -47,12 +47,20 @@ const DetailComponent = ({ categorys, category, route }) => {
         board = states.community.board[0];
     }
 
+    // 현재 라우터 값을 구한다.
+    let route = "";
+    CATEGORY.forEach((item, idx)=>{
+        if(item.name == board.category){
+            route = item.label;
+        }
+    });
+
     return (
         <>
             <CategoryTItleBox>
                 <CategoryTitle>{board?.category}</CategoryTitle>
                 <CategoryRight>
-                    <span>목록</span>
+                    <Link to={`/Community/${route}`}><span>목록</span></Link>
                 </CategoryRight>
             </CategoryTItleBox>
 
@@ -160,7 +168,7 @@ const CategoryTitle = styled.h1`
 const CategoryRight = styled.div`
     margin-top: 15px;
     cursor: pointer;
-    &>span{
+    & span{
         display: inline-block;
         font-size: 13px;
         color: #666;

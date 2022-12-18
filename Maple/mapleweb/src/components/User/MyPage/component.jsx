@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import backimg from "../Img/backimg.png";
-import profileimg from "../Img/catimg.png";
 import NavigateComp from "../../Community/Navigation/Component";
 import { useDispatch } from "react-redux";
 import { action } from "../../../modules/header";
@@ -11,13 +10,13 @@ import MyBoardEditContainer from "./MyBoardEdit/Container";
 import UserOutContainer from "./UserOut/Container";
 import { useSelector } from "react-redux";
 import MyCommentEditContainer from "./MyCommentEdit/Container";
+import { useEffect, useState } from "react";
 
-const MypageComponent = () => {
+const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
   const dispatch = useDispatch();
   const route = useParams();
   const currUserName = useSelector((state) => state.user.currUserName);
   const currUserWorld = useSelector((state) => state.user.currServerName);
-  console.log(route);
   dispatch(action.header("Mypage"));
   const CATEGORY = [
     {
@@ -26,11 +25,16 @@ const MypageComponent = () => {
       link: "/mypage",
     },
   ];
+  useEffect(() => {
+    console.log(currUserName, "asdf");
+    if (currUserName == undefined) return;
+    getUserImg(currUserName);
+  }, [currUserName]); // 2번째 매개변수로 아무것도 넣지 않은 경우 처음 component를 읽어올때만 실행된다.
 
   const myDiv = () => {
     switch (route.route) {
       case "userInfo1":
-        return <ImgChangeContainer />;
+        return <ImgChangeContainer setThumbnailImg={setThumbnailImg} />;
 
       case "userInfo2":
         return <NicknameChangeContainer />;
@@ -72,7 +76,7 @@ const MypageComponent = () => {
       <MypageBox>
         <MypageContents>
           <LeftContent>
-            <img src={profileimg} alt="프로필사진" />
+            <img src={thumbnailImg} alt="프로필사진" />
             <p>닉네임 : {currUserName}</p>
             <p> 월드 : {currUserWorld}</p>
           </LeftContent>

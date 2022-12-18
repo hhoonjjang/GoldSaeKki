@@ -15,6 +15,47 @@ const storage = multer.diskStorage({
 });
 const uploader = multer({ storage: storage });
 
+router.post("/imgUpload", uploader.single("selectimg"), (req, res) => {
+  console.log("폼데이터다", req.file.filename);
+  res.send(req.file);
+});
+
+router.post("/imgchange", (req, res) => {
+  console.log("현재 접속 id", req.body); // currUserName, currImg
+  db.User.update(
+    {
+      profileImg: req.body.currImg,
+    },
+    { where: { userName: req.body.currUser } }
+  ).then((data) => {
+    router.get(`/download${req.body.currImg}`, (req, res) => {
+      fs.readFile("./upload/" + req.body.currImg, (err, data) => {
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.end(data);
+      });
+    });
+    res.send(`http://localhost:8080/api/download${req.body.currImg}`);
+  });
+});
+
+router.post("/getImg", (req, res) => {
+  console.log("요청", req.body.currUserName);
+  if (req.body?.currUserName)
+    db.User.findOne({ where: { userName: req.body?.currUserName } }).then(
+      (data) => {
+        if (data?.profileImg) {
+          console.log("이미지 정보", data.profileImg);
+          res.send(`http://localhost:8080/api/download${data.profileImg}`);
+        } else {
+          res.send("/Img/catimg.png");
+        }
+      }
+    );
+  else {
+    res.send("/Img/catimg.png");
+  }
+});
+
 router.post("/getUser", (req, res) => {
   db.User.findAll().then((data) => {
     res.send(data);
@@ -73,7 +114,7 @@ router.post("/login", (req, res) => {
               currUserName: userName,
             },
           });
-          console.log("로그인 완료");
+          consoNamele.log("로그인 완료");
         } else {
           res.send({ message: "잘못된 비밀번호입니다.", status: 501 });
         }

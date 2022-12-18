@@ -58,6 +58,7 @@ router.post("/findAll", async (req, res) => {
 });
 
 router.post("/mainCommunity", async (req, res) => {
+  console.log("메인커뮤니티 받았당");
   try {
     const tempBoard = await db.Board.findAll({
       order: [
@@ -73,6 +74,7 @@ router.post("/mainCommunity", async (req, res) => {
         ],
       },
     });
+    console.log("디비로부터 뭔가 받았다");
     res.send({
       status: 200,
       result: tempBoard,

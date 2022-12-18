@@ -113,7 +113,7 @@ const MainCommunityComponent = ({ communityNewestPost }) => {
                           "mainCommunity_innerBox_community_item_bottom_innerBox_userName"
                         }
                       >
-                        {communityNewestPost[index]?.userName || "흰수염"}
+                        {communityNewestPost[index]?.userName}
                       </span>
                       <span
                         className={
@@ -261,6 +261,10 @@ const MainCommunityBox = styled.div`
               }
               .mainCommunity_innerBox_community_item_top_innerBox_title {
                 color: #333;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                word-break: break-all;
               }
             }
           }
@@ -270,11 +274,25 @@ const MainCommunityBox = styled.div`
             height: 230px;
 
             .mainCommunity_innerBox_community_item_mid_innerBox {
+              height: 100%;
+
               .mainCommunity_innerBox_community_item_mid_innerBox_contents {
-                span {
-                  color: #666;
-                  font-size: 13px;
-                }
+                height: 100%;
+              }
+              .mainCommunity_innerBox_community_item_mid_innerBox_contents
+                > a
+                > span {
+                height: 100%;
+                color: #666;
+                font-size: 13px;
+              }
+              .mainCommunity_innerBox_community_item_mid_innerBox_contents
+                > a
+                > span
+                > p {
+                height: 100%;
+                overflow: hidden;
+                line-height: 25px;
               }
             }
           }

@@ -1,16 +1,19 @@
 import React, { useMemo, useState } from "react";
 
-import img0 from "../Img/img0.jpg";
-import img1 from "../Img/img1.jpg";
-import img2 from "../Img/img2.jpg";
-import img3 from "../Img/img3.jpg";
-import img4 from "../Img/img4.jpg";
-import img5 from "../Img/img5.jpg";
-import img6 from "../Img/img6.jpg";
+import slideBackground from "../Img/main_slide_background.png";
+
+import img0 from "../Img/main_slide_img_0.jpg";
+import img1 from "../Img/main_slide_img_1.jpg";
+import img2 from "../Img/main_slide_img_2.jpg";
+import img3 from "../Img/main_slide_img_3.jpg";
+import img4 from "../Img/main_slide_img_4.jpg";
+import img5 from "../Img/main_slide_img_5.jpg";
+import img6 from "../Img/main_slide_img_6.jpg";
 
 import "../CSS/mainSlide.css";
 import { useEffect } from "react";
 import { useRef } from "react";
+import styled from "styled-components";
 const MainSlide = () => {
   const [imgArr] = useState([
     { img: img0 },
@@ -20,11 +23,6 @@ const MainSlide = () => {
     { img: img4 },
     { img: img5 },
     { img: img6 },
-    // { img: img7 },
-    // { img: img8 },
-    // { img: img9 },
-    // { img: img10 },
-    // { img: img11 },
   ]);
   // 슬라이드에 올라올 이미지 목록
 
@@ -52,6 +50,7 @@ const MainSlide = () => {
   //     // currP가 fresh한 상태로 있어야 한다.
   //   }, 5000);
   // }, []);
+  // 5초마다 다음 슬라이드로 이동
 
   useEffect(() => {
     if (onlyUpdateCurrSlide.current) {
@@ -89,7 +88,6 @@ const MainSlide = () => {
       onlyUpdateCurrSlideTranslate.current = false;
       // mount 실행 방지
     } else {
-      console.log("currSlideTranslate : ", currSlideTranslate);
       if (currSlideTranslate > 99) {
         console.log(setCurrSlideTranslate(0));
         setCurrSlideTranslate(0);
@@ -122,61 +120,122 @@ const MainSlide = () => {
     });
   }, [imgArr]);
   return (
-    <div>
-      <div className="carousel">
-        <div className="carousel_btn">
-          <div className="carousel_btn_innerBox">
-            <div
-              onClick={() => {
-                if (slideFocus % 4 == 0) {
-                  setBool(false);
-                  setCurrSlide(
-                    (state) => (state + imgArr.length - 1) % imgArr.length
-                  );
-                } else setSlideFocus(slideFocus - 1);
-              }}
-            >
-              <svg width="20px" height="20px">
-                <polyline
-                  points="20,0 0,10 20,20"
-                  file="none"
-                  stroke="black"
-                  strokeWidth="1"
-                />
-              </svg>
+    <MainSlideComponent>
+      <CarouselBackground bgImg={""}></CarouselBackground>
+      <Carousel>
+        <div className="carousel_innerBox">
+          <div className="carousel_btn">
+            <div className="carousel_btn_innerBox">
+              <div
+                onClick={() => {
+                  if (slideFocus % 4 == 0) {
+                    setBool(false);
+                    setCurrSlide(
+                      (state) => (state + imgArr.length - 1) % imgArr.length
+                    );
+                  } else setSlideFocus(slideFocus - 1);
+                }}
+              >
+                <svg width="20px" height="20px">
+                  <polyline
+                    points="20,0 0,10 20,20"
+                    file="none"
+                    stroke="black"
+                    strokeWidth="1"
+                  />
+                </svg>
+              </div>
+              &nbsp;&nbsp;
+              <div>{slideFocus}</div>
+              &nbsp;/&nbsp;
+              <div>{imgArr.length}</div>
+              &nbsp;&nbsp;
+              <div
+                onClick={() => {
+                  if (slideFocus % 4 == 0) {
+                    setBool(true);
+                    setCurrSlide((state) => (state + 1) % imgArr.length);
+                  } else setSlideFocus(slideFocus + 1);
+                }}
+              >
+                <svg width="20px" height="20px">
+                  <polyline
+                    points="0,0 20,10 0,20"
+                    file="none"
+                    stroke="black"
+                    strokeWidth="1"
+                  />
+                </svg>
+              </div>
             </div>
-            &nbsp;&nbsp;
-            <div>{slideFocus}</div>
-            &nbsp;/&nbsp;
-            <div>{imgArr.length}</div>
-            &nbsp;&nbsp;
-            <div
-              onClick={() => {
-                if (slideFocus % 4 == 0) {
-                  setBool(true);
-                  setCurrSlide((state) => (state + 1) % imgArr.length);
-                } else setSlideFocus(slideFocus + 1);
-              }}
-            >
-              <svg width="20px" height="20px">
-                <polyline
-                  points="0,0 20,10 0,20"
-                  file="none"
-                  stroke="black"
-                  strokeWidth="1"
-                />
-              </svg>
+          </div>
+          <div className="carousel_slide">
+            <div className="carousel_slide_itemBox" ref={container}>
+              {listItems}
             </div>
           </div>
         </div>
-        <div className="carousel_slide">
-          <div className="carousel_slide_itemBox" ref={container}>
-            {listItems}
-          </div>
-        </div>
-      </div>
-    </div>
+      </Carousel>
+    </MainSlideComponent>
   );
 };
 
 export default MainSlide;
+
+const MainSlideComponent = styled.div`
+  position: relative;
+  height: 560px;
+
+  * {
+    box-sizing: border-box;
+    word-break: break-all;
+    text-overflow: ellipsis;
+  }
+  body {
+    margin: 0;
+  }
+`;
+
+const CarouselBackground = styled.div``;
+
+const Carousel = styled.div`
+  width: 100%;
+  background-image: url(${slideBackground});
+  position: absolute;
+  bottom: 0px;
+  background-repeat: no-repeat;
+
+  .carousel_innerBox {
+    width: 1040px;
+    padding-top: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-bottom: 20px;
+
+    .carousel_btn {
+      justify-content: space-between;
+      font-weight: bold;
+      padding-bottom: 5px;
+    }
+    .carousel_btn_innerBox {
+      display: flex;
+    }
+    .carousel_slide {
+      width: 100%;
+      overflow: hidden;
+    }
+    .carousel_slide_itemBox {
+      display: flex;
+      width: 99999px;
+      /* justify-content: space-between; */
+      transition: transform 0.5s;
+    }
+    .carousel_slide_item {
+      width: 210px;
+      display: flex;
+    }
+    .carousel_slide_itemBox img {
+      width: 100px;
+    }
+  }
+`;

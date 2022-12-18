@@ -50,7 +50,7 @@ const DetailComponent = ({ categorys, category, route }) => {
     return (
         <>
             <CategoryTItleBox>
-                <CategoryTitle>{category}</CategoryTitle>
+                <CategoryTitle>{board?.category}</CategoryTitle>
                 <CategoryRight>
                     <span>목록</span>
                 </CategoryRight>

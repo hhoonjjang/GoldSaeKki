@@ -23,7 +23,6 @@ export const CATEGORY = [
     { name: '토론게시판', label: "TopicDiscussion", link: "/TopicDiscussion" },
     { name: '금쪽이 아트', label: "Art", link: "/Art" },
     { name: '금쪽이 코디', label: "Coordination", link: "/Coordination" },
-    { name: '자유게시판 게시글 상세 페이지(임시)', label: "Free/Board", link: "/Board" },
 ];
 
 // 개발용 임시 카테고리

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link, Routes, Route, useLocation } from "react-router-dom";
+import { Link, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 // const UPLOAD_ENDPOINT = "upload_files";
 
 const AddComponent = ({ categorys, category, route }) => {
+
+    const navigate = useNavigate();
 
     const [titleText, setTitleText] = useState("");
     const [contentData, setContentData] = useState("");
@@ -102,11 +104,16 @@ const AddComponent = ({ categorys, category, route }) => {
                             userWorld: userWorld,
                         });
 
+                        // 불안정한 코드
+                        console.log(regist.data);
+                        const boardId = regist.data?.tempBoard?.id;
+
                         // 응답 받아오기
                         switch (regist.data.status) {
                             case 200:
                                 // 성공 알람, 게시물 상세 페이지로 리턴
                                 alert("게시글 등록됨");
+                                navigate(`/Community/board/${boardId}`);
                                 return;
                             case 400:
                                 alert("게시글 등록 에러");

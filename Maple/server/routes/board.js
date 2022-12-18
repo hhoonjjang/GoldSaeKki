@@ -32,7 +32,7 @@ router.post("/create", async (req, res) => {
     });
     // 연결관계 맺은 놈으로 같이 값 집어넣어 연결해준다.
     tempUser.addBoard(tempBoard);
-    res.send({ status: 200 });
+    res.send({tempBoard, status: 200 });
   } catch (error) {
     console.log(error);
     res.send({ status: 400 });
@@ -47,7 +47,7 @@ router.post("/getList", async (req, res) => {
       where: {
         category: req.body.category,
       },
-      // order: [['id', 'DESC']],
+      order: [['id', 'DESC']],
     });
 
     // 값을 뽑아오려면 tempBoards[해당번호].dataValues로 가져와야 한다.

@@ -76,10 +76,10 @@ const ListComponent = ({ categorys, category, route }) => {
           {boards &&
             boards.map((board, idx) => {
               return (
-                <Link 
-                key={`boardIdLink-${idx}`}
-                 to={`/Community/board/${board.id}`}
-                 >
+                <Link
+                  key={`boardIdLink-${idx}`}
+                  to={`/Community/board/${board.id}`}
+                >
                   <OneBoardList key={`oneBoard-${idx}`}>
                     <BoardTitle key={`boardTitle-${idx}`}>
                       <span key={`boardWorld-${idx}`} className="server">[{board.world}]</span>{" "}
@@ -92,7 +92,7 @@ const ListComponent = ({ categorys, category, route }) => {
                       {WORLDLIST.map((world, idx) => {
 
                         if (world.name == board.userWorld) {
-                          return <UserName key={`userName-${idx}`}><UserWorldImg key={`userWorldImg-${idx}`} src={`${world.img}`} style={{marginRight : "1px"}} /> {board.userName}</UserName>;
+                          return <UserName key={`userName-${idx}`}><UserWorldImg key={`userWorldImg-${idx}`} src={`${world.img}`} style={{ marginRight: "1px" }} /> {board.userName}</UserName>;
                         } else {
                           return;
                         }
@@ -118,11 +118,11 @@ const ListComponent = ({ categorys, category, route }) => {
                             // 같으면 DB 뒷자리 시간을 출력한다.
                             moment().toDate().toLocaleString().substr(0, 13)
                               !==
-                            moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)
-                            ?
+                              moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)
+                              ?
                               // `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)}`
                               `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(2, 11)}`
-                            :
+                              :
                               `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(13, 9)}`
                           }
 

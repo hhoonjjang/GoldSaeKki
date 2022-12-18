@@ -1,26 +1,69 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { WORLDLIST } from '../../../../modules/community';
+import { action as communityAction, WORLDLIST } from '../../../../modules/community';
 // import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import LinkIcon from "../../images/link_btn.png";
 import AlarmIcon from "../../images/report_btn2.png";
 
 import eyeImg from "../../images/info_eye_new.png";
-import heartImg from "../../images/info_heart2_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
 import lineImg from "../../images/btn_line_img.png";
 
 import moment from 'moment';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-const DetailComponent = ({ categorys, category }) => {
+const DetailComponent = ({ categorys, category, route }) => {
+
+    const dispatch = useDispatch();
 
     // 라우터 상단의 번호를 가져와 그 번호를 아래 보드 번호로 맞춰준다.
+    const { boardId } = useParams();
 
-    // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
-    const boardList = useSelector((state) => state);
-    const boards = boardList.community.list;
-    const board = boards[0];
-    console.log(board);
+    // 디테일 컴포넌트로 보낼 때 게시글 번호를 보내주고, 
+    // 게시글 번호를 토대로 해당 목록을 가져오는 요청을 여기에서 보내면 될것 같다.
+    // board redux...
+    // 리덕스에 저장하는 것이 아닌, 그냥 db에서 뽑아온 값을 출력하고 싶을 떄는 
+    // 어떻게 해야하는지 모르겠다.
+    // index.jsx에 만들어놨던 것 지우기
+
+
+    // 해당 게시글을 가져오는 요청을 보낸다.
+    // 요청 받는쪽 수정 db쪽
+    const boardReq = axios.post("http://localhost:8080/api/board/getBoard", {
+        boardId: boardId
+    });
+
+    // Promise {<pending>} 형태로 값이 뽑아와 진다.
+    // console.log(boardReq);
+
+    // 계속된 리랜더링 문제로 useEffect()로 감싸주었다.
+    // 보드 번호가 변경될 때 Redux에 값을 저장해준다.
+    // 리덕스에 저장 안 되는 이유가 뭔지 몰겠다.
+    useEffect(() => {
+        // 배열의 객체로 값이 잘 뽑아와진다. Redux에 해당 리스트를 저장해 준다.
+        boardReq.then((board) => {
+            dispatch(communityAction.board(board?.data));
+        });
+    }, [boardId]);
+
+
+    // Redux에 저장된 상태값인 해당 게시물을 가져와준다.
+    const states = useSelector((state) => state);
+
+    let board = "";
+
+    // 처음 랜더링은 Redux에 community가 저장되지 않으며 재 랜더링 했을 때 생긴다.
+    // 그래서 처음에 바로 띄우려고 해서 에러가 난 것이고 Redux에 있기 시작할 때 board를 정의해 주었다.
+    if (states.community.board) {
+        // console.log("하이");
+        console.log(states.community.board[0]);
+        board = states.community.board[0];
+    } else {
+        // console.log("Redux에 게시글 없음");
+        // console.log(states);
+    }
 
     return (
         <>
@@ -37,16 +80,16 @@ const DetailComponent = ({ categorys, category }) => {
             {/* 여기서부터 게시글 상세 페이지 내용 시작 */}
             <ContentBox>
                 <BoardTitle>
-                    <BoardTitleSpan>[{board.world}]</BoardTitleSpan>{" "}
-                    <BoardTitleText>{board.title}</BoardTitleText>
+                    <BoardTitleSpan>[{board?.world}]</BoardTitleSpan>{" "}
+                    <BoardTitleText>{board?.title}</BoardTitleText>
                 </BoardTitle>
 
                 {/* BoardInfo */}
                 <BoardInfoBox>
                     <BoardUserName>
                         {WORLDLIST.map((world, idx) => {
-                            if (world.name == board.userWorld) {
-                                return <UserName key={`userName-${idx}`}><UserWorldImg key={`userWorldImg-${idx}`} src={`${world.img}`} style={{ marginRight: "1px" }} /> {board.userName}</UserName>;
+                            if (world.name == board?.userWorld) {
+                                return <UserName key={`userName-${idx}`}><UserWorldImg key={`userWorldImg-${idx}`} src={`${world.img}`} style={{ marginRight: "1px" }} /> {board?.userName}</UserName>;
                             } else {
                                 return;
                             }
@@ -55,9 +98,9 @@ const DetailComponent = ({ categorys, category }) => {
                     <BoardInfo>
                         {/* 나머지정보들 */}
                         <IconInfo>
-                            <span style={{margin : "0px 10px"}}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board.eyeCount}{" "}{" "}</span>
-                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString()}</span>
-                        </IconInfo><img src={lineImg} alt={"구분선 이미지"} style={{margin : "0px 10px"}} />
+                            <span style={{ margin: "0px 10px" }}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board?.eyeCount}{" "}{" "}</span>
+                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString()}</span>
+                        </IconInfo><img src={lineImg} alt={"구분선 이미지"} style={{ margin: "0px 10px" }} />
                         <IconBox>
                             <IconWrap>
                                 <BoardOtherIcon src={LinkIcon} alt='링크 아이콘' onClick={() => {
@@ -74,13 +117,13 @@ const DetailComponent = ({ categorys, category }) => {
                 </BoardInfoBox>
 
                 {/* 내용 영역 : innerHTML으로 넣었다. */}
-                <BoardContent dangerouslySetInnerHTML={{ __html: board.contents }}>
+                <BoardContent dangerouslySetInnerHTML={{ __html: board?.contents }}>
                 </BoardContent>
 
                 {/* 공감영역 */}
                 <LikeWrap>
                     <LikeBtn><span>❤ 공감하기</span></LikeBtn>
-                    <LikeCheck><span>{board.likeCount} 명</span></LikeCheck>
+                    <LikeCheck><span>{board?.likeCount} 명</span></LikeCheck>
                 </LikeWrap>
 
                 {/* 댓글 영역 */}

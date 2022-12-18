@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import moment from "moment";
 
-import { action, WORLDLIST } from "../../../../modules/community";
+import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 import eyeImg from "../../images/info_eye_new.png";
 import heartImg from "../../images/info_heart2_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
+import DetailContainer from "../Detail/Container";
 
 const tempArr = [
   { text: 1, img: "heart2_new" },
@@ -29,13 +30,13 @@ const ListComponent = ({ categorys, category, route }) => {
   // 현재 유저
   const userName = useSelector((state) => state.user.currUserName);
 
-  // 해당 카테고리 목록을 가져오는 요청을 보낸다.
-  const boardsReq = axios.post("http://localhost:8080/api/board/findAll", {
+  // 해당 카테고리 게시글 목록을 가져오는 요청을 보낸다.
+  const boardsReq = axios.post("http://localhost:8080/api/board/getList", {
     category: category,
   });
 
   // Promise {<pending>} 형태로 값이 뽑아와 진다.
-  console.log(boardsReq);
+  // console.log(boardsReq);
 
   // 계속된 리랜더링 문제로 useEffect()로 감싸주었다.
   // 카테고리가 변경될 때 Redux에 값을 저장해준다.
@@ -75,7 +76,10 @@ const ListComponent = ({ categorys, category, route }) => {
           {boards &&
             boards.map((board, idx) => {
               return (
-                <Link key={`boardIdLink-${idx}`} to={`/Community/${route}/${board.id}`}>
+                <Link 
+                key={`boardIdLink-${idx}`}
+                 to={`/Community/board/${board.id}`}
+                 >
                   <OneBoardList key={`oneBoard-${idx}`}>
                     <BoardTitle key={`boardTitle-${idx}`}>
                       <span key={`boardWorld-${idx}`} className="server">[{board.world}]</span>{" "}
@@ -119,7 +123,7 @@ const ListComponent = ({ categorys, category, route }) => {
                               // `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)}`
                               `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(2, 11)}`
                             :
-                              `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(13, 8)}`
+                              `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(13, 9)}`
                           }
 
                         </IconInfo>

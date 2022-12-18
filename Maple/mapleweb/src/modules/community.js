@@ -59,10 +59,16 @@ export const WORLDLIST = [
 ];
 
 
+
+
+
+
 const TYPE = {
-    LIST : "/community/list",
+    LIST: "/community/list",
+    BOARD: "/community/board",
 }
 
+// 해당 커뮤니티 게시글 목록
 const list = (list) => {
     // console.log(list);
     return {
@@ -70,8 +76,16 @@ const list = (list) => {
         payload: { list }
     };
 };
+// 보드 id에 해당하는 게시글
+const board = (board) => {
+    // console.log(board);
+    return {
+        type: TYPE.BOARD,
+        payload: { board }
+    }
+}
 
-export const action = { list };
+export const action = { list, board };
 
 export const initialize = {};
 
@@ -80,6 +94,8 @@ export const reducer = (state = initialize, action) => {
     const { type, payload } = action;
     switch (type) {
         case TYPE.LIST:
+            return payload;
+        case TYPE.BOARD:
             return payload;
         default:
             return state;

@@ -21,70 +21,49 @@ const DetailComponent = ({ categorys, category, route }) => {
     // 라우터 상단의 번호를 가져와 그 번호를 아래 보드 번호로 맞춰준다.
     const { boardId } = useParams();
 
-    // 디테일 컴포넌트로 보낼 때 게시글 번호를 보내주고, 
-    // 게시글 번호를 토대로 해당 목록을 가져오는 요청을 여기에서 보내면 될것 같다.
-    // board redux...
-    // 리덕스에 저장하는 것이 아닌, 그냥 db에서 뽑아온 값을 출력하고 싶을 떄는 
-    // 어떻게 해야하는지 모르겠다.
-    // index.jsx에 만들어놨던 것 지우기
-
-
     // 해당 게시글을 가져오는 요청을 보낸다.
-    // 요청 받는쪽 수정 db쪽
     const boardReq = axios.post("http://localhost:8080/api/board/getBoard", {
         boardId: boardId
     });
 
-    // Promise {<pending>} 형태로 값이 뽑아와 진다.
+    // 그냥 출력하면 Promise {<pending>} 형태로 값이 뽑아와 진다.
     // console.log(boardReq);
 
-    // 계속된 리랜더링 문제로 useEffect()로 감싸주었다.
-    // 보드 번호가 변경될 때 Redux에 값을 저장해준다.
-    // 리덕스에 저장 안 되는 이유가 뭔지 몰겠다.
+    // 보드 번호가 변경될 때 Redux에 서버에서 가져온 리스트를 저장해준다.
     useEffect(() => {
-        // 배열의 객체로 값이 잘 뽑아와진다. Redux에 해당 리스트를 저장해 준다.
         boardReq.then((board) => {
             dispatch(communityAction.board(board?.data));
         });
     }, [boardId]);
 
 
-    // Redux에 저장된 상태값인 해당 게시물을 가져와준다.
+    // Redux에 저장된 값을 가져온다.
     const states = useSelector((state) => state);
 
     let board = "";
 
-    // 처음 랜더링은 Redux에 community가 저장되지 않으며 재 랜더링 했을 때 생긴다.
-    // 그래서 처음에 바로 띄우려고 해서 에러가 난 것이고 Redux에 있기 시작할 때 board를 정의해 주었다.
+    // 랜더링 이후 값을 집어넣어줌
     if (states.community.board) {
-        // console.log("하이");
-        console.log(states.community.board[0]);
         board = states.community.board[0];
-    } else {
-        // console.log("Redux에 게시글 없음");
-        // console.log(states);
     }
 
     return (
         <>
-            {/* 게시글 목록, 게시글 등록도 이런 식으로 추가하기 */}
             <CategoryTItleBox>
                 <CategoryTitle>{category}</CategoryTitle>
-                {/* 목록 : 이놈 수정 */}
-                {/* Link to로 해당 카테고리 리스트로 이동하도록 한다. */}
                 <CategoryRight>
                     <span>목록</span>
                 </CategoryRight>
             </CategoryTItleBox>
 
-            {/* 여기서부터 게시글 상세 페이지 내용 시작 */}
+            {/* 게시글 상세 페이지 내용 시작 */}
             <ContentBox>
                 <BoardTitle>
                     <BoardTitleSpan>[{board?.world}]</BoardTitleSpan>{" "}
                     <BoardTitleText>{board?.title}</BoardTitleText>
                 </BoardTitle>
 
-                {/* BoardInfo */}
+                {/* 게시글 상단 정보 영역 */}
                 <BoardInfoBox>
                     <BoardUserName>
                         {WORLDLIST.map((world, idx) => {
@@ -96,7 +75,7 @@ const DetailComponent = ({ categorys, category, route }) => {
                         })}
                     </BoardUserName>
                     <BoardInfo>
-                        {/* 나머지정보들 */}
+                        {/* 오른쪽 아이콘 영역 */}
                         <IconInfo>
                             <span style={{ margin: "0px 10px" }}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board?.eyeCount}{" "}{" "}</span>
                             <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString()}</span>

@@ -17,17 +17,23 @@ const AddComponent = ({ categorys, category, route }) => {
 
     const navigate = useNavigate();
 
-    const [titleText, setTitleText] = useState("");
-    const [contentData, setContentData] = useState("");
-    const [tags, setTags] = useState("");
-    const [selected, setSelected] = useState("리부트2");
-    const handleSelect = (e) => {
-        setSelected(e.target.value);
-    };
-
     // 현재 로그인 유저 정보
     const userWorld = useSelector((state) => state.user.currServerName);
     const userName = useSelector((state) => state.user.currUserName);
+
+    const [titleText, setTitleText] = useState("");
+    const [contentData, setContentData] = useState("");
+    const [tags, setTags] = useState("");
+    const [selected, setSelected] = useState(userWorld);
+    const handleSelect = (e) => {
+        setSelected(e?.target?.value);
+    };
+
+    if(!userName){
+        console.log("유저 정보가 없습니다."); 
+        navigate("/");
+        return;
+    } 
 
     // 이미지 등록 시 폼 태그로 감싸주기
 
@@ -39,16 +45,12 @@ const AddComponent = ({ categorys, category, route }) => {
             <ContentBox>
                 <TitleWrap>
                     <CategorySelector name='serverName' onChange={handleSelect} value={selected}>
-                        {/* 서버 이름 module에서 가져와 map으로 띄우기 */}
-
-                        {/* 유저의 서버와 같으면 해당 선택해주기 */}
-
                         {WORLDLIST.map((item, idx) => {
                             if (idx === 0) return null;
-                            // 만약 유저의 서버이름과 같은게 있으면 그것을 선택시켜줌
                             return <option key={`world-${idx}`} value={`${item.name}`}>{item.name}</option>
                         })}
                     </CategorySelector>
+
 
                     {/* 제목값을 가져오기~~ */}
                     {/* 현재 게시판 이름을 저장해 가져와 띄운다. */}

@@ -118,6 +118,12 @@ const DetailComponent = ({ categorys, category }) => {
                 </LikeWrap>
 
                 {/* 태그 영역 */}
+                {/* 태그는 먼저 위에서 잘 가공해 예쁜 배열로 만든다음 map 돌린다. */}
+                {/* Link to로 태그검색 가능하게 해도 좋을 것 같다. */}
+                <TagWrap>
+                    <Tag>#어쩌구</Tag>{" "}
+                    <Tag>#어쩌구2</Tag>{" "}
+                </TagWrap>
 
                 {/* 수정/삭제 영역 : 로그인 유저와 보드 유저가 같으면 띄운다. */}
                 {userName==board.userName ? (
@@ -145,7 +151,9 @@ const DetailComponent = ({ categorys, category }) => {
                     <CommentWrap>
                         {/* 댓글 개수에 맞게 map 돌린다. */}
                         <Comment>
+                            {/* 댓글유저정보 */}
                             댓글댓글추가... (닉네임 등등)
+                            {/* 댓글내용 */}
                         </Comment>
 
                     </CommentWrap>
@@ -466,4 +474,19 @@ const UpDelBtn = styled.div`
     line-height: 40px;
     color: #ececec;
     border-radius: 2px;
+`;
+
+// 태그
+const TagWrap = styled.div`
+    float: left;
+    background-color: #F9F9F9;
+    width: 100%;
+    padding: 12px 27px;
+    margin-bottom: 16px;
+
+`;
+const Tag = styled.span`
+    cursor: pointer;
+    color: #696969;
+    font-size: 13px;
 `;

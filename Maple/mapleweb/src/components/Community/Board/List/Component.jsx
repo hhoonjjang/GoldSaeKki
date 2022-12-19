@@ -36,20 +36,28 @@ const ListComponent = ({ categorys, category, route }) => {
   });
 
   // Promise {<pending>} 형태로 값이 뽑아와 진다.
-  // console.log(boardsReq);
+  console.log(boardsReq);
 
   // 계속된 리랜더링 문제로 useEffect()로 감싸주었다.
   // 카테고리가 변경될 때 Redux에 값을 저장해준다.
   useEffect(() => {
     // 배열의 객체로 값이 잘 뽑아와진다. Redux에 해당 리스트를 저장해 준다.
     boardsReq.then((boards) => {
+      if (boards.data.name == "SequelizeDatabaseError") {
+        return;
+      }
       dispatch(action.list(boards.data));
     });
   }, [category]);
 
+  let boards = "";
+
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
   const boardList = useSelector((state) => state);
-  const boards = boardList.community.list;
+  // const boards = boardList.community.list;
+  if (boardList.community.list) {
+    boards = boardList.community.list;
+  }
   // console.log(boards[0].id);
   // console.log(boards);
 
@@ -63,8 +71,14 @@ const ListComponent = ({ categorys, category, route }) => {
           {WORLDLIST.map((item, idx) => {
             return (
               <WorldSpan key={`world-${idx}`}>
-                <WorldImg key={`worldImg-${idx}`} src={item.img} alt={"월드 이미지"} />{" "}
-                <WorldNameSpan key={`worldName-${idx}`}>{item.name}</WorldNameSpan>
+                <WorldImg
+                  key={`worldImg-${idx}`}
+                  src={item.img}
+                  alt={"월드 이미지"}
+                />{" "}
+                <WorldNameSpan key={`worldName-${idx}`}>
+                  {item.name}
+                </WorldNameSpan>
               </WorldSpan>
             );
           })}
@@ -74,35 +88,47 @@ const ListComponent = ({ categorys, category, route }) => {
         <ListBox>
           {/* 여기서 map 돌리기 */}
           {boards &&
-            boards.map((board, idx) => {
+            boards?.map((board, idx) => {
               return (
                 <Link
                   key={`boardIdLink-${idx}`}
-                  to={`/Community/board/${board.id}`}
+                  to={`/Community/board/${board?.id}`}
                 >
                   <OneBoardList key={`oneBoard-${idx}`}>
                     <BoardTitle key={`boardTitle-${idx}`}>
-                      <span key={`boardWorld-${idx}`} className="server">[{board.world}]</span>{" "}
-                      <span key={`boardTitleName-${idx}`} className="title">{board.title}</span>
+                      <span key={`boardWorld-${idx}`} className="server">
+                        [{board?.world}]
+                      </span>{" "}
+                      <span key={`boardTitleName-${idx}`} className="title">
+                        {board?.title}
+                      </span>
                       {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
                       {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
                     </BoardTitle>
                     <OtherBoardInfo>
-
                       {WORLDLIST.map((world, idx) => {
-
-                        if (world.name == board.userWorld) {
-                          return <UserName key={`userName-${idx}`}><UserWorldImg key={`userWorldImg-${idx}`} src={`${world.img}`} style={{ marginRight: "1px" }} /> {board.userName}</UserName>;
+                        if (world.name == board?.userWorld) {
+                          return (
+                            <UserName key={`userName-${idx}`}>
+                              <UserWorldImg
+                                key={`userWorldImg-${idx}`}
+                                src={`${world.img}`}
+                                style={{ marginRight: "1px" }}
+                              />{" "}
+                              {board?.userName}
+                            </UserName>
+                          );
                         } else {
                           return;
                         }
                       })}
 
                       <IconInfoWrap key={`iconInfoWrap-${idx}`}>
-                        <IconInfo key={`likeCount-${idx}`} className="heart">{board.likeCount}</IconInfo>
+                        <IconInfo key={`likeCount-${idx}`} className="heart">
+                          {board?.likeCount}
+                        </IconInfo>
                         {/* 이놈 예외처리 하기(오늘이면 시간만, 어제면 날짜만 출력, 작년이면 년도~일까지 출력) */}
                         <IconInfo key={`createDate-${idx}`} className="date">
-
                           {/* 현재 시간 */}
                           {/* {console.log(moment().toDate().toLocaleString())} */}
                           {/* DB에서 가져온 시간 */}
@@ -116,19 +142,30 @@ const ListComponent = ({ categorys, category, route }) => {
                           {
                             // 현재 시간 앞자리와 DB 시간 앞자리가 다르면 다른 날이므로 날짜를 띄운다.
                             // 같으면 DB 뒷자리 시간을 출력한다.
-                            moment().toDate().toLocaleString().substr(0, 13)
-                              !==
-                              moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)
-                              ?
-                              // `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)}`
-                              `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(2, 11)}`
-                              :
-                              `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(13, 9)}`
+                            moment().toDate().toLocaleString().substr(0, 13) !==
+                            moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ")
+                              .toDate()
+                              .toLocaleString()
+                              .substr(0, 13)
+                              ? // `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)}`
+                                `${moment(
+                                  board?.createdAt,
+                                  "YYYY-MM-DDTHH:mm:ssZ"
+                                )
+                                  .toDate()
+                                  .toLocaleString()
+                                  .substr(2, 11)}`
+                              : `${moment(
+                                  board?.createdAt,
+                                  "YYYY-MM-DDTHH:mm:ssZ"
+                                )
+                                  .toDate()
+                                  .toLocaleString()
+                                  .substr(13, 9)}`
                           }
-
                         </IconInfo>
                         <IconInfo key={`eyeCount-${idx}`} className="eyeCount">
-                          {board.eyeCount}
+                          {board?.eyeCount}
                         </IconInfo>
                       </IconInfoWrap>
                     </OtherBoardInfo>
@@ -337,7 +374,10 @@ const IconInfo = styled.div`
 
   /* 보통은 그냥 바로 안띄우고 예외처리도 해준다(ex. 이미지가 안 들어왔을 때 무엇을 띄울 것인지) */
   /* 이놈 뭔지 모르겠는데 조금 수정해야 할듯? */
-  background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(props) => props.iconImg}.png") left 0px no-repeat;
+  background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(
+      props
+    ) => props.iconImg}.png")
+    left 0px no-repeat;
   max-width: ${(props) => {
     // 무엇을 기준으로 나눌건지
     switch (props.iconImg) {
@@ -389,9 +429,7 @@ const RegistBtn = styled.a`
   }
 `;
 
-const UserWorldImg = styled.img`
-
-`;
+const UserWorldImg = styled.img``;
 
 // const PaginationBox = styled.div`
 //   .pagination { display: flex; justify-content: center; margin-top: 15px;}

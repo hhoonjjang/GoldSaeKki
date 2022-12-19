@@ -43,10 +43,12 @@ const DetailComponent = ({ categorys, category }) => {
     const states = useSelector((state) => state);
 
     let board = "";
+    let boardTagsText = "";
 
     // 랜더링 이후 값을 집어넣어줌
     if (states.community.board) {
         board = states.community.board[0];
+        boardTagsText = board?.tags;
     }
 
     // 현재 라우터 값을 구한다.
@@ -61,8 +63,21 @@ const DetailComponent = ({ categorys, category }) => {
     const userWorld = useSelector((state) => state.user.currServerName);
     const userName = useSelector((state) => state.user.currUserName);
 
-    // 
+    // 삭제 확인
     let deleteConfirm;
+
+    // console.log(boardTagsText);
+    // console.log(boardTagsText.split("#"));
+
+    // 태그 가공(#으로 나눈 배열)
+    // #시간 #뉴비
+    let boardTags = [];
+    boardTagsText.split("#").map((item,idx)=>{
+        if(item!==""){
+            boardTags.push("#"+item.replace(" ",""));
+            console.log(boardTags);
+        }
+    });
 
     return (
         <>
@@ -126,8 +141,9 @@ const DetailComponent = ({ categorys, category }) => {
                 {/* 태그는 먼저 위에서 잘 가공해 예쁜 배열로 만든다음 map 돌린다. */}
                 {/* Link to로 태그검색 가능하게 해도 좋을 것 같다. */}
                 <TagWrap>
-                    <Tag>#어쩌구</Tag>{" "}
-                    <Tag>#어쩌구2</Tag>{" "}
+                    {boardTags.map((item,idx)=>{
+                        return <Tag>{item}</Tag>;
+                    })}
                 </TagWrap>
 
                 {/* 수정/삭제 영역 : 로그인 유저와 보드 유저가 같으면 띄운다. */}
@@ -517,4 +533,5 @@ const Tag = styled.span`
     cursor: pointer;
     color: #696969;
     font-size: 13px;
+    margin-right: 11px;
 `;

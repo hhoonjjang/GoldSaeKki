@@ -82,7 +82,7 @@ router.post("/getList", async (req, res) => {
   }
 });
 
-// 보드 id에 해당하는 게시글
+// 보드 id에 해당하는 게시글 내용
 router.post("/getBoard", async (req, res) => {
   try {
     // 모든 게시글 목록을 가져온다.
@@ -97,6 +97,21 @@ router.post("/getBoard", async (req, res) => {
     res.send(error);
   }
 });
+
+// 게시글 삭제
+router.post("/destroy", (req,res)=>{
+  try {
+      db.Board.destroy({
+        where : {id : req.body.boardId}
+      }).then(()=>{
+        res.send({status : 200});
+      });
+  } catch (err) {
+    console.error(err);
+    res.send({status : 400});
+  }
+});
+
 
 router.post("/mainCommunity", async (req, res) => {
   try {

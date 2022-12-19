@@ -32,11 +32,11 @@ const AdminLoginContainer = () => {
 
   axios.post("http://localhost:8080/api/admin/login", accountInfo).then(
     function (data) {
-      console.log("하이");
+      if (document.cookie) {
+        alert("성공적으로 로그인했습니다");
+      }
       // dispatch(action.login(data.data));
-
       window.location.reload();
-      console.log("하이");
     },
     (error) => {
       console.error("에러");

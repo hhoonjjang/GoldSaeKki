@@ -54,14 +54,51 @@ router.post("/login", async (req, res) => {
 
 router.post("/admincheck", (req, res) => {
   const tempAdmin = jwt.verify(req.cookies.admin, process.env.JWT_KEY);
-  console.log("템프어드민");
-  console.log(tempAdmin);
   res.send(tempAdmin.name);
 });
 
 router.post("/logout", (req, res) => {
   res.clearCookie("admin");
   res.send({ message: "로그아웃" });
+});
+
+router.post("/list", async (req, res) => {
+  const tempList = await db.Admin.findAll();
+  res.send(tempList);
+});
+
+router.post("/delete", async (req, res) => {
+  const tempId = req.body;
+  await db.Admin.destroy({
+    where: {
+      id: tempId.idx,
+    },
+  });
+  res.end();
+});
+
+router.post("/category", async (req, res) => {
+  try {
+    const category = await db.Category.create({
+      category: req.body.value,
+    });
+    res.end();
+  } catch (err) {
+    console.error(err);
+  }
+  console.log(req.body);
+});
+
+router.post("/addtext", async (req, res) => {
+  try {
+    const category = await db.Category.findAll();
+    console.log("에드텍스트");
+    console.log(category);
+    console.log("에드텍스트");
+    res.send(category);
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 export default router;

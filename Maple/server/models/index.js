@@ -8,7 +8,7 @@ import Report from "./report.js";
 import Board from "./board.js";
 import Comment from "./comment.js";
 
-
+import Category from "./category.js";
 import Admin from "./admin.js";
 
 import { createRequire } from "module";
@@ -16,9 +16,7 @@ const require = createRequire(import.meta.url);
 const configJson = require("../config/config.json");
 const config = configJson["development"];
 
-
-const db = { User, Report, Admin,Board, Comment  };
-
+const db = { User, Report, Admin, Board, Comment, Category };
 
 let sequelize = new Sequelize(
   config.database,
@@ -34,7 +32,7 @@ Board.init(sequelize);
 Comment.init(sequelize);
 
 Admin.init(sequelize);
-
+Category.init(sequelize);
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

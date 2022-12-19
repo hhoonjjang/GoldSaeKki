@@ -4,6 +4,9 @@ import styled from "styled-components";
 import BugCSContainer from "./BugCs/Container";
 import AccountContainer from "./Account/Container";
 import AdminLoginContainer from "./AdminLogin/Container";
+import AdminListContainer from "./AdminList/Container";
+import HelpCategoryContainer from "./HelpCategory/Container";
+import HelpTextContainer from "./HelpCategory/HelpText/Container";
 const AdministratorComponet = () => {
   const dispatch = useDispatch();
   dispatch(action.header("Administrator"));
@@ -14,13 +17,23 @@ const AdministratorComponet = () => {
       {!isCookie ? (
         <>
           <AdminLoginContainer />
+          {/* <AccountContainer /> */}
         </>
       ) : (
         <>
-          {tempAdmin?.name == "정재훈" ? <AccountContainer /> : <></>}
-
           <AdminLoginContainer />
+          {tempAdmin?.name == "정재훈" ? (
+            <>
+              <AccountContainer />
+              <AdminListContainer />
+            </>
+          ) : (
+            <></>
+          )}
+
           <BugCSContainer />
+          <HelpCategoryContainer />
+          <HelpTextContainer />
         </>
       )}
       {/* <AdminLoginContainer />

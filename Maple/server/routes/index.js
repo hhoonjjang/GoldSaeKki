@@ -28,18 +28,10 @@ router.use("/report", report);
 // 이미지 등록
 function changeImg() {
   fs.readdir("./upload", (err, datas) => {
-    console.log(datas);
-
     for (let i = 0; i < datas.length; i++) {
-      console.log("포문확인");
-      console.log(i);
-      console.log("포문확인");
       router.get(`/download${datas[i]}`, (req, res) => {
         fs.readFile("./upload/" + datas[i], (err, data) => {
           res.writeHead(200, { "Content-Type": "img/jpeg; charset=utf-8" });
-          console.log("표시");
-          console.log(data);
-          console.log("표시");
 
           res.end(data);
         });

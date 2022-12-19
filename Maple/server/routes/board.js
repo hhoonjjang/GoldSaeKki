@@ -131,6 +131,26 @@ router.post("/update", (req,res)=>{
   }
 });
 
+// 게시글 조회수 추가
+router.post("/eyeCountUpdate", async(req,res)=>{
+  // 해당 게시글의 조회수를 가져와
+  const tempBoard = await db.Board.findOne({
+    where: {
+      id: req.body.boardId,
+    },
+  });
+  // 1 증가시키고
+  const tempEyeCount = tempBoard.dataValues.eyeCount;
+  const newEyeCount = tempEyeCount+1;
+  // 그 값을 해당 게시글에 다시 업데이트 해준다.
+  db.Board.update({
+    eyeCount : newEyeCount,
+  }, {
+    where : {id : req.body.boardId}
+  });
+
+});
+
 
 
 

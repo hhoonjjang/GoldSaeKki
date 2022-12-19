@@ -1,15 +1,17 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { action, WORLDLIST } from "../../../../modules/community";
 // import { Link, Routes, Route } from "react-router-dom";
 import Pagination from "react-js-pagination";
-
-import eyeImg from "../../images/info_eye_new.png";
-import heartImg from "../../images/info_heart2_new.png";
-import dateImg from "../../images/info_sub_date_new.png";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import moment from "moment";
+
+import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
+import eyeImg from "../../images/info_eye_new.png";
+import heartImg from "../../images/info_heart2_new.png";
+import dateImg from "../../images/info_sub_date_new.png";
+import DetailContainer from "../Detail/Container";
 
 const tempArr = [
   { text: 1, img: "heart2_new" },
@@ -28,8 +30,8 @@ const ListComponent = ({ categorys, category, route }) => {
   // 현재 유저
   const userName = useSelector((state) => state.user.currUserName);
 
-  // 해당 카테고리 목록을 가져오는 요청을 보낸다.
-  const boardsReq = axios.post("http://localhost:8080/api/board/findAll", {
+  // 해당 카테고리 게시글 목록을 가져오는 요청을 보낸다.
+  const boardsReq = axios.post("http://localhost:8080/api/board/getList", {
     category: category,
   });
 
@@ -41,13 +43,21 @@ const ListComponent = ({ categorys, category, route }) => {
   useEffect(() => {
     // 배열의 객체로 값이 잘 뽑아와진다. Redux에 해당 리스트를 저장해 준다.
     boardsReq.then((boards) => {
+      if (boards.data.name == "SequelizeDatabaseError") {
+        return;
+      }
       dispatch(action.list(boards.data));
     });
   }, [category]);
 
+  let boards = "";
+
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
   const boardList = useSelector((state) => state);
-  const boards = boardList.community.list;
+  // const boards = boardList.community.list;
+  if (boardList.community.list) {
+    boards = boardList.community.list;
+  }
   // console.log(boards[0].id);
   // console.log(boards);
 
@@ -61,8 +71,14 @@ const ListComponent = ({ categorys, category, route }) => {
           {WORLDLIST.map((item, idx) => {
             return (
               <WorldSpan key={`world-${idx}`}>
-                <WorldImg src={item.img} alt={"월드 이미지"} />{" "}
-                <WorldNameSpan>{item.name}</WorldNameSpan>
+                <WorldImg
+                  key={`worldImg-${idx}`}
+                  src={item.img}
+                  alt={"월드 이미지"}
+                />{" "}
+                <WorldNameSpan key={`worldName-${idx}`}>
+                  {item.name}
+                </WorldNameSpan>
               </WorldSpan>
             );
           })}
@@ -70,32 +86,86 @@ const ListComponent = ({ categorys, category, route }) => {
 
         {/* 게시글 목록 */}
         <ListBox>
-          {/* {console.log(boards[0])} */}
-
           {/* 여기서 map 돌리기 */}
           {boards &&
-            boards.map((board, idx) => {
+            boards?.map((board, idx) => {
               return (
-                <Link to={`/Community/${route}/${board.id}`}>
-                  <OneBoardList>
-                    <BoardTitle>
-                      <span className="server">[{board.world}]</span>{" "}
-                      <span className="title">{board.title}</span>
+                <Link
+                  key={`boardIdLink-${idx}`}
+                  to={`/Community/board/${board?.id}`}
+                >
+                  <OneBoardList key={`oneBoard-${idx}`}>
+                    <BoardTitle key={`boardTitle-${idx}`}>
+                      <span key={`boardWorld-${idx}`} className="server">
+                        [{board?.world}]
+                      </span>{" "}
+                      <span key={`boardTitleName-${idx}`} className="title">
+                        {board?.title}
+                      </span>
                       {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
                       {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
                     </BoardTitle>
                     <OtherBoardInfo>
-                      {/* 유저 서버 아이콘도 될수있으면 띄우기 : 이름/아이콘 누르면 해당 캐릭터 정보로 이동함 */}
-                      {/* 유저 이름은 제목의 오른쪽에 붙이는 게 나을 것 같다. */}
-                      <UserName>🎂 {board.userName}</UserName>
-                      <IconInfoWrap>
-                        <IconInfo className="heart">{board.likeCount}</IconInfo>
-                        {/* 이놈 예외처리 하기(오늘이면 시간만, 어제면 날짜만 출력, 작년이면 년도~일까지 출력) */}
-                        <IconInfo className="date">
-                          {board.createdAt.substr(0, 10)}
+                      {WORLDLIST.map((world, idx) => {
+                        if (world.name == board?.userWorld) {
+                          return (
+                            <UserName key={`userName-${idx}`}>
+                              <UserWorldImg
+                                key={`userWorldImg-${idx}`}
+                                src={`${world.img}`}
+                                style={{ marginRight: "1px" }}
+                              />{" "}
+                              {board?.userName}
+                            </UserName>
+                          );
+                        } else {
+                          return;
+                        }
+                      })}
+
+                      <IconInfoWrap key={`iconInfoWrap-${idx}`}>
+                        <IconInfo key={`likeCount-${idx}`} className="heart">
+                          {board?.likeCount}
                         </IconInfo>
-                        <IconInfo className="eyeCount">
-                          {board.eyeCount}
+                        {/* 이놈 예외처리 하기(오늘이면 시간만, 어제면 날짜만 출력, 작년이면 년도~일까지 출력) */}
+                        <IconInfo key={`createDate-${idx}`} className="date">
+                          {/* 현재 시간 */}
+                          {/* {console.log(moment().toDate().toLocaleString())} */}
+                          {/* DB에서 가져온 시간 */}
+                          {/* {console.log(moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString())} */}
+
+                          {/* 현재 시간 앞자리 */}
+                          {/* {console.log(moment().toDate().toLocaleString().substr(0, 13))} */}
+                          {/* DB 시간 앞자리 */}
+                          {/* {console.log(moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13))} */}
+
+                          {
+                            // 현재 시간 앞자리와 DB 시간 앞자리가 다르면 다른 날이므로 날짜를 띄운다.
+                            // 같으면 DB 뒷자리 시간을 출력한다.
+                            moment().toDate().toLocaleString().substr(0, 13) !==
+                            moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ")
+                              .toDate()
+                              .toLocaleString()
+                              .substr(0, 13)
+                              ? // `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)}`
+                                `${moment(
+                                  board?.createdAt,
+                                  "YYYY-MM-DDTHH:mm:ssZ"
+                                )
+                                  .toDate()
+                                  .toLocaleString()
+                                  .substr(2, 11)}`
+                              : `${moment(
+                                  board?.createdAt,
+                                  "YYYY-MM-DDTHH:mm:ssZ"
+                                )
+                                  .toDate()
+                                  .toLocaleString()
+                                  .substr(13, 9)}`
+                          }
+                        </IconInfo>
+                        <IconInfo key={`eyeCount-${idx}`} className="eyeCount">
+                          {board?.eyeCount}
                         </IconInfo>
                       </IconInfoWrap>
                     </OtherBoardInfo>
@@ -104,59 +174,6 @@ const ListComponent = ({ categorys, category, route }) => {
               );
             })}
           {/* 여기까지 map 돌림 */}
-
-          <OneBoardList>
-            <BoardTitle>
-              {/* a : Link to로 바꾼뒤 해당 게시물로 보내줘야 함 : 게시글 번호 */}
-              <a
-                href="/Community/Free/354367?search=c%253d3"
-                style={{ color: "rgb(51, 51, 51)" }}
-              >
-                <span className="server">[오로라]</span>{" "}
-                <span className="title">
-                  나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임
-                </span>
-                {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
-                {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
-              </a>
-            </BoardTitle>
-            <OtherBoardInfo>
-              {/* 유저 서버 아이콘도 될수있으면 띄우기 : 이름/아이콘 누르면 해당 캐릭터 정보로 이동함 */}
-              {/* 유저 이름은 제목의 오른쪽에 붙이는 게 나을 것 같다. */}
-              <UserName>🎂 하이하이</UserName>
-              <IconInfoWrap>
-                <IconInfo className="heart">11</IconInfo>
-                <IconInfo className="date">날짜디비</IconInfo>
-                <IconInfo className="eyeCount">0</IconInfo>
-              </IconInfoWrap>
-            </OtherBoardInfo>
-          </OneBoardList>
-
-          <OneBoardList>
-            <BoardTitle>
-              <a
-                href="/Community/Free/354367?search=c%253d3"
-                style={{ color: "rgb(51, 51, 51)" }}
-              >
-                <span className="server">[오로라]</span>{" "}
-                <span className="title">
-                  나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임나제목임
-                </span>
-              </a>
-            </BoardTitle>
-            <OtherBoardInfo>
-              <UserName>🈺 냐냐냔냐</UserName>
-              <IconInfoWrap>
-                {tempArr.map((item, idx) => {
-                  return (
-                    <IconInfo key={`icon-${idx}`} iconImg={item.img}>
-                      {item.text}
-                    </IconInfo>
-                  );
-                })}
-              </IconInfoWrap>
-            </OtherBoardInfo>
-          </OneBoardList>
         </ListBox>
 
         {/* 취소, 글작성 버튼 */}
@@ -333,7 +350,7 @@ const UserName = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  cursor: default;
+  cursor: pointer;
 `;
 const IconInfoWrap = styled.div`
   float: left;
@@ -411,6 +428,8 @@ const RegistBtn = styled.a`
     background-color: #ca5196;
   }
 `;
+
+const UserWorldImg = styled.img``;
 
 // const PaginationBox = styled.div`
 //   .pagination { display: flex; justify-content: center; margin-top: 15px;}

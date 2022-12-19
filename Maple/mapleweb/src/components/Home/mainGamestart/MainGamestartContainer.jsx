@@ -18,6 +18,23 @@ const loginCheck = (setCurrUserName, setCurrUserWorld) => {
   }
 };
 
+const getUserImg = (currUserName, setThumbnailImg) => {
+  if (document.cookie) {
+    try {
+      axios
+        .post("http://localhost:8080/api/user/getImg", {
+          currUserName: currUserName,
+        })
+        .then((data) => {
+          console.log(data);
+          setThumbnailImg(data.data);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
 const logout = () => {
   try {
     axios.post("http://localhost:8080/api/user/logout");
@@ -34,6 +51,7 @@ const MainGamestartContainer = () => {
   const navigate = useNavigate();
   const [logoutState, setLogoutState] = useState(false);
   const onlyMainLogoutUpdate = useRef(false);
+  const [thumbnailImg, setThumbnailImg] = useState("/Img/catimg.png");
 
   useEffect(() => {
     loginCheck(setCurrUserName, setCurrUserWorld);
@@ -53,6 +71,9 @@ const MainGamestartContainer = () => {
       currUserWorld={currUserWorld}
       logout={logout}
       setLogoutState={setLogoutState}
+      getUserImg={getUserImg}
+      thumbnailImg={thumbnailImg}
+      setThumbnailImg={setThumbnailImg}
     ></MainGamestartComponent>
   );
 };

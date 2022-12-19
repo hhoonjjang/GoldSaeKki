@@ -5,6 +5,23 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const getUserImg = (currUserName, setThumbnailImg) => {
+  if (document.cookie) {
+    try {
+      axios
+        .post("http://localhost:8080/api/user/getImg", {
+          currUserName: currUserName,
+        })
+        .then((data) => {
+          console.log(data);
+          setThumbnailImg(data.data);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
 const logout = () => {
   try {
     axios.post("http://localhost:8080/api/user/logout").then((data) => {});
@@ -22,6 +39,7 @@ const HeaderContainer = () => {
   const [_, setRender] = useState(false);
   const navigate = useNavigate();
   const [logoutState, setLogoutState] = useState(false);
+  const [thumbnailImg, setThumbnailImg] = useState("/Img/catimg.png");
   const onlyHeaderLogoutUpdate = useRef(false);
 
   useEffect(() => {
@@ -39,6 +57,9 @@ const HeaderContainer = () => {
       currUserName={currUserName}
       logout={logout}
       setLogoutState={setLogoutState}
+      getUserImg={getUserImg}
+      thumbnailImg={thumbnailImg}
+      setThumbnailImg={setThumbnailImg}
     ></HeaderComponent>
   );
 };

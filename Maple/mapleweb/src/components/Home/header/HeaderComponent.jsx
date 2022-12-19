@@ -18,7 +18,15 @@ const Header = ({
   currUserName,
   logout,
   setLogoutState,
+  getUserImg,
+  thumbnailImg,
+  setThumbnailImg,
 }) => {
+  useEffect(() => {
+    if (currUserName == undefined) return;
+    getUserImg(currUserName, setThumbnailImg);
+  }, [currUserName]);
+
   return (
     <HeaderComponent paint={paint} icon={icon} text={text}>
       <div className="header_innerBox">
@@ -45,7 +53,7 @@ const Header = ({
                     className="header_innerBox_center_loggedin_Mypage"
                   >
                     <div className="header_innerBox_center_loggedin_logo">
-                      <img src={logo} alt="Logo" />
+                      <img src={thumbnailImg} alt="아바타" />
                     </div>
                   </Link>
                   <div className="header_innerBox_center_loggedin_text">
@@ -310,7 +318,9 @@ const HeaderComponent = styled.div`
     display: flex;
     justify-content: center;
     position: absolute;
-    right: 45px;
+    right: 44px;
+    bottom: -26px;
+    bottom: -30px;
     z-index: 99999;
     cursor: pointer;
   }

@@ -156,7 +156,13 @@ const EditComponent = ({ isUpdate, titleValue, contentsValue, tagsValue  }) => {
                             case 200:
                                 // 성공 알람, 게시물 상세 페이지로 리턴
                                 alert("게시글 수정됨");
-                                navigate(`/Community/board/${boardNum}`);
+                                // navigate로 보내면 redux가 초기화되지 않기 때문에 location으로 바꿔주었다.
+                                // navigate(`/Community/board/${boardNum}`);
+
+                                // 리덕스 값 초기화하기
+
+                                // 그냥 보내는 방식
+                                window.location.href = `/Community/board/${boardNum}`;
                                 return;
                             case 400:
                                 alert("게시글 수정 에러");

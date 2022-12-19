@@ -1,10 +1,10 @@
 import DetailComponent from "./Component";
 
-const DetailContainer = ({categorys, category}) =>{
+const DetailContainer = ({categorys, category, route}) =>{
     // console.log(category);
 
     return (
-        <DetailComponent categorys={categorys} category={category} />
+        <DetailComponent categorys={categorys} category={category} route={route} />
     );
 }
 

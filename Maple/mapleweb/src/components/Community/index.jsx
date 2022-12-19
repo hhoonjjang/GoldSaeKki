@@ -23,6 +23,7 @@ import next from "./images/next.png";
 import AddContainer from "./Board/Add/Container";
 
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
+// import { action as communityAction, CATEGORY, CATEGORY2 } from "../../modules/community";
 import { CATEGORY, CATEGORY2 } from "../../modules/community";
 import CommentContainer from "./Pagination/Container";
 import DetailContainer from "./Board/Detail/Container";
@@ -31,9 +32,7 @@ const CommunityComponet = () => {
   const dispatch = useDispatch();
   dispatch(action.header("Community"));
 
-  
-
-  // 슬라이드 세팅 : 슬라이드의 기능 조정
+  // 사이드 슬라이드 라이브러리 세팅 : 슬라이드의 기능 조정
   const settings = {
     dots: true, // 점 보이게
     infinite: true, // 무한으로 돌리게
@@ -66,14 +65,15 @@ const CommunityComponet = () => {
               <Route path="/Coordination" element={<ListContainer category={"금쪽이코디"} route={"Coordination"} />}></Route>
 
               {/* 카테고리에 게시글 추가 컴포넌트 라우터를 만듬 */}
-              <Route path="/Free/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"자유게시판"} route={"Free"}  />}></Route>
+              <Route path="/Free/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"자유게시판"} route={"Free"} />}></Route>
               <Route path="/Information/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"정보게시판"} route={"Information"} />}></Route>
               <Route path="/TopicDiscussion/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"토론게시판"} route={"TopicDiscussion"} />}></Route>
               <Route path="/Art/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이아트"} route={"Art"} />}></Route>
               <Route path="/Coordination/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이코디"} route={"Coordination"} />}></Route>
-              
-              {/* 카테고리에 게시글 상세 컴포넌트 임시 띄움 : 라우터 카테고리에 따라 다르게 수정해야 한다. */}
-              <Route path="/Free/Board" element={<DetailContainer categorys={CATEGORY} category={"자유게시판"}/>} ></Route>
+
+              {/* 게시글 상세 페이지 띄우기 : Link to 로 이동할 때 그 보드 번호가 전달되어야 한다. */}
+              <Route path="/board/:boardId" element={<DetailContainer/>}></Route>
+
             </Routes>
           </ContentBox>
 

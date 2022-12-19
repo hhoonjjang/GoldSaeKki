@@ -23,7 +23,6 @@ export const CATEGORY = [
     { name: '토론게시판', label: "TopicDiscussion", link: "/TopicDiscussion" },
     { name: '금쪽이 아트', label: "Art", link: "/Art" },
     { name: '금쪽이 코디', label: "Coordination", link: "/Coordination" },
-    { name: '자유게시판 게시글 상세 페이지(임시)', label: "Free/Board", link: "/Board" },
 ];
 
 // 개발용 임시 카테고리
@@ -59,10 +58,16 @@ export const WORLDLIST = [
 ];
 
 
+
+
+
+
 const TYPE = {
-    LIST : "/community/list",
+    LIST: "/community/list",
+    BOARD: "/community/board",
 }
 
+// 해당 커뮤니티 게시글 목록
 const list = (list) => {
     // console.log(list);
     return {
@@ -70,8 +75,16 @@ const list = (list) => {
         payload: { list }
     };
 };
+// 보드 id에 해당하는 게시글
+const board = (board) => {
+    // console.log(board);
+    return {
+        type: TYPE.BOARD,
+        payload: { board }
+    }
+}
 
-export const action = { list };
+export const action = { list, board };
 
 export const initialize = {};
 
@@ -80,6 +93,8 @@ export const reducer = (state = initialize, action) => {
     const { type, payload } = action;
     switch (type) {
         case TYPE.LIST:
+            return payload;
+        case TYPE.BOARD:
             return payload;
         default:
             return state;

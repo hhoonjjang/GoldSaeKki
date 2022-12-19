@@ -742,6 +742,7 @@ jsonfile@^6.0.1:
   dependencies:
     universalify "^2.0.0"
   optionalDependencies:
+
     graceful-fs "^4.1.6"
 
 jsonwebtoken@^8.5.1:
@@ -1197,6 +1198,7 @@ safe-buffer@5.2.1, safe-buffer@^5.0.1:
   version "5.2.1"
   resolved "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
+
 
 "safer-buffer@>= 2.1.2 < 3", "safer-buffer@>= 2.1.2 < 3.0.0":
   version "2.1.2"

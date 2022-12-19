@@ -13,9 +13,18 @@ const store = createStore(
     report: reportReducer,
     user: userReducer,
     header: headerReducer,
-    community: communityReducer
+    community: communityReducer,
+    admin: adminReducer,
   }),
-  { regist: registIni, report: reportIni, header: headerIni, user: userIni, community: communityIni },
+  {
+    regist: registIni,
+    report: reportIni,
+    header: headerIni,
+    user: userIni,
+    community: communityIni,
+    admin: adminIni,
+  },
+
   composeWithDevTools()
 );
 

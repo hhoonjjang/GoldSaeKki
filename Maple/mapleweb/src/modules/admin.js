@@ -23,10 +23,10 @@ export const initialize = {};
 
 export const reducer = (state = initialize, action) => {
   const { type, payload } = action;
-  console.log(payload.name);
+  console.log(payload);
   switch (type) {
     case TYPE.LOGIN:
-      return payload.name;
+      return { name: payload.name };
     default:
       return state;
   }

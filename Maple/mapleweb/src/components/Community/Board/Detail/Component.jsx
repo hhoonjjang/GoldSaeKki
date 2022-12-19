@@ -49,6 +49,12 @@ const DetailComponent = ({ categorys, category }) => {
     if (states.community.board) {
         board = states.community.board[0];
         boardTagsText = board?.tags;
+        // Board 조회수를 수정하는 요청도 보내줌
+        const boardReq = axios.post("http://localhost:8080/api/board/eyeCountUpdate", {
+            boardId: boardId
+        });
+        console.log(boardReq);
+
     }
 
     // 현재 라우터 값을 구한다.
@@ -72,9 +78,9 @@ const DetailComponent = ({ categorys, category }) => {
     // 태그 가공(#으로 나눈 배열)
     // #시간 #뉴비
     let boardTags = [];
-    boardTagsText.split("#").map((item,idx)=>{
-        if(item!==""){
-            boardTags.push("#"+item.replace(" ",""));
+    boardTagsText.split("#").map((item, idx) => {
+        if (item !== "") {
+            boardTags.push("#" + item.replace(" ", ""));
             console.log(boardTags);
         }
     });
@@ -141,8 +147,8 @@ const DetailComponent = ({ categorys, category }) => {
                 {/* 태그는 먼저 위에서 잘 가공해 예쁜 배열로 만든다음 map 돌린다. */}
                 {/* Link to로 태그검색 가능하게 해도 좋을 것 같다. */}
                 <TagWrap>
-                    {boardTags.map((item,idx)=>{
-                        return <Tag>{item}</Tag>;
+                    {boardTags.map((item, idx) => {
+                        return <Tag key={`tag-${idx}`}>{item}</Tag>;
                     })}
                 </TagWrap>
 

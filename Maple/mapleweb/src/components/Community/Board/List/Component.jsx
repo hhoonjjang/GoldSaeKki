@@ -397,7 +397,7 @@ const IconInfo = styled.div`
   }
   &.date {
     background: url(${dateImg}) left 0px no-repeat;
-    min-width: 80px !important;
+    min-width: 90px !important;
   }
   &.eyeCount {
     background: url(${eyeImg}) left 0px no-repeat;

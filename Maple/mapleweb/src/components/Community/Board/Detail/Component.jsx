@@ -50,6 +50,7 @@ const DetailComponent = ({ categorys, category }) => {
         board = states.community.board[0];
         boardTagsText = board?.tags;
         // Board 조회수를 수정하는 요청도 보내줌
+        // 본인이 보면 조회수 안 오르게? : 필요 없을듯
         const boardReq = axios.post("http://localhost:8080/api/board/eyeCountUpdate", {
             boardId: boardId
         });
@@ -116,7 +117,7 @@ const DetailComponent = ({ categorys, category }) => {
                         {/* 오른쪽 아이콘 영역 */}
                         <IconInfo>
                             <span style={{ margin: "0px 10px" }}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board?.eyeCount}{" "}{" "}</span>
-                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString()}</span>
+                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0,moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length-3)}</span>
                         </IconInfo><img src={lineImg} alt={"구분선 이미지"} style={{ margin: "0px 10px" }} />
                         <IconBox>
                             <IconWrap>

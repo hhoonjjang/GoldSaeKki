@@ -152,8 +152,14 @@ const DetailComponent = ({ categorys, category }) => {
                         {/* 댓글 개수에 맞게 map 돌린다. */}
                         <Comment>
                             {/* 댓글유저정보 */}
-                            댓글댓글추가... (닉네임 등등)
+                            <div>
+                                <span>왼쪽</span>
+                                <span>오른쪽</span>
+                            </div>
                             {/* 댓글내용 */}
+                            <div>하이</div>
+                            {/* 답글 */}
+                            <div>어머 답글이네..(답글컴포넌트)</div>
                         </Comment>
 
                     </CommentWrap>

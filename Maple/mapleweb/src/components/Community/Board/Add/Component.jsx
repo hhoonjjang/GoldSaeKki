@@ -1,10 +1,12 @@
+
 import styled from 'styled-components';
 import { Link, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import { useEffect, useRef, useState } from 'react';
-import { WORLDLIST } from '../../../../modules/community';
+import { useEffect, useRef, useState } from "react";
+import { WORLDLIST } from "../../../../modules/community";
 
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -137,149 +139,150 @@ const AddComponent = ({ categorys, category, route }) => {
             </ContentBox>
         </>
     );
+
 };
 
 export default AddComponent;
 
 const ContentBox = styled.div`
+  & > div {
+    float: left;
+  }
+  & input:focus,
+  & div:focus {
+    outline: none;
+  }
 
-    &>div{
-        float: left;
-    }
-    & input:focus, & div:focus{
-        outline: none;
-    }
-
-    /* ckEditor css 설정 */
-    & .ck-content{
-        height: 560px;
-    }
-    & .ck-rounded-corners{
-        width: 100%;
-    }
-    & .ck-editor__editable{
-        padding: 0 15px;
-    }
-    & .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable){
-        border: 1px solid #CCCED1;
-    }
-
+  /* ckEditor css 설정 */
+  & .ck-content {
+    height: 560px;
+  }
+  & .ck-rounded-corners {
+    width: 100%;
+  }
+  & .ck-editor__editable {
+    padding: 0 15px;
+  }
+  & .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
+    border: 1px solid #ccced1;
+  }
 `;
 
 const TitleWrap = styled.div`
-    /* margin-top: 30px; */
-    height: 50px;
-    float: left;
-    width: 100%;
-    border-bottom: none;
-    display: flex;
-    align-items: center;
-    padding : 0 20px;
-    background-color: #F9F9F9;
-    border : none;
-    border-top: 1px solid #7E7E7E;
-    /* border-bottom: 1px solid #CCCED1; */
-    /* border-bottom: 1px solid #CCCED1; */
+  /* margin-top: 30px; */
+  height: 50px;
+  float: left;
+  width: 100%;
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #f9f9f9;
+  border: none;
+  border-top: 1px solid #7e7e7e;
+  /* border-bottom: 1px solid #CCCED1; */
+  /* border-bottom: 1px solid #CCCED1; */
 `;
 const CategorySelector = styled.select`
-    font-size: 13px;
-    height: 32px;
-    padding: 0 42px 0 20px;
-    margin-right: 10px;
-    border : 1px solid #CCCED1;
-    cursor: pointer;
+  font-size: 13px;
+  height: 32px;
+  padding: 0 42px 0 20px;
+  margin-right: 10px;
+  border: 1px solid #ccced1;
+  cursor: pointer;
 `;
 const TitleInput = styled.input`
-    height: 32px;
-    width: 730px;
-    padding: 0 10px;
-    font-size: 15px;
-    border : 1px solid #CCCED1;
+  height: 32px;
+  width: 730px;
+  padding: 0 10px;
+  font-size: 15px;
+  border: 1px solid #ccced1;
 `;
 
 const CategoryTitle = styled.h1`
-    font-size: 28px;
-    color: #333;
-    margin-top: 60px;
-    font-weight: 600;
-    width: 100%;
-    float: left;
-    height: 40px;
-    margin-bottom: 80px;
-    cursor: default;
+  font-size: 28px;
+  color: #333;
+  margin-top: 60px;
+  font-weight: 600;
+  width: 100%;
+  float: left;
+  height: 40px;
+  margin-bottom: 80px;
+  cursor: default;
 `;
 
 const TagWrap = styled.div`
-    border : 1px solid #CCCED1;
-    /* margin-top: 30px; */
-    height: 50px;
-    float: left;
-    width: 100%;
-    border-top: none;
-    display: flex;
-    align-items: center;
+  border: 1px solid #ccced1;
+  /* margin-top: 30px; */
+  height: 50px;
+  float: left;
+  width: 100%;
+  border-top: none;
+  display: flex;
+  align-items: center;
 `;
 const TagSpan = styled.span`
-    line-height: 50px;
-    float: left;
-    margin-left: 27px;
-    font-size: 15px;
-    color: #333;
-    padding-right: 21px;
-    background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/tag_title_bg.png) right 17px no-repeat;
+  line-height: 50px;
+  float: left;
+  margin-left: 27px;
+  font-size: 15px;
+  color: #333;
+  padding-right: 21px;
+  background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/tag_title_bg.png)
+    right 17px no-repeat;
 `;
 const TagInput = styled.input`
-    margin-left: 20px;
-    height: 32px;
-    width: 760px;
-    border-radius: 0;
-    border: 1px solid #CCCED1;
-    font-size: 15px;
-    padding: 0 10px;
+  margin-left: 20px;
+  height: 32px;
+  width: 760px;
+  border-radius: 0;
+  border: 1px solid #ccced1;
+  font-size: 15px;
+  padding: 0 10px;
 `;
 
 const ButtonBox = styled.div`
-    width: 100%;
-    float: left;
-    margin: 16px 0;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  float: left;
+  margin: 16px 0;
+  display: flex;
+  justify-content: center;
 `;
 const CancelBtn = styled.a`
-    min-width: 53px;
-    font-size: 15px;
-    color: #fff;
-    text-align: center;
-    background-color: #747a86;
-    border-radius: 2px;
-    padding: 12px 24px;
-    border: 1px solid #747a86;
-    display: inline-block;
-    line-height: 1;
-    margin: 0 5px;
-    &:hover{
-        color: white;
-        background-color: #636872;
-    }
+  min-width: 53px;
+  font-size: 15px;
+  color: #fff;
+  text-align: center;
+  background-color: #747a86;
+  border-radius: 2px;
+  padding: 12px 24px;
+  border: 1px solid #747a86;
+  display: inline-block;
+  line-height: 1;
+  margin: 0 5px;
+  &:hover {
+    color: white;
+    background-color: #636872;
+  }
 `;
 const RegistBtn = styled.a`
-    min-width: 53px;
-    font-size: 15px;
-    color: #fff;
-    text-align: center;
-    /* background-color: #485F9C; */
-    /* background-color: #D271A8; */
-    background-color: #da63a6;
-    border-radius: 2px;
-    padding: 12px 24px;
-    /* border: 1px solid #747a86; */
-    display: inline-block;
-    line-height: 1;
-    margin: 0 5px;
-    cursor: pointer;
-    &:hover{
-        color: white;
-        /* background-color: #324B90; */
-        background-color: #CA5196;
-    }
+  min-width: 53px;
+  font-size: 15px;
+  color: #fff;
+  text-align: center;
+  /* background-color: #485F9C; */
+  /* background-color: #D271A8; */
+  background-color: #da63a6;
+  border-radius: 2px;
+  padding: 12px 24px;
+  /* border: 1px solid #747a86; */
+  display: inline-block;
+  line-height: 1;
+  margin: 0 5px;
+  cursor: pointer;
+  &:hover {
+    color: white;
+    /* background-color: #324B90; */
+    background-color: #ca5196;
+  }
 `;

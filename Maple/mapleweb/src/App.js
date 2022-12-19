@@ -52,7 +52,6 @@ function App() {
       });
     }
   };
-
   console.log();
   document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck();
   return (

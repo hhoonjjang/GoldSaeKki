@@ -30,7 +30,7 @@ router.post("/imgchange", (req, res) => {
   ).then((data) => {
     router.get(`/download${req.body.currImg}`, (req, res) => {
       fs.readFile("./upload/" + req.body.currImg, (err, data) => {
-        res.writeHead(200, { "Content-Type": "text/html" });
+        res.writeHead(200, { "Content-Type": "img/jpeg; charset=utf-8" });
         res.end(data);
       });
     });

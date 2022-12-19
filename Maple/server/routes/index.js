@@ -29,14 +29,30 @@ router.use("/report", report);
 function changeImg() {
   fs.readdir("./upload", (err, datas) => {
     console.log(datas);
-    datas?.map((item) => {
-      router.get(`/download${item}`, (req, res) => {
-        fs.readFile("./upload/" + item, (err, data) => {
-          res.writeHead(200, { "Content-Type": "text/html" });
+
+    for (let i = 0; i < datas.length; i++) {
+      console.log("포문확인");
+      console.log(i);
+      console.log("포문확인");
+      router.get(`/download${datas[i]}`, (req, res) => {
+        fs.readFile("./upload/" + datas[i], (err, data) => {
+          res.writeHead(200, { "Content-Type": "img/jpeg; charset=utf-8" });
+          console.log("표시");
+          console.log(data);
+          console.log("표시");
+
           res.end(data);
         });
       });
-    });
+    }
+    // datas?.map((item) => {
+    //   router.get(`/download${item}`, (req, res) => {
+    //     fs.readFile("./upload/" + item, (err, data) => {
+    //       res.writeHead(200, { "Content-Type": "img/jpeg; charset=utf-8" });
+    //       res.end(data);
+    //     });
+    //   });
+    // });
   });
 }
 changeImg();

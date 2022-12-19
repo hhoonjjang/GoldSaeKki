@@ -1,41 +1,97 @@
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { action as communityAction, CATEGORY, WORLDLIST } from '../../../../modules/community';
 // import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import LinkIcon from "../../images/link_btn.png";
 import AlarmIcon from "../../images/report_btn2.png";
 
+import eyeImg from "../../images/info_eye_new.png";
+import dateImg from "../../images/info_sub_date_new.png";
+import lineImg from "../../images/btn_line_img.png";
 
-const DetailComponent = ({categorys, category}) => {
+import moment from 'moment';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-    
+const DetailComponent = ({ categorys, category }) => {
+
+    const dispatch = useDispatch();
+
+    // 라우터 상단의 번호를 가져와 그 번호를 아래 보드 번호로 맞춰준다.
+    const { boardId } = useParams();
+
+    // 해당 게시글을 가져오는 요청을 보낸다.
+    const boardReq = axios.post("http://localhost:8080/api/board/getBoard", {
+        boardId: boardId
+    });
+
+    // 그냥 출력하면 Promise {<pending>} 형태로 값이 뽑아와 진다.
+    // console.log(boardReq);
+
+    // 보드 번호가 변경될 때 Redux에 서버에서 가져온 리스트를 저장해준다.
+    useEffect(() => {
+        boardReq.then((board) => {
+            dispatch(communityAction.board(board?.data));
+        });
+    }, [boardId]);
+
+
+    // Redux에 저장된 값을 가져온다.
+    const states = useSelector((state) => state);
+
+    let board = "";
+
+    // 랜더링 이후 값을 집어넣어줌
+    if (states.community.board) {
+        board = states.community.board[0];
+    }
+
+    // 현재 라우터 값을 구한다.
+    let route = "";
+    CATEGORY.forEach((item, idx) => {
+        if (item.name == board.category) {
+            route = item.label;
+        }
+    });
+
+    // 현재 로그인 유저 정보
+    const userWorld = useSelector((state) => state.user.currServerName);
+    const userName = useSelector((state) => state.user.currUserName);
 
     return (
         <>
-            {/* 게시글 목록, 게시글 등록도 이런 식으로 추가하기 */}
             <CategoryTItleBox>
-                <CategoryTitle>{category}</CategoryTitle>
-                {/* 목록 : 이놈 수정 */}
-                {/* Link to로 해당 카테고리 리스트로 이동하도록 한다. */}
+                <CategoryTitle>{board?.category}</CategoryTitle>
                 <CategoryRight>
-                    <span>목록</span>
+                    <Link to={`/Community/${route}`}><span>목록</span></Link>
                 </CategoryRight>
             </CategoryTItleBox>
 
-            {/* 여기서부터 게시글 상세 페이지 내용 시작 */}
+            {/* 게시글 상세 페이지 내용 시작 */}
             <ContentBox>
                 <BoardTitle>
-                    <BoardTitleSpan>[오로라]</BoardTitleSpan>{" "}
-                    <BoardTitleText>"그의 노력을 폄하하려는 의도는 아니었다."</BoardTitleText>
+                    <BoardTitleSpan>[{board?.world}]</BoardTitleSpan>{" "}
+                    <BoardTitleText>{board?.title}</BoardTitleText>
                 </BoardTitle>
 
-                {/* BoardInfo */}
+                {/* 게시글 상단 정보 영역 */}
                 <BoardInfoBox>
                     <BoardUserName>
-                        {/* 서버(월드)아이콘과 닉네임 map으로 출력하기 */}
-                        🈺 efforthye
+                        {WORLDLIST.map((world, idx) => {
+                            if (world.name == board?.userWorld) {
+                                return <UserName key={`userName-${idx}`}><UserWorldImg key={`userWorldImg-${idx}`} src={`${world.img}`} style={{ marginRight: "1px" }} /> {board?.userName}</UserName>;
+                            } else {
+                                return;
+                            }
+                        })}
                     </BoardUserName>
                     <BoardInfo>
-                        {/* 나머지정보들 */}
-                        <div>조회수, 등록시간</div>{" | "}
+                        {/* 오른쪽 아이콘 영역 */}
+                        <IconInfo>
+                            <span style={{ margin: "0px 10px" }}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board?.eyeCount}{" "}{" "}</span>
+                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString()}</span>
+                        </IconInfo><img src={lineImg} alt={"구분선 이미지"} style={{ margin: "0px 10px" }} />
                         <IconBox>
                             <IconWrap>
                                 <BoardOtherIcon src={LinkIcon} alt='링크 아이콘' onClick={() => {
@@ -51,33 +107,59 @@ const DetailComponent = ({categorys, category}) => {
                     </BoardInfo>
                 </BoardInfoBox>
 
-                {/* 내용 영역 */}
-                <BoardContent>
-                    <p>내용내용</p><p>내용내용</p><p>크크크</p><p>내용내용</p><p>내용내용</p><p>내용내용</p>
+                {/* 내용 영역 : innerHTML으로 넣었다. */}
+                <BoardContent dangerouslySetInnerHTML={{ __html: board?.contents }}>
                 </BoardContent>
 
                 {/* 공감영역 */}
                 <LikeWrap>
                     <LikeBtn><span>❤ 공감하기</span></LikeBtn>
-                    <LikeCheck><span>0 명</span></LikeCheck>
+                    <LikeCheck><span>{board?.likeCount} 명</span></LikeCheck>
                 </LikeWrap>
-                {/* <LikeWrap>
-                    <LikeBtn>공감하기</LikeBtn>
-                    <LikeCheck>12121212명</LikeCheck>
-                </LikeWrap> */}
 
+                {/* 태그 영역 */}
+                {/* 태그는 먼저 위에서 잘 가공해 예쁜 배열로 만든다음 map 돌린다. */}
+                {/* Link to로 태그검색 가능하게 해도 좋을 것 같다. */}
+                <TagWrap>
+                    <Tag>#어쩌구</Tag>{" "}
+                    <Tag>#어쩌구2</Tag>{" "}
+                </TagWrap>
+
+                {/* 수정/삭제 영역 : 로그인 유저와 보드 유저가 같으면 띄운다. */}
+                {userName==board.userName ? (
+                    <UpDelBtnWrap>
+                        {/* 등록 창으로 보내고, props로 현재 수정 상태임도 보내준다. */}
+                        <Link to={`/Community/Free`}>
+                            <UpDelBtn>수정</UpDelBtn>
+                        </Link>
+                        <Link to={`/Community/Free`}>
+                            <UpDelBtn>삭제</UpDelBtn>
+                        </Link>
+                    </UpDelBtnWrap>
+                ) : ""}
 
                 {/* 댓글 영역 */}
+                {/* 여기서부터 댓글 컴포넌트 만들어진 이후에 작업 */}
                 <CommentInfo>
                     {/* 몇개인지,색깔바꾸기 */}
                     댓글{" "}
                     <CommentCount>0</CommentCount>
                 </CommentInfo>
+
+                {/* 댓글 목록 */}
                 <CommentBox>
                     <CommentWrap>
                         {/* 댓글 개수에 맞게 map 돌린다. */}
                         <Comment>
-                            댓글댓글추가... (닉네임 등등)
+                            {/* 댓글유저정보 */}
+                            <div>
+                                <span>왼쪽</span>
+                                <span>오른쪽</span>
+                            </div>
+                            {/* 댓글내용 */}
+                            <div>하이</div>
+                            {/* 답글 */}
+                            <div>어머 답글이네..(답글컴포넌트)</div>
                         </Comment>
 
                     </CommentWrap>
@@ -88,7 +170,7 @@ const DetailComponent = ({categorys, category}) => {
                     <CommentAdd>
                         <CommentTextArea name='comment'></CommentTextArea>
                         <CommentBtnWrap>
-                            <div style={{fontSize:"25px", marginLeft:"5px"}}>🦢</div>
+                            <div style={{ fontSize: "25px", marginLeft: "5px" }}>🦢</div>
                             <CommentAddBtn>등록</CommentAddBtn>
                         </CommentBtnWrap>
 
@@ -121,7 +203,7 @@ const CategoryTitle = styled.h1`
 const CategoryRight = styled.div`
     margin-top: 15px;
     cursor: pointer;
-    &>span{
+    & span{
         display: inline-block;
         font-size: 13px;
         color: #666;
@@ -179,6 +261,8 @@ const BoardUserName = styled.div`
     margin-left: 27px;
     height: 100%;
     font-size: 13px;
+    display: flex;
+    align-items: center;
     &>a{
         float: left;
         color: #888;
@@ -349,4 +433,66 @@ const CommentAddBtn = styled.div`
     display: inline-block;
     line-height: 1;
     /* float: left; */
+`;
+
+const UserName = styled.span`
+  float: left;
+  width: 110px;
+  max-width: 110px;
+  color: #888888;
+  font-size: 12px;
+  font-family: "NanumBarunGothic", "Malgun Gothic", sans-serif;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+`;
+
+const UserWorldImg = styled.img`
+
+`;
+const IconInfo = styled.div`
+    color : #888;
+    &>span{
+        /* display: flex;
+        align-items: center; */
+    }
+`;
+
+const UpDelBtnWrap = styled.div`
+    float: left;
+    width: 100%;
+    height: 60px;
+    padding-top: 15px;
+    border-top: 1px solid #cecece;
+    margin-bottom: 25px;
+`;
+const UpDelBtn = styled.div`
+    float: left;
+    margin-left: 7px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #747A86;
+    width: 90px;
+    height: 40px;
+    line-height: 40px;
+    color: #ececec;
+    border-radius: 2px;
+`;
+
+// 태그
+const TagWrap = styled.div`
+    float: left;
+    background-color: #F9F9F9;
+    width: 100%;
+    padding: 12px 27px;
+    margin-bottom: 16px;
+
+`;
+const Tag = styled.span`
+    cursor: pointer;
+    color: #696969;
+    font-size: 13px;
 `;

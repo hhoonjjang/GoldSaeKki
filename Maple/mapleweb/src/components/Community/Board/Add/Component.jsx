@@ -1,5 +1,7 @@
-import styled from "styled-components";
-import { Link, Routes, Route, useLocation } from "react-router-dom";
+
+import styled from 'styled-components';
+import { Link, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
@@ -14,138 +16,130 @@ import { useSelector } from "react-redux";
 // const UPLOAD_ENDPOINT = "upload_files";
 
 const AddComponent = ({ categorys, category, route }) => {
-  const [titleText, setTitleText] = useState("");
-  const [contentData, setContentData] = useState("");
-  const [tags, setTags] = useState("");
-  const [selected, setSelected] = useState("리부트2");
-  const handleSelect = (e) => {
-    setSelected(e.target.value);
-  };
 
-  // 현재 로그인 유저 정보
-  const userWorldName = useSelector((state) => state.user.currServerName);
-  const userName = useSelector((state) => state.user.currUserName);
+    const navigate = useNavigate();
 
-  // 이미지 등록 시 폼 태그로 감싸주기
+    // 현재 로그인 유저 정보
+    const userWorld = useSelector((state) => state.user.currServerName);
+    const userName = useSelector((state) => state.user.currUserName);
 
-  return (
-    <>
-      <CategoryTitle>{category}</CategoryTitle>
+    const [titleText, setTitleText] = useState("");
+    const [contentData, setContentData] = useState("");
+    const [tags, setTags] = useState("");
+    const [selected, setSelected] = useState(userWorld);
+    const handleSelect = (e) => {
+        setSelected(e?.target?.value);
+    };
 
-      <ContentBox>
-        <TitleWrap>
-          <CategorySelector
-            name="serverName"
-            onChange={handleSelect}
-            value={selected}
-          >
-            {/* 서버 이름 module에서 가져와 map으로 띄우기 */}
+    if(!userName){
+        console.log("유저 정보가 없습니다."); 
+        navigate("/");
+        return;
+    } 
 
-            {/* 유저의 서버와 같으면 해당 선택해주기 */}
+    // 이미지 등록 시 폼 태그로 감싸주기
 
-            {WORLDLIST.map((item, idx) => {
-              if (idx === 0) return null;
-              // 만약 유저의 서버이름과 같은게 있으면 그것을 선택시켜줌
-              return (
-                <option key={`world-${idx}`} value={`${item.name}`}>
-                  {item.name}
-                </option>
-              );
-            })}
-          </CategorySelector>
+    return (
 
-          {/* 제목값을 가져오기~~ */}
-          {/* 현재 게시판 이름을 저장해 가져와 띄운다. */}
-          <TitleInput
-            type={"text"}
-            placeholder={"제목을 입력해주세요."}
-            onInput={(e) => {
-              setTitleText(e.target.value);
-            }}
-          />
-        </TitleWrap>
+        <>
+            <CategoryTitle>{category}</CategoryTitle>
 
-        <CKEditor
-          editor={ClassicEditor}
-          data="<p>&nbsp;</p>"
-          onReady={(editor) => {
-            // console.log("Editor is ready to use!", editor);
-            console.log("저는 준비 되었습니다 주인님! -Editor", editor);
-          }}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            console.log({ event, editor, data });
-            setContentData(data);
-          }}
-          onBlur={(event, editor) => {
-            console.log("Blur.", editor);
-          }}
-          onFocus={(event, editor) => {
-            console.log("Focus.", editor);
-          }}
-        ></CKEditor>
-        <TagWrap>
-          <TagSpan>태그 달기</TagSpan>
-          <TagInput
-            type={"text"}
-            placeholder={
-              "태그와 태그는 #으로 구분하며, 10개까지 입력하실 수 있습니다."
-            }
-            onInput={(e) => {
-              setTags(e.target.value);
-            }}
-          ></TagInput>
-        </TagWrap>
+            <ContentBox>
+                <TitleWrap>
+                    <CategorySelector name='serverName' onChange={handleSelect} value={selected}>
+                        {WORLDLIST.map((item, idx) => {
+                            if (idx === 0) return null;
+                            return <option key={`world-${idx}`} value={`${item.name}`}>{item.name}</option>
+                        })}
+                    </CategorySelector>
 
-        {/* 취소, 등록 버튼 */}
-        <ButtonBox>
-          {/* 이놈 href 말고 Link to로 보내야 한다. ! */}
-          <CancelBtn href={`/Community/${route}`} className="btn03_g">
-            취소
-          </CancelBtn>
-          <RegistBtn
-            className="btn03_g"
-            onClick={async (e) => {
-              // 서버쪽에 등록 요청을 보낸다.
-              const regist = await axios.post(
-                "http://localhost:8080/api/board/create",
-                {
-                  title: titleText,
-                  world: selected,
-                  category: category,
-                  contents: contentData,
-                  tags: tags,
-                  userName: userName,
-                }
-              );
 
-              // 응답 받아오기
-              switch (regist.data.status) {
-                case 200:
-                  // 성공 알람, 게시물 상세 페이지로 리턴
-                  alert("게시글 등록됨");
-                  return;
-                case 400:
-                  alert("게시글 등록 에러");
-                  return;
-                case 401:
-                  alert("유저 정보가 없습니다.");
-                  return;
-                default:
-                  break;
-              }
-            }}
-          >
-            등록
-          </RegistBtn>
-        </ButtonBox>
+                    {/* 제목값을 가져오기~~ */}
+                    {/* 현재 게시판 이름을 저장해 가져와 띄운다. */}
+                    <TitleInput type={'text'} placeholder={"제목을 입력해주세요."} onInput={(e) => {
+                        setTitleText(e.target.value);
+                    }} />
 
-        {/* 값을 보기 위해 임시로 만듬 : 일단 값 잘 받아와짐 */}
-        {/* 나중에 이미지도 추가할 수 있게 하기 */}
-        {/* <div>내용 : {contentData}</div> */}
-      </ContentBox>
-    </>
-  );
+                </TitleWrap>
+
+                <CKEditor
+                    editor={ClassicEditor}
+                    data="<p>&nbsp;</p>"
+                    onReady={(editor) => {
+                        // console.log("Editor is ready to use!", editor);
+                        console.log("저는 준비 되었습니다 주인님! -Editor", editor);
+                    }}
+                    onChange={(event, editor) => {
+                        const data = editor.getData();
+                        console.log({ event, editor, data });
+                        setContentData(data);
+                    }}
+                    onBlur={(event, editor) => {
+                        console.log("Blur.", editor);
+                    }}
+                    onFocus={(event, editor) => {
+                        console.log("Focus.", editor);
+                    }}
+
+                >
+
+                </CKEditor>
+                <TagWrap>
+                    <TagSpan>태그 달기</TagSpan>
+                    <TagInput type={"text"} placeholder={"태그와 태그는 #으로 구분하며, 10개까지 입력하실 수 있습니다."} onInput={(e) => {
+                        setTags(e.target.value)
+                    }}></TagInput>
+                </TagWrap>
+
+                {/* 취소, 등록 버튼 */}
+                <ButtonBox>
+                    {/* 이놈 href 말고 Link to로 보내야 한다. ! */}
+                    <CancelBtn href={`/Community/${route}`} className="btn03_g">취소</CancelBtn>
+                    <RegistBtn className="btn03_g" onClick={async (e) => {
+
+                        // 서버쪽에 등록 요청을 보낸다.
+                        const regist = await axios.post("http://localhost:8080/api/board/create", {
+                            title: titleText,
+                            world: selected,
+                            category: category,
+                            contents: contentData,
+                            tags: tags,
+                            userName: userName,
+                            userWorld: userWorld,
+                        });
+
+                        // 불안정한 코드
+                        console.log(regist.data);
+                        const boardId = regist.data?.tempBoard?.id;
+
+                        // 응답 받아오기
+                        switch (regist.data.status) {
+                            case 200:
+                                // 성공 알람, 게시물 상세 페이지로 리턴
+                                alert("게시글 등록됨");
+                                navigate(`/Community/board/${boardId}`);
+                                return;
+                            case 400:
+                                alert("게시글 등록 에러");
+                                return;
+                            case 401:
+                                alert("유저 정보가 없습니다.");
+                                return;
+                            default:
+                                break;
+                        }
+
+                    }}>등록</RegistBtn>
+                </ButtonBox>
+
+                {/* 값을 보기 위해 임시로 만듬 : 일단 값 잘 받아와짐 */}
+                {/* 나중에 이미지도 추가할 수 있게 하기 */}
+                {/* <div>내용 : {contentData}</div> */}
+
+            </ContentBox>
+        </>
+    );
+
 };
 
 export default AddComponent;

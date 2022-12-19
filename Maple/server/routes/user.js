@@ -40,9 +40,12 @@ router.post("/imgchange", (req, res) => {
 
 router.post("/getImg", (req, res) => {
   console.log("요청", req.body.currUserName);
+  console.log("req.body?.currUserName", req.body?.currUserName);
   if (req.body?.currUserName)
     db.User.findOne({ where: { userName: req.body?.currUserName } }).then(
       (data) => {
+        console.log("data : ", data);
+        console.log("data?.profileImg : ", data?.profileImg);
         if (data?.profileImg) {
           console.log("이미지 정보", data.profileImg);
           res.send(`http://localhost:8080/api/download${data.profileImg}`);

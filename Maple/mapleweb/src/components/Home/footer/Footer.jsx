@@ -109,7 +109,7 @@ const FooterComponent = styled.div`
   width: 100%;
   height: 220px;
   position: absolute;
-  bottom: 1;
+  bottom: 0;
   left: 0;
 
   .footer_innerBox ul {

@@ -12,21 +12,19 @@ import MainCommunityContainer from "./mainCommunity/MainCommunityContainer";
 
 const HomeComponet = () => {
   return (
-    <div className="Home_wrapper">
-      <div className="Home_content">
-        {/* <MainSlide></MainSlide> */}
-        {/* 임시로 배너를 채워넣었습니다 */}
-        <MainSlide></MainSlide>
-        {/* <TempSlide></TempSlide> */}
-        <MainGamestartContainer></MainGamestartContainer>
-        <MainNoticeContainer></MainNoticeContainer>
-        <MainCommunityContainer></MainCommunityContainer>
-        <MainArchive>
-          <img src={archive} />
-        </MainArchive>
-        <MainInfo></MainInfo>
-        <Shortcut></Shortcut>
-      </div>
+    <div>
+      {/* <MainSlide></MainSlide> */}
+      {/* 임시로 배너를 채워넣었습니다 */}
+      <MainSlide></MainSlide>
+      {/* <TempSlide></TempSlide> */}
+      <MainGamestartContainer></MainGamestartContainer>
+      <MainNoticeContainer></MainNoticeContainer>
+      <MainCommunityContainer></MainCommunityContainer>
+      <MainArchive>
+        <img src={archive} />
+      </MainArchive>
+      <MainInfo></MainInfo>
+      <Shortcut></Shortcut>
     </div>
   );
 };

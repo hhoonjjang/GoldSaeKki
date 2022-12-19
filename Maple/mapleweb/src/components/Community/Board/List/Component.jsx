@@ -148,20 +148,24 @@ const ListComponent = ({ categorys, category, route }) => {
                               .toLocaleString()
                               .substr(0, 13)
                               ? // `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)}`
-                                `${moment(
+                                  `${moment(
                                   board?.createdAt,
                                   "YYYY-MM-DDTHH:mm:ssZ"
                                 )
                                   .toDate()
                                   .toLocaleString()
-                                  .substr(2, 11)}`
+                                  .substring(0, moment(board?.createdAt,"YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().indexOf("오"))
+                                }`
+                                // 위 : 오늘이 아닐 때, 아래 : 오늘일 때
                               : `${moment(
                                   board?.createdAt,
                                   "YYYY-MM-DDTHH:mm:ssZ"
                                 )
                                   .toDate()
                                   .toLocaleString()
-                                  .substr(13, 9)}`
+                                  .substring(moment(board?.createdAt,"YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().indexOf("오"))
+                                  .substr(0, moment(board?.createdAt,"YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substring(moment(board?.createdAt,"YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().indexOf("오")).lastIndexOf(":"))
+                                }`
                           }
                         </IconInfo>
                         <IconInfo key={`eyeCount-${idx}`} className="eyeCount">
@@ -374,10 +378,7 @@ const IconInfo = styled.div`
 
   /* 보통은 그냥 바로 안띄우고 예외처리도 해준다(ex. 이미지가 안 들어왔을 때 무엇을 띄울 것인지) */
   /* 이놈 뭔지 모르겠는데 조금 수정해야 할듯? */
-  background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(
-      props
-    ) => props.iconImg}.png")
-    left 0px no-repeat;
+  background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(props) => props.iconImg}.png") left 0px no-repeat;
   max-width: ${(props) => {
     // 무엇을 기준으로 나눌건지
     switch (props.iconImg) {

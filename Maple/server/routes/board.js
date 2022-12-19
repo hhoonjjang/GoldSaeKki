@@ -111,6 +111,28 @@ router.post("/destroy", (req,res)=>{
   }
 });
 
+// 게시글 수정
+router.post("/update", (req,res)=>{
+  console.log(req.body.title);
+  try {
+    // boardId에 해당하는 보드를 수정한다.
+    db.Board.update({
+      title : req.body.title,
+      world : req.body.world,
+      tags : req.body.tags,
+      contents : req.body.contents
+    }, {
+      where : {id : req.body.boardId}
+    });
+    res.send({status : 200});
+  } catch (err) {
+    console.error(err);
+    res.send({status : 400});
+  }
+});
+
+
+
 
 router.post("/mainCommunity", async (req, res) => {
   console.log("메인커뮤니티 받았당");

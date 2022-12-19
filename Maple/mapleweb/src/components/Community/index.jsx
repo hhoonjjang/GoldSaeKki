@@ -27,6 +27,7 @@ import AddContainer from "./Board/Add/Container";
 import { CATEGORY, CATEGORY2 } from "../../modules/community";
 import CommentContainer from "./Pagination/Container";
 import DetailContainer from "./Board/Detail/Container";
+import EditContainer from "./Board/Edit/Container";
 
 const CommunityComponet = () => {
   const dispatch = useDispatch();
@@ -73,6 +74,19 @@ const CommunityComponet = () => {
 
               {/* 게시글 상세 페이지 띄우기 : Link to 로 이동할 때 그 보드 번호가 전달되어야 한다. */}
               <Route path="/board/:boardId" element={<DetailContainer/>}></Route>
+
+              {/* 수정 페이지 : <Link to={`/Community/board/${board.id}/edit`}> */}
+              {/* <Route path="/board/:boardId/edit" element={<DetailContainer/>}></Route> */}
+
+              {/* 수정 */}
+              {/* <Route path="/board/:boardId/edit" element={<AddContainer />}></Route> */}
+              <Route path="/board/:boardId/edit" element={<EditContainer />}></Route>
+              
+              {/* <Route path="/Information/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"정보게시판"} route={"Information"} />}></Route>
+              <Route path="/TopicDiscussion/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"토론게시판"} route={"TopicDiscussion"} />}></Route>
+              <Route path="/Art/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이아트"} route={"Art"} />}></Route>
+              <Route path="/Coordination/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이코디"} route={"Coordination"} />}></Route> */}
+
 
             </Routes>
           </ContentBox>

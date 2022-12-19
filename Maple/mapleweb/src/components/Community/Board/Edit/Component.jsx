@@ -6,7 +6,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { useEffect, useRef, useState } from "react";
-import { WORLDLIST } from "../../../../modules/community";
+import { CATEGORY, WORLDLIST } from "../../../../modules/community";
 
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -15,7 +15,8 @@ import { useSelector } from "react-redux";
 // const API_URL = "http://localhost:8080";
 // const UPLOAD_ENDPOINT = "upload_files";
 
-const AddComponent = ({ category, route, isUpdate, titleValue, contentsValue, tagsValue  }) => {
+// const EditComponent = ({ category, route, isUpdate, titleValue, contentsValue, tagsValue  }) => {
+const EditComponent = ({ isUpdate, titleValue, contentsValue, tagsValue  }) => {
 
     const navigate = useNavigate();
 
@@ -23,6 +24,21 @@ const AddComponent = ({ category, route, isUpdate, titleValue, contentsValue, ta
     const userWorld = useSelector((state) => state.user.currServerName);
     const userName = useSelector((state) => state.user.currUserName);
 
+    // 게시글 정보
+    const boardNum = useSelector((state)=>state.community.board[0].id);
+    const boardTitle = useSelector((state)=>state.community.board[0].title);
+    const boardContents = useSelector((state)=>state.community.board[0].contents);
+    const boardTags = useSelector((state)=>state.community.board[0].tags);
+    const category = useSelector((state)=>state.community.board[0].category);
+
+    let route = "";
+
+    // route 정보 가져오기
+    CATEGORY.map((item, idx)=>{
+      if(item.name == category){
+        route = item.label;
+      }
+    });
     
 
     // 수정 상태일 때
@@ -37,9 +53,9 @@ const AddComponent = ({ category, route, isUpdate, titleValue, contentsValue, ta
     // const [contentsVal, setContentsVal] = useState("");
     // const [tagsVal, setTagsVal] = useState("");
 
-    const [titleText, setTitleText] = useState("");
-    const [contentData, setContentData] = useState("");
-    const [tags, setTags] = useState("");
+    const [titleText, setTitleText] = useState(boardTitle);
+    const [contentData, setContentData] = useState(contentsValue);
+    const [tags, setTags] = useState(boardTags);
     const [selected, setSelected] = useState(userWorld);
     const handleSelect = (e) => {
         setSelected(e?.target?.value);
@@ -53,12 +69,13 @@ const AddComponent = ({ category, route, isUpdate, titleValue, contentsValue, ta
 
     // 이미지 등록 시 폼 태그로 감싸주기
 
-    // 수정
+    // 만약 수정 상태라면?
     if(isUpdate){
       setTitleText(titleValue);
       setContentData(contentsValue);
       setTags(tagsValue);
     }
+
 
     return (
 
@@ -74,10 +91,8 @@ const AddComponent = ({ category, route, isUpdate, titleValue, contentsValue, ta
                         })}
                     </CategorySelector>
 
-
-                    {/* 제목값을 가져오기~~ */}
                     {/* 현재 게시판 이름을 저장해 가져와 띄운다. */}
-                    <TitleInput type={'text'} placeholder={"제목을 입력해주세요."} onInput={(e) => {
+                    <TitleInput type={'text'} placeholder={"제목을 입력해주세요."} value={titleText} onInput={(e) => {
                         setTitleText(e.target.value);
                     }} />
 
@@ -85,7 +100,7 @@ const AddComponent = ({ category, route, isUpdate, titleValue, contentsValue, ta
 
                 <CKEditor
                     editor={ClassicEditor}
-                    data="<p>&nbsp;</p>"
+                    data={boardContents}
                     onReady={(editor) => {
                         // console.log("Editor is ready to use!", editor);
                         console.log("저는 준비 되었습니다 주인님! -Editor", editor);
@@ -109,7 +124,7 @@ const AddComponent = ({ category, route, isUpdate, titleValue, contentsValue, ta
                 </CKEditor>
                 <TagWrap>
                     <TagSpan>태그 달기</TagSpan>
-                    <TagInput type={"text"} placeholder={"태그와 태그는 #으로 구분하며, 10개까지 입력하실 수 있습니다."} onInput={(e) => {
+                    <TagInput type={"text"} value={tags} placeholder={"태그와 태그는 #으로 구분하며, 10개까지 입력하실 수 있습니다."} onInput={(e) => {
                         setTags(e.target.value)
                     }}></TagInput>
                 </TagWrap>
@@ -120,30 +135,31 @@ const AddComponent = ({ category, route, isUpdate, titleValue, contentsValue, ta
                     <CancelBtn href={`/Community/${route}`} className="btn03_g">취소</CancelBtn>
                     <RegistBtn className="btn03_g" onClick={async (e) => {
 
-                        // 서버쪽에 등록 요청을 보낸다.
-                        const regist = await axios.post("http://localhost:8080/api/board/create", {
+                        // 서버쪽에 수정 요청을 보낸다.
+                        const update = await axios.post("http://localhost:8080/api/board/update", {
                             title: titleText,
                             world: selected,
-                            category: category,
-                            contents: contentData,
                             tags: tags,
-                            userName: userName,
-                            userWorld: userWorld,
+                            contents: contentData,
+                            boardId : boardNum,
+                            // category: category,
+                            // userName: userName,
+                            // userWorld: userWorld,
                         });
 
                         // 불안정한 코드
-                        console.log(regist.data);
-                        const boardId = regist.data?.tempBoard?.id;
+                        // console.log(regist.data);
+                        // const boardId = regist.data?.tempBoard?.id;
 
                         // 응답 받아오기
-                        switch (regist.data.status) {
+                        switch (update.data.status) {
                             case 200:
                                 // 성공 알람, 게시물 상세 페이지로 리턴
-                                alert("게시글 등록됨");
-                                navigate(`/Community/board/${boardId}`);
+                                alert("게시글 수정됨");
+                                navigate(`/Community/board/${boardNum}`);
                                 return;
                             case 400:
-                                alert("게시글 등록 에러");
+                                alert("게시글 수정 에러");
                                 return;
                             case 401:
                                 alert("유저 정보가 없습니다.");
@@ -165,7 +181,7 @@ const AddComponent = ({ category, route, isUpdate, titleValue, contentsValue, ta
 
 };
 
-export default AddComponent;
+export default EditComponent;
 
 const ContentBox = styled.div`
   & > div {

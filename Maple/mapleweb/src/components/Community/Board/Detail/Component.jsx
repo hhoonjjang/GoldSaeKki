@@ -13,6 +13,7 @@ import moment from 'moment';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import EditContainer from '../Edit/Container';
 
 const DetailComponent = ({ categorys, category }) => {
 
@@ -130,30 +131,33 @@ const DetailComponent = ({ categorys, category }) => {
                 </TagWrap>
 
                 {/* 수정/삭제 영역 : 로그인 유저와 보드 유저가 같으면 띄운다. */}
-                {userName==board.userName ? (
-                    <UpDelBtnWrap>
-                        {/* 등록 창으로 보내고, props로 현재 수정 상태임도 보내준다. */}
-                        <Link to={`/Community/Free`}>
-                            <UpDelBtn onClick={()=>{
-                                // 수정 창으로 보내기
+                {userName == board.userName ? (
+                    <>
+                        <UpDelBtnWrap>
 
-                            }}>수정</UpDelBtn>
-                        </Link>
-                        <Link to={`/Community/board/${board.id}`}>
-                            <UpDelBtn onClick={async()=>{
-                                deleteConfirm = window.confirm("정말 삭제하시겠습니까?");
+                            {/* 등록 창으로 보내고, props로 현재 수정 상태임도 보내준다. */}
+                            {/* // 쿼리스트링으로 넘길수도 있을듯 */}
+                            <Link to={`./edit`}>
+                                <UpDelBtn>수정</UpDelBtn>
+                            </Link>
 
-                                if(deleteConfirm){
-                                    // 보드 id를 기준으로 삭제 요청 보내기
-                                    await axios.post("http://localhost:8080/api/board/destroy", {
-                                        boardId : board.id,
-                                    });
-                                    // 해당 커뮤니티 리스트로 이동시키기
-                                    navigate(`/Community/${route}`);
-                                }
-                            }}>삭제</UpDelBtn>
-                        </Link>
-                    </UpDelBtnWrap>
+
+                            <Link to={`/Community/board/${board.id}`}>
+                                <UpDelBtn onClick={async () => {
+                                    deleteConfirm = window.confirm("정말 삭제하시겠습니까?");
+
+                                    if (deleteConfirm) {
+                                        // 보드 id를 기준으로 삭제 요청 보내기
+                                        await axios.post("http://localhost:8080/api/board/destroy", {
+                                            boardId: board.id,
+                                        });
+                                        // 해당 커뮤니티 리스트로 이동시키기
+                                        navigate(`/Community/${route}`);
+                                    }
+                                }}>삭제</UpDelBtn>
+                            </Link>
+                        </UpDelBtnWrap>
+                    </>
                 ) : ""}
 
                 {/* 댓글 영역 */}

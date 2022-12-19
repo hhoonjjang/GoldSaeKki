@@ -80,7 +80,9 @@ const AddComponent = ({ categorys, category, route }) => {
                     onFocus={(event, editor) => {
                         console.log("Focus.", editor);
                     }}
-
+                    // config={{ckfinder: {
+                    //     uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json'
+                    // }}}
                 >
 
                 </CKEditor>

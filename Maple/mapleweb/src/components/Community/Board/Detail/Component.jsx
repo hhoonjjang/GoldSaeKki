@@ -10,13 +10,14 @@ import dateImg from "../../images/info_sub_date_new.png";
 import lineImg from "../../images/btn_line_img.png";
 
 import moment from 'moment';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const DetailComponent = ({ categorys, category }) => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // 라우터 상단의 번호를 가져와 그 번호를 아래 보드 번호로 맞춰준다.
     const { boardId } = useParams();
@@ -58,6 +59,9 @@ const DetailComponent = ({ categorys, category }) => {
     // 현재 로그인 유저 정보
     const userWorld = useSelector((state) => state.user.currServerName);
     const userName = useSelector((state) => state.user.currUserName);
+
+    // 
+    let deleteConfirm;
 
     return (
         <>
@@ -130,10 +134,24 @@ const DetailComponent = ({ categorys, category }) => {
                     <UpDelBtnWrap>
                         {/* 등록 창으로 보내고, props로 현재 수정 상태임도 보내준다. */}
                         <Link to={`/Community/Free`}>
-                            <UpDelBtn>수정</UpDelBtn>
+                            <UpDelBtn onClick={()=>{
+                                // 수정 창으로 보내기
+
+                            }}>수정</UpDelBtn>
                         </Link>
-                        <Link to={`/Community/Free`}>
-                            <UpDelBtn>삭제</UpDelBtn>
+                        <Link to={`/Community/board/${board.id}`}>
+                            <UpDelBtn onClick={async()=>{
+                                deleteConfirm = window.confirm("정말 삭제하시겠습니까?");
+
+                                if(deleteConfirm){
+                                    // 보드 id를 기준으로 삭제 요청 보내기
+                                    await axios.post("http://localhost:8080/api/board/destroy", {
+                                        boardId : board.id,
+                                    });
+                                    // 해당 커뮤니티 리스트로 이동시키기
+                                    navigate(`/Community/${route}`);
+                                }
+                            }}>삭제</UpDelBtn>
                         </Link>
                     </UpDelBtnWrap>
                 ) : ""}

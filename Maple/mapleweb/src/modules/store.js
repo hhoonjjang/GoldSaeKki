@@ -18,6 +18,7 @@ const store = createStore(
     user: userReducer,
     header: headerReducer,
     community: communityReducer,
+    admin: adminReducer,
   }),
   {
     regist: registIni,
@@ -25,6 +26,7 @@ const store = createStore(
     header: headerIni,
     user: userIni,
     community: communityIni,
+    admin: adminIni,
   },
 
   composeWithDevTools()

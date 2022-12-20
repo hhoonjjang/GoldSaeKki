@@ -30,9 +30,11 @@ router.post("/create", async(req,res)=>{
         });
         boardId.addBoardComments(commentAdd);
 
+        res.send({status : 200});
         res.end();
     } catch (error) {
         console.log(error);
+        res.send({status : 400});
     }
 });
 

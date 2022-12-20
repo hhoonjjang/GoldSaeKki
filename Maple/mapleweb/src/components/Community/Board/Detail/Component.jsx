@@ -217,7 +217,8 @@ const DetailComponent = () => {
                 {/* 댓글 입력 */}
                 <CommentAddWrap>
                     <CommentAdd>
-                        <CommentTextArea name='comment' defaultValue={text} onInput={(e)=>{
+                        {/* <CommentTextArea name='comment' defaultValue={text} value={text} onInput={(e)=>{ */}
+                        <CommentTextArea name='comment' value={text} onInput={(e)=>{
                             setText(e.target.value);
                         }}></CommentTextArea>
                         <CommentBtnWrap>
@@ -225,6 +226,15 @@ const DetailComponent = () => {
                                 <img src={goldImg} alt='금쪽이' />
                             </div>
                             <CommentAddBtn onClick={async()=>{
+                                if(!userName){
+                                    alert("로그인이 필요합니다.");
+                                    return;
+                                }
+                                if(!text){
+                                    alert("텍스트를 입력해주세요.");
+                                    return;
+                                }
+
                                 // 서버쪽에 등록 요청을 보냄
                                 const commentAddRed = await axios.post("http://localhost:8080/api/comment/create", {
                                     // 댓글 등록시 보내줄 값
@@ -238,6 +248,19 @@ const DetailComponent = () => {
                                     boardId : board?.id,
                                 });
                                 console.log(commentAddRed.data);
+
+                                switch (commentAddRed.data.status) {
+                                    case 200:
+                                        alert("댓글이 등록되었습니다.");
+                                        // 값을 비워준다.
+                                        setText("");
+                                        return;
+                                    case 400:
+                                        alert("댓글 등록 오류입니다.");
+                                        return;
+                                    default:
+                                        break;
+                                }
                             }}>등록</CommentAddBtn>
                         </CommentBtnWrap>
 

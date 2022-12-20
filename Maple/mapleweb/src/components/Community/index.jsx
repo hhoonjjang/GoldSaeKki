@@ -1,6 +1,6 @@
 import styled from "styled-components";
 // import { Link, Routes, Route } from "react-router-dom";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -59,16 +59,16 @@ const CommunityComponet = () => {
 
               {/* 카테고리에 해당하는 리스트 출력 */}
               <Route path="/:category" element={<ListContainer />}></Route>
-              
+
               {/* 카테고리에 게시글 추가 컴포넌트 라우터를 만듬 */}
               <Route path="/:category/BoardAdd" element={<AddContainer />}></Route>
 
               {/* 게시글 상세 페이지 띄우기 : Link to 로 이동할 때 그 보드 번호가 전달되어야 한다. */}
-              <Route path="/board/:boardId" element={<DetailContainer/>}></Route>
+              <Route path="/board/:boardId" element={<DetailContainer />}></Route>
 
               {/* 수정 페이지 */}
               <Route path="/board/:boardId/edit" element={<EditContainer />}></Route>
-              
+
             </Routes>
           </ContentBox>
 
@@ -165,10 +165,12 @@ const CommunityComponet = () => {
                   <IssueTag>
                     {/* a 태그 : 나중에 Link to로 바꾸기 */}
                     {/* <a href="/Common/Search?t=어쩌구저쩌구#$23#$" title="메이플스토리"></a> */}
-                    <a href="/" title="검색어">
+                    {/* <a href="/" title="검색어"> */}
+                    <Link to={"/"}>
                       {/* 텍스트 앞의 #은 map에서 돌려 붙여줘야 한다. */}
                       #던파모바일
-                    </a>
+                    </Link>
+                    {/* </a> */}
                   </IssueTag>
 
                   <IssueTag>

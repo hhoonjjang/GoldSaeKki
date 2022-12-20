@@ -17,6 +17,11 @@ export default class Comment extends Sequelize.Model {
                     type: Sequelize.BOOLEAN,
                     allowNull: true,
                     defaultValue: null,
+                },
+                userWorld: {
+                    type: Sequelize.STRING(255),
+                    allowNull: false,
+                    defaultValue: "리부트2",
                 }
             },
             {

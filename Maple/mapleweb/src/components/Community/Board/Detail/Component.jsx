@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import EditContainer from '../Edit/Container';
 
-const DetailComponent = ({ categorys, category }) => {
+const DetailComponent = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

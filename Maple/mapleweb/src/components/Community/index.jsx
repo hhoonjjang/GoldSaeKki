@@ -57,7 +57,7 @@ const CommunityComponet = () => {
 
             <Routes>
               {/* UI가 같으니까 같은 컴포넌트로 보냄, 리스트 컴포넌트 카테고리 출력 부분 수정하기 */}
-              <Route path="/Free" element={<ListContainer categorys={CATEGORY} category={"자유게시판"} route={"Free"} />}></Route>
+              <Route path="/Free" element={<ListContainer category={"자유게시판"} route={"Free"} />}></Route>
               <Route path="/Information" element={<ListContainer category={"정보게시판"} route={"Information"} />}></Route>
 
               {/* 이놈들은 UI가 달라서 새로운 컴포넌트 만들어야함 : 일단 안 만듦 */}
@@ -169,13 +169,13 @@ const CommunityComponet = () => {
                 <TagInputWrap>
                   <TagInput />
                   <TagSerachBtnSpan>
-                    {/* a 태그 :나중에 Link to로 바꾸기 */}
-                    <a href="/Community/Free">
+                    {/* a 태그 :나중에 Link to로 바꾸기(중요) */}
+                    {/* <a href="/Community/Free">
                       <SearchImg
                         src="https://cdn.imweb.me/upload/S2020090710444c43a5dc5/255f6640fbc87.png"
                         alt="검색 이미지"
                       />
-                    </a>
+                    </a> */}
                   </TagSerachBtnSpan>
                 </TagInputWrap>
                 {/* 태그들이 들어있는 영역 : 태그는 게시물의 하트가 많은 게시물 안에서 맨처음 한개만 가져온다.(시간이 된다면) */}

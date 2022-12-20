@@ -21,6 +21,7 @@ const tempArr = [
 
 const ListComponent = ({ category, route }) => {
   console.log("리스트 컴포넌트 들어옴");
+  console.log(category)
   const dispatch = useDispatch();
 
   // 페이징 처리 라이브러리
@@ -32,9 +33,9 @@ const ListComponent = ({ category, route }) => {
   const userName = useSelector((state) => state.user.currUserName);
 
   // 해당 카테고리 게시글 목록을 가져오는 요청을 보낸다.
-  // const boardsReq = axios.post("http://localhost:8080/api/board/getList", {
-  //   category: category,
-  // });
+  const boardsReq = axios.post("http://localhost:8080/api/board/getList", {
+    category: category,
+  });
 
   // Promise {<pending>} 형태로 값이 뽑아와 진다.
   // console.log(boardsReq);
@@ -43,9 +44,7 @@ const ListComponent = ({ category, route }) => {
   // 카테고리가 변경될 때 Redux에 값을 저장해준다.
   // 배열의 객체로 값이 잘 뽑아와진다. Redux에 해당 리스트를 저장해 준다.
   useEffect(() => {
-    axios.post("http://localhost:8080/api/board/getList", {
-      category: category,
-    }).then((boards) => {
+    boardsReq.then((boards) => {
       // 페이징 처리 이후 첫번째 페이지를 불러오게 하기
       // if (boards.data.name == "SequelizeDatabaseError") {
       //   return;

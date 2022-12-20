@@ -8,6 +8,7 @@ import AlarmIcon from "../../images/report_btn2.png";
 import eyeImg from "../../images/info_eye_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
 import lineImg from "../../images/btn_line_img.png";
+import goldImg from "../../images/goldImg.png";
 
 import moment from 'moment';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -85,6 +86,9 @@ const DetailComponent = () => {
             console.log(boardTags);
         }
     });
+
+    // 댓글 등록
+    const [text, setText] = useState("");
 
     return (
         <>
@@ -213,12 +217,28 @@ const DetailComponent = () => {
                 {/* 댓글 입력 */}
                 <CommentAddWrap>
                     <CommentAdd>
-                        <CommentTextArea name='comment'></CommentTextArea>
+                        <CommentTextArea name='comment' defaultValue={text} onInput={(e)=>{
+                            setText(e.target.value);
+                        }}></CommentTextArea>
                         <CommentBtnWrap>
                             <div style={{ fontSize: "25px", marginLeft: "5px" }}>
-                                🦢
+                                <img src={goldImg} alt='금쪽이' />
                             </div>
-                            <CommentAddBtn>등록</CommentAddBtn>
+                            <CommentAddBtn onClick={async()=>{
+                                // 서버쪽에 등록 요청을 보냄
+                                const commentAddRed = await axios.post("http://localhost:8080/api/comment/create", {
+                                    // 댓글 등록시 보내줄 값
+                                    // 1. 댓글 작성 유저 닉네임
+                                    // 2. 내용 : value값을 setState한 것을 state에서 가져온다.
+                                    // 3. 해당 게시글 번호
+                                    // 4. 만약 답글이라면 해당 댓글의 댓글 번호
+                                    // 5. 만약 답글이라면 해당 댓글 작성 유저 닉네임
+                                    userName : userName,
+                                    text : text,
+                                    boardId : board?.id,
+                                });
+                                console.log(commentAddRed.data);
+                            }}>등록</CommentAddBtn>
                         </CommentBtnWrap>
 
                     </CommentAdd>

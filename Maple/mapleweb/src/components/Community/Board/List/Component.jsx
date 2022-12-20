@@ -72,7 +72,7 @@ const ListComponent = () => {
   return (
     <>
       {/* 현재 게시판 이름을 가져와 띄운다. */}
-      <CategoryTitle>{category.name}</CategoryTitle>
+      <CategoryTitle>{category?.name}</CategoryTitle>
       <ContentBox>
         {/* 월드 선택 */}
         <WorldBox>
@@ -195,7 +195,7 @@ const ListComponent = () => {
           {/* 로그인 유저 있으면 띄우고 없으면 로그인 페이지로 이동하는 Link to 띄우기 */}
 
           {userName ? (
-            <Link to={`/Community${category.link}/BoardAdd`}>
+            <Link to={`/Community/${category.label}/BoardAdd`}>
               <RegistBtn
                 onClick={(e) => {
                   // 글 작성 버튼 클릭시 해당 요청 보내도록 코드 추가하기

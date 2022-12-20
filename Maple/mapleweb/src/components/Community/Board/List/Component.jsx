@@ -19,7 +19,7 @@ const tempArr = [
   { text: "2222", img: "eye_new" },
 ];
 
-const ListComponent = ({ categorys, category, route }) => {
+const ListComponent = ({ category, route }) => {
   console.log("리스트 컴포넌트 들어옴");
   const dispatch = useDispatch();
 

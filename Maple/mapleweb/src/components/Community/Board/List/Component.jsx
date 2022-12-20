@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 // import { Link, Routes, Route } from "react-router-dom";
-import Pagination from "react-js-pagination";
+// import Pagination from "react-js-pagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -11,7 +11,7 @@ import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 import eyeImg from "../../images/info_eye_new.png";
 import heartImg from "../../images/info_heart2_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
-import DetailContainer from "../Detail/Container";
+// import DetailContainer from "../Detail/Container";
 
 const tempArr = [
   { text: 1, img: "heart2_new" },
@@ -19,61 +19,83 @@ const tempArr = [
   { text: "2222", img: "eye_new" },
 ];
 
-const ListComponent = ({ category, route }) => {
-  console.log("리스트 컴포넌트 들어옴");
-  console.log(category)
+const ListComponent = () => {
+
   const dispatch = useDispatch();
+
+  // 현재 주소의 카테고리 라우터를 가져온다.
+  const location = useLocation();
+  const nowParam = useParams(location).category;
+
+  // 주소에서 카테고리 이름을 가져와 기본값으로 저장한다.
+  const [category, setCategory] = useState(CATEGORY.find(item => item.label == nowParam));
+
+  // let category = "";
+  // CATEGORY.map((item,idx)=>{
+  //   if(item.label==route){
+  //     category = item.name;
+  //   }
+  // });
 
   // 페이징 처리 라이브러리
   // https://velog.io/@dltmdwls15/pagination-Library%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%AA%A9%EB%A1%9D-%EA%B5%AC%ED%98%84
   // const [page, setPage] = useState(1);
   // const handlePageChange = (page) => { setPage(page); };
 
-  // 현재 유저
+  // 현재 유저 닉네임
   const userName = useSelector((state) => state.user.currUserName);
 
   // 해당 카테고리 게시글 목록을 가져오는 요청을 보낸다.
-  const boardsReq = axios.post("http://localhost:8080/api/board/getList", {
-    category: category,
-  });
+  // const boardsReq = axios.post("http://localhost:8080/api/board/getList", {
+  //   category: category.name,
+  // });
 
   // Promise {<pending>} 형태로 값이 뽑아와 진다.
   // console.log(boardsReq);
+  console.log(category.name);
+
+  useEffect(()=>{
+    
+    setCategory(CATEGORY.find(item => item.label == nowParam));
+    // category = CATEGORY.find(item => item.label == nowParam);
+  }, [nowParam]);
 
   // 계속된 리랜더링 문제로 useEffect()로 감싸주었다.
   // 카테고리가 변경될 때 Redux에 값을 저장해준다.
   // 배열의 객체로 값이 잘 뽑아와진다. Redux에 해당 리스트를 저장해 준다.
   useEffect(() => {
-    boardsReq.then((boards) => {
-      // 페이징 처리 이후 첫번째 페이지를 불러오게 하기
-      // if (boards.data.name == "SequelizeDatabaseError") {
-      //   return;
-      // }
-      console.log("확인");
-      dispatch(action.list(boards.data));
-    }).catch((err)=>{
-      console.log(err);
-    }).finally(()=>{
-      // 무조건 실행한다.
-      console.log("쓸 일 거의 없다고는 함");
-    });
-  }, [category]);
+    axios.post("http://localhost:8080/api/board/getList", {
+      category: category.name,
+    }).then((boards) => {
+        // 페이징 처리 이후 첫번째 페이지를 불러오게 하기
+        // if (boards.data.name == "SequelizeDatabaseError") {
+        //   return;
+        // }
+        console.log("확인");
+        dispatch(action.list(boards.data));
+      }).catch((err) => {
+        console.log(err);
+      }).finally(() => {
+        // 무조건 실행한다.
+        console.log("쓸 일 거의 없다고는 함");
+      });
+  }, [category, dispatch]);
 
-  let boards = "";
+  // let boards = "";
 
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
-  const boardList = useSelector((state) => state);
+  const boards = useSelector((state) => state.community.list);
   // const boards = boardList.community.list;
-  if (boardList.community.list) {
-    boards = boardList.community.list;
-  }
+  // if (boardList.community.list) {
+  //   boards = boardList.community.list;
+  // }
   // console.log(boards[0].id);
   // console.log(boards);
 
   return (
     <>
       {/* 현재 게시판 이름을 가져와 띄운다. */}
-      <CategoryTitle>{category}</CategoryTitle>
+      <CategoryTitle>{category.name}</CategoryTitle>
       <ContentBox>
         {/* 월드 선택 */}
         <WorldBox>
@@ -196,7 +218,7 @@ const ListComponent = ({ category, route }) => {
           {/* 로그인 유저 있으면 띄우고 없으면 로그인 페이지로 이동하는 Link to 띄우기 */}
 
           {userName ? (
-            <Link to={`/Community/${route}/BoardAdd`}>
+            <Link to={`/Community${category.link}/BoardAdd`}>
               <RegistBtn
                 onClick={(e) => {
                   // 글 작성 버튼 클릭시 해당 요청 보내도록 코드 추가하기

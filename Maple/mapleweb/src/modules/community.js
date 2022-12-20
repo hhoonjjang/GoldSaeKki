@@ -21,8 +21,9 @@ export const CATEGORY = [
     { name: '자유게시판', label: "Free", link: "/Free" },
     { name: '정보게시판', label: "Information", link: "/Information" },
     { name: '토론게시판', label: "TopicDiscussion", link: "/TopicDiscussion" },
-    { name: '금쪽이 아트', label: "Art", link: "/Art" },
-    { name: '금쪽이 코디', label: "Coordination", link: "/Coordination" },
+    { name: '금쪽이아트', label: "Art", link: "/Art" },
+    { name: '금쪽이코디', label: "Coordination", link: "/Coordination" },
+    { name: '혜리미아트', label: "Hihi", link: "/Hihi" },
 ];
 
 // 개발용 임시 카테고리

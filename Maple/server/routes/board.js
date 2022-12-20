@@ -123,7 +123,7 @@ router.post("/eyeCountUpdate", async (req, res) => {
   }, {
     where: { id: req.body.boardId }
   });
-
+  res.end();
 });
 
 

@@ -13,7 +13,7 @@ export default class Comment extends Sequelize.Model {
                     allowNull: true,
                     defaultValue: null,
                 },
-                isReply: {
+                replyCommentId: {
                     type: Sequelize.BOOLEAN,
                     allowNull: true,
                     defaultValue: null,

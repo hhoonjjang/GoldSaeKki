@@ -39,5 +39,23 @@ router.post("/create", async(req,res)=>{
     }
 });
 
+// 댓글 목록 불러오기(findAll)
+router.post("/getComment", async(req,res)=>{
+    console.log(req.body);
+    try {
+        const nowCommentList = await db.Comment.findAll({
+            where : {
+                boardId : req.body.boardId
+            }
+        });
+        console.log(nowCommentList);
+
+        res.send(nowCommentList);
+        res.end();
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 
 export default router;

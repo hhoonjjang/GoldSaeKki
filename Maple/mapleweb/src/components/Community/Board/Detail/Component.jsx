@@ -30,6 +30,8 @@ const DetailComponent = () => {
     });
 
     // 해당 게시글의 댓글을 가져오는 요청을 보낸다. - 수정 혹은 추가 해야함~~~
+    // 어떤 항목이 필요한지.. 댓글의 boardId가 req.body.boardId와 같은 놈을 모두?
+    // 정렬은 어떤 방식으로? -> ... 댓글이 답글이 아닌 놈 기준으로 먼저 단 댓글이 위에 나온다.
     const commentReq = axios.post("http://localhost:8080/api/comment/getComment", {
         boardId: boardId
     });
@@ -42,6 +44,13 @@ const DetailComponent = () => {
         boardReq.then((board) => {
             dispatch(communityAction.board(board?.data));
         });
+        
+        // 리덕스를 여러개 저장하려면?
+        // store, reducer에 commentList도 추가하기? ㅇㅅㅇ... 
+        // 한 페이지에 여러 개 띄울 수 있을까.?
+        // commentReq.then((comment) => {
+        //     dispatch(communityAction.board(board?.data));
+        // });
     }, [boardId]);
 
 
@@ -514,7 +523,7 @@ const CommentValue = styled.span`
 
 const CommentAddWrap = styled.div`
     float: left;
-    margin-top: 40px;
+    margin-top: 30px;
     width: 100%;
     height: 205px;
 `;

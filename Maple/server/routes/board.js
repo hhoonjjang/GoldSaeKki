@@ -50,31 +50,6 @@ router.post("/getList", async (req, res) => {
       },
       order: [["id", "DESC"]],
     });
-
-    // 게시글 목록
-    router.post("/findAll", async (req, res) => {
-      try {
-        // 게시판 db의 category가 유저가 보낸 category와 같은 것을 모두 찾아온다.
-        const tempBoards = await db.Board.findAll({
-          where: {
-            category: req.body.category,
-          },
-        });
-
-        // 값을 뽑아오려면 tempBoards[해당번호].dataValues로 가져와야 한다.
-        console.log(tempBoards);
-
-        res.send(tempBoards);
-      } catch (error) {
-        console.error(error);
-        res.send(error);
-      }
-    });
-
-    // 게시글 한개
-    // 게시글 수정
-    // 게시글 삭제
-
     res.send(tempBoards);
   } catch (error) {
     console.error(error);
@@ -99,41 +74,41 @@ router.post("/getBoard", async (req, res) => {
 });
 
 // 게시글 삭제
-router.post("/destroy", (req,res)=>{
+router.post("/destroy", (req, res) => {
   try {
-      db.Board.destroy({
-        where : {id : req.body.boardId}
-      }).then(()=>{
-        res.send({status : 200});
-      });
+    db.Board.destroy({
+      where: { id: req.body.boardId }
+    }).then(() => {
+      res.send({ status: 200 });
+    });
   } catch (err) {
     console.error(err);
-    res.send({status : 400});
+    res.send({ status: 400 });
   }
 });
 
 // 게시글 수정
-router.post("/update", (req,res)=>{
+router.post("/update", (req, res) => {
   console.log(req.body.title);
   try {
     // boardId에 해당하는 보드를 수정한다.
     db.Board.update({
-      title : req.body.title,
-      world : req.body.world,
-      tags : req.body.tags,
-      contents : req.body.contents
+      title: req.body.title,
+      world: req.body.world,
+      tags: req.body.tags,
+      contents: req.body.contents
     }, {
-      where : {id : req.body.boardId}
+      where: { id: req.body.boardId }
     });
-    res.send({status : 200});
+    res.send({ status: 200 });
   } catch (err) {
     console.error(err);
-    res.send({status : 400});
+    res.send({ status: 400 });
   }
 });
 
 // 게시글 조회수 추가
-router.post("/eyeCountUpdate", async(req,res)=>{
+router.post("/eyeCountUpdate", async (req, res) => {
   // 해당 게시글의 조회수를 가져와
   const tempBoard = await db.Board.findOne({
     where: {
@@ -142,12 +117,12 @@ router.post("/eyeCountUpdate", async(req,res)=>{
   });
   // 1 증가시키고
   const tempEyeCount = tempBoard?.dataValues?.eyeCount;
-  const newEyeCount = tempEyeCount+1;
+  const newEyeCount = tempEyeCount + 1;
   // 그 값을 해당 게시글에 다시 업데이트 해준다.
   db.Board.update({
-    eyeCount : newEyeCount,
+    eyeCount: newEyeCount,
   }, {
-    where : {id : req.body.boardId}
+    where: { id: req.body.boardId }
   });
 
 });

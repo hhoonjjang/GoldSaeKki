@@ -25,7 +25,7 @@ function App() {
   // }, [location]);
 
   const dispatch = useDispatch();
-
+  const location = useLocation();
   const adminLogin = () => {
     if (document.cookie) {
       axios.post("http://localhost:8080/api/admin/admincheck").then(
@@ -52,13 +52,17 @@ function App() {
       });
     }
   };
-  console.log();
+  console.log(location);
   document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck();
   return (
     <div id="body_wrapper">
       <div id="body_content">
         {/* {(location.pathname = "/Adminstrator" ? <></> : <Menubar />)} */}
-        <Menubar />
+        {location.pathname == "/regist" || location.pathname == "/login" ? (
+          <></>
+        ) : (
+          <Menubar />
+        )}
         <Routes>
           {/* 메인페이지 헤더 */}
           <Route path="/News/*" element={<HeaderContainer />}></Route>

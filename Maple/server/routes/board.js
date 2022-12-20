@@ -22,7 +22,6 @@ router.post("/create", async (req, res) => {
     }
     // 일단 게시판 DB에 값을 집어넣고
     const tempBoard = await db.Board.create({
-
       title: req.body.title,
       world: req.body.world,
       category: req.body.category,
@@ -32,7 +31,7 @@ router.post("/create", async (req, res) => {
     });
     // 연결관계 맺은 놈으로 같이 값 집어넣어 연결해준다.
     tempUser.addBoard(tempBoard);
-    res.send({tempBoard, status: 200 });
+    res.send({ tempBoard, status: 200 });
   } catch (error) {
     console.log(error);
     res.send({ status: 400 });
@@ -47,7 +46,7 @@ router.post("/getList", async (req, res) => {
       where: {
         category: req.body.category,
       },
-      order: [['id', 'DESC']],
+      order: [["id", "DESC"]],
     });
 
     // 게시글 목록
@@ -86,9 +85,9 @@ router.post("/getBoard", async (req, res) => {
   try {
     // 모든 게시글 목록을 가져온다.
     const tempBoard = await db.Board.findAll({
-      where : {
-        id : req.body.boardId
-      }
+      where: {
+        id: req.body.boardId,
+      },
     });
     res.send(tempBoard);
   } catch (error) {
@@ -97,28 +96,19 @@ router.post("/getBoard", async (req, res) => {
   }
 });
 
-
 router.post("/mainCommunity", async (req, res) => {
   console.log("메인커뮤니티 받았당");
   try {
-    const tempBoard = await db.Board.findAll({
-      order: [
-        ["createdAt", "DESC"],
-        ["category", "DESC"],
-      ],
-      group: "category",
-      where: {
-        [Op.or]: [
-          { category: "자유게시판" },
-          { category: "정보게시판" },
-          { category: "토론게시판" },
-        ],
-      },
-    });
-    console.log("디비로부터 뭔가 받았다");
+    const result = await db.sequelize.query(
+      'SELECT * FROM (SELECT * FROM maple.boards  where category="자유게시판" or category="정보게시판" or category="토론게시판" ORDER BY created_at DESC LIMIT 50)as t group by t.category',
+      { type: db.Sequelize.QueryTypes.SELECT }
+      // 없으면 배열에 두개가 들어간다. 이유는 불명.
+    );
+    console.log("result", result);
+
     res.send({
       status: 200,
-      result: tempBoard,
+      result,
     });
   } catch (error) {
     console.error(error);

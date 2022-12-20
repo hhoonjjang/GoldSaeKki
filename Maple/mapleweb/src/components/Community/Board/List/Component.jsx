@@ -21,6 +21,7 @@ const tempArr = [
 
 const ListComponent = () => {
 
+  // 리덕스를 사용하기 위한 라이브러리
   const dispatch = useDispatch();
 
   // 현재 주소의 카테고리 라우터를 가져온다.
@@ -30,67 +31,43 @@ const ListComponent = () => {
   // 주소에서 카테고리 이름을 가져와 기본값으로 저장한다.
   const [category, setCategory] = useState(CATEGORY.find(item => item.label == nowParam));
 
-  // let category = "";
-  // CATEGORY.map((item,idx)=>{
-  //   if(item.label==route){
-  //     category = item.name;
-  //   }
-  // });
-
   // 페이징 처리 라이브러리
   // https://velog.io/@dltmdwls15/pagination-Library%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%AA%A9%EB%A1%9D-%EA%B5%AC%ED%98%84
   // const [page, setPage] = useState(1);
   // const handlePageChange = (page) => { setPage(page); };
 
-  // 현재 유저 닉네임
+  // 현재 유저 닉네임을 가져온다.
   const userName = useSelector((state) => state.user.currUserName);
 
-  // 해당 카테고리 게시글 목록을 가져오는 요청을 보낸다.
-  // const boardsReq = axios.post("http://localhost:8080/api/board/getList", {
-  //   category: category.name,
-  // });
-
-  // Promise {<pending>} 형태로 값이 뽑아와 진다.
-  // console.log(boardsReq);
-  console.log(category.name);
-
-  useEffect(()=>{
-    
+  // 현재 주소가 바뀌면 카테고리가 바뀌도록 한다.
+  useEffect(() => {
     setCategory(CATEGORY.find(item => item.label == nowParam));
-    // category = CATEGORY.find(item => item.label == nowParam);
   }, [nowParam]);
 
-  // 계속된 리랜더링 문제로 useEffect()로 감싸주었다.
-  // 카테고리가 변경될 때 Redux에 값을 저장해준다.
-  // 배열의 객체로 값이 잘 뽑아와진다. Redux에 해당 리스트를 저장해 준다.
+  // 계속된 리랜더링 문제로 useEffect(()=>{},[카테고리])로 감싸주었다.
   useEffect(() => {
+    // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
     axios.post("http://localhost:8080/api/board/getList", {
       category: category.name,
     }).then((boards) => {
-        // 페이징 처리 이후 첫번째 페이지를 불러오게 하기
-        // if (boards.data.name == "SequelizeDatabaseError") {
-        //   return;
-        // }
-        console.log("확인");
-        dispatch(action.list(boards.data));
-      }).catch((err) => {
-        console.log(err);
-      }).finally(() => {
-        // 무조건 실행한다.
-        console.log("쓸 일 거의 없다고는 함");
-      });
+      // DB에 값이 없으면 에러가 뜨지 않게 해준다.
+      if (boards.data.name == "SequelizeDatabaseError") {
+        return;
+      }
+      // 해당 게시글 목록을 리덕스에 저장한다.
+      // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
+      dispatch(action.list(boards.data));
+    }).catch((err) => {
+      console.log(err);
+    }).finally(() => {
+      // 무조건 실행한다.
+    });
   }, [category, dispatch]);
 
-  // let boards = "";
+
 
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
   const boards = useSelector((state) => state.community.list);
-  // const boards = boardList.community.list;
-  // if (boardList.community.list) {
-  //   boards = boardList.community.list;
-  // }
-  // console.log(boards[0].id);
-  // console.log(boards);
 
   return (
     <>

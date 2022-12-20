@@ -117,7 +117,7 @@ const DetailComponent = ({ categorys, category }) => {
                         {/* 오른쪽 아이콘 영역 */}
                         <IconInfo>
                             <span style={{ margin: "0px 10px" }}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board?.eyeCount}{" "}{" "}</span>
-                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0,moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length-3)}</span>
+                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</span>
                         </IconInfo><img src={lineImg} alt={"구분선 이미지"} style={{ margin: "0px 10px" }} />
                         <IconBox>
                             <IconWrap>
@@ -215,7 +215,9 @@ const DetailComponent = ({ categorys, category }) => {
                     <CommentAdd>
                         <CommentTextArea name='comment'></CommentTextArea>
                         <CommentBtnWrap>
-                            <div style={{ fontSize: "25px", marginLeft: "5px" }}>🦢</div>
+                            <div style={{ fontSize: "25px", marginLeft: "5px" }}>
+                                🦢
+                            </div>
                             <CommentAddBtn>등록</CommentAddBtn>
                         </CommentBtnWrap>
 

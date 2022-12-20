@@ -1,4 +1,4 @@
-import {Sequelize, DataTypes} from "sequelize";
+import Sequelize from "sequelize";
 
 export default class Board extends Sequelize.Model {
     static init(sequelize) {
@@ -18,8 +18,7 @@ export default class Board extends Sequelize.Model {
                     allowNull: true,
                 },
                 contents: {
-                    type: DataTypes.TEXT,
-                    // type: DataTypes.LONGTEXT,
+                    type: Sequelize.TEXT,
                 },
                 eyeCount: {
                     type: Sequelize.INTEGER,

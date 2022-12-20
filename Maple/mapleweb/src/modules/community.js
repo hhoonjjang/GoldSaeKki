@@ -18,12 +18,13 @@ import world15Img from "../components/Community/images/worlds/icon_15.png";
 
 // 커뮤니티 카테고리 목록
 export const CATEGORY = [
-    { name: '자유게시판', label: "Free", link: "/Free" },
-    { name: '정보게시판', label: "Information", link: "/Information" },
-    { name: '토론게시판', label: "TopicDiscussion", link: "/TopicDiscussion" },
-    { name: '금쪽이아트', label: "Art", link: "/Art" },
-    { name: '금쪽이코디', label: "Coordination", link: "/Coordination" },
-    { name: '혜리미아트', label: "Hihi", link: "/Hihi" },
+    { name: '자유게시판', label: "Free" },
+    // { name: '바다이야기', label: "Hi" },
+    { name: '정보게시판', label: "Information" },
+    // { name: '금쪽이야기', label: "Go" },
+    { name: '연재소설', label: "So" },
+    { name: '토론게시판', label: "TopicDiscussion" },
+    { name: '금쪽이아트', label: "Art" },
 ];
 
 // 개발용 임시 카테고리

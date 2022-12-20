@@ -15,8 +15,8 @@ export default class Comment extends Sequelize.Model {
                 },
                 isReply: {
                     type: Sequelize.BOOLEAN,
-                    allowNull: false,
-                    defaultValue: false,
+                    allowNull: true,
+                    defaultValue: null,
                 }
             },
             {

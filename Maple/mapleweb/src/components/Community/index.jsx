@@ -59,14 +59,9 @@ const CommunityComponet = () => {
 
               {/* 카테고리에 해당하는 리스트 출력 */}
               <Route path="/:category" element={<ListContainer />}></Route>
-  
+              
               {/* 카테고리에 게시글 추가 컴포넌트 라우터를 만듬 */}
-              <Route path="/Free/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"자유게시판"} route={"Free"} />}></Route>
-              <Route path="/Information/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"정보게시판"} route={"Information"} />}></Route>
-              <Route path="/TopicDiscussion/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"토론게시판"} route={"TopicDiscussion"} />}></Route>
-              <Route path="/Art/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이아트"} route={"Art"} />}></Route>
-              <Route path="/Coordination/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이코디"} route={"Coordination"} />}></Route>
-              <Route path="/Hihi/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"혜리미아트"} route={"Hihi"} />}></Route>
+              <Route path="/:category/BoardAdd" element={<AddContainer />}></Route>
 
               {/* 게시글 상세 페이지 띄우기 : Link to 로 이동할 때 그 보드 번호가 전달되어야 한다. */}
               <Route path="/board/:boardId" element={<DetailContainer/>}></Route>

@@ -13,7 +13,8 @@ router.post("/create", async(req,res)=>{
         const commentAdd = await db.Comment.create({
             userName : req.body.userName,
             text : req.body.text,
-            boardId : req.body.boardId
+            boardId : req.body.boardId,
+            userWorld : req.body.userWorld
         });
         // 연결된 곳에도 추가시켜줌
         // 사용법 : 해당디비에서가져온연결된키.add메서드명(db생성코드)

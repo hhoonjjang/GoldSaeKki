@@ -29,6 +29,11 @@ const DetailComponent = () => {
         boardId: boardId
     });
 
+    // 해당 게시글의 댓글을 가져오는 요청을 보낸다. - 수정 혹은 추가 해야함~~~
+    const commentReq = axios.post("http://localhost:8080/api/comment/getComment", {
+        boardId: boardId
+    });
+
     // 그냥 출력하면 Promise {<pending>} 형태로 값이 뽑아와 진다.
     // console.log(boardReq);
 
@@ -51,12 +56,10 @@ const DetailComponent = () => {
         board = states.community.board[0];
         boardTagsText = board?.tags;
         // Board 조회수를 수정하는 요청도 보내줌
-        // 본인이 보면 조회수 안 오르게? : 필요 없을듯
         const boardReq = axios.post("http://localhost:8080/api/board/eyeCountUpdate", {
             boardId: boardId
         });
         console.log(boardReq);
-
     }
 
     // 현재 라우터 값을 구한다.
@@ -83,7 +86,7 @@ const DetailComponent = () => {
     boardTagsText.split("#").map((item, idx) => {
         if (item !== "") {
             boardTags.push("#" + item.replace(" ", ""));
-            console.log(boardTags);
+            // console.log(boardTags);
         }
     });
 
@@ -196,19 +199,35 @@ const DetailComponent = () => {
                 </CommentInfo>
 
                 {/* 댓글 목록 */}
+                {/* 댓글 findAll하는 것도 리덕스에 같이 넣어야 할 것 같다. */}
+                {/* 댓글 등록시 유저 월드도 같이 보내도록 한다. */}
                 <CommentBox>
                     <CommentWrap>
                         {/* 댓글 개수에 맞게 map 돌린다. */}
+                        {/* 하나의 댓글 뭉텅이라고 쳐야할 듯 */}
                         <Comment>
                             {/* 댓글유저정보 */}
-                            <div>
-                                <span>왼쪽</span>
-                                <span>오른쪽</span>
-                            </div>
+                            <CommentUserInfo>
+                                <span>🈺</span>
+                                <span>닉네임</span>{" "}
+                                <CommentTimeSpan>댓글작성시간</CommentTimeSpan>
+                            </CommentUserInfo>
                             {/* 댓글내용 */}
-                            <div>하이</div>
+                            <CommentValue>댓글내용</CommentValue>
+
+                            {/* 답글 컴포넌트 여기에 추가(바로 아래 붙도록 출력) */}
+                            {/* <>하이</> */}
+                        </Comment>
+                        <Comment>
+                            {/* 댓글유저정보 */}
+                            <CommentUserInfo>
+                                <span>🈺</span>
+                                <span>닉네임</span>{" "}
+                                <CommentTimeSpan>댓글작성시간</CommentTimeSpan>
+                            </CommentUserInfo>
+                            {/* 댓글내용 */}
+                            <CommentValue>댓글내용</CommentValue>
                             {/* 답글 */}
-                            <div>어머 답글이네..(답글컴포넌트)</div>
                         </Comment>
 
                     </CommentWrap>
@@ -218,19 +237,19 @@ const DetailComponent = () => {
                 <CommentAddWrap>
                     <CommentAdd>
                         {/* <CommentTextArea name='comment' defaultValue={text} value={text} onInput={(e)=>{ */}
-                        <CommentTextArea name='comment' value={text} onInput={(e)=>{
+                        <CommentTextArea name='comment' value={text} onInput={(e) => {
                             setText(e.target.value);
                         }}></CommentTextArea>
                         <CommentBtnWrap>
                             <div style={{ fontSize: "25px", marginLeft: "5px" }}>
                                 <img src={goldImg} alt='금쪽이' />
                             </div>
-                            <CommentAddBtn onClick={async()=>{
-                                if(!userName){
+                            <CommentAddBtn onClick={async () => {
+                                if (!userName) {
                                     alert("로그인이 필요합니다.");
                                     return;
                                 }
-                                if(!text){
+                                if (!text) {
                                     alert("텍스트를 입력해주세요.");
                                     return;
                                 }
@@ -243,9 +262,10 @@ const DetailComponent = () => {
                                     // 3. 해당 게시글 번호
                                     // 4. 만약 답글이라면 해당 댓글의 댓글 번호
                                     // 5. 만약 답글이라면 해당 댓글 작성 유저 닉네임
-                                    userName : userName,
-                                    text : text,
-                                    boardId : board?.id,
+                                    userName: userName,
+                                    text: text,
+                                    boardId: board?.id,
+                                    userWorld: userWorld,
                                 });
                                 console.log(commentAddRed.data);
 
@@ -432,7 +452,7 @@ const CommentInfo = styled.div`
     height: 55px;
     line-height: 55px;
     border-top: 1px solid #e3e3e3;
-    border-bottom: 1px solid #e3e3e3;
+    /* border-bottom: 1px solid #e3e3e3; */
     /* background-color: #F9F9F9; */
     /* background-color: #FBF9FA; */
     padding: 0 30px;
@@ -464,11 +484,32 @@ const CommentBox = styled.div`
 const CommentWrap = styled.div`
     float: left;
     width: 100%;
-    padding: 30px 27px 25px 27px;
+    /* padding: 30px 27px 25px 27px; */
     border-bottom: 1px solid #e3e3e3;
 `;
 const Comment = styled.div`
+    box-sizing: border-box;
+    border-top: 1px solid #e3e3e3;
+    /* margin: 5px 0; */
+    font-size: 15px;
+    float: left;
+    width: 100%;
 
+    
+    padding: 30px 27px 25px 27px;
+    &>div:first-child{
+        margin-bottom: 10px;
+    }
+`;
+const CommentUserInfo = styled.div`
+
+    & span{
+        margin-right: 2px;
+    }
+`;
+const CommentValue = styled.span`
+    font-size: 13px;
+    color: #555555;
 `;
 
 const CommentAddWrap = styled.div`
@@ -586,4 +627,11 @@ const Tag = styled.span`
     color: #696969;
     font-size: 13px;
     margin-right: 11px;
+`;
+
+
+// 댓글
+const CommentTimeSpan = styled.span`
+    font-size: 13px;
+    color: #888;
 `;

@@ -314,6 +314,7 @@ const BoardTitle = styled.div`
   font-size: 16px;
   color: #333;
   float: left;
+  max-width: 500px;
   & > span:first-child {
     color: #ca5196;
   }

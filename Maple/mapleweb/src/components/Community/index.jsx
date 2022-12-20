@@ -56,38 +56,24 @@ const CommunityComponet = () => {
             {/* 여기에 나머지 라우터를 띄움(map 돌리지 않기) */}
 
             <Routes>
-              {/* UI가 같으니까 같은 컴포넌트로 보냄, 리스트 컴포넌트 카테고리 출력 부분 수정하기 */}
-              <Route path="/Free" element={<ListContainer category={"자유게시판"} route={"Free"} />}></Route>
-              <Route path="/Information" element={<ListContainer category={"정보게시판"} route={"Information"} />}></Route>
 
-              {/* 이놈들은 UI가 달라서 새로운 컴포넌트 만들어야함 : 일단 안 만듦 */}
-              <Route path="/TopicDiscussion" element={<ListContainer category={"토론게시판"} route={"TopicDiscussion"} />}></Route>
-              <Route path="/Art" element={<ListContainer category={"금쪽이아트"} route={"Art"} />}></Route>
-              <Route path="/Coordination" element={<ListContainer category={"금쪽이코디"} route={"Coordination"} />}></Route>
-
+              {/* 카테고리에 해당하는 리스트 출력 */}
+              <Route path="/:category" element={<ListContainer />}></Route>
+  
               {/* 카테고리에 게시글 추가 컴포넌트 라우터를 만듬 */}
               <Route path="/Free/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"자유게시판"} route={"Free"} />}></Route>
               <Route path="/Information/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"정보게시판"} route={"Information"} />}></Route>
               <Route path="/TopicDiscussion/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"토론게시판"} route={"TopicDiscussion"} />}></Route>
               <Route path="/Art/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이아트"} route={"Art"} />}></Route>
               <Route path="/Coordination/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이코디"} route={"Coordination"} />}></Route>
+              <Route path="/Hihi/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"혜리미아트"} route={"Hihi"} />}></Route>
 
               {/* 게시글 상세 페이지 띄우기 : Link to 로 이동할 때 그 보드 번호가 전달되어야 한다. */}
               <Route path="/board/:boardId" element={<DetailContainer/>}></Route>
 
-              {/* 수정 페이지 : <Link to={`/Community/board/${board.id}/edit`}> */}
-              {/* <Route path="/board/:boardId/edit" element={<DetailContainer/>}></Route> */}
-
-              {/* 수정 */}
-              {/* <Route path="/board/:boardId/edit" element={<AddContainer />}></Route> */}
+              {/* 수정 페이지 */}
               <Route path="/board/:boardId/edit" element={<EditContainer />}></Route>
               
-              {/* <Route path="/Information/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"정보게시판"} route={"Information"} />}></Route>
-              <Route path="/TopicDiscussion/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"토론게시판"} route={"TopicDiscussion"} />}></Route>
-              <Route path="/Art/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이아트"} route={"Art"} />}></Route>
-              <Route path="/Coordination/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이코디"} route={"Coordination"} />}></Route> */}
-
-
             </Routes>
           </ContentBox>
 

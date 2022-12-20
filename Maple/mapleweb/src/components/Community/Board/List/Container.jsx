@@ -1,10 +1,9 @@
 import ListComponent from "./Component";
 
-const ListContainer = ({category, route}) =>{
-    console.log(category);
+const ListContainer = () =>{
 
     return (
-        <ListComponent category={category} route={route} />
+        <ListComponent/>
     );
 }
 

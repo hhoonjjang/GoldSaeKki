@@ -15,8 +15,7 @@ import { useSelector } from "react-redux";
 // const API_URL = "http://localhost:8080";
 // const UPLOAD_ENDPOINT = "upload_files";
 
-// const EditComponent = ({ category, route, isUpdate, titleValue, contentsValue, tagsValue  }) => {
-const EditComponent = ({ isUpdate, titleValue, contentsValue, tagsValue  }) => {
+const EditComponent = ({ contentsValue }) => {
 
     const navigate = useNavigate();
 
@@ -24,7 +23,7 @@ const EditComponent = ({ isUpdate, titleValue, contentsValue, tagsValue  }) => {
     const userWorld = useSelector((state) => state.user.currServerName);
     const userName = useSelector((state) => state.user.currUserName);
 
-    // 게시글 정보
+    // 기존 게시글 정보를 리덕스에서 가져온다.
     const boardNum = useSelector((state)=>state.community.board[0].id);
     const boardTitle = useSelector((state)=>state.community.board[0].title);
     const boardContents = useSelector((state)=>state.community.board[0].contents);
@@ -39,20 +38,8 @@ const EditComponent = ({ isUpdate, titleValue, contentsValue, tagsValue  }) => {
         route = item.label;
       }
     });
-    
 
-    // 수정 상태일 때
-    // value 값을 지정해 준다.
-    // boardId : 게시글번호
-    // title : 기존 타이틀
-    // contents : 기존 컨텐츠
-    // tags : 기존 태그들
-    // 만약 isUpdate이면 setBoardId를 우리가 받아온 값으로 해준다.
-    // 등록 버튼 클릭시 수정 요청을 보내게 설정한다.
-    // const [titleVal, setTitleVal] = useState("");
-    // const [contentsVal, setContentsVal] = useState("");
-    // const [tagsVal, setTagsVal] = useState("");
-
+    // 수정, 입력을 위한 State
     const [titleText, setTitleText] = useState(boardTitle);
     const [contentData, setContentData] = useState(contentsValue);
     const [tags, setTags] = useState(boardTags);
@@ -62,19 +49,12 @@ const EditComponent = ({ isUpdate, titleValue, contentsValue, tagsValue  }) => {
     };
 
     if(!userName){
-        console.log("유저 정보가 없습니다."); 
+        alert("유저 정보가 없습니다."); 
         navigate("/");
         return;
     } 
 
     // 이미지 등록 시 폼 태그로 감싸주기
-
-    // 만약 수정 상태라면?
-    if(isUpdate){
-      setTitleText(titleValue);
-      setContentData(contentsValue);
-      setTags(tagsValue);
-    }
 
 
     return (
@@ -147,22 +127,12 @@ const EditComponent = ({ isUpdate, titleValue, contentsValue, tagsValue  }) => {
                             // userWorld: userWorld,
                         });
 
-                        // 불안정한 코드
-                        // console.log(regist.data);
-                        // const boardId = regist.data?.tempBoard?.id;
-
                         // 응답 받아오기
                         switch (update.data.status) {
                             case 200:
                                 // 성공 알람, 게시물 상세 페이지로 리턴
                                 alert("게시글 수정됨");
-                                // navigate로 보내면 redux가 초기화되지 않기 때문에 location으로 바꿔주었다.
-                                // navigate(`/Community/board/${boardNum}`);
-
-                                // 리덕스 값 초기화하기
-
-                                // 그냥 보내는 방식
-                                window.location.href = `/Community/board/${boardNum}`;
+                                navigate(`/Community/board/${boardNum}`);
                                 return;
                             case 400:
                                 alert("게시글 수정 에러");

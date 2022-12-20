@@ -99,24 +99,16 @@ router.post("/getBoard", async (req, res) => {
 router.post("/mainCommunity", async (req, res) => {
   console.log("메인커뮤니티 받았당");
   try {
-    const tempBoard = await db.Board.findAll({
-      order: [
-        ["createdAt", "DESC"],
-        ["category", "DESC"],
-      ],
-      group: "category",
-      where: {
-        [Op.or]: [
-          { category: "자유게시판" },
-          { category: "정보게시판" },
-          { category: "토론게시판" },
-        ],
-      },
-    });
-    console.log("디비로부터 뭔가 받았다");
+    const result = await db.sequelize.query(
+      'SELECT * FROM (SELECT * FROM maple.boards  where category="자유게시판" or category="정보게시판" or category="토론게시판" ORDER BY created_at DESC LIMIT 50)as t group by t.category',
+      { type: db.Sequelize.QueryTypes.SELECT }
+      // 없으면 배열에 두개가 들어간다. 이유는 불명.
+    );
+    console.log("result", result);
+
     res.send({
       status: 200,
-      result: tempBoard,
+      result,
     });
   } catch (error) {
     console.error(error);

@@ -53,6 +53,9 @@ const DetailComponent = () => {
             dispatch(communityAction.comments(comment?.data));
         });
 
+        // 스크롤 높이 변경
+        window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+
     }, [boardId]);
 
 

@@ -39,6 +39,11 @@ const AddComponent = ({ }) => {
   const [selected, setSelected] = useState(userWorld);
   const nowSelect = (e) => { setSelected(e?.target?.value) };
 
+  // 페이지 도착시 스크롤 높이 변경
+  useEffect(() => {
+    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+  }, []);
+
   if (!userName) {
     console.log("유저 정보가 없습니다.");
     navigate("/");

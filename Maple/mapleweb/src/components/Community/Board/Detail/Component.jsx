@@ -114,6 +114,14 @@ const DetailComponent = () => {
         });
     }, [text]);
 
+    // 공감버튼 클릭시 리랜더링
+    const [likeCount, setLikeCount] = useState(0);
+    useEffect(()=>{
+        boardReq.then((board) => {
+            dispatch(communityAction.board(board?.data));
+        });
+    }, [likeCount]);
+
     return (
         <>
             <CategoryTItleBox>
@@ -166,7 +174,16 @@ const DetailComponent = () => {
 
                 {/* 공감영역 */}
                 <LikeWrap>
-                    <LikeBtn><span>❤ 공감하기</span></LikeBtn>
+                    <LikeBtn onClick={async (e) => {
+                        // 공감 클릭시 요청 보내기 : 보드 아이디 보내야 함 board.id
+                        // useState도 사용하여 값 변한 것처럼 보이게 한다.
+                        const likeCountUpReq = await axios.post("http://localhost:8080/api/board/likeCountUpdate", {
+                            boardId: boardId
+                        });
+                        console.log(likeCountUpReq);
+                        setLikeCount(likeCount+1);
+                    }}>
+                        <span>❤ 공감하기</span></LikeBtn>
                     <LikeCheck><span>{board?.likeCount} 명</span></LikeCheck>
                 </LikeWrap>
 

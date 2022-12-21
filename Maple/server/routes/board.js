@@ -127,6 +127,26 @@ router.post("/eyeCountUpdate", async (req, res) => {
   res.end();
 });
 
+// 게시글 공감수 추가
+router.post("/likeCountUpdate", async (req, res) => {
+  // 해당 게시글의 공감수를 가져와
+  const tempBoard = await db.Board.findOne({
+    where: {
+      id: req.body.boardId,
+    },
+  });
+  // 1 증가시키고
+  const tempLikeCount = tempBoard?.dataValues?.likeCount;
+  const newLikeCount = tempLikeCount + 1;
+  // 그 값을 해당 게시글에 다시 업데이트 해준다.
+  db.Board.update({
+    likeCount: newLikeCount,
+  }, {
+    where: { id: req.body.boardId }
+  });
+  res.end();
+});
+
 
 
 

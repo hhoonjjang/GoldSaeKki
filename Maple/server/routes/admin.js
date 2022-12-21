@@ -90,14 +90,13 @@ router.post("/delete", async (req, res) => {
 router.post("/category", async (req, res) => {
   try {
     const category = await db.Category.create({
-      category: req.body.value,
+      category: req.body.text,
     });
     res.end();
   } catch (err) {
     console.error(err);
     res.end();
   }
-  console.log(req.body);
 });
 
 router.post("/addtext", async (req, res) => {
@@ -111,6 +110,7 @@ router.post("/addtext", async (req, res) => {
 });
 
 router.post("/delcategory", async (req, res) => {
+  console.log(req.body.category);
   await db.Category.destroy({
     where: {
       category: req.body.category,
@@ -136,6 +136,7 @@ router.post("/editcategory", async (req, res) => {
 
 router.post("/helptext", async (req, res) => {
   try {
+    console.log(req.body);
     const tempHelp = req.body;
     const tempCategory = await db.Category.findOne({
       where: {

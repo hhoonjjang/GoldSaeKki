@@ -89,6 +89,7 @@ const ThirdContainer = () => {
       cancel={cancel}
       a="textChild"
       b="textCategory"
+      c="text"
     />
   );
 };

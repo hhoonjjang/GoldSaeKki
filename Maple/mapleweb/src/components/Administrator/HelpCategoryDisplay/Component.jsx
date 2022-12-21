@@ -13,6 +13,7 @@ const HelpCategoryDisplayComponent = ({
   cancel,
   a,
   b,
+  c,
 }) => {
   const [category, setCategory] = useState("");
   const [text, setText] = useState("");
@@ -21,7 +22,7 @@ const HelpCategoryDisplayComponent = ({
   console.log(childArr);
   console.log(a);
   console.log(b);
-
+  console.log(c);
   return (
     <DisplayBox>
       <form
@@ -32,21 +33,26 @@ const HelpCategoryDisplayComponent = ({
       >
         <div>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</div>
         <div>온라인상담문의유형선택 카테고리 텍스트</div>
-
-        <select
-          onChange={(e) => {
-            setCategory(e.target.value);
-          }}
-        >
-          <option value="" selected disabled hidden>
-            선택하시오
-          </option>
-          {categoryArr.map((item, idx) => (
-            <option value={item.text} key={`childOption-${idx}`}>
-              {item.text}
+        {categoryArr == "" ? (
+          <></>
+        ) : (
+          <select
+            value="default"
+            onChange={(e) => {
+              setCategory(e.target.value);
+            }}
+          >
+            <option value="default" disabled>
+              선택하시오
             </option>
-          ))}
-        </select>
+            {categoryArr.map((item, idx) => (
+              <option value={item[c]} key={`childOption-${idx}`}>
+                {item[c]}
+              </option>
+            ))}
+          </select>
+        )}
+
         <input
           type="text"
           placeholder="텍스트"
@@ -79,7 +85,7 @@ const HelpCategoryDisplayComponent = ({
             </Blank>
           ) : (
             <Blank>
-              <span>{item[b]} &gt; </span>
+              {b == "" ? <></> : <span>{item[b]} &gt; </span>}
 
               <div key={`childTextDiv-${idx}`}>{item[a]}</div>
               <button

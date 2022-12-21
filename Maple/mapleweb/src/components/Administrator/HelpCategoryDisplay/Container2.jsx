@@ -89,6 +89,7 @@ const SecondContainer = () => {
       cancel={cancel}
       a="text"
       b="helpCategory"
+      c="category"
     />
   );
 };

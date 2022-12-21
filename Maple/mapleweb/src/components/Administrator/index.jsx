@@ -9,6 +9,7 @@ import HelpTextContainer from "./HelpCategory/HelpText/Container";
 import TextChildContainer from "./HelpCategory/HelpText/TextChild/Container";
 import ThirdContainer from "./HelpCategoryDisplay/Container3";
 import SecondContainer from "./HelpCategoryDisplay/Container2";
+import FirstContainer from "./HelpCategoryDisplay/Container1";
 const AdministratorComponet = () => {
   const dispatch = useDispatch();
   dispatch(action.header("Administrator"));
@@ -34,16 +35,17 @@ const AdministratorComponet = () => {
           )}
 
           <BugCSContainer />
-          <HelpCategoryContainer />
+          <FirstContainer />
+          <SecondContainer />
+          <ThirdContainer />
+          {/* <HelpCategoryContainer />
           <HelpTextContainer />
-          <TextChildContainer />
+          <TextChildContainer /> */}
         </>
       )}
       {/* <AdminLoginContainer />
       <AccountContainer />
       <BugCSContainer /> */}
-      <SecondContainer />
-      <ThirdContainer />
     </AdminBox>
   );
 };

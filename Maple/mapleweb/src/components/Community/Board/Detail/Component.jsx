@@ -48,7 +48,6 @@ const DetailComponent = () => {
             dispatch(communityAction.board(board?.data));
         });
 
-        // 이놈은 댓글 목록이 변경되었을 때로 수정해주기.!!
         commentReq.then((comment) => {
             if (comment.data.length == 0) return;
             dispatch(communityAction.comments(comment?.data));
@@ -69,8 +68,10 @@ const DetailComponent = () => {
         const boardReq = axios.post("http://localhost:8080/api/board/eyeCountUpdate", {
             boardId: boardId
         });
-        console.log(boardReq);
+    }
+    if (states.community.comments) {
         comments = states.community.comments;
+        // console.log(comments);
     }
 
     // 현재 라우터 값을 구한다.
@@ -100,6 +101,16 @@ const DetailComponent = () => {
 
     // 댓글 등록
     const [text, setText] = useState("");
+
+    const [_, render] = useState({});
+
+    useEffect(()=>{
+        // 댓글 불러오는 코드
+        commentReq.then((comment) => {
+            if (comment.data.length == 0) return;
+            dispatch(communityAction.comments(comment?.data));
+        });
+    }, [text]);
 
     return (
         <>
@@ -201,7 +212,7 @@ const DetailComponent = () => {
                 <CommentInfo>
                     {/* 몇개인지,색깔바꾸기 */}
                     댓글{" "}
-                    <CommentCount>{}</CommentCount>
+                    <CommentCount>{comments?.length}</CommentCount>
                 </CommentInfo>
 
                 {/* 댓글 목록 */}
@@ -212,34 +223,29 @@ const DetailComponent = () => {
                         {/* 댓글 개수에 맞게 map 돌린다. */}
                         {/* 하나의 댓글 뭉텅이라고 쳐야할 듯 */}
                         {comments.map((comment, idx) => {
-                            <Comment>
-                                {/* 댓글유저정보 */}
-                                <CommentUserInfo>
-                                    {/* 유저 월드 띄우기 */}
-                                    <span>🈺</span>
-                                    <span>{comment.userName}</span>{" "}
-                                    <CommentTimeSpan>{comment.createdAt}</CommentTimeSpan>
-                                </CommentUserInfo>
-                                {/* 댓글내용 */}
-                                <CommentValue>{comment.text}</CommentValue>
+                            return (
+                                <Comment key={`comment-${idx}`}>
+                                    {/* 댓글유저정보 */}
+                                    <CommentUserInfo key={`commentUserInfo-${idx}`}>
+                                        {/* 유저 월드 띄우기 */}
+                                        {WORLDLIST.map((item, idx) => {
+                                            if (item.name == comment.userWorld) {
+                                                return (
+                                                    <img key={`userWorld-${idx}`} src={item.img} alt='유저 월드 아이콘'></img>
+                                                )
+                                            }
+                                        })}{" "}
+                                        <span key={`userName-${idx}`}>{comment.userName}</span>{" "}
+                                        <CommentTimeSpan key={`createTime-${idx}`}>{moment(comment.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(comment.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</CommentTimeSpan>
+                                    </CommentUserInfo>
+                                    {/* 댓글내용 */}
+                                    <CommentValue key={`commentText-${idx}`}>{comment.text}</CommentValue>
 
-                                {/* 답글 컴포넌트 여기에 추가(바로 아래 붙도록 출력) */}
-                                {/* <>하이</> */}
-                            </Comment>
+                                    {/* 답글 컴포넌트 여기에 추가(바로 아래 붙도록 출력) */}
+                                    {/* <>하이</> */}
+                                </Comment>
+                            );
                         })}
-
-                        <Comment>
-                            {/* 댓글유저정보 */}
-                            <CommentUserInfo>
-                                <span>🈺</span>
-                                <span>닉네임</span>{" "}
-                                <CommentTimeSpan>댓글작성시간</CommentTimeSpan>
-                            </CommentUserInfo>
-                            {/* 댓글내용 */}
-                            <CommentValue>댓글내용</CommentValue>
-                            {/* 답글 */}
-                        </Comment>
-
                     </CommentWrap>
                 </CommentBox>
 

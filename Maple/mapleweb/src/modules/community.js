@@ -88,8 +88,7 @@ const board = (board) => {
 }
 // 보드 id에 해당하는 댓글 목록
 const comments = (comments) => {
-    console.log(board);
-    console.log(comments);
+    // console.log(comments);
     return {
         type: TYPE.COMMENTS,
         payload: { comments }

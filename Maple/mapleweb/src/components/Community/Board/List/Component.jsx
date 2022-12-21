@@ -43,6 +43,9 @@ const ListComponent = () => {
   // 현재 주소가 바뀌면 카테고리가 바뀌도록 한다.
   useEffect(() => {
     setCategory(CATEGORY.find(item => item.label == nowParam));
+
+    // 스크롤도 올려줌?
+    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
   }, [nowParam]);
 
   // 계속된 리랜더링 문제로 useEffect(()=>{},[카테고리])로 감싸주었다.
@@ -70,8 +73,6 @@ const ListComponent = () => {
   const boards = useSelector((state) => state.community.list);
 
 
-
-
   // 페이징 처리 : 현재 페이지
   const [nowPage, setNowPage] = useState(1);
   // 페이지 변경 함수
@@ -82,31 +83,20 @@ const ListComponent = () => {
   // 띄워야 하는 것 : 해당 페이지의 번호에 맞는 목록을 띄움
   // 1페이지면 0~10개 boards에서 자름
   let newBoards = [];
-  if(boards){
-    boards.map((item, idx)=>{
-      if(idx>=(nowPage-1)*10 && idx<(nowPage)*10){
+  if (boards) {
+    boards.map((item, idx) => {
+      if (idx >= (nowPage - 1) * 10 && idx < (nowPage) * 10) {
         newBoards.push(item);
       }
     });
-    // console.log(newBoards);
   }
   console.log(newBoards);
-  // boards
-  // const boardCount = boards.length;
-  // console.log(boardCount);
 
-  // console.log(boards);
-
-  // 만약 페이지가 1이면 (나우페이지-1)*0부터 나우페이지*10 개의 개수를 배열에서 잘라 띄워준다.
-  // let newBoards = [];
-  // boards.map((item, idx)=>{
-  //   // if(idx==(nowPage-1)*0){
-  //   if(idx==(nowPage-1)*10 && idx==(nowPage)*10){
-  //     console.log(idx);
-  //   }
-  // });
-
-  // 페이징 가공 처리를 다 하고, 어느 배열을 출력할 지만 바꿔주면 될 것 같다.
+  
+  // 페이지 높이 변경
+  useEffect(() => {
+    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+  }, [nowPage]);
 
   return (
     <>

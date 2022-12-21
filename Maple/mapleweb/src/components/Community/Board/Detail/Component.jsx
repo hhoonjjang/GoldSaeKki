@@ -1,0 +1,498 @@
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { action as communityAction, CATEGORY, WORLDLIST } from '../../../../modules/community';
+// import { Link, Routes, Route, useNavigate } from "react-router-dom";
+import LinkIcon from "../../images/link_btn.png";
+import AlarmIcon from "../../images/report_btn2.png";
+
+import eyeImg from "../../images/info_eye_new.png";
+import dateImg from "../../images/info_sub_date_new.png";
+import lineImg from "../../images/btn_line_img.png";
+
+import moment from 'moment';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+const DetailComponent = ({ categorys, category }) => {
+
+    const dispatch = useDispatch();
+
+    // 라우터 상단의 번호를 가져와 그 번호를 아래 보드 번호로 맞춰준다.
+    const { boardId } = useParams();
+
+    // 해당 게시글을 가져오는 요청을 보낸다.
+    const boardReq = axios.post("http://localhost:8080/api/board/getBoard", {
+        boardId: boardId
+    });
+
+    // 그냥 출력하면 Promise {<pending>} 형태로 값이 뽑아와 진다.
+    // console.log(boardReq);
+
+    // 보드 번호가 변경될 때 Redux에 서버에서 가져온 리스트를 저장해준다.
+    useEffect(() => {
+        boardReq.then((board) => {
+            dispatch(communityAction.board(board?.data));
+        });
+    }, [boardId]);
+
+
+    // Redux에 저장된 값을 가져온다.
+    const states = useSelector((state) => state);
+
+    let board = "";
+
+    // 랜더링 이후 값을 집어넣어줌
+    if (states.community.board) {
+        board = states.community.board[0];
+    }
+
+    // 현재 라우터 값을 구한다.
+    let route = "";
+    CATEGORY.forEach((item, idx) => {
+        if (item.name == board.category) {
+            route = item.label;
+        }
+    });
+
+    // 현재 로그인 유저 정보
+    const userWorld = useSelector((state) => state.user.currServerName);
+    const userName = useSelector((state) => state.user.currUserName);
+
+    return (
+        <>
+            <CategoryTItleBox>
+                <CategoryTitle>{board?.category}</CategoryTitle>
+                <CategoryRight>
+                    <Link to={`/Community/${route}`}><span>목록</span></Link>
+                </CategoryRight>
+            </CategoryTItleBox>
+
+            {/* 게시글 상세 페이지 내용 시작 */}
+            <ContentBox>
+                <BoardTitle>
+                    <BoardTitleSpan>[{board?.world}]</BoardTitleSpan>{" "}
+                    <BoardTitleText>{board?.title}</BoardTitleText>
+                </BoardTitle>
+
+                {/* 게시글 상단 정보 영역 */}
+                <BoardInfoBox>
+                    <BoardUserName>
+                        {WORLDLIST.map((world, idx) => {
+                            if (world.name == board?.userWorld) {
+                                return <UserName key={`userName-${idx}`}><UserWorldImg key={`userWorldImg-${idx}`} src={`${world.img}`} style={{ marginRight: "1px" }} /> {board?.userName}</UserName>;
+                            } else {
+                                return;
+                            }
+                        })}
+                    </BoardUserName>
+                    <BoardInfo>
+                        {/* 오른쪽 아이콘 영역 */}
+                        <IconInfo>
+                            <span style={{ margin: "0px 10px" }}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board?.eyeCount}{" "}{" "}</span>
+                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString()}</span>
+                        </IconInfo><img src={lineImg} alt={"구분선 이미지"} style={{ margin: "0px 10px" }} />
+                        <IconBox>
+                            <IconWrap>
+                                <BoardOtherIcon src={LinkIcon} alt='링크 아이콘' onClick={() => {
+                                    window.prompt("이 글의 트랙백 주소입니다. Ctrl+C를 눌러 클립보드로 복사하세요", window.location.href);
+                                }} />
+                            </IconWrap>
+                            <IconWrap>
+                                <BoardOtherIcon src={AlarmIcon} alt='신고 아이콘' onClick={() => {
+                                    window.location.href = 'https://ecrm.police.go.kr/minwon/main';
+                                }} />
+                            </IconWrap>
+                        </IconBox>
+                    </BoardInfo>
+                </BoardInfoBox>
+
+                {/* 내용 영역 : innerHTML으로 넣었다. */}
+                <BoardContent dangerouslySetInnerHTML={{ __html: board?.contents }}>
+                </BoardContent>
+
+                {/* 공감영역 */}
+                <LikeWrap>
+                    <LikeBtn><span>❤ 공감하기</span></LikeBtn>
+                    <LikeCheck><span>{board?.likeCount} 명</span></LikeCheck>
+                </LikeWrap>
+
+                {/* 태그 영역 */}
+                {/* 태그는 먼저 위에서 잘 가공해 예쁜 배열로 만든다음 map 돌린다. */}
+                {/* Link to로 태그검색 가능하게 해도 좋을 것 같다. */}
+                <TagWrap>
+                    <Tag>#어쩌구</Tag>{" "}
+                    <Tag>#어쩌구2</Tag>{" "}
+                </TagWrap>
+
+                {/* 수정/삭제 영역 : 로그인 유저와 보드 유저가 같으면 띄운다. */}
+                {userName==board.userName ? (
+                    <UpDelBtnWrap>
+                        {/* 등록 창으로 보내고, props로 현재 수정 상태임도 보내준다. */}
+                        <Link to={`/Community/Free`}>
+                            <UpDelBtn>수정</UpDelBtn>
+                        </Link>
+                        <Link to={`/Community/Free`}>
+                            <UpDelBtn>삭제</UpDelBtn>
+                        </Link>
+                    </UpDelBtnWrap>
+                ) : ""}
+
+                {/* 댓글 영역 */}
+                {/* 여기서부터 댓글 컴포넌트 만들어진 이후에 작업 */}
+                <CommentInfo>
+                    {/* 몇개인지,색깔바꾸기 */}
+                    댓글{" "}
+                    <CommentCount>0</CommentCount>
+                </CommentInfo>
+
+                {/* 댓글 목록 */}
+                <CommentBox>
+                    <CommentWrap>
+                        {/* 댓글 개수에 맞게 map 돌린다. */}
+                        <Comment>
+                            {/* 댓글유저정보 */}
+                            <div>
+                                <span>왼쪽</span>
+                                <span>오른쪽</span>
+                            </div>
+                            {/* 댓글내용 */}
+                            <div>하이</div>
+                            {/* 답글 */}
+                            <div>어머 답글이네..(답글컴포넌트)</div>
+                        </Comment>
+
+                    </CommentWrap>
+                </CommentBox>
+
+                {/* 댓글 입력 */}
+                <CommentAddWrap>
+                    <CommentAdd>
+                        <CommentTextArea name='comment'></CommentTextArea>
+                        <CommentBtnWrap>
+                            <div style={{ fontSize: "25px", marginLeft: "5px" }}>🦢</div>
+                            <CommentAddBtn>등록</CommentAddBtn>
+                        </CommentBtnWrap>
+
+                    </CommentAdd>
+                </CommentAddWrap>
+            </ContentBox>
+        </>
+    );
+};
+
+export default DetailComponent;
+
+const CategoryTItleBox = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+const CategoryTitle = styled.h1`
+    font-size: 28px;
+    color: #333;
+    margin-top: 60px;
+    font-weight: 600;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 40px;
+    cursor: default;
+    display: inline;
+    max-width: 400px;
+`;
+const CategoryRight = styled.div`
+    margin-top: 15px;
+    cursor: pointer;
+    & span{
+        display: inline-block;
+        font-size: 13px;
+        color: #666;
+        padding: 13px 24px;
+        line-height: 1;
+        border: 1px solid #e6e6e6;
+    }
+    
+`;
+
+const ContentBox = styled.div`
+    /* background-color: rgb(245,245,245); */
+    min-height: 800px;
+`;
+
+const BoardTitle = styled.p`
+    /* margin-left: 30px; */
+    float: left;
+    width: 100%;
+    line-height: 1.3;
+    min-height: 36px;
+    border-top: 1px solid #7e7e7e;
+    color: #333;
+    font-size: 24px;
+    /* background-color: #F9F9F9; */
+    background-color: #FBF9FA;
+    word-break: break-all;
+    /* font-weight: bold; */
+    padding: 37px 27px 37px;
+    margin-top: 0 !important;
+    margin-bottom: 0px;
+
+`;
+const BoardTitleSpan = styled.span`
+    color: #CA5196;
+    font-style: normal;
+    font-size: 24px;
+`;
+const BoardTitleText = styled.span`
+    color: #333;
+`;
+
+
+const BoardInfoBox = styled.div`
+    float: left;
+    width: 100%;
+    height: 55px;
+    line-height: 55px;
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+`;
+const BoardUserName = styled.div`
+    /* a태그 안의 이미지 아래에 유저 이름을 적는다. */
+    float: left;
+    margin-left: 27px;
+    height: 100%;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    &>a{
+        float: left;
+        color: #888;
+        &>img{
+            margin-bottom: 3px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+    }
+`;
+const BoardInfo = styled.div`
+    float: right;
+    margin-right: 27px;
+    font-size: 13px;
+
+    &>div{
+        display: inline;
+        /* background-color: rgb(245,245,245); */
+    }
+
+`;
+
+const BoardContent = styled.div`
+    width: 100%;
+    float: left;
+    padding: 50px 30px;
+    /* background-color: #f0808040; */
+    min-height: 10px;
+    &>p{
+        margin-bottom: 0.9rem;
+    }
+`;
+
+const LikeWrap = styled.div`
+    float: left;
+    width: 100%;
+    height: 55px;
+    line-height: 55px;
+    text-align: center;
+    margin-bottom: 50px;
+    &>div{
+        display: inline-block;
+        height: inherit;
+        border-radius: 2px;
+        cursor: pointer;
+        box-sizing: border-box;
+    }
+`;
+const LikeBtn = styled.div`
+    width: 140px;
+    background-color: #F6890A;
+    color: white;
+    margin-right: 5px;
+    padding: 0 20px;
+    border: 1px solid #F6890A;
+    &:hover{
+        background-color: #F57700;
+        border: 1px solid #F6890A;
+    }
+`;
+const LikeCheck = styled.div`
+    min-width: 60px;
+    border: 1px solid #dbdbdb;
+    background-color: #F7F7F7cc;
+    color: #7c767c;
+    padding: 0 20px;
+    &:hover{
+        border: 1px solid #929192da;
+    }
+
+`;
+
+
+const CommentInfo = styled.div`
+    float: left;
+    width: 100%;
+    height: 55px;
+    line-height: 55px;
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+    /* background-color: #F9F9F9; */
+    /* background-color: #FBF9FA; */
+    padding: 0 30px;
+`;
+const CommentCount = styled.div`
+    color: #F6890A;
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 600;
+`;
+const IconBox = styled.div`
+`;
+const IconWrap = styled.div`
+    display: inline;
+    width: 31px;
+    height: 31px;
+    margin: 0 5px;
+`;
+const BoardOtherIcon = styled.img`
+    cursor: pointer;
+    /* width: 20px;
+    height: 20px; */
+`;
+
+const CommentBox = styled.div`
+    float: left;
+    width: 100%;
+`;
+const CommentWrap = styled.div`
+    float: left;
+    width: 100%;
+    padding: 30px 27px 25px 27px;
+    border-bottom: 1px solid #e3e3e3;
+`;
+const Comment = styled.div`
+
+`;
+
+const CommentAddWrap = styled.div`
+    float: left;
+    margin-top: 40px;
+    width: 100%;
+    height: 205px;
+`;
+const CommentAdd = styled.div`
+    height: 203px;
+    background-color: #e8eaee;
+    border: 1px solid #dcdde1;
+`;
+const CommentTextArea = styled.textarea`
+    float: left;
+    padding: 20px;
+    width: 908px;
+    height: 135px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: #fff;
+    resize: none;
+    overflow: hidden;
+    overflow-y: auto;
+    border: none;
+`;
+const CommentBtnWrap = styled.div`
+    position: relative;
+    float: left;
+    margin-top: 6px;
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &>div{
+        display: inline-block;
+        cursor: pointer;
+    }
+`;
+const CommentAddBtn = styled.div`
+    min-width: 53px;
+    font-size: 16px;
+    color: #fff !important;
+    text-align: center;
+    background-color: #747a86;
+    border-radius: 2px;
+    padding: 9px 24px;
+    border: 1px solid #747a86;
+    display: inline-block;
+    line-height: 1;
+    /* float: left; */
+`;
+
+const UserName = styled.span`
+  float: left;
+  width: 110px;
+  max-width: 110px;
+  color: #888888;
+  font-size: 12px;
+  font-family: "NanumBarunGothic", "Malgun Gothic", sans-serif;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+`;
+
+const UserWorldImg = styled.img`
+
+`;
+const IconInfo = styled.div`
+    color : #888;
+    &>span{
+        /* display: flex;
+        align-items: center; */
+    }
+`;
+
+const UpDelBtnWrap = styled.div`
+    float: left;
+    width: 100%;
+    height: 60px;
+    padding-top: 15px;
+    border-top: 1px solid #cecece;
+    margin-bottom: 25px;
+`;
+const UpDelBtn = styled.div`
+    float: left;
+    margin-left: 7px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #747A86;
+    width: 90px;
+    height: 40px;
+    line-height: 40px;
+    color: #ececec;
+    border-radius: 2px;
+`;
+
+// 태그
+const TagWrap = styled.div`
+    float: left;
+    background-color: #F9F9F9;
+    width: 100%;
+    padding: 12px 27px;
+    margin-bottom: 16px;
+
+`;
+const Tag = styled.span`
+    cursor: pointer;
+    color: #696969;
+    font-size: 13px;
+`;

@@ -72,16 +72,19 @@ const NavigationComponent = ({ categorys }) => {
     console.log(`네비게이션 바 크기 ${naviWidth}으로 바뀜`);
   }, [naviWidth]);
 
+
   // left값 변경시키기
   // 자신보다 왼쪽에 있는 엘리먼트의 wid값 합 + (왼쪽엘리먼트개수*마진값) + 현재엘리먼트width값/2
-  // 자신보다 왼쪽에 있는 엘리먼트들
+  // 자신보다 왼쪽에 있는 엘리먼트 배열
   let prevElems = [];
   // 현재 선택한 엘리먼트
   const [nowElem, setNowElem] = useState();
+
+  // 현재 카테고리가 바뀌면
   useEffect(()=>{
     console.log(nowElem);
   }, [nowElem]);
-  // 
+
   // while (nowElem = nowElem.previousElementSibling){
   //   prevElems.push(nowElem);
   // }
@@ -110,10 +113,11 @@ const NavigationComponent = ({ categorys }) => {
               // }}
               >
                 <CategoryLi key={`category-${item.label}`} onMouseOver={(e)=>{
+                  // 현재 width를 변경시킨다
                   setNaviWidth(e.target.offsetWidth);
                   setNowElem(e.target);
                 }} onMouseLeave={()=>{
-                  setNaviWidth(20);
+
                 }}>
                   {item.name}
                 </CategoryLi>

@@ -4,8 +4,6 @@ import logo from "../Img/goldsaekki-logo.png";
 
 import { useMemo, useState } from "react";
 
-import { Routes, Route } from "react-router-dom";
-
 const Menubar = () => {
   const [BGColor, setBGColor] = useState(false);
   const [headerScroll, setHeaderScroll] = useState(false);
@@ -28,7 +26,7 @@ const Menubar = () => {
       "확률형 아이템 결과",
       "NEXON NOW",
     ],
-    ["월드 랭킹", "유니온 랭킹", "업적 랭킹", "명예의 전당", "유니온 아레나"],
+    ["종합 랭킹", "게시판 랭킹", "댓글 랭킹"],
     ["자유게시판", "정보게시판", "토론게시판", "메이플 아트", "메이플 코디"],
     ["웹툰", "메이플스토리 서체", "영상", "음악", "아트웍"],
     ["도움말/1:1문의", "버그악용/불법프로그램 신고"],
@@ -46,7 +44,11 @@ const Menubar = () => {
   const routeAddressSubGroup = [
     ["/", "/", "/", "/", "/"],
     ["/", "/", "/", "/", "/", "/"],
-    ["/", "/", "/", "/", "/"],
+    [
+      "/Ranking/TotalRanking",
+      "/Ranking/BoardRanking",
+      "/Ranking/CommentRanking",
+    ],
     [
       "/Community/Free",
       "/Community/Information",

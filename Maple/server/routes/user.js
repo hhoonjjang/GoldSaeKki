@@ -2,6 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import db from "../models/index.js";
+import fs from "fs";
 
 const router = Router();
 
@@ -91,6 +92,9 @@ router.post("/login", (req, res) => {
     where: { userId: req.body.loginId },
   })
     .then((data) => {
+      console.log("data??", data);
+      console.log("data.userPw", data?.userPw);
+      console.log("req.body.loginPw", req.body.loginPw);
       if (data) {
         if (data.userPw === req.body.loginPw) {
           const token = jwt.sign(
@@ -191,6 +195,23 @@ router.post("/signOut", (req, res) => {
   db.User.destroy({ where: { userName: req.body.currUserName } }).then(() => {
     res.send();
   });
+});
+
+fs.readFile("./user.json", "utf-8", async function (err, data) {
+  const count = await db.User.count();
+  if (err) {
+    console.error(err.message);
+  } else {
+    if (data && JSON.parse(data).length > count) {
+      JSON.parse(data).forEach((item) => {
+        try {
+          db.User.create(item);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+  }
 });
 
 export default router;

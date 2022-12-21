@@ -8,7 +8,6 @@ import Report from "./report.js";
 import Board from "./board.js";
 import Comment from "./comment.js";
 
-
 import Admin from "./admin.js";
 
 import { createRequire } from "module";
@@ -16,9 +15,7 @@ const require = createRequire(import.meta.url);
 const configJson = require("../config/config.json");
 const config = configJson["development"];
 
-
-const db = { User, Report, Admin,Board, Comment  };
-
+const db = { User, Report, Admin, Board, Comment };
 
 let sequelize = new Sequelize(
   config.database,

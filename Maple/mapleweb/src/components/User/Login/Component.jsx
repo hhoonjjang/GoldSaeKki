@@ -7,79 +7,132 @@ import loginChar from "../Img/login-char.png";
 import footerLogo from "../Img/login-footer.png";
 import backgroundImg from "../Img/login-background.png";
 import { useState } from "react";
+import menuselectLogo from "../Img/menu-select-logo.png";
+import LoginHeaderComp from "./LoginHeader";
+import FindLoginContainer from "./FindLoginId/Container";
+import FindPwContainer from "./FindLoginPw/Container";
 
 const LoginComponent = ({ loginClick }) => {
   const [loginId, setloginId] = useState("");
   const [loginPw, setloginPw] = useState("");
+  const [select, setSelect] = useState(true);
+  const [findId, setFindId] = useState(true);
+  const [findPw, setFindPw] = useState(true);
+
   return (
-    <LoginBox>
-      <LoginHeader>
-        <div>
-          <button>
-            <img src={menuLogo} alt={"메뉴"} />
-          </button>
-          <button>
-            <img src={homeLogo} alt={"홈"} />
-          </button>
-        </div>
-        <button>
-          <img src={mapleLogo} alt={"우측로고"} />
-        </button>
-      </LoginHeader>
-      <LoginMain>
-        <p>금쪽이스토리 로그인</p>
-        <LoginText>
-          <div>금쪽이ID</div>
+    <>
+      {select ? <></> : <LoginHeaderComp />}
+      {findId ? (
+        <></>
+      ) : (
+        <FindLoginContainer findId={findId} setFindId={setFindId} />
+      )}
+      {findPw ? (
+        <></>
+      ) : (
+        <FindPwContainer findPw={findPw} setFindPw={setFindPw} />
+      )}
+      <LoginBox>
+        <LoginHeader>
           <div>
-            <input
-              placeholder={"메이플ID"}
-              value={loginId}
-              type={"text"}
-              onInput={(e) => {
-                setloginId(e.target.value);
-              }}
-            />
-            <span>
-              <input type={"checkbox"} />
-              ID 저장
-            </span>
+            {select ? (
+              <button
+                onClick={() => {
+                  setSelect((select) => !select);
+                }}
+              >
+                <img src={menuLogo} alt={"메뉴"} />
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  setSelect((select) => !select);
+                }}
+              >
+                <img src={menuselectLogo} alt={"메뉴"} />
+              </button>
+            )}
+
+            <Link to={"/"}>
+              <button>
+                <img src={homeLogo} alt={"홈"} />
+              </button>
+            </Link>
           </div>
           <div>
-            <input
-              placeholder={"PW"}
-              value={loginPw}
-              type={"password"}
-              onInput={(e) => {
-                setloginPw(e.target.value);
-              }}
-            />
+            <Link to={"/"}>
+              <button>
+                <img src={mapleLogo} alt={"우측로고"} />
+              </button>
+            </Link>
           </div>
-          {/* <Link to={"/"}> */}
-          <button
-            onClick={() => {
-              loginClick(loginId, loginPw);
-            }}
-          >
-            로그인
-          </button>
-          {/* </Link> */}
-        </LoginText>
-        <LinkBox>
-          <Link to={"/regist"}>
-            <p>회원가입</p>
-          </Link>
-          <p> | </p>
-          <p>금쪽이ID 찾기</p>
-          <p> | </p>
-          <p> 비밀번호 찾기 </p>
-        </LinkBox>
-      </LoginMain>
-      <LoginFooter>
-        <div>
-          <img src={footerLogo} alt={"하단로고"}></img>
-        </div>
-      </LoginFooter>
-    </LoginBox>
+        </LoginHeader>
+        <LoginMain>
+          <p>금쪽이스토리 로그인</p>
+          <LoginText>
+            <div>금쪽이ID</div>
+            <div>
+              <input
+                placeholder={"메이플ID"}
+                value={loginId}
+                type={"text"}
+                onInput={(e) => {
+                  setloginId(e.target.value);
+                }}
+              />
+              <span>
+                <input type={"checkbox"} />
+                ID 저장
+              </span>
+            </div>
+            <div>
+              <input
+                placeholder={"PW"}
+                value={loginPw}
+                type={"password"}
+                onInput={(e) => {
+                  setloginPw(e.target.value);
+                }}
+              />
+            </div>
+            <button
+              onClick={() => {
+                loginClick(loginId, loginPw);
+              }}
+            >
+              로그인
+            </button>
+          </LoginText>
+          <LinkBox>
+            <Link to={"/regist"}>
+              <p>회원가입</p>
+            </Link>
+            <p> | </p>
+            <p
+              onClick={() => {
+                setFindId((findId) => !findId);
+              }}
+            >
+              금쪽이ID 찾기
+            </p>
+            <p> | </p>
+            <p
+              onClick={() => {
+                setFindPw((findPw) => !findPw);
+              }}
+            >
+              {" "}
+              비밀번호 찾기{" "}
+            </p>
+          </LinkBox>
+        </LoginMain>
+        <LoginFooter>
+          <div>
+            <img src={footerLogo} alt={"하단로고"}></img>
+          </div>
+        </LoginFooter>
+      </LoginBox>
+    </>
   );
 };
 
@@ -97,6 +150,7 @@ const LoginHeader = styled.div`
   padding: 0 30px;
 
   & > button {
+    position: relative;
     background-color: transparent;
     cursor: pointer;
     border: none;
@@ -104,19 +158,22 @@ const LoginHeader = styled.div`
 
   & > div button {
     &:first-child {
+      position: relative;
       background-color: transparent;
       border: none;
       cursor: pointer;
+      z-index: 9999;
     }
 
-    &:last-child {
+    & > button:last-child {
       background-color: transparent;
       cursor: pointer;
       border: none;
+      z-index: 9999;
     }
   }
 
-  & > button:last-child img {
+  & > div:last-child > a > button img {
     width: 150px;
   }
 `;
@@ -125,7 +182,7 @@ const LoginMain = styled.div`
   background-image: url(${loginChar});
   background-repeat: no-repeat;
   background-position: bottom;
-  height: 700px;
+  height: 750px;
 
   & > p {
     font-size: 50px;

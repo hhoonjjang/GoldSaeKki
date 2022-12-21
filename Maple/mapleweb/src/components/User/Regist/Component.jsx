@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import registImg from "../Img/regist-header-img.jpg";
 import { useState, useMemo } from "react";
+import backgroundImg from "../Img/login-background.png";
+import loginChar from "../Img/login-char.png";
 
 const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
   const [userId, setId] = useState("");
   const [userPw, setPw] = useState("");
   const [userName, setName] = useState("");
-  const [server, setServer] = useState("");
+  const [server, setServer] = useState("서버 선택");
+  console.log(server);
 
   const idMemo = useMemo(() => {
     return idcheck(userId);
@@ -75,7 +77,7 @@ const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
               console.log(e.target.value);
             }}
           >
-            <option>서버 선택</option>
+            <option value="서버 선택">서버 선택</option>
             <option value="리부트">리부트</option>
             <option value="리부트2">리부트2</option>
             <option value="오로라">오로라</option>
@@ -93,7 +95,7 @@ const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
           </select>
         </SelectBox>
         <ButtonBox>
-          {userId && userPw && userName ? (
+          {userId && userPw && userName && server != "서버 선택" ? (
             <>
               <Link to={"/login"}>
                 <button
@@ -136,15 +138,14 @@ const RegistBox = styled.div`
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  background-image: url(${registImg});
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background-image: url(${backgroundImg});
+  background-size: contain;
 
   & > h2 {
     padding-top: 20px;
     text-align: center;
-    margin-top: 0;
+    margin-bottom: 20px;
+    color: white;
   }
 `;
 
@@ -153,6 +154,10 @@ const RegistMain = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-image: url(${loginChar});
+  background-repeat: no-repeat;
+  background-position: bottom;
+  height: 700px;
 `;
 
 const RegistText = styled.div`
@@ -161,17 +166,19 @@ const RegistText = styled.div`
   justify-content: center;
 
   & p:first-child {
-    color: black;
+    color: white;
     font-weight: 600;
+    font-size: 20px;
   }
 
   & p:last-child {
     font-size: 12px;
+    color: white;
   }
 
   & input {
-    width: 250px;
-    height: 25px;
+    width: 400px;
+    height: 50px;
     border: 2px solid lightgray;
     background-color: rgb(234, 240, 254);
   }
@@ -179,12 +186,12 @@ const RegistText = styled.div`
     margin-left: 10px;
   }
 
-  .green {
-    color: green;
+  & .green {
+    color: green !important;
   }
 
-  .red {
-    color: red;
+  & .red {
+    color: red !important;
   }
 `;
 
@@ -193,10 +200,10 @@ const ButtonBox = styled.div`
 
   & > a:first-child {
     & > button {
-      width: 100px;
-      height: 35px;
+      width: 150px;
+      height: 50px;
       border: none;
-      background-color: pink;
+      background-color: rgb(246, 133, 0);
       margin-right: 10px;
       color: white;
       font-weight: 600;
@@ -207,12 +214,12 @@ const ButtonBox = styled.div`
 
   & > a:last-child {
     & > button {
-      width: 100px;
-      height: 35px;
+      width: 150px;
+      height: 50px;
       background-color: white;
       border: 2px solid lightgray;
       margin-right: 10px;
-      color: pink;
+      color: rgb(246, 133, 0);
       font-weight: 600;
       border-radius: 5px;
       cursor: pointer;
@@ -226,5 +233,6 @@ const SelectBox = styled.div`
     height: 35px;
     border-radius: 3px;
     border: 2px solid lightgray;
+    margin: 10px;
   }
 `;

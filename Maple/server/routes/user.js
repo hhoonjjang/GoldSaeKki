@@ -2,6 +2,8 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import db from "../models/index.js";
+import crypto from "crypto-js";
+import { where } from "sequelize";
 
 const router = Router();
 
@@ -79,6 +81,28 @@ router.post("/logincheck", (req, res) => {
   res.send({
     userInfo: decodeToken,
     loginComplete: 1,
+  });
+});
+
+router.post("/findId", (req, res) => {
+  db.User.findOne({ where: { userName: req.body.nickName } }).then((data) => {
+    res.send(data);
+  });
+});
+
+router.post("/findPw", (req, res) => {
+  db.User.update(
+    { userPw: crypto.SHA256("goldsaekki!").toString() },
+    {
+      where: { userId: req.body.findId },
+    }
+  ).then((data) => {
+    console.log("받을데이터", data);
+    if (data[0] === 0) {
+      res.send({ message: 504 });
+    } else {
+      res.send({ pw: "goldsaekki!" });
+    }
   });
 });
 
@@ -183,4 +207,21 @@ router.post("/signOut", (req, res) => {
   });
 });
 
+router.post("/board", (req, res) => {
+  console.log("현재 닉네임", req.body.currUser);
+  db.Board.findAll({ where: { userName: req.body.currUser } }).then((data) => {
+    console.log("찾아온 데이터", data);
+    res.send(data);
+  });
+});
+
+router.post("/pwchange", (req, res) => {
+  db.User.update(
+    { userPw: crypto.SHA256(req.body.changePw).toString() },
+    { where: { userName: req.body.currUserName } }
+  ).then(() => {
+    res.clearCookie("login");
+    res.send({ message: "비밀번호 잘 바꾸고 쿠키 초기화함" });
+  });
+});
 export default router;

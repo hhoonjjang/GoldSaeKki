@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import LoginComponent from "./Component";
 import axios from "axios";
 import { action } from "../../../modules/user";
@@ -9,8 +9,6 @@ import { useNavigate } from "react-router-dom";
 const LoginContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // let tempCookie = document.cookie.split("=");
-  // let cookieJwt = tempCookie[1];
 
   // const loginCheck = () => {
   // if (document.cookie) {

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import multer from "multer";
 import db from "../models/index.js";
 import crypto from "crypto-js";
+import fs from "fs";
 
 const router = Router();
 
@@ -220,6 +221,16 @@ router.post("/board", (req, res) => {
   });
 });
 
+router.post("/comment", (req, res) => {
+  console.log("현재 닉네임", req.body.currUser);
+  db.Comment.findAll({ where: { userName: req.body.currUser } }).then(
+    (data) => {
+      console.log("찾아온 데이터", data);
+      res.send(data);
+    }
+  );
+});
+
 router.post("/pwchange", (req, res) => {
   db.User.update(
     { userPw: crypto.SHA256(req.body.changePw).toString() },
@@ -228,5 +239,22 @@ router.post("/pwchange", (req, res) => {
     res.clearCookie("login");
     res.send({ message: "비밀번호 잘 바꾸고 쿠키 초기화함" });
   });
+});
+
+fs.readFile("./user.json", "utf-8", async function (err, data) {
+  const count = await db.User.count();
+  if (err) {
+    console.error(err.message);
+  } else {
+    if (data && JSON.parse(data).length > count) {
+      JSON.parse(data).forEach((item) => {
+        try {
+          db.User.create(item);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+  }
 });
 export default router;

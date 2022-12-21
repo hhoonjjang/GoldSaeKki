@@ -144,7 +144,7 @@ router.post("/login", (req, res) => {
               currUserName: userName,
             },
           });
-          consoNamele.log("로그인 완료");
+          console.log("로그인 완료");
         } else {
           res.send({ message: "잘못된 비밀번호입니다.", status: 501 });
         }

@@ -63,41 +63,18 @@ const NavigationComponent = ({ categorys }) => {
   });
 
   // 유동적 네비게이션 바
-  // 기본값은 선택된 wid놈으로 해주기..
+  // 기본값은 선택된 width로 해주기..
   const [naviWidth, setNaviWidth] = useState(20);
-
-  // 해당 카테고리를 onmouseup하면 width가 해당 놈으로 set되게 하기
 
   // 네비게이션 바 크기 변경되었을 때
   useEffect(() => {
     console.log(`네비게이션 바 크기 ${naviWidth}으로 바뀜`);
   }, [naviWidth]);
 
-  // left값 변경시키기
-  // 자신보다 왼쪽에 있는 엘리먼트의 wid값 합 + (왼쪽엘리먼트개수*마진값) + 현재엘리먼트width값/2
-  // 자신보다 왼쪽에 있는 엘리먼트 배열
-  let prevElems = [];
-  // 현재 선택한 엘리먼트
-  const [nowElem, setNowElem] = useState();
-
-  // 현재 카테고리가 바뀌면
-  useEffect(() => {
-    console.log(nowElem);
-  }, [nowElem]);
-
-  // while (nowElem = nowElem.previousElementSibling){
-  //   prevElems.push(nowElem);
-  // }
-  // console.log(prevElems);
-
-  // left값 변경시키기
-  // 자신보다 왼쪽에 있는 엘리먼트의 wid값 합 + (왼쪽엘리먼트개수*마진값) + 현재엘리먼트width값/2
-  // 자신보다 왼쪽에 있는 엘리먼트들
+  // 네비게이션 바 left값 변경시키기
   const [naviLeft, setNaviLeft] = useState(0);
 
-  // 각각의 엘리먼트 width는 이미 구해졌음 -> 어딘가에 저장, 순서를 통해 가져옴
-  // 이전 width값 모두 +++++하면 됨 이전엘리먼트 개수만큼 마진값도 더해줌(44)
-
+  
   return (
     <NavigationWrap className="mnb_wrap">
       <NavigationBox className="div_inner2">

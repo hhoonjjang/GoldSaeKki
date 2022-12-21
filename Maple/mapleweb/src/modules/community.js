@@ -21,9 +21,8 @@ export const CATEGORY = [
     { name: '자유게시판', label: "Free" },
     // { name: '바다이야기', label: "Hi" },
     { name: '정보게시판', label: "Information" },
-    // { name: '금쪽이야기', label: "Go" },
-    { name: '연재소설', label: "Novel" },
     { name: '토론게시판', label: "TopicDiscussion" },
+    { name: '연재소설', label: "Novel" },
     { name: '금쪽이아트', label: "Art" },
 ];
 

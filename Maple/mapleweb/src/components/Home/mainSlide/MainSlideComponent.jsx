@@ -40,19 +40,20 @@ const MainSlideComponent = ({
       // 마운트 될 때 실행되지 않게
     } else {
       console.log(currSlide);
-      if (currSlide % 4 == 0) {
-        console.log("bool", bool);
-        console.log(currSlide, "이동한다이");
-
-        if (bool) {
-          console.log(bool);
+      if (bool) {
+        console.log(bool);
+        if (currSlide % 4 == 0) {
+          console.log("bool", bool);
+          console.log(currSlide, "이동한다이");
           container.current.style.transform = `translate(${
             currSlideTranslate - 1100
           }px)`;
           setCurrSlideTranslate(currSlideTranslate - 1100);
           console.log(currSlideTranslate);
           console.log("");
-        } else if (!bool) {
+        }
+      } else {
+        if (currSlide % 4 == 3) {
           container.current.style.transform = `translate(${
             currSlideTranslate + 1100
           }px)`;
@@ -60,7 +61,7 @@ const MainSlideComponent = ({
           console.log(currSlideTranslate);
           console.log("");
         }
-      } else console.log("오른쪽 이동안한다이");
+      }
     }
   }, [currSlide]);
 

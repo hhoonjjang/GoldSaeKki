@@ -40,14 +40,12 @@ function App() {
   };
 
   const loginCheck = () => {
-    // if (document.cookie) {
-    //   axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
-    //     dispatch(action.check(data.data.userInfo));
-    //     console.log("로그인정보를 받았다", data);
-    //     // currUser = data.data.userInfo.name;
-    //     // console.log(currUser);
-    //   });
-    // }
+    if (document.cookie) {
+      axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
+        dispatch(action.check(data.data.userInfo));
+        console.log("로그인정보를 받았다", data);
+      });
+    }
   };
   console.log(location);
   document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck();

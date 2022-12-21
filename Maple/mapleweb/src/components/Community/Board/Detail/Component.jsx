@@ -21,6 +21,9 @@ const DetailComponent = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    // Redux에 저장된 값을 가져온다.
+    const states = useSelector((state) => state);
+
     // 라우터 상단의 번호를 가져와 그 번호를 아래 보드 번호로 맞춰준다.
     const { boardId } = useParams();
 
@@ -29,7 +32,7 @@ const DetailComponent = () => {
         boardId: boardId
     });
 
-    // 해당 게시글의 댓글을 가져오는 요청을 보낸다. - 수정 혹은 추가 해야함~~~
+    // 해당 게시글의 댓글을 가져오는 요청을 보낸다.
     // 어떤 항목이 필요한지.. 댓글의 boardId가 req.body.boardId와 같은 놈을 모두?
     // 정렬은 어떤 방식으로? -> ... 댓글이 답글이 아닌 놈 기준으로 먼저 단 댓글이 위에 나온다.
     const commentReq = axios.post("http://localhost:8080/api/comment/getComment", {
@@ -44,21 +47,19 @@ const DetailComponent = () => {
         boardReq.then((board) => {
             dispatch(communityAction.board(board?.data));
         });
-        
-        // 리덕스를 여러개 저장하려면?
-        // store, reducer에 commentList도 추가하기? ㅇㅅㅇ... 
-        // 한 페이지에 여러 개 띄울 수 있을까.?
-        // commentReq.then((comment) => {
-        //     dispatch(communityAction.board(board?.data));
-        // });
+
+        // 이놈은 댓글 목록이 변경되었을 때로 수정해주기.!!
+        commentReq.then((comment) => {
+            if (comment.data.length == 0) return;
+            dispatch(communityAction.comments(comment?.data));
+        });
+
     }, [boardId]);
 
 
-    // Redux에 저장된 값을 가져온다.
-    const states = useSelector((state) => state);
-
     let board = "";
     let boardTagsText = "";
+    let comments = [];
 
     // 랜더링 이후 값을 집어넣어줌
     if (states.community.board) {
@@ -69,6 +70,7 @@ const DetailComponent = () => {
             boardId: boardId
         });
         console.log(boardReq);
+        comments = states.community.comments;
     }
 
     // 현재 라우터 값을 구한다.
@@ -85,9 +87,6 @@ const DetailComponent = () => {
 
     // 삭제 확인
     let deleteConfirm;
-
-    // console.log(boardTagsText);
-    // console.log(boardTagsText.split("#"));
 
     // 태그 가공(#으로 나눈 배열)
     // #시간 #뉴비
@@ -124,9 +123,7 @@ const DetailComponent = () => {
                         {WORLDLIST.map((world, idx) => {
                             if (world.name == board?.userWorld) {
                                 return <UserName key={`userName-${idx}`}><UserWorldImg key={`userWorldImg-${idx}`} src={`${world.img}`} style={{ marginRight: "1px" }} /> {board?.userName}</UserName>;
-                            } else {
-                                return;
-                            }
+                            } else return;
                         })}
                     </BoardUserName>
                     <BoardInfo>
@@ -204,7 +201,7 @@ const DetailComponent = () => {
                 <CommentInfo>
                     {/* 몇개인지,색깔바꾸기 */}
                     댓글{" "}
-                    <CommentCount>0</CommentCount>
+                    <CommentCount>{}</CommentCount>
                 </CommentInfo>
 
                 {/* 댓글 목록 */}
@@ -214,19 +211,23 @@ const DetailComponent = () => {
                     <CommentWrap>
                         {/* 댓글 개수에 맞게 map 돌린다. */}
                         {/* 하나의 댓글 뭉텅이라고 쳐야할 듯 */}
-                        <Comment>
-                            {/* 댓글유저정보 */}
-                            <CommentUserInfo>
-                                <span>🈺</span>
-                                <span>닉네임</span>{" "}
-                                <CommentTimeSpan>댓글작성시간</CommentTimeSpan>
-                            </CommentUserInfo>
-                            {/* 댓글내용 */}
-                            <CommentValue>댓글내용</CommentValue>
+                        {comments.map((comment, idx) => {
+                            <Comment>
+                                {/* 댓글유저정보 */}
+                                <CommentUserInfo>
+                                    {/* 유저 월드 띄우기 */}
+                                    <span>🈺</span>
+                                    <span>{comment.userName}</span>{" "}
+                                    <CommentTimeSpan>{comment.createdAt}</CommentTimeSpan>
+                                </CommentUserInfo>
+                                {/* 댓글내용 */}
+                                <CommentValue>{comment.text}</CommentValue>
 
-                            {/* 답글 컴포넌트 여기에 추가(바로 아래 붙도록 출력) */}
-                            {/* <>하이</> */}
-                        </Comment>
+                                {/* 답글 컴포넌트 여기에 추가(바로 아래 붙도록 출력) */}
+                                {/* <>하이</> */}
+                            </Comment>
+                        })}
+
                         <Comment>
                             {/* 댓글유저정보 */}
                             <CommentUserInfo>

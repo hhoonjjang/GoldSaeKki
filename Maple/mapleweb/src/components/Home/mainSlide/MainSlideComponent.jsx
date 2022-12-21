@@ -41,18 +41,24 @@ const MainSlideComponent = ({
     } else {
       console.log(currSlide);
       if (bool) {
-        console.log(bool);
-        if (currSlide % 4 == 0) {
-          console.log("bool", bool);
-          console.log(currSlide, "이동한다이");
-          container.current.style.transform = `translate(${
-            currSlideTranslate - 1100
-          }px)`;
-          setCurrSlideTranslate(currSlideTranslate - 1100);
-          console.log(currSlideTranslate);
+        console.log("bool : ", bool);
+        console.log(currSlide, "이동한다이");
+        if (currSlide == 0) {
+          // 마지막에서 뒤로 갔을 때
+          container.current.style.transform = `translate(0px)`;
+          setCurrSlideTranslate(0);
           console.log("");
+        } else {
+          if (currSlide % 4 == 0) {
+            container.current.style.transform = `translate(${
+              currSlideTranslate - 1100
+            }px)`;
+            setCurrSlideTranslate(currSlideTranslate - 1100);
+            console.log(currSlideTranslate);
+            console.log("");
+          }
         }
-      } else {
+      } else if (!bool) {
         if (currSlide % 4 == 3) {
           container.current.style.transform = `translate(${
             currSlideTranslate + 1100

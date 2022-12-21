@@ -212,4 +212,21 @@ router.post("/signOut", (req, res) => {
   });
 });
 
+router.post("/board", (req, res) => {
+  console.log("현재 닉네임", req.body.currUser);
+  db.Board.findAll({ where: { userName: req.body.currUser } }).then((data) => {
+    console.log("찾아온 데이터", data);
+    res.send(data);
+  });
+});
+
+router.post("/pwchange", (req, res) => {
+  db.User.update(
+    { userPw: crypto.SHA256(req.body.changePw).toString() },
+    { where: { userName: req.body.currUserName } }
+  ).then(() => {
+    res.clearCookie("login");
+    res.send({ message: "비밀번호 잘 바꾸고 쿠키 초기화함" });
+  });
+});
 export default router;

@@ -60,7 +60,6 @@ function App() {
         ) : (
           <Menubar />
         )}
-
         <Routes>
           {/* 메인페이지 헤더 */}
           <Route path="/News/*" element={<HeaderContainer />}></Route>

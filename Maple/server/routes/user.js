@@ -2,9 +2,6 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import db from "../models/index.js";
-import crypto from "crypto-js";
-import { where } from "sequelize";
-import fs from "fs";
 
 const router = Router();
 
@@ -212,40 +209,6 @@ router.post("/signOut", (req, res) => {
   db.User.destroy({ where: { userName: req.body.currUserName } }).then(() => {
     res.send();
   });
-});
-
-router.post("/board", (req, res) => {
-  console.log("현재 닉네임", req.body.currUser);
-  db.Board.findAll({ where: { userName: req.body.currUser } }).then((data) => {
-    console.log("찾아온 데이터", data);
-    res.send(data);
-  });
-});
-
-router.post("/pwchange", (req, res) => {
-  db.User.update(
-    { userPw: crypto.SHA256(req.body.changePw).toString() },
-    { where: { userName: req.body.currUserName } }
-  ).then(() => {
-    res.clearCookie("login");
-    res.send({ message: "비밀번호 잘 바꾸고 쿠키 초기화함" });
-  });
-});
-fs.readFile("./user.json", "utf-8", async function (err, data) {
-  const count = await db.User.count();
-  if (err) {
-    console.error(err.message);
-  } else {
-    if (data && JSON.parse(data).length > count) {
-      JSON.parse(data).forEach((item) => {
-        try {
-          db.User.create(item);
-        } catch (err) {
-          console.error(err);
-        }
-      });
-    }
-  }
 });
 
 export default router;

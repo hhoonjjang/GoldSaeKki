@@ -92,8 +92,6 @@ const ListComponent = () => {
       }
     });
   }
-  console.log(newBoards);
-
 
 
   // 페이지 높이 변경
@@ -255,11 +253,8 @@ const ListComponent = () => {
             activePage={nowPage}
             // 띄울 게시글 개수
             itemsCountPerPage={10}
-            // 총 게시글 개수(가져옴)
-            // totalItemsCount={450}
-            // totalItemsCount={boards.length}
-            // totalItemsCount={boardCount}
-            totalItemsCount={boards.length}
+            // 총 게시글 개수
+            totalItemsCount={boards?.length || 0}
             // 표시할 개수 
             pageRangeDisplayed={10}
             // 이전을 나타낼 아이콘

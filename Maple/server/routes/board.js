@@ -5,6 +5,8 @@ const router = Router();
 import db from "../models/index.js";
 import { Op } from "sequelize";
 
+import fs from "fs";
+
 // 게시글 추가
 router.post("/create", async (req, res) => {
   console.log(req.body);
@@ -97,14 +99,14 @@ router.post("/getBoard", async (req, res) => {
 });
 
 router.post("/mainCommunity", async (req, res) => {
-  console.log("메인커뮤니티 받았당");
   try {
-    const result = await db.sequelize.query(
+    const result2 = await db.sequelize.query(
       'SELECT * FROM (SELECT * FROM maple.boards  where category="자유게시판" or category="정보게시판" or category="토론게시판" ORDER BY created_at DESC LIMIT 50)as t group by t.category',
       { type: db.Sequelize.QueryTypes.SELECT }
       // 없으면 배열에 두개가 들어간다. 이유는 불명.
     );
-    console.log("result", result);
+    const result = await db.Board.findAll({});
+    // result2는 sql그대로 갖다 넣어서 카멜 케이스가 적용되지않고 스네이크 케이스로 출력된다...
 
     res.send({
       status: 200,
@@ -113,6 +115,23 @@ router.post("/mainCommunity", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.send({ status: 400 });
+  }
+});
+
+fs.readFile("./board.json", "utf-8", async function (err, data) {
+  const count = await db.Board.count();
+  if (err) {
+    console.error(err.message);
+  } else {
+    if (data && JSON.parse(data).length > count) {
+      JSON.parse(data).forEach((item) => {
+        try {
+          db.Board.create(item);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
   }
 });
 

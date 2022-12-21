@@ -43,6 +43,7 @@ const MainCommunityComponent = ({ communityNewestPost }) => {
             {/* <div></div> */}
             {/* </div> */}
             {communityList.map((item, index) => {
+              console.log(communityNewestPost[index]);
               return (
                 <div
                   className={`mainCommunity_innerBox_community_item`}

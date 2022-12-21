@@ -6,6 +6,7 @@ import slideBackground from "../Img/main_slide_background.png";
 import { useEffect } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 const MainSlideComponent = ({
   carouselBackgroundArr,
   carouselImgArr,
@@ -45,13 +46,19 @@ const MainSlideComponent = ({
 
         if (bool) {
           console.log(bool);
-          container.current.style.transform = `translate(${currSlideTranslate}px)`;
+          container.current.style.transform = `translate(${
+            currSlideTranslate - 1100
+          }px)`;
           setCurrSlideTranslate(currSlideTranslate - 1100);
           console.log(currSlideTranslate);
           console.log("");
         } else if (!bool) {
-          container.current.style.transform = `translate(1100px)`;
+          container.current.style.transform = `translate(${
+            currSlideTranslate + 1100
+          }px)`;
           setCurrSlideTranslate(currSlideTranslate + 1100);
+          console.log(currSlideTranslate);
+          console.log("");
         }
       } else console.log("오른쪽 이동안한다이");
     }
@@ -59,9 +66,18 @@ const MainSlideComponent = ({
 
   return (
     <MainSlide>
-      <CarouselBackgroundArr
-        bgImg={carouselBackgroundArr[currSlide]}
-      ></CarouselBackgroundArr>
+      <Link to="/News/Event">
+        <CarouselBackground bgImg={carouselBackgroundArr[currSlide]}>
+          <div className="CarouselBackground_innerBox">
+            <h2
+              className="CarouselBackground_innerBox_title"
+              dangerouslySetInnerHTML={{
+                __html: carouselTitleArr[currSlide],
+              }}
+            ></h2>
+          </div>
+        </CarouselBackground>
+      </Link>
       <Carousel>
         <div className="carousel_innerBox">
           <div className="carousel_pageBox">
@@ -155,13 +171,27 @@ const MainSlide = styled.div`
   height: 560px;
 `;
 
-const CarouselBackgroundArr = styled.div`
+const CarouselBackground = styled.div`
   background-image: url(${(state) => state.bgImg});
   background-repeat: no-repeat;
   background-position: center;
   transition: background 200ms linear;
   width: 100%;
   height: 100%;
+  position: relative;
+
+  .CarouselBackground_innerBox {
+    position: absolute;
+    top: 35%;
+    right: 43%;
+    left: 100x;
+
+    .CarouselBackground_innerBox_title {
+      color: white;
+      font-size: 60px;
+      white-space: nowrap;
+    }
+  }
 `;
 
 const Carousel = styled.div`

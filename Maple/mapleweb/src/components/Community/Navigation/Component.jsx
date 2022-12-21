@@ -98,8 +98,8 @@ const NavigationComponent = ({ categorys }) => {
                   setNaviLeft(e.target.offsetLeft);
                   console.log(e.target.offsetLeft);
                   console.log(naviLeft);
-                }} onMouseLeave={()=>{
-
+                }} onMouseLeave={(e)=>{
+                  // setNaviLeft(naviLeft - e.target.offsetLeft);
                 }}>
                   {item.name}
                 </CategoryLi>

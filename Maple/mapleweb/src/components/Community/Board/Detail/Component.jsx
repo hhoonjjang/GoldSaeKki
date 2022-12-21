@@ -9,6 +9,7 @@ import eyeImg from "../../images/info_eye_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
 import lineImg from "../../images/btn_line_img.png";
 import goldImg from "../../images/goldImg.png";
+import reportImg from "../../images/report_btn.png";
 
 import moment from 'moment';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -127,6 +128,9 @@ const DetailComponent = () => {
             dispatch(communityAction.board(board?.data));
         });
     }, [likeCount]);
+
+    // 강제 리랜더링
+    const [_, render] = useState(false);
 
     return (
         <>
@@ -263,6 +267,58 @@ const DetailComponent = () => {
                                         })}{" "}
                                         <span key={`userName-${idx}`}>{comment.userName}</span>{" "}
                                         <CommentTimeSpan key={`createTime-${idx}`}>{moment(comment.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(comment.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</CommentTimeSpan>
+
+                                        <span style={{ float: "right" }}>
+                                            <CommentBtnItem onClick={() => {
+                                                alert("답글버튼 클릭");
+                                            }}>답글</CommentBtnItem>
+
+                                            {/* 유저 아이디가 댓글 작성 유저 아이디와 같으면 띄운다. */}
+                                            {comment.userName == userName ? <>
+                                                {/* 요청 보내서 게시글과 유저에 연결된 댓글 수정/삭제하기 -> 파라노이드 처리해서 그냥 지우기? */}
+
+                                                <CommentBtnItem onClick={() => {
+                                                    alert("수정버튼 클릭");
+                                                    // 여기부터 다시 작업
+
+                                                }}>수정</CommentBtnItem>
+
+                                                <CommentBtnItem onClick={async () => {
+                                                    const isDel = window.confirm("댓글을 삭제하시겠습니까?");
+
+                                                    if (isDel) {
+                                                        const commentDelReq = await axios.post("http://localhost:8080/api/comment/destroy", {
+                                                            // 댓글 삭제에 필요한 것 : 댓글 id, 유저닉네임?ㄴㄴ 보드아이디?ㄴㄴ
+                                                            commentId: comment.id,
+                                                            userName: userName,
+                                                            boardId: board.id
+                                                        });
+                                                        switch (commentDelReq.data.status) {
+                                                            case 200:
+                                                                alert("댓글이 삭제되었습니다.");
+                                                                // 리랜더링 시켜야 하는데 방법을 모르겠다.
+                                                                // 일단 이렇게 리랜더링 시켰다.
+                                                                setText(" ");
+                                                                return;
+                                                            case 400:
+                                                                alert("댓글 삭제 불가능합니다.");
+                                                                return;
+                                                            default:
+                                                                break;
+                                                        }
+                                                    }else{
+                                                        return;
+                                                    }
+
+                                                }}>삭제</CommentBtnItem>
+
+                                            </> : ""}
+
+                                            {/* 신고할 수 있도록 보내주기 */}
+                                            <Link to={"/Support/BugReport/Create"}>
+                                                <img src={reportImg} alt={"신고 버튼"} style={{ cursor: "pointer" }}></img>
+                                            </Link>
+                                        </span>
                                     </CommentUserInfo>
                                     {/* 댓글내용 */}
                                     <CommentValue key={`commentText-${idx}`}>{comment.text}</CommentValue>
@@ -556,7 +612,7 @@ const CommentValue = styled.span`
 
 const CommentAddWrap = styled.div`
     float: left;
-    margin-top: 30px;
+    margin-top: 40px;
     width: 100%;
     height: 205px;
 `;
@@ -676,4 +732,21 @@ const Tag = styled.span`
 const CommentTimeSpan = styled.span`
     font-size: 13px;
     color: #888;
+`;
+// 댓글 옆의 수정, 삭제, 신고 버튼 UI
+const CommentBtnItem = styled.span`
+    font-size: 13px;
+    border: 1px solid #c4c4c4;
+    padding: 4.5px 5px;
+    cursor: pointer;
+    /* float: left; */
+    margin-right: 4px;
+    width: 33px;
+    height: 30px;
+    line-height: 23px;
+    text-align: center;
+    font-size: 10px;
+    border: 1px solid #e3e3e3;
+    color: #313131;
+    box-sizing: border-box;
 `;

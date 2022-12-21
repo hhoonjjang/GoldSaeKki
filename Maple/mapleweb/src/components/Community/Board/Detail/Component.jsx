@@ -102,9 +102,8 @@ const DetailComponent = () => {
     // 댓글 등록
     const [text, setText] = useState("");
 
-    const [_, render] = useState({});
-
-    useEffect(()=>{
+    // 온클릭 하면 render를 통해 text의 값이 hi에 저장된다.
+    useEffect(() => {
         // 댓글 불러오는 코드
         commentReq.then((comment) => {
             if (comment.data.length == 0) return;
@@ -206,6 +205,7 @@ const DetailComponent = () => {
                         </UpDelBtnWrap>
                     </>
                 ) : ""}
+
 
                 {/* 댓글 영역 */}
                 {/* 여기서부터 댓글 컴포넌트 만들어진 이후에 작업 */}

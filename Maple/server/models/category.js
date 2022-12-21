@@ -16,10 +16,18 @@ export default class Category extends Sequelize.Model {
         underscored: true,
         modelName: "Category",
         tableName: "category",
-        paranoid: true,
+        paranoid: false,
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci",
       }
     );
+  }
+  static associate(db) {
+    db.Category.hasMany(db.Helptext, {
+      foreignKey: "helpCategory",
+      sourceKey: "category",
+      as: "Help",
+      onDelete: "cascade",
+    });
   }
 }

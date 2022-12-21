@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import UncontrolledExample from "./Request/Component";
+import RequestContainer from "./Request/Container";
 const OnlineComponent = () => {
   return (
     <OnlineBox>
@@ -14,7 +14,7 @@ const OnlineComponent = () => {
           찾아 주세요.
         </div>
       </div>
-      <UncontrolledExample />
+      <RequestContainer />
     </OnlineBox>
   );
 };

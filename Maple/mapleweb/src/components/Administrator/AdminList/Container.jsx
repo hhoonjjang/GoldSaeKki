@@ -9,17 +9,14 @@ const tempListFun = async (setList) => {
   } catch (err) {
     console.error(err);
   }
-  return <div></div>;
 };
 
 const AdminListContainer = () => {
   const [listArr, setList] = useState([]);
-  const [id, setId] = useState("");
 
   useEffect(() => {
     tempListFun(setList);
   }, []);
-  console.log(listArr);
 
   const onClick = async (idx) => {
     console.log(idx);

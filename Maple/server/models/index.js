@@ -8,15 +8,26 @@ import Report from "./report.js";
 import Board from "./board.js";
 import Comment from "./comment.js";
 
-import Category from "./category.js";
 import Admin from "./admin.js";
+import Category from "./category.js";
+import Helptext from "./helptext.js";
+import Helptextchild from "./helptextchild.js";
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const configJson = require("../config/config.json");
 const config = configJson["development"];
 
-const db = { User, Report, Admin, Board, Comment, Category };
+const db = {
+  User,
+  Report,
+  Admin,
+  Board,
+  Comment,
+  Category,
+  Helptext,
+  Helptextchild,
+};
 
 let sequelize = new Sequelize(
   config.database,
@@ -33,6 +44,9 @@ Comment.init(sequelize);
 
 Admin.init(sequelize);
 Category.init(sequelize);
+Helptext.init(sequelize);
+Helptextchild.init(sequelize);
+
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

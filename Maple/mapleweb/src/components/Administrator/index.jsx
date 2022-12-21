@@ -7,6 +7,9 @@ import AdminLoginContainer from "./AdminLogin/Container";
 import AdminListContainer from "./AdminList/Container";
 import HelpCategoryContainer from "./HelpCategory/Container";
 import HelpTextContainer from "./HelpCategory/HelpText/Container";
+import TextChildContainer from "./HelpCategory/HelpText/TextChild/Container";
+import ThirdContainer from "./HelpCategoryDisplay/Container3";
+import SecondContainer from "./HelpCategoryDisplay/Container2";
 const AdministratorComponet = () => {
   const dispatch = useDispatch();
   dispatch(action.header("Administrator"));
@@ -17,7 +20,7 @@ const AdministratorComponet = () => {
       {!isCookie ? (
         <>
           <AdminLoginContainer />
-          {/* <AccountContainer /> */}
+          <AccountContainer />
         </>
       ) : (
         <>
@@ -25,7 +28,7 @@ const AdministratorComponet = () => {
           {tempAdmin?.name == "정재훈" ? (
             <>
               <AccountContainer />
-              <AdminListContainer />
+              {/* <AdminListContainer /> */}
             </>
           ) : (
             <></>
@@ -34,15 +37,20 @@ const AdministratorComponet = () => {
           <BugCSContainer />
           <HelpCategoryContainer />
           <HelpTextContainer />
+          <TextChildContainer />
         </>
       )}
       {/* <AdminLoginContainer />
       <AccountContainer />
       <BugCSContainer /> */}
+      <SecondContainer />
+      <ThirdContainer />
     </AdminBox>
   );
 };
 
 export default AdministratorComponet;
 
-const AdminBox = styled.div``;
+const AdminBox = styled.div`
+  padding: 30px 30px;
+`;

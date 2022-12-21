@@ -1,9 +1,7 @@
 import multer from "multer";
-import fs from "fs";
 import { Router } from "express";
 import db from "../models/index.js";
 import jwt from "jsonwebtoken";
-import Report from "../models/report.js";
 
 const router = Router();
 let storage = multer.diskStorage({

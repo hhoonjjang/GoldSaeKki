@@ -2,23 +2,31 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import Cryptojs from "crypto-js";
 import db from "../models/index.js";
-
 const router = Router();
 
 router.post("/regist", async (req, res) => {
   try {
+    console.log(req.body);
     await db.Admin.create({
       adminId: req.body.id,
       adminPw: Cryptojs.SHA256(req.body.password).toString(),
       adminName: req.body.adminName,
+    }).then((data) => {
+      console.log(data.dataValues);
+      res.send(req.body);
     });
-    res.end();
+    // .catch((err) => {
+    //   console.log("err", err);
+    //   res.send("중복");
+    // });
   } catch (err) {
     console.error(err);
+    res.send(err);
   }
 });
 
 router.post("/login", async (req, res) => {
+  console.log(req.body);
   try {
     const tempAdmin = await db.Admin.findOne({
       where: { adminId: req.body.id },
@@ -49,6 +57,7 @@ router.post("/login", async (req, res) => {
     }
   } catch (err) {
     console.error(err);
+    res.end();
   }
 });
 
@@ -69,6 +78,7 @@ router.post("/list", async (req, res) => {
 
 router.post("/delete", async (req, res) => {
   const tempId = req.body;
+  console.log(tempId);
   await db.Admin.destroy({
     where: {
       id: tempId.idx,
@@ -85,6 +95,7 @@ router.post("/category", async (req, res) => {
     res.end();
   } catch (err) {
     console.error(err);
+    res.end();
   }
   console.log(req.body);
 });
@@ -92,13 +103,141 @@ router.post("/category", async (req, res) => {
 router.post("/addtext", async (req, res) => {
   try {
     const category = await db.Category.findAll();
-    console.log("에드텍스트");
-    console.log(category);
-    console.log("에드텍스트");
     res.send(category);
   } catch (err) {
     console.error(err);
+    res.end();
   }
+});
+
+router.post("/delcategory", async (req, res) => {
+  await db.Category.destroy({
+    where: {
+      category: req.body.category,
+    },
+  });
+  res.end();
+});
+
+router.post("/editcategory", async (req, res) => {
+  console.log(req.body.category);
+  await db.Category.update(
+    {
+      category: req.body.category,
+    },
+    {
+      where: {
+        id: req.body.id,
+      },
+    }
+  );
+  res.end();
+});
+
+router.post("/helptext", async (req, res) => {
+  try {
+    const tempHelp = req.body;
+    const tempCategory = await db.Category.findOne({
+      where: {
+        category: tempHelp.category,
+      },
+    });
+    const tempHelpText = await db.Helptext.create({
+      text: tempHelp.text,
+    });
+    console.log(tempCategory);
+    tempCategory.addHelp(tempHelpText);
+
+    res.end();
+  } catch (err) {
+    console.error(err);
+    res.end();
+  }
+});
+
+router.post("/deltext", async (req, res) => {
+  console.log(req.body);
+  await db.Helptext.destroy({
+    where: {
+      text: req.body.text,
+    },
+  });
+  res.end();
+});
+
+router.post("/edittext", async (req, res) => {
+  console.log(req.body.text);
+  await db.Helptext.update(
+    {
+      text: req.body.text,
+    },
+    {
+      where: {
+        id: req.body.id,
+      },
+    }
+  );
+  res.end();
+});
+
+router.post("/addchild", async (req, res) => {
+  try {
+    const helpText = await db.Helptext.findAll();
+    res.send(helpText);
+  } catch (err) {
+    console.error(err);
+    res.end();
+  }
+});
+
+router.post("/addchildtext", async (req, res) => {
+  try {
+    const tempChild = req.body;
+    const tempHelpText = await db.Helptext.findOne({
+      where: {
+        text: tempChild.category,
+      },
+    });
+    const tempHelpTextChild = await db.Helptextchild.create({
+      textChild: tempChild.text,
+    });
+
+    tempHelpText.addChild(tempHelpTextChild);
+    res.end();
+  } catch (err) {
+    console.error(err);
+    res.end();
+  }
+});
+
+router.post("/displaychild", async (req, res) => {
+  const textChild = await db.Helptextchild.findAll({
+    include: { model: db.Helptext },
+  });
+  res.send(textChild);
+});
+
+router.post("/delchild", async (req, res) => {
+  console.log(req.body.text);
+  await db.Helptextchild.destroy({
+    where: { textChild: req.body.text },
+  });
+  res.end();
+});
+
+router.post("/editchild", async (req, res) => {
+  console.log(req.body.text);
+  await db.Helptextchild.update(
+    {
+      textChild: req.body.text,
+    },
+    {
+      where: {
+        id: req.body.id,
+      },
+    }
+  );
+  res.end();
 });
 
 export default router;

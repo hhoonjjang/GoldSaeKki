@@ -67,11 +67,17 @@ const DetailComponent = () => {
     if (states.community.board) {
         board = states.community.board[0];
         boardTagsText = board?.tags;
+    }
+
+    // 엄청난 요청으로 인해 밖으로 빼 useEffect로 감싸줬음
+    // 리랜더링시 다시 요청하지 않기 위함
+    useEffect(() => {
         // Board 조회수를 수정하는 요청도 보내줌
         const boardReq = axios.post("http://localhost:8080/api/board/eyeCountUpdate", {
             boardId: boardId
         });
-    }
+    }, []);
+
     if (states.community.comments) {
         comments = states.community.comments;
         // console.log(comments);
@@ -116,7 +122,7 @@ const DetailComponent = () => {
 
     // 공감버튼 클릭시 리랜더링
     const [likeCount, setLikeCount] = useState(0);
-    useEffect(()=>{
+    useEffect(() => {
         boardReq.then((board) => {
             dispatch(communityAction.board(board?.data));
         });
@@ -181,7 +187,7 @@ const DetailComponent = () => {
                             boardId: boardId
                         });
                         console.log(likeCountUpReq);
-                        setLikeCount(likeCount+1);
+                        setLikeCount(likeCount + 1);
                     }}>
                         <span>❤ 공감하기</span></LikeBtn>
                     <LikeCheck><span>{board?.likeCount} 명</span></LikeCheck>

@@ -42,7 +42,7 @@ router.post("/create", async(req,res)=>{
 
 // 댓글 목록 불러오기(findAll)
 router.post("/getComment", async(req,res)=>{
-    // console.log(req.body);
+    console.log(req.body);
     try {
         const nowCommentList = await db.Comment.findAll({
             where : {
@@ -50,6 +50,42 @@ router.post("/getComment", async(req,res)=>{
             }
         });
         res.send(nowCommentList);
+        res.end();
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// 댓글 삭제 destroy
+router.post("/destroy", async(req,res)=>{
+    console.log(req.body);
+    try {
+        await db.Comment.destroy({
+            where : {id : req.body.commentId},
+        }).then(()=>{
+            res.send({status : 200});
+        });
+        res.end();
+    } catch (error) {
+        console.log(error);
+        res.send({status : 400});
+    }
+});
+
+// 댓글 수정 update
+router.post("/update", (req,res)=>{
+    try {
+        db.Comment.update({
+            // 내용만 바꿔준다.
+            // 새로운 내용값을 받아온다.
+            // 수정시 원래 텍스트가 있었던 곳에
+            // 댓글 입력 인풋을 조그맣게 만들어준다.
+            // 기존의 값은 받아와 그 값으로 넣어준다.
+        }, {
+            // comment id 보내줘야 함
+            where : {id : req.body.commentId}
+        });
+
         res.end();
     } catch (error) {
         console.log(error);

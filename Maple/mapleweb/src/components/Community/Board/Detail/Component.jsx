@@ -156,6 +156,9 @@ const DetailComponent = () => {
     }, [commentValue]);
 
 
+    // 강제 리랜더링
+    const [_, render] = useState(false);
+
     return (
         <>
             <CategoryTItleBox>
@@ -343,8 +346,6 @@ const DetailComponent = () => {
                                                                 dispatch(communityAction.comments(comment?.data));
                                                                 console.log(commentCountDownReq);
                                                                 setCommentCount(commentCount - 1);
-
-
                                                                 return;
                                                             case 400:
                                                                 alert("댓글 삭제 불가능합니다.");

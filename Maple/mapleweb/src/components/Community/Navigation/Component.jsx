@@ -91,19 +91,17 @@ const NavigationComponent = ({ categorys }) => {
                 //     return dispatch(action.category(`${item.label}`));
                 // }}
               >
-                <CategoryLi
-                  key={`category-${item.label}`}
-                  onMouseOver={(e) => {
-                    // 현재 width를 변경시킨다
-                    setNaviWidth(e.target.offsetWidth);
-                    // setNowElem(e.target);
-                    // 현재 놈의 왼쪽 공간을 구한다.
-                    setNaviLeft(e.target.offsetLeft);
-                    console.log(e.target.offsetLeft);
-                    console.log(naviLeft);
-                  }}
-                  onMouseLeave={() => {}}
-                >
+                <CategoryLi key={`category-${item.label}`} onMouseOver={(e)=>{
+                  // 현재 width를 변경시킨다
+                  setNaviWidth(e.target.offsetWidth);
+                  // setNowElem(e.target);
+                  // 현재 놈의 왼쪽 공간을 구한다.
+                  setNaviLeft(e.target.offsetLeft);
+                  console.log(e.target.offsetLeft);
+                  console.log(naviLeft);
+                }} onMouseLeave={(e)=>{
+                  // setNaviLeft(naviLeft - e.target.offsetLeft);
+                }}>
                   {item.name}
                 </CategoryLi>
               </Link>

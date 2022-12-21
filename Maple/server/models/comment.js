@@ -9,12 +9,17 @@ export default class Comment extends Sequelize.Model {
                     allowNull: false,
                 },
                 icon: {
-                    type: Sequelize.INTEGER,
+                    type: Sequelize.STRING(255),
                     allowNull: true,
                     defaultValue: null,
                 },
                 replyCommentId: {
-                    type: Sequelize.BOOLEAN,
+                    type: Sequelize.STRING(255),
+                    allowNull: true,
+                    defaultValue: null,
+                },
+                replyUserName: {
+                    type: Sequelize.STRING(255),
                     allowNull: true,
                     defaultValue: null,
                 },

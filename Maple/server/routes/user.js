@@ -2,6 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import db from "../models/index.js";
+import crypto from "crypto-js";
 
 const router = Router();
 

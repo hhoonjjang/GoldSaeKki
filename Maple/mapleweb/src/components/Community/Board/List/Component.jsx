@@ -37,6 +37,15 @@ const ListComponent = () => {
   // const [page, setPage] = useState(1);
   // const handlePageChange = (page) => { setPage(page); };
 
+  // 페이징 처리 : 현재 페이지
+  const [nowPage, setNowPage] = useState(1);
+  // 페이지 변경 함수
+  const handlePageChange = (page) => {
+    setNowPage(page);
+  };
+
+
+
   // 현재 유저 닉네임을 가져온다.
   const userName = useSelector((state) => state.user.currUserName);
 
@@ -50,6 +59,7 @@ const ListComponent = () => {
 
   // 계속된 리랜더링 문제로 useEffect(()=>{},[카테고리])로 감싸주었다.
   useEffect(() => {
+    setNowPage(1);
     // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
     axios.post("http://localhost:8080/api/board/getList", {
       category: category.name,
@@ -72,14 +82,6 @@ const ListComponent = () => {
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
   const boards = useSelector((state) => state.community.list);
 
-
-  // 페이징 처리 : 현재 페이지
-  const [nowPage, setNowPage] = useState(1);
-  // 페이지 변경 함수
-  const handlePageChange = (page) => {
-    setNowPage(page);
-  };
-
   // 띄워야 하는 것 : 해당 페이지의 번호에 맞는 목록을 띄움
   // 1페이지면 0~10개 boards에서 자름
   let newBoards = [];
@@ -92,7 +94,8 @@ const ListComponent = () => {
   }
   console.log(newBoards);
 
-  
+
+
   // 페이지 높이 변경
   useEffect(() => {
     window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
@@ -256,7 +259,7 @@ const ListComponent = () => {
             // totalItemsCount={450}
             // totalItemsCount={boards.length}
             // totalItemsCount={boardCount}
-            totalItemsCount={12}
+            totalItemsCount={boards.length}
             // 표시할 개수 
             pageRangeDisplayed={10}
             // 이전을 나타낼 아이콘

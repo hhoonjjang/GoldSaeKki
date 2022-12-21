@@ -1,11 +1,11 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
-// import { Link, Routes, Route } from "react-router-dom";
-// import Pagination from "react-js-pagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import moment from "moment";
+import Pagination from "react-js-pagination";
+import './Paging.css';
 
 import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 import eyeImg from "../../images/info_eye_new.png";
@@ -18,6 +18,7 @@ const tempArr = [
   { text: "날짜디비", img: "sub_date_new" },
   { text: "2222", img: "eye_new" },
 ];
+
 
 const ListComponent = () => {
 
@@ -65,9 +66,47 @@ const ListComponent = () => {
   }, [category, dispatch]);
 
 
-
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
   const boards = useSelector((state) => state.community.list);
+
+
+
+
+  // 페이징 처리 : 현재 페이지
+  const [nowPage, setNowPage] = useState(1);
+  // 페이지 변경 함수
+  const handlePageChange = (page) => {
+    setNowPage(page);
+  };
+
+  // 띄워야 하는 것 : 해당 페이지의 번호에 맞는 목록을 띄움
+  // 1페이지면 0~10개 boards에서 자름
+  let newBoards = [];
+  if(boards){
+    boards.map((item, idx)=>{
+      if(idx>=(nowPage-1)*10 && idx<(nowPage)*10){
+        newBoards.push(item);
+      }
+    });
+    // console.log(newBoards);
+  }
+  console.log(newBoards);
+  // boards
+  // const boardCount = boards.length;
+  // console.log(boardCount);
+
+  // console.log(boards);
+
+  // 만약 페이지가 1이면 (나우페이지-1)*0부터 나우페이지*10 개의 개수를 배열에서 잘라 띄워준다.
+  // let newBoards = [];
+  // boards.map((item, idx)=>{
+  //   // if(idx==(nowPage-1)*0){
+  //   if(idx==(nowPage-1)*10 && idx==(nowPage)*10){
+  //     console.log(idx);
+  //   }
+  // });
+
+  // 페이징 가공 처리를 다 하고, 어느 배열을 출력할 지만 바꿔주면 될 것 같다.
 
   return (
     <>
@@ -95,8 +134,8 @@ const ListComponent = () => {
         {/* 게시글 목록 */}
         <ListBox>
           {/* 여기서 map 돌리기 */}
-          {boards &&
-            boards?.map((board, idx) => {
+          {newBoards &&
+            newBoards?.map((board, idx) => {
               return (
                 <Link
                   key={`boardIdLink-${idx}`}
@@ -217,15 +256,28 @@ const ListComponent = () => {
         </ButtonBox>
 
         {/* 페이지 */}
-        {/* <PaginationBox>
+        <PagenationWrap>
           <Pagination
-            activePage={1}
-            itemsCountPerPage={5}
-            totalItemsCount={300}
-            pageRangeDisplayed={5}
-            onChange={handlePageChange}>
-          </Pagination>
-        </PaginationBox> */}
+            // 현재 페이지
+            activePage={nowPage}
+            // 띄울 게시글 개수
+            itemsCountPerPage={10}
+            // 총 게시글 개수(가져옴)
+            // totalItemsCount={450}
+            // totalItemsCount={boards.length}
+            // totalItemsCount={boardCount}
+            totalItemsCount={12}
+            // 표시할 개수 
+            pageRangeDisplayed={10}
+            // 이전을 나타낼 아이콘
+            prevPageText={"‹"}
+            // 다음을 나타낼 아이콘
+            nextPageText={"›"}
+            // 페이지네이션 함수
+            onChange={handlePageChange}
+          />
+        </PagenationWrap>
+
       </ContentBox>
     </>
   );
@@ -441,24 +493,7 @@ const RegistBtn = styled.a`
 
 const UserWorldImg = styled.img``;
 
-// const PaginationBox = styled.div`
-//   .pagination { display: flex; justify-content: center; margin-top: 15px;}
-//   ul { list-style: none; padding: 0; }
-//   ul.pagination li {
-//     display: inline-block;
-//     width: 30px;
-//     height: 30px;
-//     border: 1px solid #e2e2e2;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     font-size: 1rem;
-//   }
-//   ul.pagination li:first-child{ border-radius: 5px 0 0 5px; }
-//   ul.pagination li:last-child{ border-radius: 0 5px 5px 0; }
-//   ul.pagination li a { text-decoration: none; color: #337ab7; font-size: 1rem; }
-//   ul.pagination li.active a { color: white; }
-//   ul.pagination li.active { background-color: #337ab7; }
-//   ul.pagination li a:hover,
-//   ul.pagination li a.active { color: blue; }
-// `;
+const PagenationWrap = styled.div`
+  float: left;
+  width: 100%;
+`;

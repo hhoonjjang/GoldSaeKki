@@ -32,7 +32,7 @@ export const initialize = {};
 
 export const reducer = (state = initialize, action) => {
   const { type, payload } = action;
-  console.log(payload);
+  // console.log(payload);
   switch (type) {
     case TYPE.LOGIN:
       return { name: payload.name };

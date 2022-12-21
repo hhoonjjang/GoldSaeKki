@@ -174,30 +174,41 @@ const CommunityComponet = () => {
                   </IssueTag>
 
                   <IssueTag>
-                    <a href="/Community/Free" title="검색어">
+                    <Link to={`/Community/Free`}>
+                    {/* <a href="/Community/Free" title="검색어"> */}
                       #메이플스토리
-                    </a>
+                    {/* </a> */}
+                    </Link>
                   </IssueTag>
                   <IssueTag>
-                    <a href="/Community/Free" title="검색어">
+                    <Link to={`/Community/Free`}>
+                    {/* <a href="/Community/Free" title="검색어"> */}
                       #데미지스킨끄기
-                    </a>
+                    {/* </a> */}
+                    </Link>
                   </IssueTag>
                   <IssueTag>
-                    <a href="/Community/Free" title="검색어">
+                    <Link to={`/Community/Free`}>
+                    {/* <a href="/Community/Free" title="검색어"> */}
                       #정재훈
-                    </a>
+                    {/* </a> */}
+                    </Link>
                   </IssueTag>
                   <IssueTag>
-                    <a href="/Community/Free" title="검색어">
+                    <Link to={`/Community/Free`}>
+                    {/* <a href="/Community/Free" title="검색어"> */}
                       #월드리프
-                    </a>
+                    {/* </a> */}
+                    </Link>
                   </IssueTag>
                   <IssueTag>
-                    <a href="/Community/Free" title="검색어">
+                    <Link to={`/Community/Free`}>
+                    {/* <a href="/Community/Free" title="검색어"> */}
                       #반뉴비
-                    </a>
+                    {/* </a> */}
+                    </Link>
                   </IssueTag>
+                  
                 </TagListBox>
               </TagContentBox>
             </TagSearchBox>

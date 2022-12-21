@@ -28,29 +28,26 @@ function App() {
 
   const adminLogin = () => {
     if (document.cookie) {
-      axios.post("http://localhost:8080/api/admin/admincheck").then(
-        function (data) {
+      axios
+        .post("http://localhost:8080/api/admin/admincheck")
+        .then(function (data) {
           console.log(data);
           // window.location.reload();
           dispatch(adminaction.login(data.data));
           console.log(data.data);
-        },
-        (error) => {
-          console.error("에러");
-        }
-      );
+        });
     }
   };
 
   const loginCheck = () => {
-    if (document.cookie) {
-      axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
-        dispatch(action.check(data.data.userInfo));
-        console.log("로그인정보를 받았다", data);
-        // currUser = data.data.userInfo.name;
-        // console.log(currUser);
-      });
-    }
+    // if (document.cookie) {
+    //   axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
+    //     dispatch(action.check(data.data.userInfo));
+    //     console.log("로그인정보를 받았다", data);
+    //     // currUser = data.data.userInfo.name;
+    //     // console.log(currUser);
+    //   });
+    // }
   };
   console.log();
   document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck();

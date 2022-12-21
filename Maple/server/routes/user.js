@@ -75,7 +75,6 @@ router.post("/regist", (req, res) => {
 });
 
 router.post("/logincheck", (req, res) => {
-  console.log(req.cookies.login); // cookies.쿠키명
   const decodeToken = jwt.verify(req.cookies.login, process.env.JWT_KEY);
   res.send({
     userInfo: decodeToken,
@@ -138,10 +137,8 @@ router.post("/clearCookie", (req, res) => {
     },
     { where: { userName: req.body.currUserName } }
   ).then(() => {
-    console.log("then안이다", req.body);
     db.User.findOne({ where: { userName: req.body.changeName } }).then(
       (data) => {
-        console.log("뭐냐", data);
         res.clearCookie("login");
         res.send({
           message: "쿠키 삭제 완료",
@@ -154,8 +151,6 @@ router.post("/clearCookie", (req, res) => {
 });
 
 router.post("/changename", (req, res) => {
-  console.log(req.body.changeName);
-
   {
     const token = jwt.sign(
       {
@@ -171,7 +166,6 @@ router.post("/changename", (req, res) => {
     );
     res.cookie("login", token, { maxAge: 1800000 });
     const { serverName, changeName } = req.body;
-    console.log("쿠키생성시", serverName, changeName);
     res.send({
       message: "쿠키생성 완료",
       status: 200,
@@ -184,7 +178,6 @@ router.post("/changename", (req, res) => {
 });
 
 router.post("/signOut", (req, res) => {
-  console.log("나다", req.body.currUserName);
   db.User.destroy({ where: { userName: req.body.currUserName } }).then(() => {
     res.send();
   });

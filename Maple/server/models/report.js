@@ -29,7 +29,7 @@ export default class Report extends Sequelize.Model {
         underscored: true,
         modelName: "Report",
         tableName: "reports",
-        paranoid: true,
+        paranoid: false,
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci",
       }

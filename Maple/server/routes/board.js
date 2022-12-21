@@ -22,7 +22,6 @@ router.post("/create", async (req, res) => {
     }
     // 일단 게시판 DB에 값을 집어넣고
     const tempBoard = await db.Board.create({
-
       title: req.body.title,
       world: req.body.world,
       category: req.body.category,
@@ -32,7 +31,7 @@ router.post("/create", async (req, res) => {
     });
     // 연결관계 맺은 놈으로 같이 값 집어넣어 연결해준다.
     tempUser.addBoard(tempBoard);
-    res.send({tempBoard, status: 200 });
+    res.send({ tempBoard, status: 200 });
   } catch (error) {
     console.log(error);
     res.send({ status: 400 });
@@ -47,7 +46,7 @@ router.post("/getList", async (req, res) => {
       where: {
         category: req.body.category,
       },
-      order: [['id', 'DESC']],
+      order: [["id", "DESC"]],
     });
 
     // 게시글 목록
@@ -86,9 +85,9 @@ router.post("/getBoard", async (req, res) => {
   try {
     // 모든 게시글 목록을 가져온다.
     const tempBoard = await db.Board.findAll({
-      where : {
-        id : req.body.boardId
-      }
+      where: {
+        id: req.body.boardId,
+      },
     });
     res.send(tempBoard);
   } catch (error) {
@@ -96,7 +95,6 @@ router.post("/getBoard", async (req, res) => {
     res.send(error);
   }
 });
-
 
 router.post("/mainCommunity", async (req, res) => {
   console.log("메인커뮤니티 받았당");

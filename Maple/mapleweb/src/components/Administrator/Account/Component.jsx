@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-const AccountComponent = ({ setAccount, accountInfo }) => {
+const AccountComponent = ({ onSubmit, listArr, onClick }) => {
   const [values, setValues] = useState({
     id: "",
     password: "",
@@ -14,14 +14,15 @@ const AccountComponent = ({ setAccount, accountInfo }) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setAccount(values);
-  };
   return (
     <AccountBox>
       <div>관리자등록페이지</div>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSubmit(values);
+        }}
+      >
         <input
           type={"text"}
           name="id"
@@ -42,6 +43,47 @@ const AccountComponent = ({ setAccount, accountInfo }) => {
         ></input>
         <button type="submit">관리자등록</button>
       </form>
+      <div>관리자리스트</div>
+      <table>
+        <colgroup>
+          <col width={"30%"} />
+          <col width={"50%"} />
+          <col width={"20%"} />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>관리자이름</th>
+            <th>날짜</th>
+          </tr>
+        </thead>
+        <tbody>
+          {listArr.map((item, idx) => (
+            <tr key={`listbox-${idx}`}>
+              {item.adminName == "정재훈" ? (
+                <></>
+              ) : (
+                <>
+                  <td key={`adminIdx-${idx}`}>{idx}</td>
+                  <td key={`adminName-${idx}`}>{item.adminName}</td>
+                  <td key={`adminDate-${idx}`}>
+                    {item.createdAt.split("T")[0]}
+                  </td>
+                  <td key={`adminBtn-${idx}`}>
+                    <button
+                      onClick={() => {
+                        onClick(item.id);
+                      }}
+                    >
+                      삭제
+                    </button>
+                  </td>
+                </>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </AccountBox>
   );
 };

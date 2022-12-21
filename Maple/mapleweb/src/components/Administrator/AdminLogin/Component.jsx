@@ -5,6 +5,7 @@ const AdminLoginComponent = ({
   isCookie,
   onClick,
   tempAdmin,
+  infoSubmit,
 }) => {
   const [values, setValues] = useState({
     id: "",
@@ -18,15 +19,16 @@ const AdminLoginComponent = ({
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setAccount(values);
-  };
   return (
     <div>
       <div>관리자로그인하기</div>
       {!isCookie ? (
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            infoSubmit(values);
+          }}
+        >
           <input
             type={"text"}
             name="id"

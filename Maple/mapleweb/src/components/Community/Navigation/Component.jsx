@@ -93,7 +93,10 @@ const NavigationComponent = ({ categorys }) => {
   // left값 변경시키기
   // 자신보다 왼쪽에 있는 엘리먼트의 wid값 합 + (왼쪽엘리먼트개수*마진값) + 현재엘리먼트width값/2
   // 자신보다 왼쪽에 있는 엘리먼트들
-  const [naviLeft, setNaviLeft] = useState((naviWidth/2)+22);
+  const [naviLeft, setNaviLeft] = useState(0);
+
+  // 각각의 엘리먼트 width는 이미 구해졌음 -> 어딘가에 저장, 순서를 통해 가져옴
+  // 이전 width값 모두 +++++하면 됨 이전엘리먼트 개수만큼 마진값도 더해줌(44)
   
 
   return (
@@ -115,7 +118,11 @@ const NavigationComponent = ({ categorys }) => {
                 <CategoryLi key={`category-${item.label}`} onMouseOver={(e)=>{
                   // 현재 width를 변경시킨다
                   setNaviWidth(e.target.offsetWidth);
-                  setNowElem(e.target);
+                  // setNowElem(e.target);
+                  // 현재 놈의 왼쪽 공간을 구한다.
+                  setNaviLeft(e.target.offsetLeft);
+                  console.log(e.target.offsetLeft);
+                  console.log(naviLeft);
                 }} onMouseLeave={()=>{
 
                 }}>
@@ -195,7 +202,7 @@ const CategoryLine = styled.span`
   /* 현재는 이렇게 설정해놨음 */
   /* left:32px;  */
   left: 0px;
-  transition: all .5s;
+  transition: all .8s;
   /* 기본 위드는 20px으로 설정해놨음 */
   /* width: 20px; */
   /* 현재 카테고리의 위드만큼으로 바꾸기 */

@@ -14,6 +14,7 @@ const HelpCategoryDisplayComponent = ({
   a,
   b,
   c,
+  children,
 }) => {
   const [category, setCategory] = useState("");
   const [text, setText] = useState("");
@@ -37,14 +38,11 @@ const HelpCategoryDisplayComponent = ({
           <></>
         ) : (
           <select
-            value="default"
             onChange={(e) => {
               setCategory(e.target.value);
             }}
           >
-            <option value="default" disabled>
-              선택하시오
-            </option>
+            <option>선택하시오</option>
             {categoryArr.map((item, idx) => (
               <option value={item[c]} key={`childOption-${idx}`}>
                 {item[c]}
@@ -108,6 +106,7 @@ const HelpCategoryDisplayComponent = ({
           )}
         </Blank>
       ))}
+      {children}
     </DisplayBox>
   );
 };

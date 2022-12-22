@@ -7,6 +7,7 @@ const tempArrFun = async (setText) => {
     let textArr = (await axios.post("http://localhost:8080/api/admin/addchild"))
       .data;
     setText(textArr);
+    console.log(textArr);
   } catch (err) {
     console.error(err);
   }
@@ -19,7 +20,8 @@ const tempChildFun = async (setChildText) => {
   setChildText(childArr);
 };
 
-const ThirdContainer = () => {
+const ThirdContainer = ({ propsArr }) => {
+  console.log(propsArr);
   const [textArr, setText] = useState([]);
   const [childArr, setChildText] = useState([]);
   const [isBool, setBool] = useState(-1);
@@ -78,7 +80,7 @@ const ThirdContainer = () => {
   };
   return (
     <HelpCategoryDisplayComponent
-      categoryArr={textArr}
+      categoryArr={propsArr}
       childArr={childArr}
       isBool={isBool}
       editText={editText}

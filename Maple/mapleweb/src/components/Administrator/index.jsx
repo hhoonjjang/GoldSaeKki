@@ -4,15 +4,14 @@ import styled from "styled-components";
 import BugCSContainer from "./BugCs/Container";
 import AccountContainer from "./Account/Container";
 import AdminLoginContainer from "./AdminLogin/Container";
-import HelpCategoryContainer from "./HelpCategory/Container";
-import HelpTextContainer from "./HelpCategory/HelpText/Container";
-import TextChildContainer from "./HelpCategory/HelpText/TextChild/Container";
-import ThirdContainer from "./HelpCategoryDisplay/Container3";
-import SecondContainer from "./HelpCategoryDisplay/Container2";
 import FirstContainer from "./HelpCategoryDisplay/Container1";
+import UserManageContainer from "./UserManage/Container";
+import { useEffect } from "react";
 const AdministratorComponet = () => {
   const dispatch = useDispatch();
-  dispatch(action.header("Administrator"));
+  useEffect(() => {
+    dispatch(action.header("Administrator"));
+  }, []);
   const isCookie = document.cookie;
   const tempAdmin = useSelector((state) => state?.admin);
   return (
@@ -28,7 +27,6 @@ const AdministratorComponet = () => {
           {tempAdmin?.name == "정재훈" ? (
             <>
               <AccountContainer />
-              {/* <AdminListContainer /> */}
             </>
           ) : (
             <></>
@@ -36,16 +34,9 @@ const AdministratorComponet = () => {
 
           <BugCSContainer />
           <FirstContainer />
-          <SecondContainer />
-          <ThirdContainer />
-          {/* <HelpCategoryContainer />
-          <HelpTextContainer />
-          <TextChildContainer /> */}
         </>
       )}
-      {/* <AdminLoginContainer />
-      <AccountContainer />
-      <BugCSContainer /> */}
+      <UserManageContainer />
     </AdminBox>
   );
 };

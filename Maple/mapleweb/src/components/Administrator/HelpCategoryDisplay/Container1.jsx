@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import HelpCategoryDisplayComponent from "./Component";
+import SecondContainer from "./Container2";
 
 const tempChildFun = async (setCategory) => {
   try {
@@ -21,6 +22,9 @@ const FirstContainer = () => {
   useEffect(() => {
     tempChildFun(setCategory);
   }, []);
+  useEffect(() => {
+    console.log(categoryArr);
+  }, [categoryArr]);
 
   const textSubmit = async (category, text) => {
     console.log(category);
@@ -76,7 +80,9 @@ const FirstContainer = () => {
       a="category"
       b=""
       c=""
-    />
+    >
+      <SecondContainer propsArr={categoryArr} />
+    </HelpCategoryDisplayComponent>
   );
 };
 

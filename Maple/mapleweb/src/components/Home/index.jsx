@@ -9,6 +9,7 @@ import archive from "./Img/main_archive.png";
 
 import styled from "styled-components";
 import MainCommunityContainer from "./mainCommunity/MainCommunityContainer";
+import { useEffect } from "react";
 
 const HomeComponet = () => {
   return (

@@ -22,13 +22,9 @@ const FirstContainer = () => {
   useEffect(() => {
     tempChildFun(setCategory);
   }, []);
-  useEffect(() => {
-    console.log(categoryArr);
-  }, [categoryArr]);
+  useEffect(() => {}, [categoryArr]);
 
   const textSubmit = async (category, text) => {
-    console.log(category);
-    console.log(text);
     axios
       .post("http://localhost:8080/api/admin/category", { category, text })
       .then(() => {
@@ -37,7 +33,6 @@ const FirstContainer = () => {
       });
   };
   const delBtn = (category) => {
-    console.log(category);
     axios
       .post("http://localhost:8080/api/admin/delcategory", { category })
       .then(() => {

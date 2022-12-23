@@ -6,9 +6,13 @@ import { action } from "../../modules/header";
 import { Routes, Route, Link } from "react-router-dom";
 import ServiceContainer from "./Service/Container";
 import BugReportContainer from "./BugReport/Container";
+import { useEffect } from "react";
+
 const SupportComponet = () => {
   const dispatch = useDispatch();
-  dispatch(action.header("Support"));
+  useEffect(() => {
+    dispatch(action.header("Administrator"));
+  }, []);
   return (
     <SupportBox>
       <Routes>

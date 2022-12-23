@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { action } from "../../../modules/header";
 import UserManageComponent from "./Component";
 
 const userArrFun = async (setUser) => {
@@ -15,13 +17,13 @@ const userArrFun = async (setUser) => {
 
 const UserManageContainer = () => {
   const [userArr, setUser] = useState([]);
-  const [tempuser, setTemp] = useState([]);
+  const [tempUser, setTemp] = useState([]);
   useEffect(() => {
     userArrFun(setUser);
   }, []);
   useEffect(() => {
-    console.log(tempuser);
-  }, [tempuser]);
+    console.log(tempUser);
+  }, [tempUser]);
   console.log(userArr);
   const userSubmit = (user) => {
     axios
@@ -34,7 +36,6 @@ const UserManageContainer = () => {
         setTemp(data.data);
       });
   };
-  console.log(tempuser);
   const delBtn = (userName) => {
     console.log(userName);
     axios
@@ -45,19 +46,37 @@ const UserManageContainer = () => {
         setTemp("");
       });
   };
-  console.log(userArr);
   const msgSubmit = (msg, userName) => {
-    console.log(msg);
-    console.log(userName);
     axios.post("http://localhost:8080/api/admin/sendmsg", { msg, userName });
+  };
+  const stateName = useSelector((state) => state?.admin);
+  console.log(tempUser);
+  const boardDel = (id, user) => {
+    axios
+      .post("http://localhost:8080/api/admin/deluserboard", { id, user })
+      .then((data) => {
+        alert(data.data.msg);
+        setTemp(data.data.tempUser);
+      });
+  };
+  const commentDel = (id, user) => {
+    axios
+      .post("http://localhost:8080/api/admin/delusercomment", { id, user })
+      .then((data) => {
+        alert(data.data.msg);
+        setTemp(data.data.tempUser);
+      });
   };
   return (
     <UserManageComponent
-      tempuser={tempuser}
+      tempUser={tempUser}
       userArr={userArr}
       userSubmit={userSubmit}
       delBtn={delBtn}
       msgSubmit={msgSubmit}
+      stateName={stateName}
+      boardDel={boardDel}
+      commentDel={commentDel}
     />
   );
 };

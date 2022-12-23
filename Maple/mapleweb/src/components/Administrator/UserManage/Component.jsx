@@ -1,15 +1,27 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const UserManageComponent = ({
   userSubmit,
   userArr,
-  tempuser,
+  tempUser,
   delBtn,
   msgSubmit,
+  stateName,
+  boardDel,
+  commentDel,
 }) => {
   const [searchUser, setUser] = useState("");
   const [isBool, setBool] = useState(false);
-  const [msg, setMsg] = useState("");
+  console.log(stateName.name);
+  const [stateAdmin, setState] = useState("");
+  const [msg, setMsg] = useState(``);
+  useEffect(() => {
+    setState(stateName.name);
+  }, [stateName]);
+  useEffect(() => {
+    console.log(stateAdmin);
+    setMsg(`안녕하세요 GM"${stateAdmin}"입니다.`);
+  }, [stateAdmin]);
   return (
     <UserManageBox>
       <div>유저관리디스플레이</div>
@@ -52,91 +64,172 @@ const UserManageComponent = ({
           value={searchUser}
           placeholder="검색할 유저닉네임"
           onInput={(e) => {
-            console.log(e.target.value);
             setUser(e.target.value);
           }}
         />
         <button type="submit">유저검색</button>
       </form>
-      {tempuser != "" ? (
-        <table>
-          <colgroup>
-            <col width={"30%"} />
-            <col width={"30%"} />
-            <col width={"15%"} />
-            <col width={"15%"} />
-            <col width={"10%"} />
-          </colgroup>
+      {tempUser != "" ? (
+        <Blank>
+          <table>
+            <colgroup>
+              <col width={"30%"} />
+              <col width={"30%"} />
+              <col width={"15%"} />
+              <col width={"15%"} />
+              <col width={"10%"} />
+            </colgroup>
 
-          <thead>
-            <tr>
-              <th>유저아이디</th>
-              <th>유저이름</th>
-              <th>서버</th>
-              <th>메세지버튼</th>
-              <th>삭제버튼</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{tempuser.userId}</td>
-              <td>{tempuser.userName}</td>
-              <td>{tempuser.serverName}</td>
-              <td>
-                <button
-                  onClick={() => {
-                    setBool(!isBool);
-                  }}
-                >
-                  메세지보내기
-                </button>
-              </td>
-              <td>
-                <button
-                  onClick={() => {
-                    delBtn(tempuser.userName);
-                  }}
-                >
-                  삭제하기
-                </button>
-              </td>
-            </tr>
-
-            {isBool ? (
+            <thead>
               <tr>
-                <td colSpan={3}>
-                  <textarea
-                    value={msg}
-                    onInput={(e) => {
-                      setMsg(e.target.value);
-                    }}
-                  />
-                </td>
+                <th>유저아이디</th>
+                <th>유저이름</th>
+                <th>서버</th>
+                <th>메세지버튼</th>
+                <th>삭제버튼</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{tempUser.userId}</td>
+                <td>{tempUser.userName}</td>
+                <td>{tempUser.serverName}</td>
                 <td>
                   <button
                     onClick={() => {
-                      msgSubmit(msg, tempuser.userName);
                       setBool(!isBool);
                     }}
                   >
-                    보내기
+                    메세지보내기
                   </button>
                 </td>
                 <td>
                   <button
                     onClick={() => {
-                      setBool(!isBool);
+                      delBtn(tempUser.userName);
                     }}
                   >
-                    취소
+                    삭제하기
                   </button>
                 </td>
               </tr>
-            ) : (
-              <></>
-            )}
-          </tbody>
-        </table>
+
+              {isBool ? (
+                <tr>
+                  <td colSpan={3}>
+                    <textarea
+                      value={msg}
+                      onInput={(e) => {
+                        setMsg(e.target.value);
+                      }}
+                    />
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        msgSubmit(msg, tempUser.userName);
+                        setBool(!isBool);
+                        setState(stateName.name);
+                      }}
+                    >
+                      보내기
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        setBool(!isBool);
+                      }}
+                    >
+                      취소
+                    </button>
+                  </td>
+                </tr>
+              ) : (
+                <></>
+              )}
+            </tbody>
+          </table>
+          <div>{tempUser.userName} 유저님의 활동내역</div>
+          <div>작성 게시글</div>
+
+          <table>
+            <colgroup>
+              <col width={"10%"} />
+              <col width={"30%"} />
+              <col width={"15%"} />
+              <col width={"10%"} />
+              <col width={"15%"} />
+              <col width={"10%"} />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>카테고리</th>
+                <th>조회수</th>
+                <th>작성날짜</th>
+                <th>삭제버튼</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {tempUser.Board.map((item, idx) => (
+                <tr key={`board-${idx}`}>
+                  <td key={`boardIdx-${idx}`}>{idx + 1}</td>
+                  <td key={`boardTitle-${idx}`}>{item.title}</td>
+                  <td key={`boardCategory-${idx}`}>{item.category}</td>
+                  <td key={`boardEyeCount-${idx}`}>{item.eyeCount}</td>
+                  <td key={`boardCreated-${idx}`}>
+                    {item.createdAt.split("T")[0]}
+                  </td>
+                  <td key={`boardDelBtn-${idx}`}>
+                    <button
+                      onClick={() => {
+                        boardDel(item.id, tempUser.userName);
+                      }}
+                    >
+                      삭제하기
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <div>작성 댓글</div>
+          <table>
+            <colgroup>
+              <col width={"10%"} />
+              <col width={"30%"} />
+              <col width={"20%"} />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>번호</th>
+                <th>댓글</th>
+                <th>삭제버튼</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tempUser.Comment.map((item, idx) => (
+                <tr key={`Comment-${idx}`}>
+                  <td key={`idx-${idx}`}>{idx + 1}</td>
+                  <td key={`CommentText-${idx}`}>
+                    {item.text}
+                    <button
+                      onClick={() => {
+                        commentDel(item.id, tempUser.userName);
+                      }}
+                    >
+                      삭제하기
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Blank>
       ) : (
         <></>
       )}
@@ -157,3 +250,5 @@ const UserManageBox = styled.div`
     height: 100px;
   }
 `;
+
+const Blank = styled.div``;

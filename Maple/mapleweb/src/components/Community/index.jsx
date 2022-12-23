@@ -21,6 +21,7 @@ import four from "./images/4.png";
 import prev from "./images/prev.png";
 import next from "./images/next.png";
 import AddContainer from "./Board/Add/Container";
+import { useEffect } from "react";
 
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
 // import { action as communityAction, CATEGORY, CATEGORY2 } from "../../modules/community";
@@ -31,7 +32,9 @@ import EditContainer from "./Board/Edit/Container";
 
 const CommunityComponet = () => {
   const dispatch = useDispatch();
-  dispatch(action.header("Community"));
+  useEffect(() => {
+    dispatch(action.header("Administrator"));
+  }, []);
 
   // 사이드 슬라이드 라이브러리 세팅 : 슬라이드의 기능 조정
   const settings = {
@@ -56,19 +59,26 @@ const CommunityComponet = () => {
             {/* 여기에 나머지 라우터를 띄움(map 돌리지 않기) */}
 
             <Routes>
-
               {/* 카테고리에 해당하는 리스트 출력 */}
               <Route path="/:category" element={<ListContainer />}></Route>
 
               {/* 카테고리에 게시글 추가 컴포넌트 라우터를 만듬 */}
-              <Route path="/:category/BoardAdd" element={<AddContainer />}></Route>
+              <Route
+                path="/:category/BoardAdd"
+                element={<AddContainer />}
+              ></Route>
 
               {/* 게시글 상세 페이지 띄우기 : Link to 로 이동할 때 그 보드 번호가 전달되어야 한다. */}
-              <Route path="/board/:boardId" element={<DetailContainer />}></Route>
+              <Route
+                path="/board/:boardId"
+                element={<DetailContainer />}
+              ></Route>
 
               {/* 수정 페이지 */}
-              <Route path="/board/:boardId/edit" element={<EditContainer />}></Route>
-
+              <Route
+                path="/board/:boardId/edit"
+                element={<EditContainer />}
+              ></Route>
             </Routes>
           </ContentBox>
 
@@ -175,40 +185,39 @@ const CommunityComponet = () => {
 
                   <IssueTag>
                     <Link to={`/Community/Free`}>
-                    {/* <a href="/Community/Free" title="검색어"> */}
+                      {/* <a href="/Community/Free" title="검색어"> */}
                       #메이플스토리
-                    {/* </a> */}
+                      {/* </a> */}
                     </Link>
                   </IssueTag>
                   <IssueTag>
                     <Link to={`/Community/Free`}>
-                    {/* <a href="/Community/Free" title="검색어"> */}
+                      {/* <a href="/Community/Free" title="검색어"> */}
                       #데미지스킨끄기
-                    {/* </a> */}
+                      {/* </a> */}
                     </Link>
                   </IssueTag>
                   <IssueTag>
                     <Link to={`/Community/Free`}>
-                    {/* <a href="/Community/Free" title="검색어"> */}
+                      {/* <a href="/Community/Free" title="검색어"> */}
                       #정재훈
-                    {/* </a> */}
+                      {/* </a> */}
                     </Link>
                   </IssueTag>
                   <IssueTag>
                     <Link to={`/Community/Free`}>
-                    {/* <a href="/Community/Free" title="검색어"> */}
+                      {/* <a href="/Community/Free" title="검색어"> */}
                       #월드리프
-                    {/* </a> */}
+                      {/* </a> */}
                     </Link>
                   </IssueTag>
                   <IssueTag>
                     <Link to={`/Community/Free`}>
-                    {/* <a href="/Community/Free" title="검색어"> */}
+                      {/* <a href="/Community/Free" title="검색어"> */}
                       #반뉴비
-                    {/* </a> */}
+                      {/* </a> */}
                     </Link>
                   </IssueTag>
-                  
                 </TagListBox>
               </TagContentBox>
             </TagSearchBox>
@@ -366,11 +375,10 @@ const StyledSlide = styled(Slider)`
     margin-left: 54px;
     position: absolute;
     top: 152px;
-    &.slick-active{
-
+    &.slick-active {
     }
-    & li button:before{
-      color: #CA5196;
+    & li button:before {
+      color: #ca5196;
     }
   }
 
@@ -380,7 +388,7 @@ const StyledSlide = styled(Slider)`
     font-weight: 500;
     line-height: 1;
     opacity: 0.8;
-    color: #E6C6D5;
+    color: #e6c6d5;
     -webkit-font-smoothing: antialiased;
   }
   .slick-prev:before {

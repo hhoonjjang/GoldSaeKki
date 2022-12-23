@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 const msgArrFun = async (setMsg, userName) => {
-  const msgArr = (
-    await axios.post("http://localhost:8080/api/support/displaymsg", userName)
-  ).data;
-  setMsg(msgArr);
+  if (document.cookie) {
+    const msgArr = (
+      await axios.post("http://localhost:8080/api/support/displaymsg", userName)
+    ).data;
+    setMsg(msgArr);
+  }
 };
 
 const MessageContainer = () => {

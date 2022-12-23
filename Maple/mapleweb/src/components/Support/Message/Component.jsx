@@ -22,7 +22,9 @@ const MessageComponent = ({ msgArr }) => {
           {msgArr.map((item, idx) => (
             <tr>
               <td key={`msgBoxIdx-${idx}`}>{idx + 1}</td>
-              <td key={`msgBoxContents-${idx}`}>{item.text}</td>
+              <td key={`msgBoxContents-${idx}`}>
+                <pre>{item.text}</pre>
+              </td>
               <td key={`msgBoxDate-${idx}`}>{item.createdAt.split("T")[0]}</td>
             </tr>
           ))}
@@ -38,5 +40,17 @@ const MessageBox = styled.div`
   table {
     width: 80%;
     text-align: center;
+  }
+  tr:first-child {
+    border-top: none;
+  }
+  th {
+    border: 1px solid black;
+  }
+  td {
+    border: 1px dashed gray;
+  }
+  pre {
+    margin: 10px 0px;
   }
 `;

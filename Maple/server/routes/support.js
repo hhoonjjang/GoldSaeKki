@@ -1,5 +1,7 @@
 import { Router } from "express";
 import db from "../models/index.js";
+import jwt from "jsonwebtoken";
+
 const router = Router();
 
 router.post("/displaycategory", async (req, res) => {
@@ -15,11 +17,6 @@ router.post("/displaycategory", async (req, res) => {
             as: "Child",
           },
         ],
-
-        // order: [
-        //   ["id", "ASC"],
-        //   //   [{ model: db.Helptext, as: "Help" }, "createdAt", "ASC"],
-        // ],
       },
     ],
 
@@ -33,18 +30,25 @@ router.post("/displaycategory", async (req, res) => {
         "ASC",
       ],
     ],
-    // order: [
-    //   ["id", "ASC"],
-    //   [{ model: db.Helptext, as: "Help" }, "id", "ASC"],
-    // ],
   });
 
-  console.log("하이");
-
-  console.log(tempCategory[0].Help);
-  console.log("하이");
-
   res.send(tempCategory);
+});
+
+router.post("/displaymsg", async (req, res) => {
+  console.log("하이디플");
+
+  console.log(req.body);
+  console.log("하이디플");
+  const tempUserInfo = jwt.verify(req.cookies.login, process.env.JWT_KEY);
+  console.log(tempUserInfo);
+  const tempMsg = await db.Msg.findAll({
+    where: {
+      name: tempUserInfo.name,
+    },
+    order: [["id", "DESC"]],
+  });
+  res.send(tempMsg);
 });
 
 export default router;

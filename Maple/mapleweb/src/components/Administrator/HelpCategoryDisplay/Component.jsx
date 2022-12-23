@@ -19,11 +19,6 @@ const HelpCategoryDisplayComponent = ({
   const [category, setCategory] = useState("");
   const [text, setText] = useState("");
   const [edit, setEdit] = useState("");
-  console.log(categoryArr);
-  console.log(childArr);
-  console.log(a);
-  console.log(b);
-  console.log(c);
   return (
     <DisplayBox>
       <form

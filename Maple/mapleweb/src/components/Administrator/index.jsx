@@ -34,9 +34,9 @@ const AdministratorComponet = () => {
 
           <BugCSContainer />
           <FirstContainer />
+          <UserManageContainer />
         </>
       )}
-      <UserManageContainer />
     </AdminBox>
   );
 };

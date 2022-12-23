@@ -240,5 +240,82 @@ router.post("/editchild", async (req, res) => {
   );
   res.end();
 });
+let globalname;
+
+router.post("/displayuser", async (req, res) => {
+  const tempUser = await db.User.findAll({});
+
+  res.send(tempUser);
+});
+router.post("/searchuser", async (req, res) => {
+  const tempUser = await db.User.findOne({
+    where: { userName: req.body.user },
+    include: [
+      { model: db.Board, as: "Board" },
+      { model: db.Comment, as: "Comment" },
+    ],
+  });
+
+  res.send(tempUser);
+});
+
+router.post("/deluser", async (req, res) => {
+  await db.User.destroy({
+    where: { userName: req.body.userName },
+  });
+  res.send("성공적으로삭제함.");
+});
+
+router.post("/sendmsg", async (req, res) => {
+  console.log(req.body);
+  const tempUser = await db.User.findOne({
+    where: { userName: req.body.userName },
+  });
+  const tempMsg = await db.Msg.create({
+    text: req.body.msg,
+  });
+  tempUser.addMsg(tempMsg);
+  res.end();
+});
+
+router.post("/deluserboard", async (req, res) => {
+  console.log(req.body);
+  await db.Board.destroy({
+    where: {
+      id: req.body.id,
+    },
+  });
+  const tempUser = await db.User.findOne({
+    where: { userName: req.body.user },
+    include: [
+      { model: db.Board, as: "Board" },
+      { model: db.Comment, as: "Comment" },
+    ],
+  });
+
+  res.send({ tempUser, msg: "성공적으로지워졌습니다." });
+});
+router.post("/delusercomment", async (req, res) => {
+  console.log(req.body);
+  await db.Comment.update(
+    {
+      text: "관리자에 의해 해당 댓글은 삭제되었습니다.",
+    },
+    {
+      where: {
+        id: req.body.id,
+      },
+    }
+  );
+  const tempUser = await db.User.findOne({
+    where: { userName: req.body.user },
+    include: [
+      { model: db.Board, as: "Board" },
+      { model: db.Comment, as: "Comment" },
+    ],
+  });
+
+  res.send({ tempUser, msg: "성공적으로지워졌습니다." });
+});
 
 export default router;

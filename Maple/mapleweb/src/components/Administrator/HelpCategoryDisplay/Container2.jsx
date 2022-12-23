@@ -33,9 +33,7 @@ const SecondContainer = ({ propsArr }) => {
     tempArrFun(setCategory);
     tempChildFun(setText);
   }, []);
-  useEffect(() => {
-    console.log(categoryArr);
-  }, [setText]);
+  useEffect(() => {}, [setText]);
   const textSubmit = (category, text) => {
     if (!category) return alert("카테고리를 선택하세요");
     if (!text) return alert("내용을 입력하세요");
@@ -70,9 +68,7 @@ const SecondContainer = ({ propsArr }) => {
     setBool(-1);
   };
   const editCategorySubmit = (text, id) => {
-    console.log(text);
     if (!text) return setBool(-1);
-    console.log(text, id);
     setBool(-1);
     axios
       .post("http://localhost:8080/api/admin/edittext", { text, id })

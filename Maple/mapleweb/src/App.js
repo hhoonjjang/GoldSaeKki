@@ -37,9 +37,9 @@ function App() {
         });
     }
   };
-
+console.log(document.cookie.split("=")[0])
   const loginCheck = () => {
-    if (document.cookie) {
+    if (document.cookie.split("=")[0]=="login") {
       console.log("쿠키 들어왔다.");
       axios
         .post("http://localhost:8080/api/user/logincheck")
@@ -53,7 +53,8 @@ function App() {
     }
   };
   console.log(location);
-  document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck();
+  document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck()
+  
   return (
     <div id="body_wrapper">
       <div id="body_content">

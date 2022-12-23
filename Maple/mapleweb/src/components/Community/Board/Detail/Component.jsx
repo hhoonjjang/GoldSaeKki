@@ -251,7 +251,7 @@ const DetailComponent = () => {
                                         await axios.post("http://localhost:8080/api/board/destroy", {
                                             boardId: board.id,
                                         });
-                                        
+
                                         // 해당 커뮤니티 리스트로 이동시키기
                                         navigate(`/Community/${route}`);
                                     }
@@ -267,7 +267,7 @@ const DetailComponent = () => {
                 <CommentInfo>
                     {/* 몇개인지,색깔바꾸기 */}
                     댓글{" "}
-                    <CommentCount>{comments?.length?comments.length:0}</CommentCount>
+                    <CommentCount>{comments?.length ? comments.length : 0}</CommentCount>
                 </CommentInfo>
 
                 {/* 댓글 목록 */}
@@ -305,20 +305,16 @@ const DetailComponent = () => {
                                                 <CommentBtnItem onClick={() => {
                                                     const commentUpdateValue = prompt("수정할 댓글을 입력해주세요.", comment.text);
                                                     if (commentUpdateValue) {
-                                                        // 해당 값으로 수정시켜주기
-                                                        // 함수로 빼서 인자를 보내 호출하고
-                                                        // 거기에 setState
                                                         axios.post("http://localhost:8080/api/comment/update", {
                                                             commentId: comment.id,
                                                             commentText: commentUpdateValue,
-                                                        });
-                                                        commentReq.then((comment) => {
+                                                        }).then(() => {
+                                                            return commentReq;
+                                                        }).then((comment) => {
                                                             if (comment.data.length == 0) return;
+                                                            setCommentValue(commentUpdateValue);
                                                             dispatch(communityAction.comments(comment?.data));
-                                                        });
-                                                        dispatch(communityAction.comments(comment?.data));
-                                                        // 수정되었을 때 리랜더링 시키기
-                                                        setCommentValue(commentUpdateValue);
+                                                        });;
 
                                                     } else {
                                                         return;
@@ -348,7 +344,7 @@ const DetailComponent = () => {
                                                                 console.log(commentCountDownReq);
                                                                 setCommentCount(commentCount - 1);
 
-                                                                
+
                                                                 return;
                                                             case 400:
                                                                 alert("댓글 삭제 불가능합니다.");
@@ -586,6 +582,12 @@ const LikeBtn = styled.div`
         background-color: #F57700;
         border: 1px solid #F6890A;
     }
+    /* 드래그 금지 */
+    -webkit-touch-callout: none;
+     user-select: none;
+     -moz-user-select: none;
+     -ms-user-select: none;
+     -webkit-user-select: none;
 `;
 const LikeCheck = styled.div`
     min-width: 60px;
@@ -596,6 +598,12 @@ const LikeCheck = styled.div`
     &:hover{
         border: 1px solid #929192da;
     }
+    /* 드래그 금지 */
+    -webkit-touch-callout: none;
+     user-select: none;
+     -moz-user-select: none;
+     -ms-user-select: none;
+     -webkit-user-select: none;
 
 `;
 

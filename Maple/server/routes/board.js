@@ -50,6 +50,7 @@ router.post("/getList", async (req, res) => {
       },
       order: [["id", "DESC"]],
     });
+
     res.send(tempBoards);
   } catch (error) {
     console.error(error);
@@ -156,6 +157,51 @@ router.post("/likeCountUpdate", async (req, res) => {
   res.end();
 });
 
+// 게시글 댓글수 +1
+router.post("/commentCountUp", async (req, res) => {
+  // 해당 게시글의 공감수를 가져와
+  const tempBoard = await db.Board.findOne({
+    where: {
+      id: req.body.boardId,
+    },
+  });
+  // 1 증가시키고
+  const tempCommentCount = tempBoard?.dataValues?.commentCount;
+  const newCommentCount = tempCommentCount + 1;
+  // 그 값을 해당 게시글에 다시 업데이트 해준다.
+  db.Board.update(
+    {
+      commentCount: newCommentCount,
+    },
+    {
+      where: { id: req.body.boardId },
+    }
+  );
+  res.end();
+});
+// 게시글 댓글수 -1
+router.post("/commentCountDown", async (req, res) => {
+  // 해당 게시글의 공감수를 가져와
+  const tempBoard = await db.Board.findOne({
+    where: {
+      id: req.body.boardId,
+    },
+  });
+  // 1 감소시키고
+  const tempCommentCount = tempBoard?.dataValues?.commentCount;
+  const newCommentCount = tempCommentCount - 1;
+  // 그 값을 해당 게시글에 다시 업데이트 해준다.
+  db.Board.update(
+    {
+      commentCount: newCommentCount,
+    },
+    {
+      where: { id: req.body.boardId },
+    }
+  );
+  res.end();
+});
+
 router.post("/mainCommunity", async (req, res) => {
   try {
     const result = await db.sequelize.query(
@@ -175,11 +221,9 @@ router.post("/mainCommunity", async (req, res) => {
 
 fs.readFile("./board.json", "utf-8", async function (err, data) {
   const count = await db.Board.count();
-  console.log("count : ", count);
   if (err) {
     console.error(err.message);
   } else {
-    console.log("JSON.parse(data).length", JSON.parse(data).length);
     if (data && JSON.parse(data).length > count) {
       JSON.parse(data).forEach((item) => {
         try {

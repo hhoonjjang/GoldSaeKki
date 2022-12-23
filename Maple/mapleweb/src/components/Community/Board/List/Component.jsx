@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import moment from "moment";
 import Pagination from "react-js-pagination";
-import "./Paging.css";
+// import './Paging.css';
 
 import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 import eyeImg from "../../images/info_eye_new.png";
@@ -19,23 +19,19 @@ const tempArr = [
   { text: "2222", img: "eye_new" },
 ];
 
+
 const ListComponent = () => {
+
   // 리덕스를 사용하기 위한 라이브러리
   const dispatch = useDispatch();
 
-  // 현재 주소의 카테고리 라우터를 가져온다.
+  // 현재 주소의 카테고리 라우터를 가져옴
   const location = useLocation();
   const nowParam = useParams(location).category;
 
-  // 주소에서 카테고리 이름을 가져와 기본값으로 저장한다.
-  const [category, setCategory] = useState(
-    CATEGORY.find((item) => item.label == nowParam)
-  );
+  // 주소의 값으로 카테고리 이름을 찾아 기본값으로 저장
+  const [category, setCategory] = useState(CATEGORY.find(item => item.label == nowParam));
 
-  // 페이징 처리 라이브러리
-  // https://velog.io/@dltmdwls15/pagination-Library%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%AA%A9%EB%A1%9D-%EA%B5%AC%ED%98%84
-  // const [page, setPage] = useState(1);
-  // const handlePageChange = (page) => { setPage(page); };
 
   // 페이징 처리 : 현재 페이지
   const [nowPage, setNowPage] = useState(1);
@@ -44,63 +40,94 @@ const ListComponent = () => {
     setNowPage(page);
   };
 
-  // 현재 유저 닉네임을 가져온다.
+
+  // 현재 유저 닉네임
   const userName = useSelector((state) => state.user.currUserName);
 
-  // 현재 주소가 바뀌면 카테고리가 바뀌도록 한다.
+  // 현재 주소가 바뀌면 카테고리 이름 바꿈
   useEffect(() => {
-    setCategory(CATEGORY.find((item) => item.label == nowParam));
+    setCategory(CATEGORY.find(item => item.label == nowParam));
 
-    // 스크롤도 올려줌?
+    // 스크롤도 올려줌
     window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
   }, [nowParam]);
 
-  // 계속된 리랜더링 문제로 useEffect(()=>{},[카테고리])로 감싸주었다.
-  useEffect(() => {
-    setNowPage(1);
-    // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
-    axios
-      .post("http://localhost:8080/api/board/getList", {
-        category: category.name,
-      })
-      .then((boards) => {
-        // DB에 값이 없으면 에러가 뜨지 않게 해준다.
-        if (boards.data.name == "SequelizeDatabaseError") {
-          return;
-        }
-        // 해당 게시글 목록을 리덕스에 저장한다.
-        // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
-        dispatch(action.list(boards.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        // 무조건 실행한다.
-      });
-  }, [category, dispatch]);
+
 
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
   const boards = useSelector((state) => state.community.list);
 
-  // 띄워야 하는 것 : 해당 페이지의 번호에 맞는 목록을 띄움
-  // 1페이지면 0~10개 boards에서 자름
+  // 페이지에 맞는 게시글들을 띄우기 위해 개수만큼 잘라줌
   let newBoards = [];
   if (boards) {
     boards.map((item, idx) => {
-      if (idx >= (nowPage - 1) * 10 && idx < nowPage * 10) {
+      if (idx >= (nowPage - 1) * 10 && idx < (nowPage) * 10) {
         newBoards.push(item);
       }
     });
   }
+
+  // 보드 배열이 바뀔 때마다 댓글 개수를 가져온다.
+  let commentCounts = [];
+
+  // 계속된 리랜더링 문제로 useEffect(()=>{},[카테고리])로 감싸주었다.
+  useEffect(() => {
+    setNowPage(1);
+
+    // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
+    axios.post("http://localhost:8080/api/board/getList", {
+      category: category.name,
+    }).then((boards) => {
+      // DB에 값이 없으면 에러가 뜨지 않게 해준다.
+      if (boards.data.name == "SequelizeDatabaseError") {
+        return;
+      }
+      // 해당 게시글 목록을 리덕스에 저장한다.
+      // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
+      dispatch(action.list(boards.data));
+
+    }).catch((err) => {
+      console.log(err);
+    }).finally(() => {
+      // 무조건 실행한다.
+    });
+
+
+
+  }, [category, dispatch]);
+
+
+  // 게시글 가져오는 부분에서 관계형으로 값을 가져온다.
+  // 보드 배열이 바뀔 때마다 댓글 개수를 가져온다.
+  // let commentCounts = [];
+  useEffect(() => {
+    console.log("안녕");
+    newBoards.map(async (item, idx) => {
+
+      // 해당 게시글의 댓글 개수를 가져오는 요청을 보낸다.
+      await axios.post("http://localhost:8080/api/comment/count", {
+        boardId: item.id,
+      }).then((item) => {
+        commentCounts.push(item.data.number);
+        dispatch(action.commentCounts(commentCounts));
+      });
+
+    });
+  }, [category, dispatch]);
+
+  // }, []);
+
+
 
   // 페이지 높이 변경
   useEffect(() => {
     window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
   }, [nowPage]);
 
+
+
   return (
-    <>
+    <AllWrap>
       {/* 현재 게시판 이름을 가져와 띄운다. */}
       <CategoryTitle>{category?.name}</CategoryTitle>
       <ContentBox>
@@ -108,7 +135,9 @@ const ListComponent = () => {
         <WorldBox>
           {WORLDLIST.map((item, idx) => {
             return (
-              <WorldSpan key={`world-${idx}`}>
+              <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active" : ""}`} onClick={(e) => {
+                e.target.classList.add("active");
+              }}>
                 <WorldImg
                   key={`worldImg-${idx}`}
                   src={item.img}
@@ -139,7 +168,9 @@ const ListComponent = () => {
                       </span>{" "}
                       <span key={`boardTitleName-${idx}`} className="title">
                         {board?.title}
-                      </span>
+                      </span>{" "}
+                      {/* <CommentCount>({board.commentCount})</CommentCount> */}
+                      {board.commentCount == 0 ? "" : <CommentCount>({board.commentCount})</CommentCount>}
                       {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
                       {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
                     </BoardTitle>
@@ -181,62 +212,29 @@ const ListComponent = () => {
                             // 현재 시간 앞자리와 DB 시간 앞자리가 다르면 다른 날이므로 날짜를 띄운다.
                             // 같으면 DB 뒷자리 시간을 출력한다.
                             moment().toDate().toLocaleString().substr(0, 13) !==
-                            moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ")
-                              .toDate()
-                              .toLocaleString()
-                              .substr(0, 13)
+                              moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ")
+                                .toDate()
+                                .toLocaleString()
+                                .substr(0, 13)
                               ? // `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)}`
-                                `${moment(
-                                  board?.createdAt,
-                                  "YYYY-MM-DDTHH:mm:ssZ"
-                                )
-                                  .toDate()
-                                  .toLocaleString()
-                                  .substring(
-                                    0,
-                                    moment(
-                                      board?.createdAt,
-                                      "YYYY-MM-DDTHH:mm:ssZ"
-                                    )
-                                      .toDate()
-                                      .toLocaleString()
-                                      .indexOf("오")
-                                  )}`
-                              : // 위 : 오늘이 아닐 때, 아래 : 오늘일 때
-                                `${moment(
-                                  board?.createdAt,
-                                  "YYYY-MM-DDTHH:mm:ssZ"
-                                )
-                                  .toDate()
-                                  .toLocaleString()
-                                  .substring(
-                                    moment(
-                                      board?.createdAt,
-                                      "YYYY-MM-DDTHH:mm:ssZ"
-                                    )
-                                      .toDate()
-                                      .toLocaleString()
-                                      .indexOf("오")
-                                  )
-                                  .substr(
-                                    0,
-                                    moment(
-                                      board?.createdAt,
-                                      "YYYY-MM-DDTHH:mm:ssZ"
-                                    )
-                                      .toDate()
-                                      .toLocaleString()
-                                      .substring(
-                                        moment(
-                                          board?.createdAt,
-                                          "YYYY-MM-DDTHH:mm:ssZ"
-                                        )
-                                          .toDate()
-                                          .toLocaleString()
-                                          .indexOf("오")
-                                      )
-                                      .lastIndexOf(":")
-                                  )}`
+                              `${moment(
+                                board?.createdAt,
+                                "YYYY-MM-DDTHH:mm:ssZ"
+                              )
+                                .toDate()
+                                .toLocaleString()
+                                .substring(0, moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().indexOf("오"))
+                              }`
+                              // 위 : 오늘이 아닐 때, 아래 : 오늘일 때
+                              : `${moment(
+                                board?.createdAt,
+                                "YYYY-MM-DDTHH:mm:ssZ"
+                              )
+                                .toDate()
+                                .toLocaleString()
+                                .substring(moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().indexOf("오"))
+                                .substr(0, moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substring(moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().indexOf("오")).lastIndexOf(":"))
+                              }`
                           }
                         </IconInfo>
                         <IconInfo key={`eyeCount-${idx}`} className="eyeCount">
@@ -268,14 +266,18 @@ const ListComponent = () => {
               </RegistBtn>
             </Link>
           ) : (
-            <RegistBtn
-              onClick={(e) => {
-                alert("로그인이 필요합니다.");
-                return;
-              }}
-            >
-              글작성
-            </RegistBtn>
+            <>
+              <Link to={`/login`}>
+                <RegistBtn
+                  onClick={(e) => {
+                    alert("로그인이 필요합니다.");
+                    return;
+                  }}
+                >
+                  글작성
+                </RegistBtn>
+              </Link>
+            </>
           )}
         </ButtonBox>
 
@@ -288,7 +290,7 @@ const ListComponent = () => {
             itemsCountPerPage={10}
             // 총 게시글 개수
             totalItemsCount={boards?.length || 0}
-            // 표시할 개수
+            // 표시할 개수 
             pageRangeDisplayed={10}
             // 이전을 나타낼 아이콘
             prevPageText={"‹"}
@@ -298,17 +300,72 @@ const ListComponent = () => {
             onChange={handlePageChange}
           />
         </PagenationWrap>
+
       </ContentBox>
-    </>
+    </AllWrap>
   );
 };
 
 export default ListComponent;
 
 const AllWrap = styled.div`
-  & > div {
+  /* & > div {
     float: left;
-  }
+  } */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+ul {
+    list-style: none;
+    padding: 0;
+    cursor: pointer;
+}
+ul.pagination li {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #e2e2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+ul.pagination li:first-child {
+    /* border-radius: 5px 0 0 5px; */
+    border-radius: 3px 0 0 3px;
+}
+ul.pagination li:last-child {
+    /* border-radius: 0 5px 5px 0; */
+    border-radius: 0 3px 3px 0;
+}
+ul.pagination li a {
+    text-decoration: none;
+    /* color: #337ab7; */
+    color: #DC7EB3;
+    font-size: 1rem;
+}
+
+ul.pagination li.active a {
+    color: white;
+}
+
+ul.pagination li.active {
+    /* background-color: #337ab7; */
+    background-color: #DC7EB3;
+}
+ul.pagination li a:hover,
+ul.pagination li a.active {
+    /* color: blue; */
+    color: #CA5196;
+}
+.page-selection {
+    width: 48px;
+    height: 30px;
+    /* color: #337ab7; */
+    color: #DC7EB3;
+}
 `;
 const CategoryTitle = styled.h1`
   font-size: 28px;
@@ -337,7 +394,7 @@ const WorldBox = styled.div`
   border: 1px solid #e9eaee;
   background-color: #fbf9fa;
   margin-bottom: 30px;
-  padding: 26px 0 0 26px;
+  padding: 26px 0 20px 26px;
 `;
 const WorldSpan = styled.span`
   float: left;
@@ -355,6 +412,12 @@ const WorldSpan = styled.span`
   position: relative;
   cursor: pointer;
   padding-left: 8px;
+  
+  /* 이놈 : 자식 전부를 뜻함 */
+  *{
+    pointer-events: none;
+  }
+  
   &.active,
   &:hover {
     transition: all 0.2s;
@@ -366,10 +429,12 @@ const WorldSpan = styled.span`
 const WorldImg = styled.img`
   position: absolute;
   top: 10px;
+  
 `;
 const WorldNameSpan = styled.span`
   position: absolute;
   left: 27px;
+  height: 0;
 `;
 
 const ListBox = styled.div`
@@ -456,13 +521,9 @@ const IconInfo = styled.div`
   white-space: nowrap;
   overflow: hidden;
   padding-left: 18px;
-
   /* 보통은 그냥 바로 안띄우고 예외처리도 해준다(ex. 이미지가 안 들어왔을 때 무엇을 띄울 것인지) */
   /* 이놈 뭔지 모르겠는데 조금 수정해야 할듯? */
-  background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(
-      props
-    ) => props.iconImg}.png")
-    left 0px no-repeat;
+  background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(props) => props.iconImg}.png") left 0px no-repeat;
   max-width: ${(props) => {
     // 무엇을 기준으로 나눌건지
     switch (props.iconImg) {
@@ -519,4 +580,9 @@ const UserWorldImg = styled.img``;
 const PagenationWrap = styled.div`
   float: left;
   width: 100%;
+`;
+
+const CommentCount = styled.span`
+  font-size: 15px;
+  color: #e69fc7;
 `;

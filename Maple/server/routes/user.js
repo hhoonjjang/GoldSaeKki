@@ -144,7 +144,7 @@ router.post("/login", (req, res) => {
               currUserName: userName,
             },
           });
-          consoNamele.log("로그인 완료");
+          console.log("로그인 완료");
         } else {
           res.send({ message: "잘못된 비밀번호입니다.", status: 501 });
         }
@@ -242,21 +242,20 @@ router.post("/pwchange", (req, res) => {
   });
 });
 
-fs.readFile("./user.json", "utf-8", async function (err, data) {
-  const count = await db.User.count();
-  if (err) {
-    console.error(err.message);
-  } else {
-    if (data && JSON.parse(data).length > count) {
-      JSON.parse(data).forEach((item) => {
-        try {
-          db.User.create(item);
-        } catch (err) {
-          console.error(err);
-        }
-      });
-    }
-  }
-});
-
+// fs.readFile("./user.json", "utf-8", async function (err, data) {
+//   const count = await db.User.count();
+//   if (err) {
+//     console.error(err.message);
+//   } else {
+//     if (data && JSON.parse(data).length > count) {
+//       JSON.parse(data).forEach((item) => {
+//         try {
+//           db.User.create(item);
+//         } catch (err) {
+//           console.error(err);
+//         }
+//       });
+//     }
+//   }
+// });
 export default router;

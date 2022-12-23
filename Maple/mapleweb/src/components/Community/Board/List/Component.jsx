@@ -346,9 +346,11 @@ ul.pagination li a {
     color: #DC7EB3;
     font-size: 1rem;
 }
+
 ul.pagination li.active a {
     color: white;
 }
+
 ul.pagination li.active {
     /* background-color: #337ab7; */
     background-color: #DC7EB3;

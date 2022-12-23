@@ -22,6 +22,7 @@ const MyCommentEditContainer = () => {
     <MyCommentEditComponent
       commentList={commentList}
       getMycomment={getMycomment}
+      currUser={currUser}
     />
   );
 };

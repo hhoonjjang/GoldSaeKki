@@ -50,16 +50,17 @@ const NavigationComponent = ({ categorys }) => {
   useEffect(() => {
     render(!_);
     const locationArr = location.pathname.split("/");
+    console.log(locationName.current, locationArr);
     locationName.current = locationArr[locationArr.length - 1];
   }, [location]);
 
   // 현재 라우터 이름이 카테고리의 몇번째인지 알아내 ref에 저장해준다.
   categorys.forEach((category, index) => {
+    console.log(locationName.current);
     if (category.label === locationName.current) {
       nowRouterIdx.current = index;
     }
   });
-
 
   // 유동적 네비게이션 바
   // 기본값은 선택된 wid놈으로 해주기..
@@ -68,10 +69,9 @@ const NavigationComponent = ({ categorys }) => {
   // 해당 카테고리를 onmouseup하면 width가 해당 놈으로 set되게 하기
 
   // 네비게이션 바 크기 변경되었을 때
-  useEffect(()=>{
+  useEffect(() => {
     console.log(`네비게이션 바 크기 ${naviWidth}으로 바뀜`);
   }, [naviWidth]);
-
 
   // left값 변경시키기
   // 자신보다 왼쪽에 있는 엘리먼트의 wid값 합 + (왼쪽엘리먼트개수*마진값) + 현재엘리먼트width값/2
@@ -81,7 +81,7 @@ const NavigationComponent = ({ categorys }) => {
   const [nowElem, setNowElem] = useState();
 
   // 현재 카테고리가 바뀌면
-  useEffect(()=>{
+  useEffect(() => {
     console.log(nowElem);
   }, [nowElem]);
 
@@ -89,7 +89,7 @@ const NavigationComponent = ({ categorys }) => {
   //   prevElems.push(nowElem);
   // }
   // console.log(prevElems);
-  
+
   // left값 변경시키기
   // 자신보다 왼쪽에 있는 엘리먼트의 wid값 합 + (왼쪽엘리먼트개수*마진값) + 현재엘리먼트width값/2
   // 자신보다 왼쪽에 있는 엘리먼트들
@@ -97,7 +97,6 @@ const NavigationComponent = ({ categorys }) => {
 
   // 각각의 엘리먼트 width는 이미 구해졌음 -> 어딘가에 저장, 순서를 통해 가져옴
   // 이전 width값 모두 +++++하면 됨 이전엘리먼트 개수만큼 마진값도 더해줌(44)
-  
 
   return (
     <NavigationWrap className="mnb_wrap">
@@ -111,21 +110,23 @@ const NavigationComponent = ({ categorys }) => {
                 to={`./${item.label}`}
                 // className : 내가 선택한 카테고리(라우터에서 가져옴)랑 같으면 띄우도록 해야한다.
                 className={`${idx === nowRouterIdx.current ? "active" : ""}`}
-              // onClick={()=>{
-              //     return dispatch(action.category(`${item.label}`));
-              // }}
+                // onClick={()=>{
+                //     return dispatch(action.category(`${item.label}`));
+                // }}
               >
-                <CategoryLi key={`category-${item.label}`} onMouseOver={(e)=>{
-                  // 현재 width를 변경시킨다
-                  setNaviWidth(e.target.offsetWidth);
-                  // setNowElem(e.target);
-                  // 현재 놈의 왼쪽 공간을 구한다.
-                  setNaviLeft(e.target.offsetLeft);
-                  console.log(e.target.offsetLeft);
-                  console.log(naviLeft);
-                }} onMouseLeave={()=>{
-
-                }}>
+                <CategoryLi
+                  key={`category-${item.label}`}
+                  onMouseOver={(e) => {
+                    // 현재 width를 변경시킨다
+                    setNaviWidth(e.target.offsetWidth);
+                    // setNowElem(e.target);
+                    // 현재 놈의 왼쪽 공간을 구한다.
+                    setNaviLeft(e.target.offsetLeft);
+                    console.log(e.target.offsetLeft);
+                    console.log(naviLeft);
+                  }}
+                  onMouseLeave={() => {}}
+                >
                   {item.name}
                 </CategoryLi>
               </Link>
@@ -134,7 +135,10 @@ const NavigationComponent = ({ categorys }) => {
         })}
 
         {/* 계산해서 width, left값 변경하기 */}
-        <CategoryLine className="mnb_line" style={{width : `${naviWidth}px`, left:`${naviLeft}px`}}></CategoryLine>
+        <CategoryLine
+          className="mnb_line"
+          style={{ width: `${naviWidth}px`, left: `${naviLeft}px` }}
+        ></CategoryLine>
       </NavigationBox>
     </NavigationWrap>
   );
@@ -202,7 +206,7 @@ const CategoryLine = styled.span`
   /* 현재는 이렇게 설정해놨음 */
   /* left:32px;  */
   left: 0px;
-  transition: all .8s;
+  transition: all 0.8s;
   /* 기본 위드는 20px으로 설정해놨음 */
   /* width: 20px; */
   /* 현재 카테고리의 위드만큼으로 바꾸기 */

@@ -18,6 +18,7 @@ import axios from "axios";
 import { action } from "./modules/user";
 import { useDispatch } from "react-redux";
 import { action as adminaction } from "./modules/admin";
+import RankComponent from "./components/Ranking";
 function App() {
   // const location = useLocation();
   // useEffect(() => {
@@ -41,10 +42,16 @@ function App() {
 
   const loginCheck = () => {
     if (document.cookie) {
-      axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
-        dispatch(action.check(data.data.userInfo));
-        console.log("로그인정보를 받았다", data);
-      });
+      console.log("쿠키 들어왔다.");
+      axios
+        .post("http://localhost:8080/api/user/logincheck")
+        .then((data) => {
+          dispatch(action.check(data.data.userInfo));
+          console.log("로그인정보를 받았다", data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   };
   console.log(location);
@@ -92,6 +99,7 @@ function App() {
           ></Route>
           {/* <Route path="/Mypage/*" element={<MypageContainer />}></Route> */}
           <Route path="/Community/*" element={<CommunityComponet />}></Route>
+          <Route path="/Ranking/*" element={<RankComponent />}></Route>
         </Routes>
       </div>
       <Footer></Footer>

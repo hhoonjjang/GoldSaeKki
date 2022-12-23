@@ -5,8 +5,8 @@ import { useState } from "react";
 
 const MyBoardEditContainer = () => {
   const currUser = useSelector((state) => state.user.currUserName);
+  console.log("보드의", currUser);
   const [boardList, setBoardList] = useState([]);
-  console.log(currUser);
   const getMyboard = () => {
     console.log("게시글 정보 불러왔다.");
     axios
@@ -16,7 +16,13 @@ const MyBoardEditContainer = () => {
         setBoardList(data.data);
       });
   };
-  return <MyBoardEditComponent getMyBoard={getMyboard} boardList={boardList} />;
+  return (
+    <MyBoardEditComponent
+      getMyBoard={getMyboard}
+      boardList={boardList}
+      currUser={currUser}
+    />
+  );
 };
 
 export default MyBoardEditContainer;

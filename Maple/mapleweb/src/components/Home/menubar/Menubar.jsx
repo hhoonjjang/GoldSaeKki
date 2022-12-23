@@ -44,11 +44,7 @@ const Menubar = () => {
   const routeAddressSubGroup = [
     ["/", "/", "/", "/", "/"],
     ["/", "/", "/", "/", "/", "/"],
-    [
-      "/Ranking/TotalRanking",
-      "/Ranking/BoardRanking",
-      "/Ranking/CommentRanking",
-    ],
+    ["/Ranking", "/Ranking/BoardRanking", "/Ranking/CommentRanking"],
     [
       "/Community/Free",
       "/Community/Information",

@@ -25,17 +25,13 @@ const ListComponent = () => {
   // 리덕스를 사용하기 위한 라이브러리
   const dispatch = useDispatch();
 
-  // 현재 주소의 카테고리 라우터를 가져온다.
+  // 현재 주소의 카테고리 라우터를 가져옴
   const location = useLocation();
   const nowParam = useParams(location).category;
 
-  // 주소에서 카테고리 이름을 가져와 기본값으로 저장한다.
+  // 주소의 값으로 카테고리 이름을 찾아 기본값으로 저장
   const [category, setCategory] = useState(CATEGORY.find(item => item.label == nowParam));
 
-  // 페이징 처리 라이브러리
-  // https://velog.io/@dltmdwls15/pagination-Library%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%AA%A9%EB%A1%9D-%EA%B5%AC%ED%98%84
-  // const [page, setPage] = useState(1);
-  // const handlePageChange = (page) => { setPage(page); };
 
   // 페이징 처리 : 현재 페이지
   const [nowPage, setNowPage] = useState(1);
@@ -45,15 +41,14 @@ const ListComponent = () => {
   };
 
 
-
-  // 현재 유저 닉네임을 가져온다.
+  // 현재 유저 닉네임
   const userName = useSelector((state) => state.user.currUserName);
 
-  // 현재 주소가 바뀌면 카테고리가 바뀌도록 한다.
+  // 현재 주소가 바뀌면 카테고리 이름 바꿈
   useEffect(() => {
     setCategory(CATEGORY.find(item => item.label == nowParam));
 
-    // 스크롤도 올려줌?
+    // 스크롤도 올려줌
     window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
   }, [nowParam]);
 
@@ -62,8 +57,7 @@ const ListComponent = () => {
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
   const boards = useSelector((state) => state.community.list);
 
-  // 띄워야 하는 것 : 해당 페이지의 번호에 맞는 목록을 띄움
-  // 1페이지면 0~10개 boards에서 자름
+  // 페이지에 맞는 게시글들을 띄우기 위해 개수만큼 잘라줌
   let newBoards = [];
   if (boards) {
     boards.map((item, idx) => {
@@ -141,10 +135,7 @@ const ListComponent = () => {
         <WorldBox>
           {WORLDLIST.map((item, idx) => {
             return (
-              <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active" : ""}`} onClick={(e)=>{
-                alert(idx);
-                console.log(e.target);
-                // 액티브 하고 리랜더링, 다른놈들 active 없애기
+              <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active" : ""}`} onClick={(e) => {
                 e.target.classList.add("active");
               }}>
                 <WorldImg
@@ -428,6 +419,12 @@ const WorldSpan = styled.span`
   position: relative;
   cursor: pointer;
   padding-left: 8px;
+  
+  /* 이놈 : 자식 전부를 뜻함 */
+  *{
+    pointer-events: none;
+  }
+  
   &.active,
   &:hover {
     transition: all 0.2s;
@@ -439,10 +436,12 @@ const WorldSpan = styled.span`
 const WorldImg = styled.img`
   position: absolute;
   top: 10px;
+  
 `;
 const WorldNameSpan = styled.span`
   position: absolute;
   left: 27px;
+  height: 0;
 `;
 
 const ListBox = styled.div`
@@ -566,7 +565,7 @@ const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const RegistBtn = styled.a`
+const RegistBtn = styled.span`
   min-width: 53px;
   font-size: 15px;
   color: #fff;

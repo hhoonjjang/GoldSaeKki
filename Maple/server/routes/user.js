@@ -242,20 +242,20 @@ router.post("/pwchange", (req, res) => {
   });
 });
 
-fs.readFile("./user.json", "utf-8", async function (err, data) {
-  const count = await db.User.count();
-  if (err) {
-    console.error(err.message);
-  } else {
-    if (data && JSON.parse(data).length > count) {
-      JSON.parse(data).forEach((item) => {
-        try {
-          db.User.create(item);
-        } catch (err) {
-          console.error(err);
-        }
-      });
-    }
-  }
-});
+// fs.readFile("./user.json", "utf-8", async function (err, data) {
+//   const count = await db.User.count();
+//   if (err) {
+//     console.error(err.message);
+//   } else {
+//     if (data && JSON.parse(data).length > count) {
+//       JSON.parse(data).forEach((item) => {
+//         try {
+//           db.User.create(item);
+//         } catch (err) {
+//           console.error(err);
+//         }
+//       });
+//     }
+//   }
+// });
 export default router;

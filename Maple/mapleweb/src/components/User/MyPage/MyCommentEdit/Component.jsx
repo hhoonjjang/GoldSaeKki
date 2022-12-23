@@ -1,17 +1,33 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import Pagination from "react-js-pagination";
 
-const MyCommentEditComponent = ({ commentList, getMycomment }) => {
+const MyCommentEditComponent = ({ commentList, getMycomment, currUser }) => {
   const navigate = useNavigate();
+  const [nowPage, setNowPage] = useState(1);
+
+  const handlePageChange = (page) => {
+    setNowPage(page);
+  };
+
+  let newBoards = [];
+  if (commentList) {
+    commentList?.map((item, idx) => {
+      if (idx >= (nowPage - 1) * 5 && idx < nowPage * 5) {
+        newBoards.push(item);
+      }
+    });
+  }
 
   useEffect(() => {
-    getMycomment();
-  }, []);
+    console.log("currUser 뭐임?", currUser);
+    if (currUser) getMycomment();
+  }, [currUser]);
   return (
     <MyCommentBox>
       <MyCommentListBox>
-        {commentList?.map((item, idx) => {
+        {newBoards?.map((item, idx) => {
           console.log(item);
           return (
             <div
@@ -20,10 +36,28 @@ const MyCommentEditComponent = ({ commentList, getMycomment }) => {
                 navigate(`/Community/board/${item.boardId}`);
               }}
             >
-              {idx + 1}. {item.text}
+              {item.text}
             </div>
           );
         })}
+        <PagenationWrap>
+          <Pagination
+            // 현재 페이지
+            activePage={nowPage}
+            // 띄울 게시글 개수
+            itemsCountPerPage={5}
+            // 총 게시글 개수
+            totalItemsCount={commentList?.length || 0}
+            // 표시할 개수
+            pageRangeDisplayed={10}
+            // 이전을 나타낼 아이콘
+            prevPageText={"‹"}
+            // 다음을 나타낼 아이콘
+            nextPageText={"›"}
+            // 페이지네이션 함수
+            onChange={handlePageChange}
+          />
+        </PagenationWrap>
       </MyCommentListBox>
     </MyCommentBox>
   );
@@ -43,6 +77,66 @@ const MyCommentBox = styled.div`
     font-weight: 600;
     border-radius: 10px;
   }
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul.pagination li {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #e2e2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+  }
+
+  ul.pagination li:first-child {
+    /* border-radius: 5px 0 0 5px; */
+    border-radius: 3px 0 0 3px;
+  }
+
+  ul.pagination li:last-child {
+    /* border-radius: 0 5px 5px 0; */
+    border-radius: 0 3px 3px 0;
+  }
+
+  ul.pagination li a {
+    text-decoration: none;
+    /* color: #337ab7; */
+    color: #5e7bcb;
+    font-size: 1rem;
+  }
+
+  ul.pagination li.active a {
+    color: white;
+  }
+
+  ul.pagination li.active {
+    /* background-color: #337ab7; */
+    background-color: #5e7bcb;
+  }
+
+  ul.pagination li a:hover,
+  ul.pagination li a.active {
+    /* color: blue; */
+    color: #5e7bcb;
+  }
+
+  .page-selection {
+    width: 48px;
+    height: 30px;
+    /* color: #337ab7; */
+    color: #5e7bcb;
+  }
 `;
 
 const MyCommentListBox = styled.div`
@@ -54,4 +148,9 @@ const MyCommentListBox = styled.div`
   & > div:hover {
     cursor: pointer;
   }
+`;
+
+const PagenationWrap = styled.div`
+  float: left;
+  width: 100%;
 `;

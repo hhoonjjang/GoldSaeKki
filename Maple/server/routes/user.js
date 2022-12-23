@@ -80,6 +80,7 @@ router.post("/regist", (req, res) => {
 });
 
 router.post("/logincheck", (req, res) => {
+  console.log("쿠키다", req.cookies);
   const decodeToken = jwt.verify(req.cookies.login, process.env.JWT_KEY);
   res.send({
     userInfo: decodeToken,

@@ -60,6 +60,7 @@ const MainGamestartContainer = () => {
   useEffect(() => {
     if (onlyMainLogoutUpdate.current) {
       logout();
+      setRender((state) => !state);
     } else onlyMainLogoutUpdate.current = true;
   }, [logoutState]);
 

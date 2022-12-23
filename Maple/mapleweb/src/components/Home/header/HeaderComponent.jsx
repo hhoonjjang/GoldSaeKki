@@ -279,6 +279,7 @@ const HeaderComponent = styled.div`
 
   .header_innerBox_center_loggedin_logo img {
     width: 50px;
+    height: 50px;
     border: 1px solid white;
     border-radius: 50%;
   }

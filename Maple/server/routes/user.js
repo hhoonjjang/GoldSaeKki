@@ -258,4 +258,5 @@ fs.readFile("./user.json", "utf-8", async function (err, data) {
     }
   }
 });
+
 export default router;

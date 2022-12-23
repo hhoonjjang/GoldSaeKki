@@ -54,18 +54,32 @@ const MainSlideComponent = ({
               currSlideTranslate - 1100
             }px)`;
             setCurrSlideTranslate(currSlideTranslate - 1100);
-            console.log(currSlideTranslate);
+            console.log(currSlideTranslate - 1100);
             console.log("");
           }
         }
       } else if (!bool) {
-        if (currSlide % 4 == 3) {
+        console.log("bool : ", bool);
+        console.log(currSlide, "이동한다이");
+        if (currSlide + 1 == carouselImgArr.length) {
           container.current.style.transform = `translate(${
-            currSlideTranslate + 1100
+            // parseInt((carouselImgArr.length / 4 - 1) * -1100)
+            parseInt((carouselImgArr.length - 1) / 4) * -1100
           }px)`;
-          setCurrSlideTranslate(currSlideTranslate + 1100);
-          console.log(currSlideTranslate);
+          setCurrSlideTranslate(
+            parseInt((carouselImgArr.length - 1) / 4) * -1100
+          );
+          console.log((parseInt((carouselImgArr.length - 1) / 4) + 1) * -1100);
           console.log("");
+        } else {
+          if (currSlide % 4 == 3) {
+            container.current.style.transform = `translate(${
+              currSlideTranslate + 1100
+            }px)`;
+            setCurrSlideTranslate(currSlideTranslate + 1100);
+            console.log(currSlideTranslate + 1100);
+            console.log("");
+          }
         }
       }
     }

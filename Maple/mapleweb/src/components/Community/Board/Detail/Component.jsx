@@ -155,10 +155,7 @@ const DetailComponent = () => {
         });
     }, [commentValue]);
 
-
-    // 강제 리랜더링
-    const [_, render] = useState(false);
-
+    
     return (
         <>
             <CategoryTItleBox>
@@ -254,7 +251,7 @@ const DetailComponent = () => {
                                         await axios.post("http://localhost:8080/api/board/destroy", {
                                             boardId: board.id,
                                         });
-
+                                        
                                         // 해당 커뮤니티 리스트로 이동시키기
                                         navigate(`/Community/${route}`);
                                     }
@@ -270,7 +267,7 @@ const DetailComponent = () => {
                 <CommentInfo>
                     {/* 몇개인지,색깔바꾸기 */}
                     댓글{" "}
-                    <CommentCount>{comments?.length ? comments.length : 0}</CommentCount>
+                    <CommentCount>{comments?.length?comments.length:0}</CommentCount>
                 </CommentInfo>
 
                 {/* 댓글 목록 */}

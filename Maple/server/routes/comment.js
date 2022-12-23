@@ -77,16 +77,25 @@ router.post("/update", (req,res)=>{
     try {
         db.Comment.update({
             // 내용만 바꿔준다.
-            // 새로운 내용값을 받아온다.
-            // 수정시 원래 텍스트가 있었던 곳에
-            // 댓글 입력 인풋을 조그맣게 만들어준다.
-            // 기존의 값은 받아와 그 값으로 넣어준다.
+            text : req.body.commentText,
         }, {
             // comment id 보내줘야 함
             where : {id : req.body.commentId}
         });
 
         res.end();
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// 해당 게시물의 댓글 개수
+router.post("/count", async(req,res)=>{
+    try {
+        const comment = await db.Comment.findAll({
+            where : {boardId : req.body.boardId}
+        });
+        res.send({number : comment.length});
     } catch (error) {
         console.log(error);
     }

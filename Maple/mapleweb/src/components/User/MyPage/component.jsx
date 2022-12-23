@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import backimg from "../Img/backimg.png";
 import NavigateComp from "../../Community/Navigation/Component";
 import { useDispatch } from "react-redux";
 import { action } from "../../../modules/header";
@@ -10,6 +9,7 @@ import MyBoardEditContainer from "./MyBoardEdit/Container";
 import UserOutContainer from "./UserOut/Container";
 import { useSelector } from "react-redux";
 import MyCommentEditContainer from "./MyCommentEdit/Container";
+import PasswordChangeContainer from "./PasswordChange/Container";
 import { useEffect, useState } from "react";
 
 const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
@@ -46,7 +46,11 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
         return <MyCommentEditContainer />;
 
       case "userInfo5":
+        return <PasswordChangeContainer />;
+
+      case "userInfo6":
         return <UserOutContainer />;
+
       default:
         return (
           <ul>
@@ -63,6 +67,9 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
               <li>- 내가 쓴 댓글 관리</li>
             </Link>
             <Link to={"/mypage/userInfo5"}>
+              <li>- 비밀번호 변경</li>
+            </Link>
+            <Link to={"/mypage/userInfo6"}>
               <li>- 회원탈퇴</li>
             </Link>
           </ul>
@@ -82,7 +89,7 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
           </LeftContent>
           <RightContent>
             <div>
-              <p>내정보 관리</p>
+              <p className="main-title">내정보 관리</p>
             </div>
             {myDiv()}
           </RightContent>
@@ -98,9 +105,6 @@ const MypageBox = styled.div`
   width: 1200px;
   min-height: 500px;
   margin: 0 auto;
-  /* background-image: url(${backimg}); */
-  /* background-repeat: no-repeat; */
-  /* background-size: contain; */
 `;
 const MypageContents = styled.div`
   width: 100%;
@@ -123,11 +127,11 @@ const RightContent = styled.div`
   padding: 20px;
   width: 100%;
 
-  & div:first-child {
+  & > div:first-child {
     background-color: #5e7bcb;
   }
 
-  & > div > p {
+  .main-title {
     font-size: 25px;
     text-align: center;
     color: white;

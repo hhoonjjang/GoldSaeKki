@@ -17,7 +17,15 @@ const MainGamestartComponent = ({
   currUserWorld,
   logout,
   setLogoutState,
+  getUserImg,
+  thumbnailImg,
+  setThumbnailImg,
 }) => {
+  useEffect(() => {
+    if (currUserName == undefined) return;
+    getUserImg(currUserName, setThumbnailImg);
+  }, [currUserName]);
+
   return (
     <MainGamestart bgImg={gameStartBackground}>
       <div className="mainGamestart">
@@ -65,7 +73,8 @@ const MainGamestartComponent = ({
             <div className="mainGamestart_logged_innerBox">
               <div className="mainGamestart_logged_innerBox_hero">
                 <Link to="/Mypage" element={<MypageContainer />}>
-                  <img src={""} alt="캐릭터" />
+                  {/* <img src={""} alt="캐릭터" /> */}
+                  <img src={thumbnailImg} alt="아바타" />
                 </Link>
               </div>
               <div className="mainGamestart_logged_innerBox_briefProfile">
@@ -173,12 +182,12 @@ const MainGamestart = styled.div`
     position: relative;
     div:first-child {
       position: absolute;
-      left: 240px;
+      left: 220px;
       bottom: -10px;
     }
     div:last-child {
       position: absolute;
-      left: 280px;
+      left: 260px;
       bottom: -12px;
     }
   }
@@ -226,6 +235,10 @@ const MainGamestart = styled.div`
         height: 96px;
         background-color: #161617;
         margin-right: 5px;
+      }
+
+      .mainGamestart_logged_innerBox_hero img {
+        width: 90%;
       }
 
       .mainGamestart_logged_innerBox_briefProfile {

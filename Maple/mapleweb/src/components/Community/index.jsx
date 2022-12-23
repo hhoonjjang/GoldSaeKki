@@ -1,6 +1,6 @@
 import styled from "styled-components";
 // import { Link, Routes, Route } from "react-router-dom";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -21,16 +21,20 @@ import four from "./images/4.png";
 import prev from "./images/prev.png";
 import next from "./images/next.png";
 import AddContainer from "./Board/Add/Container";
+import { useEffect } from "react";
 
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
 // import { action as communityAction, CATEGORY, CATEGORY2 } from "../../modules/community";
 import { CATEGORY, CATEGORY2 } from "../../modules/community";
 import CommentContainer from "./Pagination/Container";
 import DetailContainer from "./Board/Detail/Container";
+import EditContainer from "./Board/Edit/Container";
 
 const CommunityComponet = () => {
   const dispatch = useDispatch();
-  dispatch(action.header("Community"));
+  useEffect(() => {
+    dispatch(action.header("Administrator"));
+  }, []);
 
   // 사이드 슬라이드 라이브러리 세팅 : 슬라이드의 기능 조정
   const settings = {
@@ -55,25 +59,26 @@ const CommunityComponet = () => {
             {/* 여기에 나머지 라우터를 띄움(map 돌리지 않기) */}
 
             <Routes>
-              {/* UI가 같으니까 같은 컴포넌트로 보냄, 리스트 컴포넌트 카테고리 출력 부분 수정하기 */}
-              <Route path="/Free" element={<ListContainer categorys={CATEGORY} category={"자유게시판"} route={"Free"} />}></Route>
-              <Route path="/Information" element={<ListContainer category={"정보게시판"} route={"Information"} />}></Route>
-
-              {/* 이놈들은 UI가 달라서 새로운 컴포넌트 만들어야함 : 일단 안 만듦 */}
-              <Route path="/TopicDiscussion" element={<ListContainer category={"토론게시판"} route={"TopicDiscussion"} />}></Route>
-              <Route path="/Art" element={<ListContainer category={"금쪽이아트"} route={"Art"} />}></Route>
-              <Route path="/Coordination" element={<ListContainer category={"금쪽이코디"} route={"Coordination"} />}></Route>
+              {/* 카테고리에 해당하는 리스트 출력 */}
+              <Route path="/:category" element={<ListContainer />}></Route>
 
               {/* 카테고리에 게시글 추가 컴포넌트 라우터를 만듬 */}
-              <Route path="/Free/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"자유게시판"} route={"Free"} />}></Route>
-              <Route path="/Information/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"정보게시판"} route={"Information"} />}></Route>
-              <Route path="/TopicDiscussion/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"토론게시판"} route={"TopicDiscussion"} />}></Route>
-              <Route path="/Art/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이아트"} route={"Art"} />}></Route>
-              <Route path="/Coordination/BoardAdd" element={<AddContainer categorys={CATEGORY} category={"금쪽이코디"} route={"Coordination"} />}></Route>
+              <Route
+                path="/:category/BoardAdd"
+                element={<AddContainer />}
+              ></Route>
 
               {/* 게시글 상세 페이지 띄우기 : Link to 로 이동할 때 그 보드 번호가 전달되어야 한다. */}
-              <Route path="/board/:boardId" element={<DetailContainer/>}></Route>
+              <Route
+                path="/board/:boardId"
+                element={<DetailContainer />}
+              ></Route>
 
+              {/* 수정 페이지 */}
+              <Route
+                path="/board/:boardId/edit"
+                element={<EditContainer />}
+              ></Route>
             </Routes>
           </ContentBox>
 
@@ -155,13 +160,13 @@ const CommunityComponet = () => {
                 <TagInputWrap>
                   <TagInput />
                   <TagSerachBtnSpan>
-                    {/* a 태그 :나중에 Link to로 바꾸기 */}
-                    <a href="/Community/Free">
+                    {/* a 태그 :나중에 Link to로 바꾸기(중요) */}
+                    {/* <a href="/Community/Free">
                       <SearchImg
                         src="https://cdn.imweb.me/upload/S2020090710444c43a5dc5/255f6640fbc87.png"
                         alt="검색 이미지"
                       />
-                    </a>
+                    </a> */}
                   </TagSerachBtnSpan>
                 </TagInputWrap>
                 {/* 태그들이 들어있는 영역 : 태그는 게시물의 하트가 많은 게시물 안에서 맨처음 한개만 가져온다.(시간이 된다면) */}
@@ -170,36 +175,48 @@ const CommunityComponet = () => {
                   <IssueTag>
                     {/* a 태그 : 나중에 Link to로 바꾸기 */}
                     {/* <a href="/Common/Search?t=어쩌구저쩌구#$23#$" title="메이플스토리"></a> */}
-                    <a href="/" title="검색어">
+                    {/* <a href="/" title="검색어"> */}
+                    <Link to={"/"}>
                       {/* 텍스트 앞의 #은 map에서 돌려 붙여줘야 한다. */}
                       #던파모바일
-                    </a>
+                    </Link>
+                    {/* </a> */}
                   </IssueTag>
 
                   <IssueTag>
-                    <a href="/Community/Free" title="검색어">
+                    <Link to={`/Community/Free`}>
+                      {/* <a href="/Community/Free" title="검색어"> */}
                       #메이플스토리
-                    </a>
+                      {/* </a> */}
+                    </Link>
                   </IssueTag>
                   <IssueTag>
-                    <a href="/Community/Free" title="검색어">
+                    <Link to={`/Community/Free`}>
+                      {/* <a href="/Community/Free" title="검색어"> */}
                       #데미지스킨끄기
-                    </a>
+                      {/* </a> */}
+                    </Link>
                   </IssueTag>
                   <IssueTag>
-                    <a href="/Community/Free" title="검색어">
+                    <Link to={`/Community/Free`}>
+                      {/* <a href="/Community/Free" title="검색어"> */}
                       #정재훈
-                    </a>
+                      {/* </a> */}
+                    </Link>
                   </IssueTag>
                   <IssueTag>
-                    <a href="/Community/Free" title="검색어">
+                    <Link to={`/Community/Free`}>
+                      {/* <a href="/Community/Free" title="검색어"> */}
                       #월드리프
-                    </a>
+                      {/* </a> */}
+                    </Link>
                   </IssueTag>
                   <IssueTag>
-                    <a href="/Community/Free" title="검색어">
+                    <Link to={`/Community/Free`}>
+                      {/* <a href="/Community/Free" title="검색어"> */}
                       #반뉴비
-                    </a>
+                      {/* </a> */}
+                    </Link>
                   </IssueTag>
                 </TagListBox>
               </TagContentBox>
@@ -358,11 +375,10 @@ const StyledSlide = styled(Slider)`
     margin-left: 54px;
     position: absolute;
     top: 152px;
-    &.slick-active{
-
+    &.slick-active {
     }
-    & li button:before{
-      color: #CA5196;
+    & li button:before {
+      color: #ca5196;
     }
   }
 
@@ -372,7 +388,7 @@ const StyledSlide = styled(Slider)`
     font-weight: 500;
     line-height: 1;
     opacity: 0.8;
-    color: #E6C6D5;
+    color: #e6c6d5;
     -webkit-font-smoothing: antialiased;
   }
   .slick-prev:before {

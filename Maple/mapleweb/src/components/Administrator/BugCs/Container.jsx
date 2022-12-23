@@ -33,6 +33,7 @@ const BugCSContainer = () => {
     axios.post("http://localhost:8080/api/report/buganswer", data).then(
       function () {
         tempFun(setReportArr);
+        setBoolen(-1);
       },
       (error) => {
         console.error("에러");

@@ -12,7 +12,7 @@ import Admin from "./admin.js";
 import Category from "./category.js";
 import Helptext from "./helptext.js";
 import Helptextchild from "./helptextchild.js";
-
+import Msg from "./msg.js";
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const configJson = require("../config/config.json");
@@ -27,6 +27,7 @@ const db = {
   Category,
   Helptext,
   Helptextchild,
+  Msg,
 };
 
 let sequelize = new Sequelize(
@@ -46,7 +47,7 @@ Admin.init(sequelize);
 Category.init(sequelize);
 Helptext.init(sequelize);
 Helptextchild.init(sequelize);
-
+Msg.init(sequelize);
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);

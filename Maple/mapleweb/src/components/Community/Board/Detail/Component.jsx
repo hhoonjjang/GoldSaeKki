@@ -8,21 +8,34 @@ import AlarmIcon from "../../images/report_btn2.png";
 import eyeImg from "../../images/info_eye_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
 import lineImg from "../../images/btn_line_img.png";
+import goldImg from "../../images/goldImg.png";
 
 import moment from 'moment';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import EditContainer from '../Edit/Container';
 
-const DetailComponent = ({ categorys, category }) => {
+const DetailComponent = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    // Redux에 저장된 값을 가져온다.
+    const states = useSelector((state) => state);
 
     // 라우터 상단의 번호를 가져와 그 번호를 아래 보드 번호로 맞춰준다.
     const { boardId } = useParams();
 
     // 해당 게시글을 가져오는 요청을 보낸다.
     const boardReq = axios.post("http://localhost:8080/api/board/getBoard", {
+        boardId: boardId
+    });
+
+    // 해당 게시글의 댓글을 가져오는 요청을 보낸다.
+    // 어떤 항목이 필요한지.. 댓글의 boardId가 req.body.boardId와 같은 놈을 모두?
+    // 정렬은 어떤 방식으로? -> ... 댓글이 답글이 아닌 놈 기준으로 먼저 단 댓글이 위에 나온다.
+    const commentReq = axios.post("http://localhost:8080/api/comment/getComment", {
         boardId: boardId
     });
 
@@ -34,17 +47,34 @@ const DetailComponent = ({ categorys, category }) => {
         boardReq.then((board) => {
             dispatch(communityAction.board(board?.data));
         });
+
+        commentReq.then((comment) => {
+            if (comment.data.length == 0) return;
+            dispatch(communityAction.comments(comment?.data));
+        });
+
+        // 스크롤 높이 변경
+        window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+
     }, [boardId]);
 
 
-    // Redux에 저장된 값을 가져온다.
-    const states = useSelector((state) => state);
-
     let board = "";
+    let boardTagsText = "";
+    let comments = [];
 
     // 랜더링 이후 값을 집어넣어줌
     if (states.community.board) {
         board = states.community.board[0];
+        boardTagsText = board?.tags;
+        // Board 조회수를 수정하는 요청도 보내줌
+        const boardReq = axios.post("http://localhost:8080/api/board/eyeCountUpdate", {
+            boardId: boardId
+        });
+    }
+    if (states.community.comments) {
+        comments = states.community.comments;
+        // console.log(comments);
     }
 
     // 현재 라우터 값을 구한다.
@@ -58,6 +88,39 @@ const DetailComponent = ({ categorys, category }) => {
     // 현재 로그인 유저 정보
     const userWorld = useSelector((state) => state.user.currServerName);
     const userName = useSelector((state) => state.user.currUserName);
+
+    // 삭제 확인
+    let deleteConfirm;
+
+    // 태그 가공(#으로 나눈 배열)
+    // #시간 #뉴비
+    let boardTags = [];
+    boardTagsText.split("#").map((item, idx) => {
+        if (item !== "") {
+            boardTags.push("#" + item.replace(" ", ""));
+            // console.log(boardTags);
+        }
+    });
+
+    // 댓글 등록
+    const [text, setText] = useState("");
+
+    // 온클릭 하면 render를 통해 text의 값이 hi에 저장된다.
+    useEffect(() => {
+        // 댓글 불러오는 코드
+        commentReq.then((comment) => {
+            if (comment.data.length == 0) return;
+            dispatch(communityAction.comments(comment?.data));
+        });
+    }, [text]);
+
+    // 공감버튼 클릭시 리랜더링
+    const [likeCount, setLikeCount] = useState(0);
+    useEffect(()=>{
+        boardReq.then((board) => {
+            dispatch(communityAction.board(board?.data));
+        });
+    }, [likeCount]);
 
     return (
         <>
@@ -81,16 +144,14 @@ const DetailComponent = ({ categorys, category }) => {
                         {WORLDLIST.map((world, idx) => {
                             if (world.name == board?.userWorld) {
                                 return <UserName key={`userName-${idx}`}><UserWorldImg key={`userWorldImg-${idx}`} src={`${world.img}`} style={{ marginRight: "1px" }} /> {board?.userName}</UserName>;
-                            } else {
-                                return;
-                            }
+                            } else return;
                         })}
                     </BoardUserName>
                     <BoardInfo>
                         {/* 오른쪽 아이콘 영역 */}
                         <IconInfo>
                             <span style={{ margin: "0px 10px" }}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board?.eyeCount}{" "}{" "}</span>
-                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString()}</span>
+                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</span>
                         </IconInfo><img src={lineImg} alt={"구분선 이미지"} style={{ margin: "0px 10px" }} />
                         <IconBox>
                             <IconWrap>
@@ -113,7 +174,16 @@ const DetailComponent = ({ categorys, category }) => {
 
                 {/* 공감영역 */}
                 <LikeWrap>
-                    <LikeBtn><span>❤ 공감하기</span></LikeBtn>
+                    <LikeBtn onClick={async (e) => {
+                        // 공감 클릭시 요청 보내기 : 보드 아이디 보내야 함 board.id
+                        // useState도 사용하여 값 변한 것처럼 보이게 한다.
+                        const likeCountUpReq = await axios.post("http://localhost:8080/api/board/likeCountUpdate", {
+                            boardId: boardId
+                        });
+                        console.log(likeCountUpReq);
+                        setLikeCount(likeCount+1);
+                    }}>
+                        <span>❤ 공감하기</span></LikeBtn>
                     <LikeCheck><span>{board?.likeCount} 명</span></LikeCheck>
                 </LikeWrap>
 
@@ -121,57 +191,133 @@ const DetailComponent = ({ categorys, category }) => {
                 {/* 태그는 먼저 위에서 잘 가공해 예쁜 배열로 만든다음 map 돌린다. */}
                 {/* Link to로 태그검색 가능하게 해도 좋을 것 같다. */}
                 <TagWrap>
-                    <Tag>#어쩌구</Tag>{" "}
-                    <Tag>#어쩌구2</Tag>{" "}
+                    {boardTags.map((item, idx) => {
+                        return <Tag key={`tag-${idx}`}>{item}</Tag>;
+                    })}
                 </TagWrap>
 
                 {/* 수정/삭제 영역 : 로그인 유저와 보드 유저가 같으면 띄운다. */}
-                {userName==board.userName ? (
-                    <UpDelBtnWrap>
-                        {/* 등록 창으로 보내고, props로 현재 수정 상태임도 보내준다. */}
-                        <Link to={`/Community/Free`}>
-                            <UpDelBtn>수정</UpDelBtn>
-                        </Link>
-                        <Link to={`/Community/Free`}>
-                            <UpDelBtn>삭제</UpDelBtn>
-                        </Link>
-                    </UpDelBtnWrap>
+                {userName == board.userName ? (
+                    <>
+                        <UpDelBtnWrap>
+
+                            {/* 등록 창으로 보내고, props로 현재 수정 상태임도 보내준다. */}
+                            {/* // 쿼리스트링으로 넘길수도 있을듯 */}
+                            <Link to={`./edit`}>
+                                <UpDelBtn>수정</UpDelBtn>
+                            </Link>
+
+
+                            <Link to={`/Community/board/${board.id}`}>
+                                <UpDelBtn onClick={async () => {
+                                    deleteConfirm = window.confirm("정말 삭제하시겠습니까?");
+
+                                    if (deleteConfirm) {
+                                        // 보드 id를 기준으로 삭제 요청 보내기
+                                        await axios.post("http://localhost:8080/api/board/destroy", {
+                                            boardId: board.id,
+                                        });
+                                        // 해당 커뮤니티 리스트로 이동시키기
+                                        navigate(`/Community/${route}`);
+                                    }
+                                }}>삭제</UpDelBtn>
+                            </Link>
+                        </UpDelBtnWrap>
+                    </>
                 ) : ""}
+
 
                 {/* 댓글 영역 */}
                 {/* 여기서부터 댓글 컴포넌트 만들어진 이후에 작업 */}
                 <CommentInfo>
                     {/* 몇개인지,색깔바꾸기 */}
                     댓글{" "}
-                    <CommentCount>0</CommentCount>
+                    <CommentCount>{comments?.length}</CommentCount>
                 </CommentInfo>
 
                 {/* 댓글 목록 */}
+                {/* 댓글 findAll하는 것도 리덕스에 같이 넣어야 할 것 같다. */}
+                {/* 댓글 등록시 유저 월드도 같이 보내도록 한다. */}
                 <CommentBox>
                     <CommentWrap>
                         {/* 댓글 개수에 맞게 map 돌린다. */}
-                        <Comment>
-                            {/* 댓글유저정보 */}
-                            <div>
-                                <span>왼쪽</span>
-                                <span>오른쪽</span>
-                            </div>
-                            {/* 댓글내용 */}
-                            <div>하이</div>
-                            {/* 답글 */}
-                            <div>어머 답글이네..(답글컴포넌트)</div>
-                        </Comment>
+                        {/* 하나의 댓글 뭉텅이라고 쳐야할 듯 */}
+                        {comments.map((comment, idx) => {
+                            return (
+                                <Comment key={`comment-${idx}`}>
+                                    {/* 댓글유저정보 */}
+                                    <CommentUserInfo key={`commentUserInfo-${idx}`}>
+                                        {/* 유저 월드 띄우기 */}
+                                        {WORLDLIST.map((item, idx) => {
+                                            if (item.name == comment.userWorld) {
+                                                return (
+                                                    <img key={`userWorld-${idx}`} src={item.img} alt='유저 월드 아이콘'></img>
+                                                )
+                                            }
+                                        })}{" "}
+                                        <span key={`userName-${idx}`}>{comment.userName}</span>{" "}
+                                        <CommentTimeSpan key={`createTime-${idx}`}>{moment(comment.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(comment.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</CommentTimeSpan>
+                                    </CommentUserInfo>
+                                    {/* 댓글내용 */}
+                                    <CommentValue key={`commentText-${idx}`}>{comment.text}</CommentValue>
 
+                                    {/* 답글 컴포넌트 여기에 추가(바로 아래 붙도록 출력) */}
+                                    {/* <>하이</> */}
+                                </Comment>
+                            );
+                        })}
                     </CommentWrap>
                 </CommentBox>
 
                 {/* 댓글 입력 */}
                 <CommentAddWrap>
                     <CommentAdd>
-                        <CommentTextArea name='comment'></CommentTextArea>
+                        {/* <CommentTextArea name='comment' defaultValue={text} value={text} onInput={(e)=>{ */}
+                        <CommentTextArea name='comment' value={text} onInput={(e) => {
+                            setText(e.target.value);
+                        }}></CommentTextArea>
                         <CommentBtnWrap>
-                            <div style={{ fontSize: "25px", marginLeft: "5px" }}>🦢</div>
-                            <CommentAddBtn>등록</CommentAddBtn>
+                            <div style={{ fontSize: "25px", marginLeft: "5px" }}>
+                                <img src={goldImg} alt='금쪽이' />
+                            </div>
+                            <CommentAddBtn onClick={async () => {
+                                if (!userName) {
+                                    alert("로그인이 필요합니다.");
+                                    return;
+                                }
+                                if (!text) {
+                                    alert("텍스트를 입력해주세요.");
+                                    return;
+                                }
+
+                                // 서버쪽에 등록 요청을 보냄
+                                const commentAddRed = await axios.post("http://localhost:8080/api/comment/create", {
+                                    // 댓글 등록시 보내줄 값
+                                    // 1. 댓글 작성 유저 닉네임
+                                    // 2. 내용 : value값을 setState한 것을 state에서 가져온다.
+                                    // 3. 해당 게시글 번호
+                                    // 4. 만약 답글이라면 해당 댓글의 댓글 번호
+                                    // 5. 만약 답글이라면 해당 댓글 작성 유저 닉네임
+                                    userName: userName,
+                                    text: text,
+                                    boardId: board?.id,
+                                    userWorld: userWorld,
+                                });
+                                console.log(commentAddRed.data);
+
+                                switch (commentAddRed.data.status) {
+                                    case 200:
+                                        alert("댓글이 등록되었습니다.");
+                                        // 값을 비워준다.
+                                        setText("");
+                                        return;
+                                    case 400:
+                                        alert("댓글 등록 오류입니다.");
+                                        return;
+                                    default:
+                                        break;
+                                }
+                            }}>등록</CommentAddBtn>
                         </CommentBtnWrap>
 
                     </CommentAdd>
@@ -342,7 +488,7 @@ const CommentInfo = styled.div`
     height: 55px;
     line-height: 55px;
     border-top: 1px solid #e3e3e3;
-    border-bottom: 1px solid #e3e3e3;
+    /* border-bottom: 1px solid #e3e3e3; */
     /* background-color: #F9F9F9; */
     /* background-color: #FBF9FA; */
     padding: 0 30px;
@@ -374,16 +520,37 @@ const CommentBox = styled.div`
 const CommentWrap = styled.div`
     float: left;
     width: 100%;
-    padding: 30px 27px 25px 27px;
+    /* padding: 30px 27px 25px 27px; */
     border-bottom: 1px solid #e3e3e3;
 `;
 const Comment = styled.div`
+    box-sizing: border-box;
+    border-top: 1px solid #e3e3e3;
+    /* margin: 5px 0; */
+    font-size: 15px;
+    float: left;
+    width: 100%;
 
+    
+    padding: 30px 27px 25px 27px;
+    &>div:first-child{
+        margin-bottom: 10px;
+    }
+`;
+const CommentUserInfo = styled.div`
+
+    & span{
+        margin-right: 2px;
+    }
+`;
+const CommentValue = styled.span`
+    font-size: 13px;
+    color: #555555;
 `;
 
 const CommentAddWrap = styled.div`
     float: left;
-    margin-top: 40px;
+    margin-top: 30px;
     width: 100%;
     height: 205px;
 `;
@@ -495,4 +662,12 @@ const Tag = styled.span`
     cursor: pointer;
     color: #696969;
     font-size: 13px;
+    margin-right: 11px;
+`;
+
+
+// 댓글
+const CommentTimeSpan = styled.span`
+    font-size: 13px;
+    color: #888;
 `;

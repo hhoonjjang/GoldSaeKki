@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import HelpCategoryDisplayComponent from "./Component";
+import ThirdContainer from "./Container3";
 const tempArrFun = async (setCategory) => {
   try {
     let categoryArr = (
@@ -22,7 +23,8 @@ const tempChildFun = async (setText) => {
     console.error(err);
   }
 };
-const SecondContainer = () => {
+const SecondContainer = ({ propsArr }) => {
+  console.log(propsArr);
   const [categoryArr, setCategory] = useState([]);
   const [textArr, setText] = useState([]);
   const [editText, setEdit] = useState("");
@@ -31,7 +33,7 @@ const SecondContainer = () => {
     tempArrFun(setCategory);
     tempChildFun(setText);
   }, []);
-
+  useEffect(() => {}, [setText]);
   const textSubmit = (category, text) => {
     if (!category) return alert("카테고리를 선택하세요");
     if (!text) return alert("내용을 입력하세요");
@@ -66,9 +68,7 @@ const SecondContainer = () => {
     setBool(-1);
   };
   const editCategorySubmit = (text, id) => {
-    console.log(text);
     if (!text) return setBool(-1);
-    console.log(text, id);
     setBool(-1);
     axios
       .post("http://localhost:8080/api/admin/edittext", { text, id })
@@ -78,7 +78,7 @@ const SecondContainer = () => {
   };
   return (
     <HelpCategoryDisplayComponent
-      categoryArr={categoryArr}
+      categoryArr={propsArr}
       childArr={textArr}
       isBool={isBool}
       editText={editText}
@@ -89,7 +89,10 @@ const SecondContainer = () => {
       cancel={cancel}
       a="text"
       b="helpCategory"
-    />
+      c="category"
+    >
+      <ThirdContainer propsArr={textArr} />
+    </HelpCategoryDisplayComponent>
   );
 };
 

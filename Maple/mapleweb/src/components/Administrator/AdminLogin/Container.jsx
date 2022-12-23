@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { action } from "../../../modules/admin";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const AdminLoginContainer = () => {
   console.log(document.cookie);
   console.log(document.cookie.split("=")[0]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const isCookie = document.cookie;
   // if (document.cookie.split("=")[0] == "login") {
   //   alert("일반유저");
@@ -17,6 +17,7 @@ const AdminLoginContainer = () => {
   // window.location.reload();
   // }
   const dispatch = useDispatch();
+
   const onClick = () => {
     axios.post("http://localhost:8080/api/admin/logout").then(() => {
       dispatch(action.logout());
@@ -33,7 +34,6 @@ const AdminLoginContainer = () => {
         }
         // window.location.reload();
       }
-      // (error) => {
       //   console.error("에러");
       // }
     );
@@ -53,8 +53,8 @@ const AdminLoginContainer = () => {
   //     // }
   //   );
   // }, []);
-
   const tempAdmin = useSelector((state) => state?.admin.name);
+
   console.log(tempAdmin);
   return (
     <AdminLoginComponent

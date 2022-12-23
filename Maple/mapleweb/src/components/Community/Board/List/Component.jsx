@@ -1,17 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
-// import { Link, Routes, Route } from "react-router-dom";
-import Pagination from "react-js-pagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import moment from "moment";
+import Pagination from "react-js-pagination";
+import './Paging.css';
 
 import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 import eyeImg from "../../images/info_eye_new.png";
 import heartImg from "../../images/info_heart2_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
-import DetailContainer from "../Detail/Container";
+// import DetailContainer from "../Detail/Container";
 
 const tempArr = [
   { text: 1, img: "heart2_new" },
@@ -19,52 +19,90 @@ const tempArr = [
   { text: "2222", img: "eye_new" },
 ];
 
-const ListComponent = ({ categorys, category, route }) => {
+
+const ListComponent = () => {
+
+  // 리덕스를 사용하기 위한 라이브러리
   const dispatch = useDispatch();
+
+  // 현재 주소의 카테고리 라우터를 가져온다.
+  const location = useLocation();
+  const nowParam = useParams(location).category;
+
+  // 주소에서 카테고리 이름을 가져와 기본값으로 저장한다.
+  const [category, setCategory] = useState(CATEGORY.find(item => item.label == nowParam));
 
   // 페이징 처리 라이브러리
   // https://velog.io/@dltmdwls15/pagination-Library%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%AA%A9%EB%A1%9D-%EA%B5%AC%ED%98%84
   // const [page, setPage] = useState(1);
   // const handlePageChange = (page) => { setPage(page); };
 
-  // 현재 유저
+  // 페이징 처리 : 현재 페이지
+  const [nowPage, setNowPage] = useState(1);
+  // 페이지 변경 함수
+  const handlePageChange = (page) => {
+    setNowPage(page);
+  };
+
+
+
+  // 현재 유저 닉네임을 가져온다.
   const userName = useSelector((state) => state.user.currUserName);
 
-  // 해당 카테고리 게시글 목록을 가져오는 요청을 보낸다.
-  const boardsReq = axios.post("http://localhost:8080/api/board/getList", {
-    category: category,
-  });
-
-  // Promise {<pending>} 형태로 값이 뽑아와 진다.
-  console.log(boardsReq);
-
-  // 계속된 리랜더링 문제로 useEffect()로 감싸주었다.
-  // 카테고리가 변경될 때 Redux에 값을 저장해준다.
+  // 현재 주소가 바뀌면 카테고리가 바뀌도록 한다.
   useEffect(() => {
-    // 배열의 객체로 값이 잘 뽑아와진다. Redux에 해당 리스트를 저장해 준다.
-    boardsReq.then((boards) => {
+    setCategory(CATEGORY.find(item => item.label == nowParam));
+
+    // 스크롤도 올려줌?
+    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+  }, [nowParam]);
+
+  // 계속된 리랜더링 문제로 useEffect(()=>{},[카테고리])로 감싸주었다.
+  useEffect(() => {
+    setNowPage(1);
+    // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
+    axios.post("http://localhost:8080/api/board/getList", {
+      category: category.name,
+    }).then((boards) => {
+      // DB에 값이 없으면 에러가 뜨지 않게 해준다.
       if (boards.data.name == "SequelizeDatabaseError") {
         return;
       }
+      // 해당 게시글 목록을 리덕스에 저장한다.
+      // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
       dispatch(action.list(boards.data));
+    }).catch((err) => {
+      console.log(err);
+    }).finally(() => {
+      // 무조건 실행한다.
     });
-  }, [category]);
+  }, [category, dispatch]);
 
-  let boards = "";
 
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
-  const boardList = useSelector((state) => state);
-  // const boards = boardList.community.list;
-  if (boardList.community.list) {
-    boards = boardList.community.list;
+  const boards = useSelector((state) => state.community.list);
+
+  // 띄워야 하는 것 : 해당 페이지의 번호에 맞는 목록을 띄움
+  // 1페이지면 0~10개 boards에서 자름
+  let newBoards = [];
+  if (boards) {
+    boards.map((item, idx) => {
+      if (idx >= (nowPage - 1) * 10 && idx < (nowPage) * 10) {
+        newBoards.push(item);
+      }
+    });
   }
-  // console.log(boards[0].id);
-  // console.log(boards);
+
+
+  // 페이지 높이 변경
+  useEffect(() => {
+    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+  }, [nowPage]);
 
   return (
     <>
       {/* 현재 게시판 이름을 가져와 띄운다. */}
-      <CategoryTitle>{category}</CategoryTitle>
+      <CategoryTitle>{category?.name}</CategoryTitle>
       <ContentBox>
         {/* 월드 선택 */}
         <WorldBox>
@@ -87,8 +125,8 @@ const ListComponent = ({ categorys, category, route }) => {
         {/* 게시글 목록 */}
         <ListBox>
           {/* 여기서 map 돌리기 */}
-          {boards &&
-            boards?.map((board, idx) => {
+          {newBoards &&
+            newBoards?.map((board, idx) => {
               return (
                 <Link
                   key={`boardIdLink-${idx}`}
@@ -143,25 +181,29 @@ const ListComponent = ({ categorys, category, route }) => {
                             // 현재 시간 앞자리와 DB 시간 앞자리가 다르면 다른 날이므로 날짜를 띄운다.
                             // 같으면 DB 뒷자리 시간을 출력한다.
                             moment().toDate().toLocaleString().substr(0, 13) !==
-                            moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ")
-                              .toDate()
-                              .toLocaleString()
-                              .substr(0, 13)
+                              moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ")
+                                .toDate()
+                                .toLocaleString()
+                                .substr(0, 13)
                               ? // `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)}`
-                                `${moment(
-                                  board?.createdAt,
-                                  "YYYY-MM-DDTHH:mm:ssZ"
-                                )
-                                  .toDate()
-                                  .toLocaleString()
-                                  .substr(2, 11)}`
+                              `${moment(
+                                board?.createdAt,
+                                "YYYY-MM-DDTHH:mm:ssZ"
+                              )
+                                .toDate()
+                                .toLocaleString()
+                                .substring(0, moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().indexOf("오"))
+                              }`
+                              // 위 : 오늘이 아닐 때, 아래 : 오늘일 때
                               : `${moment(
-                                  board?.createdAt,
-                                  "YYYY-MM-DDTHH:mm:ssZ"
-                                )
-                                  .toDate()
-                                  .toLocaleString()
-                                  .substr(13, 9)}`
+                                board?.createdAt,
+                                "YYYY-MM-DDTHH:mm:ssZ"
+                              )
+                                .toDate()
+                                .toLocaleString()
+                                .substring(moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().indexOf("오"))
+                                .substr(0, moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substring(moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().indexOf("오")).lastIndexOf(":"))
+                              }`
                           }
                         </IconInfo>
                         <IconInfo key={`eyeCount-${idx}`} className="eyeCount">
@@ -183,7 +225,7 @@ const ListComponent = ({ categorys, category, route }) => {
           {/* 로그인 유저 있으면 띄우고 없으면 로그인 페이지로 이동하는 Link to 띄우기 */}
 
           {userName ? (
-            <Link to={`/Community/${route}/BoardAdd`}>
+            <Link to={`/Community/${category.label}/BoardAdd`}>
               <RegistBtn
                 onClick={(e) => {
                   // 글 작성 버튼 클릭시 해당 요청 보내도록 코드 추가하기
@@ -205,15 +247,25 @@ const ListComponent = ({ categorys, category, route }) => {
         </ButtonBox>
 
         {/* 페이지 */}
-        {/* <PaginationBox>
+        <PagenationWrap>
           <Pagination
-            activePage={1}
-            itemsCountPerPage={5}
-            totalItemsCount={300}
-            pageRangeDisplayed={5}
-            onChange={handlePageChange}>
-          </Pagination>
-        </PaginationBox> */}
+            // 현재 페이지
+            activePage={nowPage}
+            // 띄울 게시글 개수
+            itemsCountPerPage={10}
+            // 총 게시글 개수
+            totalItemsCount={boards?.length || 0}
+            // 표시할 개수 
+            pageRangeDisplayed={10}
+            // 이전을 나타낼 아이콘
+            prevPageText={"‹"}
+            // 다음을 나타낼 아이콘
+            nextPageText={"›"}
+            // 페이지네이션 함수
+            onChange={handlePageChange}
+          />
+        </PagenationWrap>
+
       </ContentBox>
     </>
   );
@@ -310,6 +362,7 @@ const BoardTitle = styled.div`
   font-size: 16px;
   color: #333;
   float: left;
+  max-width: 500px;
   & > span:first-child {
     color: #ca5196;
   }
@@ -374,10 +427,7 @@ const IconInfo = styled.div`
 
   /* 보통은 그냥 바로 안띄우고 예외처리도 해준다(ex. 이미지가 안 들어왔을 때 무엇을 띄울 것인지) */
   /* 이놈 뭔지 모르겠는데 조금 수정해야 할듯? */
-  background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(
-      props
-    ) => props.iconImg}.png")
-    left 0px no-repeat;
+  background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(props) => props.iconImg}.png") left 0px no-repeat;
   max-width: ${(props) => {
     // 무엇을 기준으로 나눌건지
     switch (props.iconImg) {
@@ -396,7 +446,7 @@ const IconInfo = styled.div`
   }
   &.date {
     background: url(${dateImg}) left 0px no-repeat;
-    min-width: 80px !important;
+    min-width: 90px !important;
   }
   &.eyeCount {
     background: url(${eyeImg}) left 0px no-repeat;
@@ -431,24 +481,7 @@ const RegistBtn = styled.a`
 
 const UserWorldImg = styled.img``;
 
-// const PaginationBox = styled.div`
-//   .pagination { display: flex; justify-content: center; margin-top: 15px;}
-//   ul { list-style: none; padding: 0; }
-//   ul.pagination li {
-//     display: inline-block;
-//     width: 30px;
-//     height: 30px;
-//     border: 1px solid #e2e2e2;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     font-size: 1rem;
-//   }
-//   ul.pagination li:first-child{ border-radius: 5px 0 0 5px; }
-//   ul.pagination li:last-child{ border-radius: 0 5px 5px 0; }
-//   ul.pagination li a { text-decoration: none; color: #337ab7; font-size: 1rem; }
-//   ul.pagination li.active a { color: white; }
-//   ul.pagination li.active { background-color: #337ab7; }
-//   ul.pagination li a:hover,
-//   ul.pagination li a.active { color: blue; }
-// `;
+const PagenationWrap = styled.div`
+  float: left;
+  width: 100%;
+`;

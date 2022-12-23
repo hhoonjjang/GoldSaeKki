@@ -34,16 +34,23 @@ function LeftTabsExample() {
                   <OnlineContainer />
                 </div>
               </Tab.Pane>
-              <Tab.Pane eventKey="second">
-                <div>
-                  <MyRequestContainer />
-                </div>
-              </Tab.Pane>
-              <Tab.Pane eventKey="third">
-                <div>
-                  <MessageContainer />
-                </div>
-              </Tab.Pane>
+              {document.cookie == "admin" ? (
+                <></>
+              ) : (
+                <>
+                  {" "}
+                  <Tab.Pane eventKey="second">
+                    <div>
+                      <MyRequestContainer />
+                    </div>
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="third">
+                    <div>
+                      <MessageContainer />
+                    </div>
+                  </Tab.Pane>
+                </>
+              )}
             </Tab.Content>
           </Col>
         </Row>

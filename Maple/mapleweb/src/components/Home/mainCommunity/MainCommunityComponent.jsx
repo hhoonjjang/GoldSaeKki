@@ -5,12 +5,8 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const MainCommunityComponent = ({ communityNewestPost }) => {
-  const communityList = ["Free", "Infomation", "topicDiscussion"];
+  const communityList = ["Free", "Infomation", "TopicDiscussion"];
   console.log(communityNewestPost);
-  // const [_, setRender] = useState();
-  // useEffect(() => {
-  //   setRender();
-  // }, []);
   return (
     <MainCommunityBox img={communityBackground}>
       <div className="mainCommunity_innerBox">
@@ -18,7 +14,7 @@ const MainCommunityComponent = ({ communityNewestPost }) => {
           <div className="mainCommunity_innerBox_community_title">
             <h1 className="mainCommunity_innerBox_community_intro">
               금쪽이스토리 커뮤니티
-              <Link to="/Community" element={<CommunityComponet />}>
+              <Link to="/Community/Free" element={<CommunityComponet />}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 448 512"
@@ -47,9 +43,7 @@ const MainCommunityComponent = ({ communityNewestPost }) => {
             {/* <div></div> */}
             {/* </div> */}
             {communityList.map((item, index) => {
-              console.log(communityNewestPost);
               console.log(communityNewestPost[index]);
-              console.log(communityNewestPost[index]?.category);
               return (
                 <div
                   className={`mainCommunity_innerBox_community_item`}
@@ -68,7 +62,10 @@ const MainCommunityComponent = ({ communityNewestPost }) => {
                       >
                         [{communityNewestPost[index]?.category}]
                       </div>
-                      <Link to="/Community" element={<CommunityComponet />}>
+                      <Link
+                        to={`/Community/board/${communityNewestPost[index]?.id}`}
+                        element={<CommunityComponet />}
+                      >
                         <div
                           className={
                             "mainCommunity_innerBox_community_item_top_innerBox_title"
@@ -90,7 +87,10 @@ const MainCommunityComponent = ({ communityNewestPost }) => {
                           "mainCommunity_innerBox_community_item_mid_innerBox_contents"
                         }
                       >
-                        <Link to="/Community" element={<CommunityComponet />}>
+                        <Link
+                          to={`/Community/board/${communityNewestPost[index]?.id}`}
+                          element={<CommunityComponet />}
+                        >
                           <span
                             dangerouslySetInnerHTML={{
                               __html: communityNewestPost[index]?.contents,

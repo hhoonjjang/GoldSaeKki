@@ -25,7 +25,7 @@ function App() {
   // }, [location]);
 
   const dispatch = useDispatch();
-
+  const location = useLocation();
   const adminLogin = () => {
     if (document.cookie) {
       axios
@@ -40,56 +40,63 @@ function App() {
   };
 
   const loginCheck = () => {
-    // if (document.cookie) {
-    //   axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
-    //     dispatch(action.check(data.data.userInfo));
-    //     console.log("로그인정보를 받았다", data);
-    //     // currUser = data.data.userInfo.name;
-    //     // console.log(currUser);
-    //   });
-    // }
+    if (document.cookie) {
+      axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
+        dispatch(action.check(data.data.userInfo));
+        console.log("로그인정보를 받았다", data);
+        // currUser = data.data.userInfo.name;
+        // console.log(currUser);
+      });
+    }
   };
-  console.log();
+  console.log(location);
   document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck();
   return (
-    <div>
-      {/* {(location.pathname = "/Adminstrator" ? <></> : <Menubar />)} */}
-      <Menubar />
-      <Routes>
-        {/* 메인페이지 헤더 */}
-        <Route path="/News/*" element={<HeaderContainer />}></Route>
-        <Route path="/Guide/*" element={<HeaderContainer />}></Route>
-        <Route path="/Ranking/*" element={<HeaderContainer />}></Route>
-        <Route path="/Community/*" element={<HeaderContainer />}></Route>
-        <Route path="/Media/*" element={<HeaderContainer />}></Route>
-        <Route path="/Support/*" element={<HeaderContainer />}></Route>
-        <Route path="/Administrator/*" element={<HeaderContainer />}></Route>
-        <Route path="/Mypage/*" element={<HeaderContainer />}></Route>
-        {/* 기타 등등 헤더 */}
-      </Routes>
-      <UserComponent />
+    <div id="body_wrapper">
+      <div id="body_content">
+        {/* {(location.pathname = "/Adminstrator" ? <></> : <Menubar />)} */}
+        {location.pathname == "/regist" || location.pathname == "/login" ? (
+          <></>
+        ) : (
+          <Menubar />
+        )}
 
-      {/* 나중에 합칠 때 홈 안에 커뮤니티 컴포넌트를 넣어야 한다. */}
+        <Routes>
+          {/* 메인페이지 헤더 */}
+          <Route path="/News/*" element={<HeaderContainer />}></Route>
+          <Route path="/Guide/*" element={<HeaderContainer />}></Route>
+          <Route path="/Ranking/*" element={<HeaderContainer />}></Route>
+          <Route path="/Community/*" element={<HeaderContainer />}></Route>
+          <Route path="/Media/*" element={<HeaderContainer />}></Route>
+          <Route path="/Support/*" element={<HeaderContainer />}></Route>
+          <Route path="/Administrator/*" element={<HeaderContainer />}></Route>
+          <Route path="/Mypage/*" element={<HeaderContainer />}></Route>
+          {/* 기타 등등 헤더 */}
+        </Routes>
+        <UserComponent />
 
-      {/* <Link to={"/"}>메인홈</Link>
+        {/* 나중에 합칠 때 홈 안에 커뮤니티 컴포넌트를 넣어야 한다. */}
+
+        {/* <Link to={"/"}>메인홈</Link>
       {" | "}
       <Link to={"/Community/Free"}>커뮤니티</Link>
       <br />
 
       <Link to={"/Support"}>고객지원</Link> */}
-      <Link to={"/Administrator"}>관리자</Link>
-      <Routes>
-        <Route path="/" element={<HomeComponet />}></Route>
-        <Route path="/news"></Route>
-        <Route path="/Support/*" element={<SupportComponet />}></Route>
-        <Route
-          path="/Administrator/*"
-          element={<AdministratorComponet />}
-        ></Route>
-        {/* <Route path="/Mypage/*" element={<MypageContainer />}></Route> */}
-        <Route path="/Community/*" element={<CommunityComponet />}></Route>
-      </Routes>
 
+        <Link to={"/Administrator"}>관리자</Link>
+        <Routes>
+          <Route path="/" element={<HomeComponet />}></Route>
+          <Route path="/news"></Route>
+          <Route path="/Support/*" element={<SupportComponet />}></Route>
+          <Route
+            path="/Administrator/*"
+            element={<AdministratorComponet />}
+          ></Route>
+          {/* <Route path="/Mypage/*" element={<MypageContainer />}></Route> */}
+          <Route path="/Community/*" element={<CommunityComponet />}></Route>
+        </Routes>
+      </div>
       <Footer></Footer>
     </div>
   );

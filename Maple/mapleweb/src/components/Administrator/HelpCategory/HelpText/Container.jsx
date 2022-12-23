@@ -35,7 +35,6 @@ const HelpTextContainer = () => {
     tempArrFun(setCategory);
   }, []);
   const delCategory = (category) => {
-    console.log(category);
     axios
       .post("http://localhost:8080/api/admin/delcategory", { category })
       .then(() => {

@@ -2,6 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import db from "../models/index.js";
+import crypto from "crypto-js";
 
 const router = Router();
 
@@ -40,9 +41,12 @@ router.post("/imgchange", (req, res) => {
 
 router.post("/getImg", (req, res) => {
   console.log("요청", req.body.currUserName);
+  console.log("req.body?.currUserName", req.body?.currUserName);
   if (req.body?.currUserName)
     db.User.findOne({ where: { userName: req.body?.currUserName } }).then(
       (data) => {
+        console.log("data : ", data);
+        console.log("data?.profileImg : ", data?.profileImg);
         if (data?.profileImg) {
           console.log("이미지 정보", data.profileImg);
           res.send(`http://localhost:8080/api/download${data.profileImg}`);
@@ -82,11 +86,36 @@ router.post("/logincheck", (req, res) => {
   });
 });
 
+router.post("/findId", (req, res) => {
+  db.User.findOne({ where: { userName: req.body.nickName } }).then((data) => {
+    res.send(data);
+  });
+});
+
+router.post("/findPw", (req, res) => {
+  db.User.update(
+    { userPw: crypto.SHA256("goldsaekki!").toString() },
+    {
+      where: { userId: req.body.findId },
+    }
+  ).then((data) => {
+    console.log("받을데이터", data);
+    if (data[0] === 0) {
+      res.send({ message: 504 });
+    } else {
+      res.send({ pw: "goldsaekki!" });
+    }
+  });
+});
+
 router.post("/login", (req, res) => {
   db.User.findOne({
     where: { userId: req.body.loginId },
   })
     .then((data) => {
+      console.log("data??", data);
+      console.log("data.userPw", data?.userPw);
+      console.log("req.body.loginPw", req.body.loginPw);
       if (data) {
         if (data.userPw === req.body.loginPw) {
           const token = jwt.sign(

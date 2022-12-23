@@ -19,7 +19,7 @@ const tempChildFun = async (setChildText) => {
   setChildText(childArr);
 };
 
-const ThirdContainer = () => {
+const ThirdContainer = ({ propsArr }) => {
   const [textArr, setText] = useState([]);
   const [childArr, setChildText] = useState([]);
   const [isBool, setBool] = useState(-1);
@@ -33,8 +33,6 @@ const ThirdContainer = () => {
   const textSubmit = (category, text) => {
     if (!category) return alert("카테고리를 선택하세요");
     if (!text) return alert("내용을 입력하세요");
-    console.log(category);
-    console.log(text);
     axios
       .post("http://localhost:8080/api/admin/addchildtext", {
         category,
@@ -46,7 +44,6 @@ const ThirdContainer = () => {
       });
   };
   const delBtn = (text) => {
-    console.log(text);
     axios
       .post("http://localhost:8080/api/admin/delchild", { text })
       .then(() => {
@@ -55,8 +52,6 @@ const ThirdContainer = () => {
       });
   };
   const editBtn = (idx, text) => {
-    console.log(idx);
-    console.log(idx);
     if (idx == isBool) {
       setBool(-1);
     } else setBool(idx);
@@ -64,8 +59,6 @@ const ThirdContainer = () => {
   };
   const editSubmit = (text, id) => {
     if (!text) return setBool(-1);
-    console.log(text);
-    console.log(id);
     setBool(-1);
     axios
       .post("http://localhost:8080/api/admin/editchild", { text, id })
@@ -78,7 +71,7 @@ const ThirdContainer = () => {
   };
   return (
     <HelpCategoryDisplayComponent
-      categoryArr={textArr}
+      categoryArr={propsArr}
       childArr={childArr}
       isBool={isBool}
       editText={editText}
@@ -89,6 +82,7 @@ const ThirdContainer = () => {
       cancel={cancel}
       a="textChild"
       b="textCategory"
+      c="text"
     />
   );
 };

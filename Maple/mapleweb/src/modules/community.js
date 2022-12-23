@@ -18,11 +18,13 @@ import world15Img from "../components/Community/images/worlds/icon_15.png";
 
 // 커뮤니티 카테고리 목록
 export const CATEGORY = [
-    { name: '자유게시판', label: "Free", link: "/Free" },
-    { name: '정보게시판', label: "Information", link: "/Information" },
-    { name: '토론게시판', label: "TopicDiscussion", link: "/TopicDiscussion" },
-    { name: '금쪽이 아트', label: "Art", link: "/Art" },
-    { name: '금쪽이 코디', label: "Coordination", link: "/Coordination" },
+    { name: '자유게시판', label: "Free" },
+    // { name: '바다이야기', label: "Hi" },
+    { name: '정보게시판', label: "Information" },
+    // { name: '금쪽이야기', label: "Go" },
+    { name: '연재소설', label: "Novel" },
+    { name: '토론게시판', label: "TopicDiscussion" },
+    { name: '금쪽이아트', label: "Art" },
 ];
 
 // 개발용 임시 카테고리
@@ -65,6 +67,7 @@ export const WORLDLIST = [
 const TYPE = {
     LIST: "/community/list",
     BOARD: "/community/board",
+    COMMENTS: "/community/comments",
 }
 
 // 해당 커뮤니티 게시글 목록
@@ -75,7 +78,7 @@ const list = (list) => {
         payload: { list }
     };
 };
-// 보드 id에 해당하는 게시글
+// 보드 id에 해당하는 게시글과 댓글 목록
 const board = (board) => {
     // console.log(board);
     return {
@@ -83,8 +86,16 @@ const board = (board) => {
         payload: { board }
     }
 }
+// 보드 id에 해당하는 댓글 목록
+const comments = (comments) => {
+    // console.log(comments);
+    return {
+        type: TYPE.COMMENTS,
+        payload: { comments }
+    }
+}
 
-export const action = { list, board };
+export const action = { list, board, comments };
 
 export const initialize = {};
 
@@ -95,7 +106,11 @@ export const reducer = (state = initialize, action) => {
         case TYPE.LIST:
             return payload;
         case TYPE.BOARD:
-            return payload;
+            const { board } = payload;
+            return { ...state, board };
+        case TYPE.COMMENTS:
+            const { comments } = payload;
+            return { ...state, comments };
         default:
             return state;
     }

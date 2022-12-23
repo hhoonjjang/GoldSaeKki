@@ -1,4 +1,4 @@
-import MainSlide from "./mainSlide/MainSlide";
+import MainSlideContainer from "./mainSlide/MainSlideContainer";
 import MainGamestartContainer from "./mainGamestart/MainGamestartContainer";
 import MainNoticeContainer from "./mainNotice/MainNoticeContainer";
 import MainInfo from "./mainInfo/MainInfo";
@@ -9,24 +9,23 @@ import archive from "./Img/main_archive.png";
 
 import styled from "styled-components";
 import MainCommunityContainer from "./mainCommunity/MainCommunityContainer";
+import { useEffect } from "react";
 
 const HomeComponet = () => {
   return (
-    <div className="Home_wrapper">
-      <div className="Home_content">
-        {/* <MainSlide></MainSlide> */}
-        {/* 임시로 배너를 채워넣었습니다 */}
-        <MainSlide></MainSlide>
-        {/* <TempSlide></TempSlide> */}
-        <MainGamestartContainer></MainGamestartContainer>
-        <MainNoticeContainer></MainNoticeContainer>
-        <MainCommunityContainer></MainCommunityContainer>
-        <MainArchive>
-          <img src={archive} />
-        </MainArchive>
-        <MainInfo></MainInfo>
-        <Shortcut></Shortcut>
-      </div>
+    <div>
+      {/* <MainSlide></MainSlide> */}
+      {/* 임시로 배너를 채워넣었습니다 */}
+      <MainSlideContainer></MainSlideContainer>
+      {/* <TempSlide></TempSlide> */}
+      <MainGamestartContainer></MainGamestartContainer>
+      <MainNoticeContainer></MainNoticeContainer>
+      <MainCommunityContainer></MainCommunityContainer>
+      <MainArchive>
+        <img src={archive} />
+      </MainArchive>
+      <MainInfo></MainInfo>
+      <Shortcut></Shortcut>
     </div>
   );
 };

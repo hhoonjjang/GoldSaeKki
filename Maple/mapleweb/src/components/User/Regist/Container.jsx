@@ -22,11 +22,6 @@ axios
   });
 const RegistContainer = () => {
   const dispatch = useDispatch();
-  // component쪽에서 가져올 데이터들 세팅
-  // const alertText = document.getElementsByTagName("p"); //2,4,6 -> 1,3,5
-  // console.log(alertText);
-  // const registText = document.getElementsByTagName("input");
-  // console.log(registText);
 
   // 아이디 예외처리
   const idcheck = /^[a-z0-9_-]{5,20}$/;
@@ -37,13 +32,18 @@ const RegistContainer = () => {
   //닉네임 예외처리
   const namecheck = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
 
+  // 예외처리를 위한 세팅(회원가입)
+  let idresult;
+  let pwresult;
+  let nameresult;
+
   const idcheckFunc = (userId) => {
     // registText[0].addEventListener("focusout", (e) => {
     // console.log(userId.match(idcheck));
     const findUser = (elem) => {
       if (elem.userId === userId) return true;
     };
-    const idresult = idcheck.test(userId);
+    idresult = idcheck.test(userId);
     console.log(idresult);
     if (userId.length === 0) {
       return {
@@ -54,6 +54,8 @@ const RegistContainer = () => {
       const tempUser = tempUserArr.find(findUser);
       console.log(tempUser);
       if (tempUser) {
+        // 이미 아이디가 있는거임
+        idresult = false;
         return {
           class: "red",
           text: "아이디가 중복되었습니다.",
@@ -85,7 +87,7 @@ const RegistContainer = () => {
   };
 
   const pwcheckFunc = (userPw) => {
-    const pwresult = pwcheck.test(userPw);
+    pwresult = pwcheck.test(userPw);
     if (userPw.length === 0) {
       return {
         text: "사용하실 비밀번호를 입력해주세요.",
@@ -108,7 +110,7 @@ const RegistContainer = () => {
     const findName = (elem) => {
       if (elem.userName === userName) return true;
     };
-    const nameresult = namecheck.test(userName);
+    nameresult = namecheck.test(userName);
     if (userName.length === 0) {
       return {
         text: "사용하실 닉네임을 입력해주세요.",
@@ -118,6 +120,7 @@ const RegistContainer = () => {
       const tempName = tempUserArr.find(findName);
       console.log(tempName);
       if (tempName) {
+        nameresult = false;
         return {
           class: "red",
           text: "닉네임이 중복되었습니다.",
@@ -137,30 +140,30 @@ const RegistContainer = () => {
 
   const registClick = (userId, userPw, userName, server) => {
     console.log("우선 해보자");
-    if (!userId || !userPw || !userName || !server)
+    if (!userId || !userPw || !userName || server === "서버 선택") {
       return alert("정보를 입력해주세요!");
-    userPw = crypto.SHA256(userPw).toString();
-    axios
-      .post("http://localhost:8080/api/user/regist", {
-        userId,
-        userPw,
-        userName,
-        server,
-      })
-      .then((data) => {
-        console.log(
-          "데이터가 DB에 잘 도착했어" + data.userId,
-          data.userPw,
-          data.userName,
-          data.server
-        );
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    } else {
+      if (idresult === false || pwresult === false || nameresult === false) {
+        return alert("양식에 맞는 정보를 입력하세요.");
+      }
+      userPw = crypto.SHA256(userPw).toString();
+      axios
+        .post("http://localhost:8080/api/user/regist", {
+          userId,
+          userPw,
+          userName,
+          server,
+        })
+        .then((data) => {
+          console.log("데이터가 DB에 잘 도착했어");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
 
-    dispatch(action.regist(userId, userPw, userName, server));
-    alert("회원가입에 성공하셨습니다!");
+      dispatch(action.regist(userId, userPw, userName, server));
+      alert("회원가입에 성공하셨습니다!");
+    }
   };
   return (
     <RegistComponent

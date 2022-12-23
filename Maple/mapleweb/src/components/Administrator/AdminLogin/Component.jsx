@@ -1,12 +1,5 @@
 import { useState } from "react";
-const AdminLoginComponent = ({
-  setAccount,
-  accountInfo,
-  isCookie,
-  onClick,
-  tempAdmin,
-  infoSubmit,
-}) => {
+const AdminLoginComponent = ({ isCookie, onClick, tempAdmin, infoSubmit }) => {
   const [values, setValues] = useState({
     id: "",
     password: "",

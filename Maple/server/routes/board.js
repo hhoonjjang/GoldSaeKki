@@ -5,6 +5,8 @@ const router = Router();
 import db from "../models/index.js";
 import { Op } from "sequelize";
 
+import fs from "fs";
+
 // 게시글 추가
 router.post("/create", async (req, res) => {
   console.log(req.body);
@@ -48,31 +50,6 @@ router.post("/getList", async (req, res) => {
       },
       order: [["id", "DESC"]],
     });
-
-    // 게시글 목록
-    router.post("/findAll", async (req, res) => {
-      try {
-        // 게시판 db의 category가 유저가 보낸 category와 같은 것을 모두 찾아온다.
-        const tempBoards = await db.Board.findAll({
-          where: {
-            category: req.body.category,
-          },
-        });
-
-        // 값을 뽑아오려면 tempBoards[해당번호].dataValues로 가져와야 한다.
-        console.log(tempBoards);
-
-        res.send(tempBoards);
-      } catch (error) {
-        console.error(error);
-        res.send(error);
-      }
-    });
-
-    // 게시글 한개
-    // 게시글 수정
-    // 게시글 삭제
-
     res.send(tempBoards);
   } catch (error) {
     console.error(error);
@@ -80,7 +57,7 @@ router.post("/getList", async (req, res) => {
   }
 });
 
-// 보드 id에 해당하는 게시글
+// 보드 id에 해당하는 게시글 내용
 router.post("/getBoard", async (req, res) => {
   try {
     // 모든 게시글 목록을 가져온다.
@@ -96,32 +73,118 @@ router.post("/getBoard", async (req, res) => {
   }
 });
 
-router.post("/mainCommunity", async (req, res) => {
-  console.log("메인커뮤니티 받았당");
+// 게시글 삭제
+router.post("/destroy", (req, res) => {
   try {
-    const tempBoard = await db.Board.findAll({
-      order: [
-        ["createdAt", "DESC"],
-        ["category", "DESC"],
-      ],
-      group: "category",
-      where: {
-        [Op.or]: [
-          { category: "자유게시판" },
-          { category: "정보게시판" },
-          { category: "토론게시판" },
-        ],
-      },
+    db.Board.destroy({
+      where: { id: req.body.boardId }
+    }).then(() => {
+      res.send({ status: 200 });
     });
-    console.log("디비로부터 뭔가 받았다");
+  } catch (err) {
+    console.error(err);
+    res.send({ status: 400 });
+  }
+});
+
+// 게시글 수정
+router.post("/update", (req, res) => {
+  console.log(req.body.title);
+  try {
+    // boardId에 해당하는 보드를 수정한다.
+    db.Board.update({
+      title: req.body.title,
+      world: req.body.world,
+      tags: req.body.tags,
+      contents: req.body.contents
+    }, {
+      where: { id: req.body.boardId }
+    });
+    res.send({ status: 200 });
+  } catch (err) {
+    console.error(err);
+    res.send({ status: 400 });
+  }
+});
+
+// 게시글 조회수 추가
+router.post("/eyeCountUpdate", async (req, res) => {
+  // 해당 게시글의 조회수를 가져와
+  const tempBoard = await db.Board.findOne({
+    where: {
+      id: req.body.boardId,
+    },
+  });
+  // 1 증가시키고
+  const tempEyeCount = tempBoard?.dataValues?.eyeCount;
+  const newEyeCount = tempEyeCount + 1;
+  // 그 값을 해당 게시글에 다시 업데이트 해준다.
+  db.Board.update({
+    eyeCount: newEyeCount,
+  }, {
+    where: { id: req.body.boardId }
+  });
+  res.end();
+});
+
+// 게시글 공감수 추가
+router.post("/likeCountUpdate", async (req, res) => {
+  // 해당 게시글의 공감수를 가져와
+  const tempBoard = await db.Board.findOne({
+    where: {
+      id: req.body.boardId,
+    },
+  });
+  // 1 증가시키고
+  const tempLikeCount = tempBoard?.dataValues?.likeCount;
+  const newLikeCount = tempLikeCount + 1;
+  // 그 값을 해당 게시글에 다시 업데이트 해준다.
+  db.Board.update({
+    likeCount: newLikeCount,
+  }, {
+    where: { id: req.body.boardId }
+  });
+  res.end();
+});
+
+
+
+
+router.post("/mainCommunity", async (req, res) => {
+  try {
+    const result2 = await db.sequelize.query(
+      'SELECT * FROM (SELECT * FROM maple.boards  where category="자유게시판" or category="정보게시판" or category="토론게시판" ORDER BY created_at DESC LIMIT 50)as t group by t.category',
+      { type: db.Sequelize.QueryTypes.SELECT }
+      // 없으면 배열에 두개가 들어간다. 이유는 불명.
+    );
+    const result = await db.Board.findAll({});
+    // result2는 sql그대로 갖다 넣어서 카멜 케이스가 적용되지않고 스네이크 케이스로 출력된다...
+
     res.send({
       status: 200,
-      result: tempBoard,
+      result,
     });
   } catch (error) {
     console.error(error);
     res.send({ status: 400 });
   }
 });
+
+// fs.readFile("./board.json", "utf-8", async function (err, data) {
+//   const count = await db.Board.count();
+//   if (err) {
+//     console.error(err.message);
+//   } else {
+//     if (data && JSON.parse(data).length > count) {
+//       JSON.parse(data).forEach((item) => {
+//         try {
+//           db.Board.create(item);
+//         } catch (err) {
+//           console.error(err);
+//         }
+//       });
+//     }
+//   }
+// });
 
 export default router;

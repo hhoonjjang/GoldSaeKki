@@ -10,6 +10,7 @@ import comment from "./comment.js";
 
 import admin from "./admin.js";
 import support from "./support.js";
+import search from "./search.js";
 import fs from "fs";
 const router = Router();
 
@@ -19,6 +20,7 @@ router.use("/comment", comment);
 router.use("/admin", admin);
 router.use("/report", report);
 router.use("/support", support);
+router.use("/search", search);
 // 서버에 있는 upload의 폴더의 img들을 읽어오는 함수
 // datas는 upload경로의 파일들을 배열로 불러온 것
 // 해당 배열을 map으로 돌려서 item들을 읽어온다.

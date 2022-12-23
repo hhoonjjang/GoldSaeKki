@@ -10,6 +10,7 @@ import SupportComponet from "./components/Support";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
 import UserComponent from "./components/User";
 import BugReportContainer from "./components/Support/BugReport/Container";
+import MainSearchResultContainer from "./components/Home/mainSearchResult/MainSearchResultContainer";
 import Footer from "./components/Home/footer/Footer";
 import Menubar from "./components/Home/menubar/Menubar";
 import { useEffect } from "react";
@@ -71,6 +72,7 @@ function App() {
           <Route path="/Support/*" element={<HeaderContainer />}></Route>
           <Route path="/Administrator/*" element={<HeaderContainer />}></Route>
           <Route path="/Mypage/*" element={<HeaderContainer />}></Route>
+          <Route path="/Search/*" element={<HeaderContainer />}></Route>
           {/* 기타 등등 헤더 */}
         </Routes>
         <UserComponent />
@@ -95,6 +97,10 @@ function App() {
           ></Route>
           {/* <Route path="/Mypage/*" element={<MypageContainer />}></Route> */}
           <Route path="/Community/*" element={<CommunityComponet />}></Route>
+          <Route
+            path="/Search/*"
+            element={<MainSearchResultContainer />}
+          ></Route>
         </Routes>
       </div>
       <Footer></Footer>

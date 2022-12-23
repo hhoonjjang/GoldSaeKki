@@ -77,7 +77,7 @@ router.post("/getBoard", async (req, res) => {
 router.post("/destroy", (req, res) => {
   try {
     db.Board.destroy({
-      where: { id: req.body.boardId }
+      where: { id: req.body.boardId },
     }).then(() => {
       res.send({ status: 200 });
     });
@@ -92,14 +92,17 @@ router.post("/update", (req, res) => {
   console.log(req.body.title);
   try {
     // boardId에 해당하는 보드를 수정한다.
-    db.Board.update({
-      title: req.body.title,
-      world: req.body.world,
-      tags: req.body.tags,
-      contents: req.body.contents
-    }, {
-      where: { id: req.body.boardId }
-    });
+    db.Board.update(
+      {
+        title: req.body.title,
+        world: req.body.world,
+        tags: req.body.tags,
+        contents: req.body.contents,
+      },
+      {
+        where: { id: req.body.boardId },
+      }
+    );
     res.send({ status: 200 });
   } catch (err) {
     console.error(err);
@@ -119,11 +122,14 @@ router.post("/eyeCountUpdate", async (req, res) => {
   const tempEyeCount = tempBoard?.dataValues?.eyeCount;
   const newEyeCount = tempEyeCount + 1;
   // 그 값을 해당 게시글에 다시 업데이트 해준다.
-  db.Board.update({
-    eyeCount: newEyeCount,
-  }, {
-    where: { id: req.body.boardId }
-  });
+  db.Board.update(
+    {
+      eyeCount: newEyeCount,
+    },
+    {
+      where: { id: req.body.boardId },
+    }
+  );
   res.end();
 });
 
@@ -139,30 +145,27 @@ router.post("/likeCountUpdate", async (req, res) => {
   const tempLikeCount = tempBoard?.dataValues?.likeCount;
   const newLikeCount = tempLikeCount + 1;
   // 그 값을 해당 게시글에 다시 업데이트 해준다.
-  db.Board.update({
-    likeCount: newLikeCount,
-  }, {
-    where: { id: req.body.boardId }
-  });
+  db.Board.update(
+    {
+      likeCount: newLikeCount,
+    },
+    {
+      where: { id: req.body.boardId },
+    }
+  );
   res.end();
 });
 
-
-
-
 router.post("/mainCommunity", async (req, res) => {
   try {
-    const result2 = await db.sequelize.query(
-      'SELECT * FROM (SELECT * FROM maple.boards  where category="자유게시판" or category="정보게시판" or category="토론게시판" ORDER BY created_at DESC LIMIT 50)as t group by t.category',
+    const result = await db.sequelize.query(
+      'SELECT * FROM (SELECT * FROM maple.boards where category="자유게시판" or category="정보게시판" or category="토론게시판" or category="연재소설" ORDER BY created_at DESC LIMIT 50)as t group by t.category',
       { type: db.Sequelize.QueryTypes.SELECT }
       // 없으면 배열에 두개가 들어간다. 이유는 불명.
     );
-    const result = await db.Board.findAll({});
-    // result2는 sql그대로 갖다 넣어서 카멜 케이스가 적용되지않고 스네이크 케이스로 출력된다...
-
     res.send({
       status: 200,
-      result,
+      result: result,
     });
   } catch (error) {
     console.error(error);
@@ -170,21 +173,23 @@ router.post("/mainCommunity", async (req, res) => {
   }
 });
 
-// fs.readFile("./board.json", "utf-8", async function (err, data) {
-//   const count = await db.Board.count();
-//   if (err) {
-//     console.error(err.message);
-//   } else {
-//     if (data && JSON.parse(data).length > count) {
-//       JSON.parse(data).forEach((item) => {
-//         try {
-//           db.Board.create(item);
-//         } catch (err) {
-//           console.error(err);
-//         }
-//       });
-//     }
-//   }
-// });
+fs.readFile("./board.json", "utf-8", async function (err, data) {
+  const count = await db.Board.count();
+  console.log("count : ", count);
+  if (err) {
+    console.error(err.message);
+  } else {
+    console.log("JSON.parse(data).length", JSON.parse(data).length);
+    if (data && JSON.parse(data).length > count) {
+      JSON.parse(data).forEach((item) => {
+        try {
+          db.Board.create(item);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+  }
+});
 
 export default router;

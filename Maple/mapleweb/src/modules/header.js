@@ -6,6 +6,7 @@ import headerBanner5 from "../components/Home/Img/header_banner/header_banner_me
 import headerBanner6 from "../components/Home/Img/header_banner/header_banner_support.png";
 import headerBanner7 from "../components/Home/Img/header_banner/header_banner_support.png";
 import headerBanner8 from "../components/Home/Img/header_banner/header_banner_news.png";
+import headerBanner9 from "../components/Home/Img/header_banner/header_banner_search.png";
 
 import headericon1 from "../components/Home/Img/header_banner/header_icon_news.png";
 import headericon2 from "../components/Home/Img/header_banner/header_icon_guide.png";
@@ -15,7 +16,7 @@ import headericon5 from "../components/Home/Img/header_banner/header_icon_media.
 import headericon6 from "../components/Home/Img/header_banner/header_icon_support.png";
 import headericon7 from "../components/Home/Img/header_banner/header_icon_support.png";
 import headericon8 from "../components/Home/Img/header_banner/header_icon_support.png";
-
+import headericon9 from "../components/Home/Img/header_banner/header_icon_search.png";
 const TYPE = {
   HEADER: "/header",
 };
@@ -56,6 +57,8 @@ export const reducer = (state = initialize, action) => {
             icon: headericon8,
             text: "마이 금쪽이",
           };
+        case "Search":
+          return { banner: headerBanner9, icon: headericon9, text: "검색" };
         default:
           return state;
       }

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import multer from "multer";
 import db from "../models/index.js";
 import crypto from "crypto-js";
+import fs from "fs";
 
 const router = Router();
 
@@ -210,6 +211,23 @@ router.post("/signOut", (req, res) => {
   db.User.destroy({ where: { userName: req.body.currUserName } }).then(() => {
     res.send();
   });
+});
+
+fs.readFile("./user.json", "utf-8", async function (err, data) {
+  const count = await db.User.count();
+  if (err) {
+    console.error(err.message);
+  } else {
+    if (data && JSON.parse(data).length > count) {
+      JSON.parse(data).forEach((item) => {
+        try {
+          db.User.create(item);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+  }
 });
 
 export default router;

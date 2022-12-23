@@ -9,6 +9,7 @@ import archive from "./Img/main_archive.png";
 
 import styled from "styled-components";
 import MainCommunityContainer from "./mainCommunity/MainCommunityContainer";
+import MainSearchContainer from "./mainSearch/MainSearchContainer";
 
 const HomeComponet = () => {
   return (
@@ -19,6 +20,7 @@ const HomeComponet = () => {
       {/* <TempSlide></TempSlide> */}
       <MainGamestartContainer></MainGamestartContainer>
       <MainNoticeContainer></MainNoticeContainer>
+      <MainSearchContainer></MainSearchContainer>
       <MainCommunityContainer></MainCommunityContainer>
       <MainArchive>
         <img src={archive} />

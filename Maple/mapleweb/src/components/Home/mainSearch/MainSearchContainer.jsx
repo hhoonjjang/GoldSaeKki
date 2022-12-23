@@ -7,8 +7,6 @@ import { useDispatch } from "react-redux";
 import { action } from "../../../modules/search";
 
 const navigateToSearch = async (searchType, searchData, navigate, dispatch) => {
-  console.log("searchType : ", searchType);
-  console.log("searchData : ", searchData);
   dispatch(action.search(searchType, searchData));
   navigate("/Search", {
     state: {

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -10,6 +11,9 @@ const MainSearchResultComponent = ({
 }) => {
   const listItem = ["업데이트 정보센터", "가이드", "커뮤니티"];
   console.log(searchResultData);
+  useEffect(() => {
+    console.log(searchResultData);
+  }, [searchResultData]);
   return (
     <MainSearchResult>
       <div className="mainSearchResult_innerBox">
@@ -30,7 +34,40 @@ const MainSearchResultComponent = ({
             <tr>
               <td>커뮤니티</td>
               <td>
-                {/* 여기다 복사 */}
+                {!searchResultData ? (
+                  <div className="mainSearchResult_innerBox_resultTable_noneResult">
+                    {/* <img src={exclamationIcon} alt="!" /> */}
+                    검색된 글이 없습니다.
+                  </div>
+                ) : searchResultData != undefined ? (
+                  <>
+                    {/* {searchResultData && */}
+                    {/* searchResultData?.map((item, index) => { */}
+                    {/* return item.category == "금쪽이아트" ? ( */}
+                    {/* <div> */}
+                    {/* <div></div> */}
+                    {/* <div></div> */}
+                    {/* </div> */}
+                    {/* ) : ( */}
+                    {/* // 나중에 금쪽이아트 기능이 추가되면.. */}
+                    {/* <div> */}
+                    {/* <div> */}
+                    {/* <span>{item.category}</span> */}
+                    {/* <span>{item.world}</span> */}
+                    {/* <Link to={`/Community/board/${item.id}`}> */}
+                    {/* <span>{item.title}</span> */}
+                    {/* </Link>{" "} */}
+                    {/* <span>{item.writer}</span> */}
+                    {/* <span>{item.createdAt}</span> */}
+                    {/* </div> */}
+                    <div></div>
+                    {/* </div> */}
+                    {/* ); */}
+                    {/* })} */}
+                  </>
+                ) : (
+                  <></>
+                )}
                 <div></div>
               </td>
             </tr>

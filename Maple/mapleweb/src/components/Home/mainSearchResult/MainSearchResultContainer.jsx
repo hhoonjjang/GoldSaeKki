@@ -26,6 +26,11 @@ const MainSearchResultContainer = () => {
   dispatch(action.header("Search"));
 
   useEffect(() => {
+    console.log(
+      "location.state.searchType,location.state.searchData : ",
+      location.state.searchType,
+      location.state.searchData
+    );
     getSearchList(
       location.state.searchType,
       location.state.searchData,

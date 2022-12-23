@@ -14,6 +14,7 @@ import world12Img from "../components/Community/images/worlds/icon_12.png";
 import world13Img from "../components/Community/images/worlds/icon_13.png";
 import world14Img from "../components/Community/images/worlds/icon_14.png";
 import world15Img from "../components/Community/images/worlds/icon_15.png";
+import world16Img from "../components/Community/images/worlds/icon_16.png";
 
 
 // 커뮤니티 카테고리 목록
@@ -24,6 +25,7 @@ export const CATEGORY = [
     { name: '토론게시판', label: "TopicDiscussion" },
     { name: '연재소설', label: "Novel" },
     { name: '금쪽이아트', label: "Art" },
+    { name: '이벤트게시판', label: "Event" },
 ];
 
 // 개발용 임시 카테고리
@@ -41,21 +43,25 @@ export const CATEGORY2 = [
 
 // 서버(월드) 목록
 export const WORLDLIST = [
-    { name: '전체월드', img: world1Img },
-    { name: '리부트2', img: world2Img },
-    { name: '리부트', img: world3Img },
-    { name: '오로라', img: world4Img },
-    { name: '레드', img: world5Img },
-    { name: '이노시스', img: world6Img },
-    { name: '유니온', img: world7Img },
-    { name: '스카니아', img: world8Img },
-    { name: '루나', img: world9Img },
-    { name: '제니스', img: world10Img },
-    { name: '크로아', img: world11Img },
-    { name: '베라', img: world12Img },
-    { name: '엘리시움', img: world13Img },
-    { name: '아케인', img: world14Img },
-    { name: '노바', img: world15Img },
+    { name: '전체월드', img: world1Img, label : "All" },
+    { name: '리부트2', img: world2Img, label : "Reboot2" },
+    { name: '리부트', img: world3Img, label : "Reboot" },
+    { name: '오로라', img: world4Img, label : "Aurora" },
+    { name: '레드', img: world5Img, label : "Red" },
+    { name: '이노시스', img: world6Img, label : "Innosis" },
+    { name: '유니온', img: world7Img, label : "Union" },
+    { name: '스카니아', img: world8Img, label : "Scania" },
+    { name: '루나', img: world9Img, label : "Luna" },
+    { name: '제니스', img: world10Img, label : "Zenith" },
+    { name: '크로아', img: world11Img, label : "Croix" },
+    { name: '베라', img: world12Img, label : "Vera" },
+    { name: '엘리시움', img: world13Img, label : "Elysium" },
+    { name: '아케인', img: world14Img, label : "Arcane" },
+    { name: '노바', img: world15Img, label : "Nova" },
+    { name: '버닝', img: world16Img, label : "Burning" },
+    { name: '버닝2', img: world16Img, label : "Burning2" },
+    { name: '버닝3', img: world16Img, label : "Burning3" },
+    { name: '버닝4', img: world16Img, label : "Burning4" },
 ];
 
 
@@ -67,6 +73,7 @@ const TYPE = {
     LIST: "/community/list",
     BOARD: "/community/board",
     COMMENTS: "/community/comments",
+    COMMENTCOUNTS : "/community/commentCounts",
 }
 
 // 해당 커뮤니티 게시글 목록
@@ -94,7 +101,16 @@ const comments = (comments) => {
     }
 }
 
-export const action = { list, board, comments };
+// 게시글의 댓글 개수 배열
+const commentCounts = (counts) =>{
+    console.log(counts);
+    return{
+        type : TYPE.COMMENTCOUNTS,
+        payload : {counts}
+    }
+}
+
+export const action = { list, board, comments, commentCounts };
 
 export const initialize = {};
 
@@ -106,10 +122,13 @@ export const reducer = (state = initialize, action) => {
             return payload;
         case TYPE.BOARD:
             const { board } = payload;
-            return { ...state, board };
+            return {...state, board};
         case TYPE.COMMENTS:
             const { comments } = payload;
-            return { ...state, comments };
+            return {...state, comments};
+        case TYPE.COMMENTCOUNTS :
+            const { commentCounts } = payload;
+            return{...state , commentCounts};
         default:
             return state;
     }

@@ -69,6 +69,7 @@ const DetailComponent = () => {
         board = states.community.board[0];
         boardTagsText = board?.tags;
     }
+    comments = states.community.comments;
 
     // 엄청난 요청으로 인해 밖으로 빼 useEffect로 감싸줬음
     // 리랜더링시 다시 요청하지 않기 위함
@@ -79,10 +80,7 @@ const DetailComponent = () => {
         });
     }, []);
 
-    if (states.community.comments) {
-        comments = states.community.comments;
-        // console.log(comments);
-    }
+
 
     // 현재 라우터 값을 구한다.
     let route = "";
@@ -121,16 +119,42 @@ const DetailComponent = () => {
         });
     }, [text]);
 
+
+    // 아래 세 놈 코드 겹치니까 합치기
     // 공감버튼 클릭시 리랜더링
     const [likeCount, setLikeCount] = useState(0);
     useEffect(() => {
         boardReq.then((board) => {
             dispatch(communityAction.board(board?.data));
         });
+        commentReq.then((comment) => {
+            if (comment.data.length == 0) return;
+            dispatch(communityAction.comments(comment?.data));
+        });
     }, [likeCount]);
+    // 댓글 입력시 리랜더링
+    const [commentCount, setCommentCount] = useState(0);
+    useEffect(() => {
+        boardReq.then((board) => {
+            dispatch(communityAction.board(board?.data));
+        });
+        commentReq.then((comment) => {
+            if (comment.data.length == 0) return;
+            dispatch(communityAction.comments(comment?.data));
+        });
+    }, [commentCount]);
+    // 댓글 수정시 리랜더링???
+    const [commentValue, setCommentValue] = useState("");
+    useEffect(() => {
+        boardReq.then((board) => {
+            dispatch(communityAction.board(board?.data));
+        });
+        commentReq.then((comment) => {
+            if (comment.data.length == 0) return;
+            dispatch(communityAction.comments(comment?.data));
+        });
+    }, [commentValue]);
 
-    // 강제 리랜더링
-    const [_, render] = useState(false);
 
     return (
         <>
@@ -227,6 +251,7 @@ const DetailComponent = () => {
                                         await axios.post("http://localhost:8080/api/board/destroy", {
                                             boardId: board.id,
                                         });
+                                        
                                         // 해당 커뮤니티 리스트로 이동시키기
                                         navigate(`/Community/${route}`);
                                     }
@@ -242,7 +267,7 @@ const DetailComponent = () => {
                 <CommentInfo>
                     {/* 몇개인지,색깔바꾸기 */}
                     댓글{" "}
-                    <CommentCount>{comments?.length}</CommentCount>
+                    <CommentCount>{comments?.length?comments.length:0}</CommentCount>
                 </CommentInfo>
 
                 {/* 댓글 목록 */}
@@ -252,7 +277,7 @@ const DetailComponent = () => {
                     <CommentWrap>
                         {/* 댓글 개수에 맞게 map 돌린다. */}
                         {/* 하나의 댓글 뭉텅이라고 쳐야할 듯 */}
-                        {comments.map((comment, idx) => {
+                        {comments?.map((comment, idx) => {
                             return (
                                 <Comment key={`comment-${idx}`}>
                                     {/* 댓글유저정보 */}
@@ -278,7 +303,27 @@ const DetailComponent = () => {
                                                 {/* 요청 보내서 게시글과 유저에 연결된 댓글 수정/삭제하기 -> 파라노이드 처리해서 그냥 지우기? */}
 
                                                 <CommentBtnItem onClick={() => {
-                                                    alert("수정버튼 클릭");
+                                                    const commentUpdateValue = prompt("수정할 댓글을 입력해주세요.", comment.text);
+                                                    if (commentUpdateValue) {
+                                                        // 해당 값으로 수정시켜주기
+                                                        // 함수로 빼서 인자를 보내 호출하고
+                                                        // 거기에 setState
+                                                        axios.post("http://localhost:8080/api/comment/update", {
+                                                            commentId: comment.id,
+                                                            commentText: commentUpdateValue,
+                                                        });
+                                                        commentReq.then((comment) => {
+                                                            if (comment.data.length == 0) return;
+                                                            dispatch(communityAction.comments(comment?.data));
+                                                        });
+                                                        dispatch(communityAction.comments(comment?.data));
+                                                        // 수정되었을 때 리랜더링 시키기
+                                                        setCommentValue(commentUpdateValue);
+
+                                                    } else {
+                                                        return;
+                                                    }
+                                                    // 기존 값 받아와 인풋창에 출력(oninput, useState)
                                                     // 여기부터 다시 작업
 
                                                 }}>수정</CommentBtnItem>
@@ -288,7 +333,6 @@ const DetailComponent = () => {
 
                                                     if (isDel) {
                                                         const commentDelReq = await axios.post("http://localhost:8080/api/comment/destroy", {
-                                                            // 댓글 삭제에 필요한 것 : 댓글 id, 유저닉네임?ㄴㄴ 보드아이디?ㄴㄴ
                                                             commentId: comment.id,
                                                             userName: userName,
                                                             boardId: board.id
@@ -296,9 +340,15 @@ const DetailComponent = () => {
                                                         switch (commentDelReq.data.status) {
                                                             case 200:
                                                                 alert("댓글이 삭제되었습니다.");
-                                                                // 리랜더링 시켜야 하는데 방법을 모르겠다.
-                                                                // 일단 이렇게 리랜더링 시켰다.
+                                                                const commentCountDownReq = await axios.post("http://localhost:8080/api/board/commentCountDown", {
+                                                                    boardId: boardId
+                                                                });
                                                                 setText(" ");
+                                                                dispatch(communityAction.comments(comment?.data));
+                                                                console.log(commentCountDownReq);
+                                                                setCommentCount(commentCount - 1);
+
+                                                                
                                                                 return;
                                                             case 400:
                                                                 alert("댓글 삭제 불가능합니다.");
@@ -306,7 +356,7 @@ const DetailComponent = () => {
                                                             default:
                                                                 break;
                                                         }
-                                                    }else{
+                                                    } else {
                                                         return;
                                                     }
 
@@ -372,6 +422,12 @@ const DetailComponent = () => {
                                         alert("댓글이 등록되었습니다.");
                                         // 값을 비워준다.
                                         setText("");
+                                        // 게시글의 댓글 개수를 +1 해준다.
+                                        const commentCountUpReq = await axios.post("http://localhost:8080/api/board/commentCountUp", {
+                                            boardId: boardId
+                                        });
+                                        console.log(commentCountUpReq);
+                                        setCommentCount(commentCount + 1);
                                         return;
                                     case 400:
                                         alert("댓글 등록 오류입니다.");

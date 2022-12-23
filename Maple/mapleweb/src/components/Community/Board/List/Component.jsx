@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import moment from "moment";
 import Pagination from "react-js-pagination";
-import './Paging.css';
+// import './Paging.css';
 
 import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 import eyeImg from "../../images/info_eye_new.png";
@@ -57,26 +57,6 @@ const ListComponent = () => {
     window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
   }, [nowParam]);
 
-  // 계속된 리랜더링 문제로 useEffect(()=>{},[카테고리])로 감싸주었다.
-  useEffect(() => {
-    setNowPage(1);
-    // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
-    axios.post("http://localhost:8080/api/board/getList", {
-      category: category.name,
-    }).then((boards) => {
-      // DB에 값이 없으면 에러가 뜨지 않게 해준다.
-      if (boards.data.name == "SequelizeDatabaseError") {
-        return;
-      }
-      // 해당 게시글 목록을 리덕스에 저장한다.
-      // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
-      dispatch(action.list(boards.data));
-    }).catch((err) => {
-      console.log(err);
-    }).finally(() => {
-      // 무조건 실행한다.
-    });
-  }, [category, dispatch]);
 
 
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
@@ -93,14 +73,67 @@ const ListComponent = () => {
     });
   }
 
+  // 보드 배열이 바뀔 때마다 댓글 개수를 가져온다.
+  let commentCounts = [];
+
+  // 계속된 리랜더링 문제로 useEffect(()=>{},[카테고리])로 감싸주었다.
+  useEffect(() => {
+    setNowPage(1);
+
+    // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
+    axios.post("http://localhost:8080/api/board/getList", {
+      category: category.name,
+    }).then((boards) => {
+      // DB에 값이 없으면 에러가 뜨지 않게 해준다.
+      if (boards.data.name == "SequelizeDatabaseError") {
+        return;
+      }
+      // 해당 게시글 목록을 리덕스에 저장한다.
+      // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
+      dispatch(action.list(boards.data));
+
+    }).catch((err) => {
+      console.log(err);
+    }).finally(() => {
+      // 무조건 실행한다.
+    });
+
+
+
+  }, [category, dispatch]);
+
+
+  // 게시글 가져오는 부분에서 관계형으로 값을 가져온다.
+  // 보드 배열이 바뀔 때마다 댓글 개수를 가져온다.
+  // let commentCounts = [];
+  useEffect(() => {
+    console.log("안녕");
+    newBoards.map(async (item, idx) => {
+
+      // 해당 게시글의 댓글 개수를 가져오는 요청을 보낸다.
+      await axios.post("http://localhost:8080/api/comment/count", {
+        boardId: item.id,
+      }).then((item) => {
+        commentCounts.push(item.data.number);
+        dispatch(action.commentCounts(commentCounts));
+      });
+
+    });
+  }, [category, dispatch]);
+
+  // }, []);
+
+
 
   // 페이지 높이 변경
   useEffect(() => {
     window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
   }, [nowPage]);
 
+
+
   return (
-    <>
+    <AllWrap>
       {/* 현재 게시판 이름을 가져와 띄운다. */}
       <CategoryTitle>{category?.name}</CategoryTitle>
       <ContentBox>
@@ -108,7 +141,7 @@ const ListComponent = () => {
         <WorldBox>
           {WORLDLIST.map((item, idx) => {
             return (
-              <WorldSpan key={`world-${idx}`}>
+              <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active" : ""}`}>
                 <WorldImg
                   key={`worldImg-${idx}`}
                   src={item.img}
@@ -139,7 +172,9 @@ const ListComponent = () => {
                       </span>{" "}
                       <span key={`boardTitleName-${idx}`} className="title">
                         {board?.title}
-                      </span>
+                      </span>{" "}
+                      {/* <CommentCount>({board.commentCount})</CommentCount> */}
+                      {board.commentCount == 0 ? "" : <CommentCount>({board.commentCount})</CommentCount>}
                       {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
                       {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
                     </BoardTitle>
@@ -235,14 +270,18 @@ const ListComponent = () => {
               </RegistBtn>
             </Link>
           ) : (
-            <RegistBtn
-              onClick={(e) => {
-                alert("로그인이 필요합니다.");
-                return;
-              }}
-            >
-              글작성
-            </RegistBtn>
+            <>
+              <Link to={`/login`}>
+                <RegistBtn
+                  onClick={(e) => {
+                    alert("로그인이 필요합니다.");
+                    return;
+                  }}
+                >
+                  글작성
+                </RegistBtn>
+              </Link>
+            </>
           )}
         </ButtonBox>
 
@@ -267,16 +306,77 @@ const ListComponent = () => {
         </PagenationWrap>
 
       </ContentBox>
-    </>
+    </AllWrap>
   );
 };
 
 export default ListComponent;
 
 const AllWrap = styled.div`
-  & > div {
+  /* & > div {
     float: left;
-  }
+  } */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+ul.pagination li {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #e2e2e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+ul.pagination li:first-child {
+    /* border-radius: 5px 0 0 5px; */
+    border-radius: 3px 0 0 3px;
+}
+
+ul.pagination li:last-child {
+    /* border-radius: 0 5px 5px 0; */
+    border-radius: 0 3px 3px 0;
+}
+
+ul.pagination li a {
+    text-decoration: none;
+    /* color: #337ab7; */
+    color: #DC7EB3;
+    font-size: 1rem;
+}
+
+ul.pagination li.active a {
+    color: white;
+}
+
+ul.pagination li.active {
+    /* background-color: #337ab7; */
+    background-color: #DC7EB3;
+}
+
+ul.pagination li a:hover,
+ul.pagination li a.active {
+    /* color: blue; */
+    color: #CA5196;
+}
+
+.page-selection {
+    width: 48px;
+    height: 30px;
+    /* color: #337ab7; */
+    color: #DC7EB3;
+}
 `;
 const CategoryTitle = styled.h1`
   font-size: 28px;
@@ -305,7 +405,7 @@ const WorldBox = styled.div`
   border: 1px solid #e9eaee;
   background-color: #fbf9fa;
   margin-bottom: 30px;
-  padding: 26px 0 0 26px;
+  padding: 26px 0 20px 26px;
 `;
 const WorldSpan = styled.span`
   float: left;
@@ -484,4 +584,9 @@ const UserWorldImg = styled.img``;
 const PagenationWrap = styled.div`
   float: left;
   width: 100%;
+`;
+
+const CommentCount = styled.span`
+  font-size: 15px;
+  color: #e69fc7;
 `;

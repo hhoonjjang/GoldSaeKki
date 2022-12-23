@@ -28,6 +28,10 @@ export default class Board extends Sequelize.Model {
                     type: Sequelize.INTEGER,
                     defaultValue: 0,
                 },
+                commentCount: {
+                    type: Sequelize.INTEGER,
+                    defaultValue: 0,
+                },
                 userWorld: {
                     type: Sequelize.STRING(255),
                 },

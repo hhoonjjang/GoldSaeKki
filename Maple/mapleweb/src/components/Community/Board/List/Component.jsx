@@ -461,7 +461,7 @@ const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const RegistBtn = styled.a`
+const RegistBtn = styled.span`
   min-width: 53px;
   font-size: 15px;
   color: #fff;

@@ -141,7 +141,12 @@ const ListComponent = () => {
         <WorldBox>
           {WORLDLIST.map((item, idx) => {
             return (
-              <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active" : ""}`}>
+              <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active" : ""}`} onClick={(e)=>{
+                alert(idx);
+                console.log(e.target);
+                // 액티브 하고 리랜더링, 다른놈들 active 없애기
+                e.target.classList.add("active");
+              }}>
                 <WorldImg
                   key={`worldImg-${idx}`}
                   src={item.img}

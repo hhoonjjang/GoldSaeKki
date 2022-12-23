@@ -11,7 +11,7 @@ import { useEffect } from "react";
 const SupportComponet = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(action.header("Administrator"));
+    dispatch(action.header("Support"));
   }, []);
   return (
     <SupportBox>

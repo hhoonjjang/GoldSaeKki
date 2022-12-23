@@ -6,10 +6,12 @@ import NavigateComp from "../Community/Navigation/Component";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { action } from "../../modules/header";
-
+import { useEffect } from "react";
 const RankComponent = () => {
   const dispatch = useDispatch();
-  dispatch(action.header("Ranking"));
+  useEffect(() => {
+    dispatch(action.header("Ranking"));
+  }, []);
   const CATEGORY = [
     {
       name: "종합 랭킹",

@@ -33,7 +33,7 @@ import EditContainer from "./Board/Edit/Container";
 const CommunityComponet = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(action.header("Administrator"));
+    dispatch(action.header("Community"));
   }, []);
 
   // 사이드 슬라이드 라이브러리 세팅 : 슬라이드의 기능 조정

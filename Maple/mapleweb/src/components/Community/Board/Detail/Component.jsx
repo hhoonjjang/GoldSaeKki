@@ -469,7 +469,6 @@ const DetailComponent = ({reportBoard, reportComment}) => {
                     </CommentAdd>
                 </CommentAddWrap>
             </ContentBox>
-
         </>
     );
 };
@@ -847,21 +846,4 @@ const CommentBtnItem = styled.span`
     border: 1px solid #e3e3e3;
     color: #313131;
     box-sizing: border-box;
-`;
-
-const HeartIcon = styled.div`
-    background-color: #ff00003d;
-    width: 100px;
-    height: 100px;
-    background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
-    background-position: 0 0;
-    cursor: pointer;
-    transition: background-position 1s steps(28);
-    transition-duration: 0s;
-    display: inline-block;
-  
-    &.is-active {
-        transition-duration: 1s;
-        background-position: -2800px 0; 
-    }
 `;

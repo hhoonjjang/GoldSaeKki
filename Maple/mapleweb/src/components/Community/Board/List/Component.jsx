@@ -192,7 +192,6 @@ const ListComponent = () => {
         {/* 월드 선택 */}
         <WorldBox>
           {WORLDLIST.map((item, idx) => {
-
             return (
               // 현재 선택된 월드 allWorldRef
               <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active2" : ""}`} ref={idx === 0 ? allWorldRef : noRef} onClick={(e) => {

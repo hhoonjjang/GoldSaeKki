@@ -155,7 +155,7 @@ const DetailComponent = () => {
         });
     }, [commentValue]);
 
-    
+
     return (
         <>
             <CategoryTItleBox>
@@ -217,6 +217,10 @@ const DetailComponent = () => {
                         console.log(likeCountUpReq);
                         setLikeCount(likeCount + 1);
                     }}>
+                        {/* <span>❤ 공감하기</span></LikeBtn> */}
+                        {/* <span><HeartIcon onClick={(e) => {
+                            e.target.classList.toggle("is-active");
+                        }}>❤</HeartIcon> 공감하기</span></LikeBtn> */}
                         <span>❤ 공감하기</span></LikeBtn>
                     <LikeCheck><span>{board?.likeCount} 명</span></LikeCheck>
                 </LikeWrap>
@@ -435,6 +439,12 @@ const DetailComponent = () => {
                     </CommentAdd>
                 </CommentAddWrap>
             </ContentBox>
+
+            {/* 하트 아이콘 */}
+            <HeartIcon onClick={(e) => {
+                e.target.classList.toggle("is-active");
+            }}>❤</HeartIcon>
+            
         </>
     );
 };
@@ -803,4 +813,20 @@ const CommentBtnItem = styled.span`
     border: 1px solid #e3e3e3;
     color: #313131;
     box-sizing: border-box;
+`;
+
+const HeartIcon = styled.div`
+background-color: #ff00003d;
+    width: 100px;
+    height: 100px;
+    background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
+    background-position: 0 0;
+    cursor: pointer;
+    transition: background-position 1s steps(28);
+    transition-duration: 0s;
+  
+    &.is-active {
+        transition-duration: 1s;
+        background-position: -2800px 0; 
+    }
 `;

@@ -103,7 +103,7 @@ const comments = (comments) => {
 
 // 게시글의 댓글 개수 배열
 const commentCounts = (counts) =>{
-    console.log(counts);
+    // console.log(counts);
     return{
         type : TYPE.COMMENTCOUNTS,
         payload : {counts}

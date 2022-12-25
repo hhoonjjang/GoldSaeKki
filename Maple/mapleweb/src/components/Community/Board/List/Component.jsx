@@ -31,7 +31,11 @@ const ListComponent = () => {
 
   // 주소의 값으로 카테고리 이름을 찾아 기본값으로 저장
   const [category, setCategory] = useState(CATEGORY.find(item => item.label == nowParam));
+<<<<<<< HEAD
   const [_, render] = useState(false);
+=======
+  const [_,render] = useState(false);
+>>>>>>> 3454761 (현재 선택된 월드 출력)
 
   // 페이징 처리 : 현재 페이지
   const [nowPage, setNowPage] = useState(1);
@@ -58,7 +62,11 @@ const ListComponent = () => {
 
     // 월드 초기화
     const active2 = document.querySelectorAll(".active2");
+<<<<<<< HEAD
     for (let i = 0; i < active2.length; i++) {
+=======
+    for(let i = 0 ; i<active2.length ; i++){
+>>>>>>> 3454761 (현재 선택된 월드 출력)
       active2[i].classList.remove("active2");
     }
     allWorldRef.current.classList.add("active2");
@@ -67,6 +75,7 @@ const ListComponent = () => {
 
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
   let boards = useSelector((state) => state.community.list);
+<<<<<<< HEAD
   // 월드 필터에 해당하는 보드들
   let worldBoards = [];
 
@@ -90,6 +99,31 @@ const ListComponent = () => {
           // boards = worldBoards;
         }
       });
+=======
+
+  // 현재 월드가 바뀔 때 // 여기부터
+  useEffect(()=>{
+    // console.log(nowWorld);
+    // boards에서 world이름이 nowWorld이름과 같은 것만 다시 boards에 저장 -> 리덕스에도 재저장
+    // console.log(boards);
+
+    if(nowWorld=="전체월드"){
+      console.log("전체월드임");
+      return;
+    }else{
+      console.log("전체월드아님"+nowWorld+"임");
+      console.log(boards);
+      boards = [];
+      boards?.map((item, idx)=>{
+        // item.world == nowWorld
+        if(item.world == nowWorld){
+          console.log(item.world);
+          boards.push(item.world);
+        }
+      });
+      console.log(boards);
+
+>>>>>>> 3454761 (현재 선택된 월드 출력)
     }
   }, [nowWorld]);
 
@@ -167,7 +201,11 @@ const ListComponent = () => {
         {/* 월드 선택 */}
         <WorldBox>
           {WORLDLIST.map((item, idx) => {
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 3454761 (현재 선택된 월드 출력)
             return (
               // 현재 선택된 월드 allWorldRef
               <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active2" : ""}`} ref={idx === 0 ? allWorldRef : noRef} onClick={(e) => {
@@ -175,7 +213,11 @@ const ListComponent = () => {
                 // 해당 클래스를 가진 놈들
                 const active2 = document.querySelectorAll(".active2");
                 // 다 삭제해버림
+<<<<<<< HEAD
                 for (let i = 0; i < active2.length; i++) {
+=======
+                for(let i = 0 ; i<active2.length ; i++){
+>>>>>>> 3454761 (현재 선택된 월드 출력)
                   active2[i].classList.remove("active2");
                 }
                 // 내가 클릭한 놈한테 active 클래스 추가

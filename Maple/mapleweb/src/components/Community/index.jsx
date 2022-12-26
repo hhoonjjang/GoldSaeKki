@@ -20,6 +20,7 @@ import three from "./images/3.png";
 import four from "./images/4.png";
 import prev from "./images/prev.png";
 import next from "./images/next.png";
+import smile from "./images/smile.png";
 import AddContainer from "./Board/Add/Container";
 import { useEffect } from "react";
 
@@ -224,15 +225,13 @@ const CommunityComponet = () => {
 
 
             {/* 하트 아이콘 */}
-            <div style={{display : "flex"}}>
-              <HeartIcon onClick={(e) => {
-                e.target.classList.toggle("is-active");
-              }}></HeartIcon>
-              <HeartIcon onClick={(e) => {
-                e.target.classList.toggle("is-active");
-              }}></HeartIcon>
-            </div>
-
+            <HeartIcon onClick={(e) => {
+              e.target.classList.toggle("is-active");
+            }}></HeartIcon>
+            <HeartIcon style={{ marginLeft: "30px" }} onClick={(e) => {
+              e.target.classList.toggle("is-active");
+            }}></HeartIcon>
+            <SmileImg src={smile} alt="웃음"></SmileImg>
 
           </NewsBox>
         </AllBox>
@@ -562,10 +561,23 @@ const HeartIcon = styled.div`
     transition: background-position 1s steps(28);
     transition-duration: 0s;
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 20px;
   
     &.is-active {
         transition-duration: 1s;
         background-position: -2800px 0; 
     }
+`;
+
+const SmileImg = styled.img`
+  width: 130px;
+  height: 100px;
+  margin-left: 55px;
+  
+  /* 드래그 금지 */
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 `;

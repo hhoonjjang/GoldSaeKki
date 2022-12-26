@@ -35,6 +35,8 @@ const ImgChangeContainer = ({ setThumbnailImg }) => {
         console.log("바뀐이미지 정보 받아온거", data);
         setThumbnailImg(data.data);
         navigate("/mypage");
+        // window.location.reload();
+        // HeaderComponent와 state가 달라서 생기는 프로필이미지 차이 오류에 대한 긴급조지
         // 이 주소로 src get통신을 날리는거임 router/index.js 쪽 changeImg함수
       });
   };

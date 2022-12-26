@@ -37,7 +37,9 @@ const getUserImg = (currUserName, setThumbnailImg) => {
 
 const logout = () => {
   try {
-    axios.post("http://localhost:8080/api/user/logout");
+    axios.post("http://localhost:8080/api/user/logout").then(() => {
+      window.location.reload();
+    });
   } catch (error) {
     console.error(error);
   }

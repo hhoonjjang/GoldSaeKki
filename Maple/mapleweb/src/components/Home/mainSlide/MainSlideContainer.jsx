@@ -31,7 +31,7 @@ const carouselTitleArr = [
   "돌의 정령의 나눔 프로젝트",
   "현생 용사를 위한 겨울 <br/> 금꾸 패키지",
   "",
-  "",
+  "쓰던대로 쓰고 아케인셰이드 무기상자 받자!",
 ];
 
 const carouselTextArr = [

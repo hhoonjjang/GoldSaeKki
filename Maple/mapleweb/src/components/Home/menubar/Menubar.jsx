@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../Img/goldsaekki-logo.png";
+import logo from "../Img/goldsaekki-logo2.png";
 
 import { useMemo, useState } from "react";
 

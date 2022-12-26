@@ -456,6 +456,8 @@ const CategoryTitle = styled.h1`
   line-height: 100px;
   margin-bottom: 40px;
   cursor: default;
+
+
 `;
 
 const ContentBox = styled.div`

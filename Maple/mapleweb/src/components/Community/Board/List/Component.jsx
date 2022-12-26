@@ -32,10 +32,14 @@ const ListComponent = () => {
   // 주소의 값으로 카테고리 이름을 찾아 기본값으로 저장
   const [category, setCategory] = useState(CATEGORY.find(item => item.label == nowParam));
 <<<<<<< HEAD
+<<<<<<< HEAD
   const [_, render] = useState(false);
 =======
   const [_,render] = useState(false);
 >>>>>>> 3454761 (현재 선택된 월드 출력)
+=======
+  const [_, render] = useState(false);
+>>>>>>> 9ebafd1 (버튼 드래그 금지)
 
   // 페이징 처리 : 현재 페이지
   const [nowPage, setNowPage] = useState(1);
@@ -63,10 +67,14 @@ const ListComponent = () => {
     // 월드 초기화
     const active2 = document.querySelectorAll(".active2");
 <<<<<<< HEAD
+<<<<<<< HEAD
     for (let i = 0; i < active2.length; i++) {
 =======
     for(let i = 0 ; i<active2.length ; i++){
 >>>>>>> 3454761 (현재 선택된 월드 출력)
+=======
+    for (let i = 0; i < active2.length; i++) {
+>>>>>>> 9ebafd1 (버튼 드래그 금지)
       active2[i].classList.remove("active2");
     }
     allWorldRef.current.classList.add("active2");
@@ -82,6 +90,7 @@ const ListComponent = () => {
 
   // 현재 월드가 바뀔 때 // 여기부터
   useEffect(() => {
+<<<<<<< HEAD
     // console.log(nowWorld);
     // console.log(boards);
     // boards에서 world이름이 nowWorld이름과 같은 것만 다시 boards에 저장 -> 리덕스에도 재저장
@@ -108,18 +117,20 @@ const ListComponent = () => {
 
   // 현재 월드가 바뀔 때 // 여기부터
   useEffect(()=>{
+=======
+>>>>>>> 9ebafd1 (버튼 드래그 금지)
     // console.log(nowWorld);
     // console.log(boards);
     // boards에서 world이름이 nowWorld이름과 같은 것만 다시 boards에 저장 -> 리덕스에도 재저장
 
-    if(nowWorld=="전체월드"){
+    if (nowWorld == "전체월드") {
       console.log("전체월드임");
       return;
-    }else{
-      console.log("전체월드아님"+nowWorld+"임");
-      boards?.map((item, idx)=>{
+    } else {
+      console.log("전체월드아님" + nowWorld + "임");
+      boards?.map((item, idx) => {
         // item.world == nowWorld
-        if(item.world == nowWorld){
+        if (item.world == nowWorld) {
           // console.log(item);
           // 새로운 배열에 item들만 다시 담아준 뒤 boards를 대체시켜준다.
           worldBoards.push(item);
@@ -210,10 +221,14 @@ const ListComponent = () => {
         <WorldBox>
           {WORLDLIST.map((item, idx) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
             
 >>>>>>> 3454761 (현재 선택된 월드 출력)
+=======
+
+>>>>>>> 9ebafd1 (버튼 드래그 금지)
             return (
               // 현재 선택된 월드 allWorldRef
               <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active2" : ""}`} ref={idx === 0 ? allWorldRef : noRef} onClick={(e) => {
@@ -222,10 +237,14 @@ const ListComponent = () => {
                 const active2 = document.querySelectorAll(".active2");
                 // 다 삭제해버림
 <<<<<<< HEAD
+<<<<<<< HEAD
                 for (let i = 0; i < active2.length; i++) {
 =======
                 for(let i = 0 ; i<active2.length ; i++){
 >>>>>>> 3454761 (현재 선택된 월드 출력)
+=======
+                for (let i = 0; i < active2.length; i++) {
+>>>>>>> 9ebafd1 (버튼 드래그 금지)
                   active2[i].classList.remove("active2");
                 }
                 // 내가 클릭한 놈한테 active 클래스 추가

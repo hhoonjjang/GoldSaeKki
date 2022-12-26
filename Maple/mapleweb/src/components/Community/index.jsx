@@ -264,7 +264,9 @@ const CommunityComponet = ({}) => {
             <HeartIcon style={{ marginLeft: "30px" }} onClick={(e) => {
               e.target.classList.toggle("is-active");
             }}></HeartIcon>
-            <SmileImg src={smile} alt="웃음"></SmileImg>
+            {/* <SmileImg src={smile} alt="웃음"></SmileImg> */}
+            {/* <SmileImg src={tasty} alt="웃음"></SmileImg> */}
+            <SmileImg src={happiness} alt="웃음"></SmileImg>
 
           </NewsBox>
         </AllBox>

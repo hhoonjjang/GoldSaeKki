@@ -35,7 +35,7 @@ export default class Comment extends Sequelize.Model {
         underscored: true,
         modelName: "Comment",
         tableName: "comments",
-        paranoid: true,
+        paranoid: false,
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci",
       }

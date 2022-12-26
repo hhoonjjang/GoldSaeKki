@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 const UserManageComponent = ({
   userSubmit,
   userArr,
@@ -177,7 +178,11 @@ const UserManageComponent = ({
               {tempUser.Board.map((item, idx) => (
                 <tr key={`board-${idx}`}>
                   <td key={`boardIdx-${idx}`}>{idx + 1}</td>
-                  <td key={`boardTitle-${idx}`}>{item.title}</td>
+                  <td key={`boardTitle-${idx}`}>
+                  <Link to={`/Community/board/${item.id}`}>
+                  {item.title}
+                  </Link>
+                  </td>
                   <td key={`boardCategory-${idx}`}>{item.category}</td>
                   <td key={`boardEyeCount-${idx}`}>{item.eyeCount}</td>
                   <td key={`boardCreated-${idx}`}>
@@ -216,8 +221,12 @@ const UserManageComponent = ({
                 <tr key={`Comment-${idx}`}>
                   <td key={`idx-${idx}`}>{idx + 1}</td>
                   <td key={`CommentText-${idx}`}>
+                  <Link to={`/Community/board/${item.boardId}`}>
                     {item.text}
-                    <button
+                  </Link>
+                  </td>
+                  <td>
+                  <button
                       onClick={() => {
                         commentDel(item.id, tempUser.userName);
                       }}
@@ -248,6 +257,9 @@ const UserManageBox = styled.div`
   textarea {
     width: 80%;
     height: 100px;
+  }
+  a {
+    color:black;
   }
 `;
 

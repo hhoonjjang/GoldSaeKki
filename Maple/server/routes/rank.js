@@ -105,7 +105,6 @@ router.post("/total", (req, res) => {
     .then((tempArr) => {
       db.Comment.findAll({ order: [["userName", "DESC"]] })
         .then((data) => {
-          console.log("코멘트", data[0].dataValues);
           data.map((item) => {
             let commentUserName = item.dataValues.userName;
             let findUser = false;

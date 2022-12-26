@@ -31,7 +31,8 @@ const BugCSContainer = () => {
     const data = { answer: answer, id: idx };
     console.log(data);
     axios.post("http://localhost:8080/api/report/buganswer", data).then(
-      function () {
+      function (data) {
+        console.log(data.data)
         tempFun(setReportArr);
         setBoolen(-1);
       },

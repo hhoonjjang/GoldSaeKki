@@ -42,22 +42,21 @@ const CommunityComponet = () => {
   useEffect(() => {
     dispatch(action.header("Community"));
 
-
     // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
-    axios.post("http://localhost:8080/api/board/getLikeSevenBoards", {
-    }).then((boards) => {
-      // 해당 게시글 목록을 리덕스에 저장한다.
-      console.log(boards.data);
-      const boardsData = boards.data;
-      let likeTagBoards = [];
-      boardsData.map((board, index) => {
-        if (board.tags != "") {
-          likeTagBoards.push(board);
-        }
+    axios
+      .post("http://localhost:8080/api/board/getLikeSevenBoards", {})
+      .then((boards) => {
+        // 해당 게시글 목록을 리덕스에 저장한다.
+        console.log(boards.data);
+        const boardsData = boards.data;
+        let likeTagBoards = [];
+        boardsData.map((board, index) => {
+          if (board.tags != "") {
+            likeTagBoards.push(board);
+          }
+        });
+        dispatch(communityAction.tags(likeTagBoards));
       });
-      dispatch(communityAction.tags(likeTagBoards));
-    });
-
   }, []);
 
   // 사이드 슬라이드 라이브러리 세팅 : 슬라이드의 기능 조정
@@ -71,10 +70,6 @@ const CommunityComponet = () => {
     slidesToShow: 1, //1장씩 보이게 해줌
     slidesToScroll: 1, //1장씩 넘어가게 해줌
   };
-
-
-
-
 
   // 이슈 게시글 정보를 리덕스에서 가져온다.
   const boardTags = useSelector((state) => state?.community?.tags);
@@ -204,33 +199,41 @@ const CommunityComponet = () => {
                 </TagInputWrap>
                 {/* 태그들이 들어있는 영역 : 태그는 게시물의 하트가 많은 게시물 안에서 맨처음 한개만 가져온다.(시간이 된다면) */}
                 <TagListBox>
-
                   {/* 여기서 이 놈(IssueTag)을 map 돌리면 된다. 태그 개수는 최대 10개까지만 */}
                   {boardTags?.map((board, idx) => {
-                    return <div key={`tagDiv-${idx}`}>
-                      <Link to={`/Community/board/${board.id}`} key={`tagLink-${idx}`}>
-                        <IssueTag key={`issueTag-${idx}`}>
-                          {/* 태그 가공 및 출력 */}
-                          {board.tags.split("#").length == 1 ? "#" + board.tags : "#" + board.tags.split("#")[1]}
-                        </IssueTag>
-                      </Link>
-                    </div>
+                    return (
+                      <div key={`tagDiv-${idx}`}>
+                        <Link
+                          to={`/Community/board/${board.id}`}
+                          key={`tagLink-${idx}`}
+                        >
+                          <IssueTag key={`issueTag-${idx}`}>
+                            {/* 태그 가공 및 출력 */}
+                            {board.tags.split("#").length == 1
+                              ? "#" + board.tags
+                              : "#" + board.tags.split("#")[1]}
+                          </IssueTag>
+                        </Link>
+                      </div>
+                    );
                   })}
-
                 </TagListBox>
               </TagContentBox>
             </TagSearchBox>
 
-
             {/* 하트 아이콘 */}
-            <HeartIcon onClick={(e) => {
-              e.target.classList.toggle("is-active");
-            }}></HeartIcon>
-            <HeartIcon style={{ marginLeft: "30px" }} onClick={(e) => {
-              e.target.classList.toggle("is-active");
-            }}></HeartIcon>
+            <HeartIcon
+              onClick={(e) => {
+                e.target.classList.toggle("is-active");
+              }}
+            ></HeartIcon>
+            <HeartIcon
+              style={{ marginLeft: "30px" }}
+              onClick={(e) => {
+                e.target.classList.toggle("is-active");
+              }}
+            ></HeartIcon>
             <SmileImg src={happiness} alt="웃음"></SmileImg>
-
           </NewsBox>
         </AllBox>
       </AllWrap>
@@ -241,8 +244,8 @@ export default CommunityComponet;
 
 const CommunityBox = styled.div`
   min-height: 1600px;
-  
-  *::selection{
+
+  *::selection {
     background-color: #f1b4d1;
     color: white;
   }
@@ -251,7 +254,6 @@ const CommunityBox = styled.div`
 const AllWrap = styled.div`
   min-height: 1165px;
   width: 100%;
-
   border-top: 1px solid #ebebeb;
   border-bottom: 1px solid #ebebeb;
 `;
@@ -261,30 +263,28 @@ const AllBox = styled.div`
   margin: 0 auto;
   width: 1200px;
   min-height: inherit;
-
   display: flex;
   justify-content: space-between;
-
   /* 게시글 목록 반응형 : 전체너비 */
   @media screen and (max-width: 1280px) {
     margin: 0 auto;
     width: 1050px;
   }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
     width: 620px;
-  } 
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
+  }
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
     width: 840px;
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
-  @media all and (min-width:480px) and (max-width:767px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
     width: 620px;
     margin: none;
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
-  @media all and (max-width:479px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
     width: 370px;
     margin: none;
   }
@@ -294,33 +294,32 @@ const ContentBox = styled.div`
   min-height: inherit;
   display: inline-block;
   width: 930px;
-
   /* 게시글 목록 반응형 : 내용영역 */
   @media screen and (max-width: 1280px) {
     /* margin: 0 55px; */
   }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
     margin: 0 55px;
     margin: 0 auto;
-  } 
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
+  }
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
     margin: 0 55px;
     margin: 0 auto;
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
-  @media all and (min-width:480px) and (max-width:767px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
     margin: 0 auto;
     margin: none;
     width: 450px;
-  } 
-  @media all and (min-width:450px) and (max-width:550px) {
+  }
+  @media all and (min-width: 450px) and (max-width: 550px) {
     margin-left: 30px;
     margin: none;
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
-  @media all and (max-width:479px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
     width: 370px;
     margin-left: 0;
     margin: none;
@@ -331,26 +330,25 @@ const NewsBox = styled.div`
   min-height: inherit;
   display: inline-block;
   width: 230px;
-
   /* 게시글 목록 반응형 : 뉴스전체 */
   @media screen and (max-width: 1280px) {
     margin-right: 55px;
     margin-left: 40px;
   }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
     margin-left: 40px;
-  } 
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
+  }
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
     display: none;
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
-  @media all and (min-width:480px) and (max-width:767px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
     display: none;
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
-  @media all and (max-width:479px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
     display: none;
   }
 `;
@@ -361,7 +359,6 @@ const NewsContentWrap = styled.div`
   margin-top: 60px;
   border-top: 2px solid #343536;
   background-color: white;
-
   padding: 0 5px;
   box-sizing: border-box;
 `;
@@ -370,7 +367,7 @@ const NewsTitle = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 62px;
-  
+
   /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;
@@ -383,7 +380,6 @@ const NewsH2 = styled.h2`
   font-weight: 500;
   color: #333;
   margin-top: 17px;
-
   float: left;
   cursor: default;
 `;
@@ -402,12 +398,10 @@ const NewsContent = styled.div`
 `;
 const NewsItem = styled.div`
   /* 이 안의 항목들은 나중에 Link a 태그로 감싸 해당 라우터 주소로 보내준다. */
-
   color: #333;
   font-size: 13px;
   margin-bottom: 10px;
   cursor: pointer;
-
   &:hover {
     text-decoration: underline;
   }
@@ -420,7 +414,6 @@ const BannerBox = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 192px;
-
   float: left;
   border: 1px solid #e3e3e3;
   background-color: white;
@@ -448,12 +441,10 @@ const BannerText = styled.div`
 const StyledSlide = styled(Slider)`
   width: 230px;
   min-height: 120px;
-
   /* 슬라이드 크기 조절 */
   .slick-list {
     width: 230px;
     min-height: 120px;
-
     position: relative;
     display: block;
     box-sizing: border-box;
@@ -467,7 +458,6 @@ const StyledSlide = styled(Slider)`
     touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
   }
-
   .slick-dots {
     width: 120px;
     margin-left: 54px;
@@ -479,7 +469,6 @@ const StyledSlide = styled(Slider)`
       color: #ca5196;
     }
   }
-
   .slick-prev:before,
   .slick-next:before {
     font-size: 20px;
@@ -569,14 +558,13 @@ const IssueTag = styled.span`
   margin-right: 6px;
   margin-bottom: 6px;
   cursor: pointer;
-  
+
   /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-user-select: none;
-
   & > a {
     color: white;
     width: 100%;
@@ -590,31 +578,31 @@ const IssueTag = styled.span`
   }
 `;
 
-
 const HeartIcon = styled.div`
-    background-color: #ff00003d;
-    width: 100px;
-    height: 100px;
-    background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
-    background-position: 0 0;
-    cursor: pointer;
-    transition: background-position 1s steps(28);
-    transition-duration: 0s;
-    display: inline-block;
-    margin-top: 10px;
-    /* margin-top: 300px; */
-  
-    &.is-active {
-        transition-duration: 1s;
-        background-position: -2800px 0; 
-    }
+  background-color: #ff00003d;
+  width: 100px;
+  height: 100px;
+  background: url("https://cssanimation.rocks/images/posts/steps/heart.png")
+    no-repeat;
+  background-position: 0 0;
+  cursor: pointer;
+  transition: background-position 1s steps(28);
+  transition-duration: 0s;
+  display: inline-block;
+  margin-top: 10px;
+  /* margin-top: 300px; */
+
+  &.is-active {
+    transition-duration: 1s;
+    background-position: -2800px 0;
+  }
 `;
 
 const SmileImg = styled.img`
   width: 130px;
   height: 50px;
   margin-left: 50px;
-  
+
   /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;

@@ -676,6 +676,7 @@ const CommentAddWrap = styled.div`
     margin-top: 40px;
     width: 100%;
     height: 205px;
+    margin-bottom: 40px;
 `;
 const CommentAdd = styled.div`
     height: 203px;

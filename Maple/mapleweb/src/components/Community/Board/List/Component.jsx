@@ -571,6 +571,7 @@ const WorldSpan = styled.span`
   position: relative;
   cursor: pointer;
   padding-left: 8px;
+  
   /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;

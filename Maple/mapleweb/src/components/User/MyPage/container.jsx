@@ -20,9 +20,8 @@ const MypageContainer = () => {
       });
   };
 
-  const checkLogin = (currUserName) => {
-    if (currUserName == undefined) {
-      console.log(currUserName);
+  const checkLogin = () => {
+    if (!document.cookie) {
       alert("로그인 후에 이용가능합니다."); // 이것때문에 뭔가 다음 처리가 안되거나 밀려서 navigate를 바로 쓰는 경우 안먹음 교수님께 물어볼것
       setTimeout(() => {
         navigate("/login");

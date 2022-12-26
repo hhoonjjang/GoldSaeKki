@@ -1,16 +1,26 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import backgroundImg from "../Img/login-background.png";
 import loginChar from "../Img/login-char.png";
 
-const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
+const RegistComponent = ({
+  registClick,
+  idcheck,
+  pwcheck,
+  namecheck,
+  pwRecheckFunc,
+  userInfo,
+}) => {
   const [userId, setId] = useState("");
   const [userPw, setPw] = useState("");
+  const [pwReCheck, setPwReCheck] = useState("");
   const [userName, setName] = useState("");
   const [server, setServer] = useState("서버 선택");
-  console.log(server);
 
+  useEffect(() => {
+    userInfo();
+  }, []);
   const idMemo = useMemo(() => {
     return idcheck(userId);
   }, [userId]);
@@ -21,9 +31,14 @@ const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
     return pwcheck(userPw);
   }, [userPw]);
 
+  const checkMemo = useMemo(() => {
+    return pwRecheckFunc(pwReCheck, userPw);
+  }, [pwReCheck]);
+
   const nameMemo = useMemo(() => {
     return namecheck(userName);
   }, [userName]);
+
   return (
     <RegistBox>
       <h2>금쪽이스토리 회원 가입</h2>
@@ -54,6 +69,19 @@ const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
             }}
           />
           <p className={pwMemo.class}>{pwMemo.text}</p>
+        </RegistText>
+        <RegistText>
+          <p>비밀번호 확인</p>
+          <input
+            placeholder={"비밀번호"}
+            value={pwReCheck}
+            type={"password"}
+            onInput={(e) => {
+              setPwReCheck(e.target.value);
+              // pwcheck(userPw);
+            }}
+          />
+          <p className={checkMemo.class}>{checkMemo.text}</p>
         </RegistText>
         <RegistText>
           <p>닉네임 </p>

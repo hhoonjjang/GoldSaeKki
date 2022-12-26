@@ -113,6 +113,7 @@ const ListComponent = () => {
         // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
         dispatch(action.list(boards.data));
       });
+
     }
   }, [nowWorld]);
 

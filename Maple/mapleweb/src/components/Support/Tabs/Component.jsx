@@ -34,7 +34,7 @@ function LeftTabsExample() {
                   <OnlineContainer />
                 </div>
               </Tab.Pane>
-              {document.cookie == "admin" ? (
+              {document.cookie.split("=")[0] == "admin" ? (
                 <></>
               ) : (
                 <>

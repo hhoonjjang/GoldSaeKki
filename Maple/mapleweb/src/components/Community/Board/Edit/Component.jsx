@@ -268,7 +268,7 @@ const ButtonBox = styled.div`
   display: flex;
   justify-content: center;
 `;
-const CancelBtn = styled.a`
+const CancelBtn = styled.span`
   min-width: 53px;
   font-size: 15px;
   color: #fff;
@@ -285,7 +285,7 @@ const CancelBtn = styled.a`
     background-color: #636872;
   }
 `;
-const RegistBtn = styled.a`
+const RegistBtn = styled.span`
   min-width: 53px;
   font-size: 15px;
   color: #fff;

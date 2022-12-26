@@ -1,6 +1,6 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import moment from "moment";
@@ -31,7 +31,7 @@ const ListComponent = () => {
 
   // 주소의 값으로 카테고리 이름을 찾아 기본값으로 저장
   const [category, setCategory] = useState(CATEGORY.find(item => item.label == nowParam));
-
+  const [_, render] = useState(false);
 
   // 페이징 처리 : 현재 페이지
   const [nowPage, setNowPage] = useState(1);
@@ -40,9 +40,14 @@ const ListComponent = () => {
     setNowPage(page);
   };
 
-
   // 현재 유저 닉네임
   const userName = useSelector((state) => state.user.currUserName);
+
+  // 전체 월드 버튼 엘리먼트
+  const allWorldRef = useRef();
+  const noRef = useRef();
+  // 현재 선택된 월드
+  const [nowWorld, setNowWorld] = useState("전체월드");
 
   // 현재 주소가 바뀌면 카테고리 이름 바꿈
   useEffect(() => {
@@ -50,12 +55,43 @@ const ListComponent = () => {
 
     // 스크롤도 올려줌
     window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+
+    // 월드 초기화
+    const active2 = document.querySelectorAll(".active2");
+    for (let i = 0; i < active2.length; i++) {
+      active2[i].classList.remove("active2");
+    }
+    allWorldRef.current.classList.add("active2");
   }, [nowParam]);
 
 
-
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
-  const boards = useSelector((state) => state.community.list);
+  let boards = useSelector((state) => state.community.list);
+  // 월드 필터에 해당하는 보드들
+  let worldBoards = [];
+
+  // 현재 월드가 바뀔 때 // 여기부터
+  useEffect(() => {
+    // console.log(nowWorld);
+    // console.log(boards);
+    // boards에서 world이름이 nowWorld이름과 같은 것만 다시 boards에 저장 -> 리덕스에도 재저장
+
+    if (nowWorld == "전체월드") {
+      console.log("전체월드임");
+      return;
+    } else {
+      console.log("전체월드아님" + nowWorld + "임");
+      boards?.map((item, idx) => {
+        // item.world == nowWorld
+        if (item.world == nowWorld) {
+          // console.log(item);
+          // 새로운 배열에 item들만 다시 담아준 뒤 boards를 대체시켜준다.
+          worldBoards.push(item);
+          // boards = worldBoards;
+        }
+      });
+    }
+  }, [nowWorld]);
 
   // 페이지에 맞는 게시글들을 띄우기 위해 개수만큼 잘라줌
   let newBoards = [];
@@ -92,13 +128,12 @@ const ListComponent = () => {
       // 무조건 실행한다.
     });
 
-
-
   }, [category, dispatch]);
 
 
   // 게시글 가져오는 부분에서 관계형으로 값을 가져온다.
   // 보드 배열이 바뀔 때마다 댓글 개수를 가져온다.
+  // 일단 이 놈은 안 쓰이는 놈들이다.
   // let commentCounts = [];
   useEffect(() => {
     console.log("안녕");
@@ -114,9 +149,7 @@ const ListComponent = () => {
 
     });
   }, [category, dispatch]);
-
   // }, []);
-
 
 
   // 페이지 높이 변경
@@ -134,9 +167,24 @@ const ListComponent = () => {
         {/* 월드 선택 */}
         <WorldBox>
           {WORLDLIST.map((item, idx) => {
+
             return (
-              <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active" : ""}`} onClick={(e) => {
-                e.target.classList.add("active");
+              // 현재 선택된 월드 allWorldRef
+              <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active2" : ""}`} ref={idx === 0 ? allWorldRef : noRef} onClick={(e) => {
+                // console.log("하이");
+                // 해당 클래스를 가진 놈들
+                const active2 = document.querySelectorAll(".active2");
+                // 다 삭제해버림
+                for (let i = 0; i < active2.length; i++) {
+                  active2[i].classList.remove("active2");
+                }
+                // 내가 클릭한 놈한테 active 클래스 추가
+                e.target.classList.add("active2");
+                // 현재 액티브 클래스를 가진 놈 확인
+                // console.log(document.querySelectorAll(".active2"));
+
+                // 현재 월드 재설정
+                setNowWorld(item.name);
               }}>
                 <WorldImg
                   key={`worldImg-${idx}`}
@@ -316,56 +364,56 @@ const AllWrap = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 15px;
-}
-ul {
-    list-style: none;
-    padding: 0;
-    cursor: pointer;
-}
-ul.pagination li {
-    display: inline-block;
-    width: 35px;
-    height: 35px;
-    border: 1px solid #e2e2e2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-}
-ul.pagination li:first-child {
-    /* border-radius: 5px 0 0 5px; */
-    border-radius: 3px 0 0 3px;
-}
-ul.pagination li:last-child {
-    /* border-radius: 0 5px 5px 0; */
-    border-radius: 0 3px 3px 0;
-}
-ul.pagination li a {
-    text-decoration: none;
-    /* color: #337ab7; */
-    color: #DC7EB3;
-    font-size: 1rem;
-}
+  }
+  ul {
+      list-style: none;
+      padding: 0;
+      cursor: pointer;
+  }
+  ul.pagination li {
+      display: inline-block;
+      width: 35px;
+      height: 35px;
+      border: 1px solid #e2e2e2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1rem;
+  }
+  ul.pagination li:first-child {
+      /* border-radius: 5px 0 0 5px; */
+      border-radius: 3px 0 0 3px;
+  }
+  ul.pagination li:last-child {
+      /* border-radius: 0 5px 5px 0; */
+      border-radius: 0 3px 3px 0;
+  }
+  ul.pagination li a {
+      text-decoration: none;
+      /* color: #337ab7; */
+      color: #DC7EB3;
+      font-size: 1rem;
+  }
 
-ul.pagination li.active a {
-    color: white;
-}
+  ul.pagination li.active a {
+      color: white;
+  }
 
-ul.pagination li.active {
-    /* background-color: #337ab7; */
-    background-color: #DC7EB3;
-}
-ul.pagination li a:hover,
-ul.pagination li a.active {
-    /* color: blue; */
-    color: #CA5196;
-}
-.page-selection {
-    width: 48px;
-    height: 30px;
-    /* color: #337ab7; */
-    color: #DC7EB3;
-}
+  ul.pagination li.active {
+      /* background-color: #337ab7; */
+      background-color: #DC7EB3;
+  }
+  ul.pagination li a:hover,
+  ul.pagination li a.active {
+      /* color: blue; */
+      color: #CA5196;
+  }
+  .page-selection {
+      width: 48px;
+      height: 30px;
+      /* color: #337ab7; */
+      color: #DC7EB3;
+  }
 `;
 const CategoryTitle = styled.h1`
   font-size: 28px;
@@ -412,13 +460,20 @@ const WorldSpan = styled.span`
   position: relative;
   cursor: pointer;
   padding-left: 8px;
+
+  /* 드래그 금지 */
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
   
   /* 이놈 : 자식 전부를 뜻함 */
   *{
     pointer-events: none;
   }
   
-  &.active,
+  &.active2,
   &:hover {
     transition: all 0.2s;
     background-color: #ca5196;

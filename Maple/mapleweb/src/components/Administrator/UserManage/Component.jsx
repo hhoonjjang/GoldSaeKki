@@ -44,7 +44,7 @@ const UserManageComponent = ({
         <tbody>
           {userArr.map((item, idx) => (
             <tr key={`userbox-${idx}`}>
-              <td key={`userIdx-${idx}`}>{idx}</td>
+              <td key={`userIdx-${idx}`}>{idx+1}</td>
               <td key={`userName-${idx}`}>{item.userName}</td>
               <td key={`userServer-${idx}`}>{item.serverName}</td>
               <td key={`userDate-${idx}`}>{item.createdAt.split("T")[0]}</td>

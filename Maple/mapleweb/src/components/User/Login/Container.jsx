@@ -32,7 +32,6 @@ const LoginContainer = () => {
         if (data.data.status == 200) {
           alert("로그인 성공");
           dispatch(action.login(data.data.data));
-          // loginCheck();
           navigate("/");
         } else {
           if (data.data.status == 502) {

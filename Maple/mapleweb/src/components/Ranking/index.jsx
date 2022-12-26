@@ -6,10 +6,14 @@ import NavigateComp from "../Community/Navigation/Component";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { action } from "../../modules/header";
+import { useEffect } from "react";
+import styled from "styled-components";
 
 const RankComponent = () => {
   const dispatch = useDispatch();
-  dispatch(action.header("Ranking"));
+  useEffect(() => {
+    dispatch(action.header("Ranking"));
+  }, []);
   const CATEGORY = [
     {
       name: "종합 랭킹",
@@ -29,7 +33,7 @@ const RankComponent = () => {
   ];
 
   return (
-    <div>
+    <RankingMain>
       <NavigateComp categorys={CATEGORY} />
 
       <Routes>
@@ -43,8 +47,12 @@ const RankComponent = () => {
           element={<CommentRankingContainer />}
         ></Route>
       </Routes>
-    </div>
+    </RankingMain>
   );
 };
 
 export default RankComponent;
+
+const RankingMain = styled.div`
+ margin:0 auto;
+`

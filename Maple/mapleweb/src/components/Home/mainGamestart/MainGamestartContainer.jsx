@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const loginCheck = (setCurrUserName, setCurrUserWorld) => {
-  if (document.cookie) {
+  if (document.cookie.split("=")[0]=="login") {
     try {
       axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
         console.log(data.data.userInfo.name);

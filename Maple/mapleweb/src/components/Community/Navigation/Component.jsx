@@ -74,7 +74,6 @@ const NavigationComponent = ({ categorys }) => {
   // 네비게이션 바 left값 변경시키기
   const [naviLeft, setNaviLeft] = useState(0);
 
-  
   return (
     <NavigationWrap className="mnb_wrap">
       <NavigationBox className="div_inner2">
@@ -91,17 +90,21 @@ const NavigationComponent = ({ categorys }) => {
                 //     return dispatch(action.category(`${item.label}`));
                 // }}
               >
-                <CategoryLi key={`category-${item.label}`} onMouseOver={(e)=>{
-                  // 현재 width를 변경시킨다
-                  setNaviWidth(e.target.offsetWidth);
-                  // setNowElem(e.target);
-                  // 현재 놈의 왼쪽 공간을 구한다.
-                  setNaviLeft(e.target.offsetLeft);
-                  console.log(e.target.offsetLeft);
-                  console.log(naviLeft);
-                }} onMouseLeave={(e)=>{
-                  // setNaviLeft(naviLeft - e.target.offsetLeft);
-                }}>
+                <CategoryLi
+                  key={`category-${item.label}`}
+                  onMouseOver={(e) => {
+                    // 현재 width를 변경시킨다
+                    setNaviWidth(e.target.offsetWidth);
+                    // setNowElem(e.target);
+                    // 현재 놈의 왼쪽 공간을 구한다.
+                    setNaviLeft(e.target.offsetLeft);
+                    console.log(e.target.offsetLeft);
+                    console.log(naviLeft);
+                  }}
+                  onMouseLeave={(e) => {
+                    // setNaviLeft(naviLeft - e.target.offsetLeft);
+                  }}
+                >
                   {item.name}
                 </CategoryLi>
               </Link>
@@ -132,7 +135,7 @@ const NavigationWrap = styled.div`
   z-index: 1;
 
   width: 100%;
-  float: left;
+  /* float: left; */
 `;
 
 const NavigationBox = styled.div`

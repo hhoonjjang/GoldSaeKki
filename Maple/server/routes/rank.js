@@ -105,7 +105,7 @@ router.post("/total", (req, res) => {
     .then((tempArr) => {
       db.Comment.findAll({ order: [["userName", "DESC"]] })
         .then((data) => {
-          console.log("코멘트", data[0].dataValues);
+          console.log("코멘트", data[0]?.dataValues);
           data.map((item) => {
             let commentUserName = item.dataValues.userName;
             let findUser = false;
@@ -148,4 +148,313 @@ router.post("/total", (req, res) => {
         });
     });
 });
+
+router.post("/totalServer", (req, res) => {
+  const tempArr = [];
+  let tempUserName = "";
+  db.Board.findAll({
+    where: { userWorld: req.body.server },
+    order: [["userName", "DESC"]],
+  })
+    .then((data) => {
+      console.log("서버선택한 배열", data);
+      data?.map((item) => {
+        if (tempUserName != item.dataValues.userName) {
+          tempUserName = item.dataValues.userName;
+          tempArr.push({
+            tempUserName: tempUserName,
+            count: 3,
+            userWorld: item.dataValues.userWorld,
+            profileImg: "",
+          });
+        } else {
+          tempArr[tempArr.length - 1].count += 3;
+        }
+      });
+      console.log("니가 선택한 배열이다.", tempArr);
+      return tempArr;
+    })
+    .then((tempArr) => {
+      db.Comment.findAll({
+        where: { userWorld: req.body.server },
+        order: [["userName", "DESC"]],
+      })
+        .then((data) => {
+          data.map((item) => {
+            let commentUserName = item.dataValues.userName;
+            let findUser = false;
+            tempArr.map((boardItem) => {
+              if (boardItem.tempUserName == commentUserName) {
+                findUser = true;
+                boardItem.count += 1;
+              }
+            });
+            if (!findUser) {
+              tempArr.push({
+                tempUserName: commentUserName,
+                count: 1,
+                userWorld: item.dataValues.userWorld,
+                profileImg: "",
+              });
+            }
+          }); // tempArr 완성됨
+          return tempArr;
+        })
+        .then((tempArr) => {
+          tempArr.sort((a, b) => b.count - a.count);
+          let count = 0;
+          for (let i = 0; i < tempArr.length; i++) {
+            db.User.findOne({
+              where: { userName: tempArr[i].tempUserName },
+            }).then((data) => {
+              console.log("아이디찾음", data);
+              count++;
+              tempArr[i].profileImg = data.dataValues.profileImg;
+              //data.dataValues.profileImg
+            });
+          }
+          const intervalId = setInterval(() => {
+            if (tempArr.length <= count) {
+              clearInterval(intervalId);
+              res.send(tempArr);
+            }
+          }, 100);
+        });
+    });
+});
+
+router.post("/searchTotal", (req, res) => {
+  const tempArr = [];
+  let tempUserName = "";
+  db.Board.findAll({
+    where: { userName: req.body.searchData },
+    order: [["userName", "DESC"]],
+  })
+    .then((data) => {
+      data?.map((item) => {
+        if (tempUserName != item.dataValues.userName) {
+          tempUserName = item.dataValues.userName;
+          tempArr.push({
+            tempUserName: tempUserName,
+            count: 3,
+            userWorld: item.dataValues.userWorld,
+            profileImg: "",
+          });
+        } else {
+          tempArr[tempArr.length - 1].count += 3;
+        }
+      });
+      return tempArr;
+    })
+    .then((tempArr) => {
+      db.Comment.findAll({
+        where: { userName: req.body.searchData },
+        order: [["userName", "DESC"]],
+      })
+        .then((data) => {
+          data.map((item) => {
+            let commentUserName = item.dataValues.userName;
+            let findUser = false;
+            tempArr.map((boardItem) => {
+              if (boardItem.tempUserName == commentUserName) {
+                findUser = true;
+                boardItem.count += 1;
+              }
+            });
+            if (!findUser) {
+              tempArr.push({
+                tempUserName: commentUserName,
+                count: 1,
+                userWorld: item.dataValues.userWorld,
+                profileImg: "",
+              });
+            }
+          });
+          return tempArr;
+        })
+        .then((tempArr) => {
+          tempArr.sort((a, b) => b.count - a.count);
+          let count = 0;
+          for (let i = 0; i < tempArr.length; i++) {
+            db.User.findOne({
+              where: { userName: tempArr[i].tempUserName },
+            }).then((data) => {
+              count++;
+              tempArr[i].profileImg = data.dataValues.profileImg;
+            });
+          }
+          const intervalId = setInterval(() => {
+            if (tempArr.length <= count) {
+              clearInterval(intervalId);
+              res.send(tempArr);
+            }
+          }, 100);
+        });
+    });
+});
+
+router.post("/boardServer", (req, res) => {
+  const tempArr = [];
+  let tempUserName = "";
+  db.Board.findAll({
+    where: { userWorld: req.body.server },
+    order: [["userName", "DESC"]],
+  }).then((data) => {
+    data?.map((item) => {
+      if (tempUserName != item.dataValues.userName) {
+        tempUserName = item.dataValues.userName;
+        tempArr.push({
+          tempUserName: tempUserName,
+          count: 1,
+          userWorld: item.dataValues.userWorld,
+          profileImg: "",
+        });
+      } else {
+        tempArr[tempArr.length - 1].count += 1;
+      }
+    });
+    tempArr.sort((a, b) => b.count - a.count);
+    console.log(tempArr);
+    let count = 0;
+    for (let i = 0; i < tempArr.length; i++) {
+      db.User.findOne({ where: { userName: tempArr[i].tempUserName } }).then(
+        (data) => {
+          console.log("아이디찾음", data);
+          count++;
+          tempArr[i].profileImg = data.dataValues.profileImg;
+          //data.dataValues.profileImg
+        }
+      );
+    }
+    const intervalId = setInterval(() => {
+      if (tempArr.length <= count) {
+        clearInterval(intervalId);
+        res.send(tempArr);
+      }
+    }, 100);
+  });
+});
+
+router.post("/searchBoard", (req, res) => {
+  const tempArr = [];
+  let tempUserName = "";
+  db.Board.findAll({
+    where: { userName: req.body.searchData },
+    order: [["userName", "DESC"]],
+  }).then((data) => {
+    data?.map((item) => {
+      if (tempUserName != item.dataValues.userName) {
+        tempUserName = item.dataValues.userName;
+        tempArr.push({
+          tempUserName: tempUserName,
+          count: 1,
+          userWorld: item.dataValues.userWorld,
+          profileImg: "",
+        });
+      } else {
+        tempArr[tempArr.length - 1].count += 1;
+      }
+    });
+    tempArr.sort((a, b) => b.count - a.count);
+    console.log(tempArr);
+    let count = 0;
+    for (let i = 0; i < tempArr.length; i++) {
+      db.User.findOne({ where: { userName: tempArr[i].tempUserName } }).then(
+        (data) => {
+          console.log("아이디찾음", data);
+          count++;
+          tempArr[i].profileImg = data.dataValues.profileImg;
+          //data.dataValues.profileImg
+        }
+      );
+    }
+    const intervalId = setInterval(() => {
+      if (tempArr.length <= count) {
+        clearInterval(intervalId);
+        res.send(tempArr);
+      }
+    }, 100);
+  });
+});
+
+router.post("/commentServer", (req, res) => {
+  const tempArr = [];
+  let tempUserName = "";
+  db.Comment.findAll({
+    where: { userWorld: req.body.server },
+    order: [["userName", "DESC"]],
+  }).then((data) => {
+    data?.map((item) => {
+      if (tempUserName != item.dataValues.userName) {
+        tempUserName = item.dataValues.userName;
+        tempArr.push({
+          tempUserName: tempUserName,
+          count: 1,
+          userWorld: item.dataValues.userWorld,
+          profileImg: "",
+        });
+      } else {
+        tempArr[tempArr.length - 1].count += 1;
+      }
+    });
+    tempArr.sort((a, b) => b.count - a.count);
+    console.log(tempArr);
+    let count = 0;
+    for (let i = 0; i < tempArr.length; i++) {
+      db.User.findOne({ where: { userName: tempArr[i].tempUserName } }).then(
+        (data) => {
+          count++;
+          tempArr[i].profileImg = data.dataValues.profileImg;
+        }
+      );
+    }
+    const intervalId = setInterval(() => {
+      if (tempArr.length <= count) {
+        clearInterval(intervalId);
+        res.send(tempArr);
+      }
+    }, 100);
+  });
+});
+
+router.post("/searchComment", (req, res) => {
+  const tempArr = [];
+  let tempUserName = "";
+  db.Comment.findAll({
+    where: { userName: req.body.searchData },
+    order: [["userName", "DESC"]],
+  }).then((data) => {
+    data?.map((item) => {
+      if (tempUserName != item.dataValues.userName) {
+        tempUserName = item.dataValues.userName;
+        tempArr.push({
+          tempUserName: tempUserName,
+          count: 1,
+          userWorld: item.dataValues.userWorld,
+          profileImg: "",
+        });
+      } else {
+        tempArr[tempArr.length - 1].count += 1;
+      }
+    });
+    tempArr.sort((a, b) => b.count - a.count);
+    console.log(tempArr);
+    let count = 0;
+    for (let i = 0; i < tempArr.length; i++) {
+      db.User.findOne({ where: { userName: tempArr[i].tempUserName } }).then(
+        (data) => {
+          count++;
+          tempArr[i].profileImg = data.dataValues.profileImg;
+        }
+      );
+    }
+    const intervalId = setInterval(() => {
+      if (tempArr.length <= count) {
+        clearInterval(intervalId);
+        res.send(tempArr);
+      }
+    }, 100);
+  });
+});
+
 export default router;

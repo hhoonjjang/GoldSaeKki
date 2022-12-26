@@ -1,9 +1,13 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const NicknameChangeComponent = ({ namecheck, changeClick }) => {
+const NicknameChangeComponent = ({ namecheck, changeClick, userInfo }) => {
   const [changeName, setChangeName] = useState("");
+
+  useEffect(() => {
+    userInfo();
+  }, []);
 
   const nameMemo = useMemo(() => {
     return namecheck(changeName);

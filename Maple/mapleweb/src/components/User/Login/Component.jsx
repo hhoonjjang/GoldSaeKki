@@ -80,10 +80,10 @@ const LoginComponent = ({ loginClick }) => {
                   setloginId(e.target.value);
                 }}
               />
-              <span>
+              {/* <span>
                 <input type={"checkbox"} />
                 ID 저장
-              </span>
+              </span> */}
             </div>
             <div>
               <input
@@ -229,9 +229,6 @@ const LoginText = styled.div`
     color: white;
     width: 600px;
     height: 80px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
   }
 
   & div:nth-child(3) {
@@ -243,22 +240,7 @@ const LoginText = styled.div`
     font-size: 20px;
   }
 
-  & div:nth-child(2) > input {
-    width: 450px;
-    height: 75px;
-    border: none;
-    background-color: #17151c;
-    font-size: 20px;
-    color: rgb(118, 118, 118);
-  }
-
-  & div:nth-child(2) input:last-child {
-    width: 1.5rem;
-    height: 1.5rem;
-    cursor: pointer;
-    accent-color: rgb(118, 118, 118);
-  }
-
+  & div:nth-child(2) > input,
   & div:nth-child(3) > input {
     width: 500px;
     height: 75px;

@@ -258,18 +258,14 @@ const CommunityComponet = ({}) => {
             </TagSearchBox>
 
             {/* 하트 아이콘 */}
-            <HeartIcon
-              onClick={(e) => {
-                e.target.classList.toggle("is-active");
-              }}
-            ></HeartIcon>
-            <HeartIcon
-              style={{ marginLeft: "30px" }}
-              onClick={(e) => {
-                e.target.classList.toggle("is-active");
-              }}
-            ></HeartIcon>
-            <SmileImg src={happiness} alt="웃음"></SmileImg>
+            <HeartIcon onClick={(e) => {
+              e.target.classList.toggle("is-active");
+            }}></HeartIcon>
+            <HeartIcon style={{ marginLeft: "30px" }} onClick={(e) => {
+              e.target.classList.toggle("is-active");
+            }}></HeartIcon>
+            <SmileImg src={smile} alt="웃음"></SmileImg>
+
           </NewsBox>
         </AllBox>
       </AllWrap>

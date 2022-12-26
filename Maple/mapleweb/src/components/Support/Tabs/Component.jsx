@@ -10,8 +10,9 @@ import MyRequestContainer from "../MyRequest/Container";
 import OnlineContainer from "../Online/Container";
 function LeftTabsExample() {
   return (
+    <TabsBox>
+
     <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-      <TabsBox>
         {" "}
         <Row>
           <Col sm={3}>
@@ -54,15 +55,16 @@ function LeftTabsExample() {
             </Tab.Content>
           </Col>
         </Row>
-      </TabsBox>
     </Tab.Container>
+    </TabsBox>
+
   );
 }
 
 export default LeftTabsExample;
 
 const TabsBox = styled.div`
-  .flex-column .nav-pills .nav-link.active {
-    color: black;
-  }
+ width:1200px;
+ margin:auto;
+ margin-top:40px;
 `;

@@ -1,123 +1,34 @@
 import styled from "styled-components";
-import { useEffect, useState, useMemo } from "react";
 import searchImg from "../../User/Img/search.png";
-import { useParams } from "react-router-dom";
-import Pagination from "react-js-pagination";
+import { useEffect } from "react";
 
-const TotalRankingComponent = ({
-  commentRanking,
-  commentData,
-  serverCommentRanking,
-  serverData,
-  searchCommentRanking,
-  searchList,
-}) => {
-  const [nowPage, setNowPage] = useState(1);
-
-  const handlePageChange = (page) => {
-    setNowPage(page);
-  };
-
+const CommentRankingComponent = ({ commentData, commentRanking }) => {
   useEffect(() => {
     commentRanking();
   }, []);
-
-  const [server, setServer] = useState("서버 선택");
-  const [searchData, setSearchData] = useState("");
-  const route = useParams();
-
-  useEffect(() => {
-    serverCommentRanking(server);
-  }, [server]);
-
-  const RankingArr = useMemo(() => {
-    if (route.sword) {
-      if (searchList.length) return searchList;
-      return [];
-    } else if (server === "서버 선택") {
-      return commentData;
-    } else {
-      return serverData;
-    }
-  }, [server, route, commentData, serverData, searchList]);
-
-  let newBoards = [];
-  if (RankingArr) {
-    RankingArr?.map((item, idx) => {
-      if (idx >= (nowPage - 1) * 10 && idx < nowPage * 10) {
-        newBoards.push(item);
-      }
-    });
-  }
-
   return (
     <CommentRankBox>
       <div className="ranking-title">댓글 랭킹</div>
       <div>
-        <div style={{ marginBottom: "10px" }}>유저 랭킹 검색</div>
-        <input
-          style={{ border: "2px solid lightgray", borderRadius: "5px" }}
-          type={"text"}
-          value={searchData}
-          onInput={(e) => {
-            setSearchData(e.target.value);
-          }}
-        />
-        <button
-          style={{
-            border: "2px solid lightgray",
-            borderRadius: "5px",
-            marginLeft: "5px",
-          }}
-          onClick={() => {
-            searchCommentRanking(searchData);
-          }}
-        >
-          <img src={searchImg} alt="야호" />
+        <div>유저 랭킹 검색</div>
+        <input />
+        <button>
+          <img src={searchImg} alt="검색" />
         </button>
       </div>
       <CommentRankingList>
-        <RankingSelectBox>
-          <select
-            style={{ marginTop: "10px" }}
-            name="server"
-            className="select"
-            onChange={(e) => {
-              setServer(e.target.value);
-              console.log("셋서버", e.target.value);
-            }}
-          >
-            <option value="서버 선택">서버 선택</option>
-            <option value="리부트">리부트</option>
-            <option value="리부트2">리부트2</option>
-            <option value="오로라">오로라</option>
-            <option value="레드">레드</option>
-            <option value="이노시스">이노시스</option>
-            <option value="유니온">유니온</option>
-            <option value="스카니아">스카니아</option>
-            <option value="루나">루나</option>
-            <option value="제니스">제니스</option>
-            <option value="크로아">크로아</option>
-            <option value="베라">베라</option>
-            <option value="엘리시움">엘리시움</option>
-            <option value="아케인">아케인</option>
-            <option value="노바">노바</option>
-          </select>
-        </RankingSelectBox>
         <ul className="ranking-header">
           <li>순위</li>
           <li>유저 정보</li>
           <li>서버</li>
           <li>댓글 갯수</li>
         </ul>
-      </CommentRankingList>
-      <CommentRankingRaw>
-        {RankingArr.length ? (
-          newBoards?.map((item, idx) => {
+        <CommentRankingRaw>
+          {commentData?.map((item, idx) => {
             return (
               <ul key={`rankingList${idx}`} className="ranking-data">
                 <li key={`ranking${idx}`} className="ranking">
-                  {idx + 1 + (nowPage - 1) * 10}
+                  {idx + 1}
                 </li>
                 <UserImgBox key={`userInfo${idx}`} item={item} />
                 <li key={`server${idx}`} className="server-name">
@@ -128,29 +39,9 @@ const TotalRankingComponent = ({
                 </li>
               </ul>
             );
-          })
-        ) : (
-          <div style={{ textAlign: "center" }}>검색 결과가 없습니다.</div>
-        )}
-      </CommentRankingRaw>
-      <PagenationWrap>
-        <Pagination
-          // 현재 페이지
-          activePage={nowPage}
-          // 띄울 게시글 개수
-          itemsCountPerPage={10}
-          // 총 게시글 개수
-          totalItemsCount={RankingArr?.length || 0}
-          // 표시할 개수
-          pageRangeDisplayed={10}
-          // 이전을 나타낼 아이콘
-          prevPageText={"‹"}
-          // 다음을 나타낼 아이콘
-          nextPageText={"›"}
-          // 페이지네이션 함수
-          onChange={handlePageChange}
-        />
-      </PagenationWrap>
+          })}
+        </CommentRankingRaw>
+      </CommentRankingList>
     </CommentRankBox>
   );
 };
@@ -172,81 +63,6 @@ const CommentRankBox = styled.div`
   margin: 0 auto;
   box-sizing: border-box;
   width: 1200px;
-
-  @media only screen and (max-width: 1280px) {
-    width: 90%;
-  }
-
-  @media only screen and (max-width: 768px) {
-    width: 80%;
-  }
-
-  .ranking-title {
-    font-size: 25px;
-    margin-top: 40px;
-    font-weight: bold;
-  }
-
-  .pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  ul.pagination li {
-    display: inline-block;
-    width: 35px;
-    height: 35px;
-    border: 1px solid #e2e2e2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-  }
-
-  ul.pagination li:first-child {
-    /* border-radius: 5px 0 0 5px; */
-    border-radius: 3px 0 0 3px;
-  }
-
-  ul.pagination li:last-child {
-    /* border-radius: 0 5px 5px 0; */
-    border-radius: 0 3px 3px 0;
-  }
-
-  ul.pagination li a {
-    text-decoration: none;
-    /* color: #337ab7; */
-    color: #5e7bcb;
-    font-size: 1rem;
-  }
-
-  ul.pagination li.active a {
-    color: white;
-  }
-
-  ul.pagination li.active {
-    /* background-color: #337ab7; */
-    background-color: #5e7bcb;
-  }
-
-  ul.pagination li a:hover,
-  ul.pagination li a.active {
-    /* color: blue; */
-    color: #5e7bcb;
-  }
-
-  .page-selection {
-    width: 48px;
-    height: 30px;
-    /* color: #337ab7; */
-    color: #5e7bcb;
-  }
 `;
 
 const CommentRankingList = styled.div`
@@ -345,18 +161,4 @@ const CommentRankingRaw = styled.div`
   .count-data {
     width: 10%;
   }
-`;
-
-const RankingSelectBox = styled.div`
-  .select {
-    width: 150px;
-    height: 35px;
-    border-radius: 3px;
-    border: 2px solid lightgray;
-  }
-`;
-
-const PagenationWrap = styled.div`
-  float: left;
-  width: 100%;
 `;

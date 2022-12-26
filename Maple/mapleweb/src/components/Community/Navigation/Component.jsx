@@ -86,9 +86,9 @@ const NavigationComponent = ({ categorys }) => {
                 to={`./${item.label}`}
                 // className : 내가 선택한 카테고리(라우터에서 가져옴)랑 같으면 띄우도록 해야한다.
                 className={`${idx === nowRouterIdx.current ? "active" : ""}`}
-              // onClick={()=>{
-              //     return dispatch(action.category(`${item.label}`));
-              // }}
+                // onClick={()=>{
+                //     return dispatch(action.category(`${item.label}`));
+                // }}
               >
                 <CategoryLi
                   key={`category-${item.label}`}
@@ -151,7 +151,6 @@ const NavigationBox = styled.div`
   position: relative;
   overflow: hidden;
 
-  
   /* 네비바 반응형 : 전체너비 */
   @media screen and (max-width: 1280px) {
     width: 1050px;
@@ -191,30 +190,29 @@ const LiBox = styled.div`
     background-color: white;
     margin-right: 44px;
 
-      /* 네비바 반응형 : 각각의 항목 */
-      @media screen and (max-width: 1280px) {
-      }
-      /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
-      @media all and (min-width: 768px) and (max-width: 1023px) {
-        margin-right: 24px;
-      }
-      /* 테블릿 세로 (해상도 768px ~ 1023px)*/
-      @media all and (min-width: 768px) and (max-width: 1023px) {
-        font-size: 14px;
-        margin-right: 24px;
-      }
-      /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
-      @media all and (min-width: 480px) and (max-width: 767px) {
-        font-size: 12px;
-        margin-right: 12px;
-      }
-      /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
-      @media all and (max-width: 479px) {
-        font-size: 10.5px;
-        margin-right: 7px;
-      }
-
+    /* 네비바 반응형 : 각각의 항목 */
+    @media screen and (max-width: 1280px) {
     }
+    /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+    @media all and (min-width: 768px) and (max-width: 1023px) {
+      margin-right: 24px;
+    }
+    /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+    @media all and (min-width: 768px) and (max-width: 1023px) {
+      font-size: 14px;
+      margin-right: 24px;
+    }
+    /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+    @media all and (min-width: 480px) and (max-width: 767px) {
+      font-size: 12px;
+      margin-right: 12px;
+    }
+    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+    @media all and (max-width: 479px) {
+      font-size: 10.5px;
+      margin-right: 7px;
+    }
+  }
   a {
     color: #666;
     text-decoration: none;
@@ -228,9 +226,6 @@ const LiBox = styled.div`
       font-weight: 600;
     }
   }
-
-  
-
 `;
 
 const CategoryLi = styled.li``;

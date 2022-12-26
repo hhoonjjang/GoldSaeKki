@@ -35,7 +35,7 @@ const RankComponent = () => {
   return (
     <RankingMain>
       <NavigateComp categorys={CATEGORY} />
-
+      <div>{""}
       <Routes>
         <Route path={"/"} element={<TotalRankingContainer />}></Route>
         <Route
@@ -46,7 +46,7 @@ const RankComponent = () => {
           path={"/CommentRanking"}
           element={<CommentRankingContainer />}
         ></Route>
-      </Routes>
+      </Routes></div>
     </RankingMain>
   );
 };

@@ -10,6 +10,7 @@ import {
 import { initialize as reportIni, reducer as reportReducer } from "./support";
 import { initialize as adminIni, reducer as adminReducer } from "./admin";
 import { initialize as searchIni, reducer as searchReducer } from "./search";
+import { initialize as onImgIni, reducer as onImgReducer } from "./onImg";
 
 const store = createStore(
   combineReducers({
@@ -20,6 +21,7 @@ const store = createStore(
     community: communityReducer,
     admin: adminReducer,
     search: searchReducer,
+    onImg: onImgReducer,
   }),
   {
     regist: registIni,
@@ -29,6 +31,7 @@ const store = createStore(
     community: communityIni,
     admin: adminIni,
     search: searchIni,
+    onImg: onImgIni,
   },
 
   composeWithDevTools()

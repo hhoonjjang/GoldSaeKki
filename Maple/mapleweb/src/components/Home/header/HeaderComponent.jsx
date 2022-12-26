@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import MypageContainer from "../../User/MyPage/Container";
+import { useSelector } from "react-redux";
 
 const Header = ({
   paint,
@@ -18,14 +19,9 @@ const Header = ({
   currUserName,
   logout,
   setLogoutState,
-  getUserImg,
-  thumbnailImg,
-  setThumbnailImg,
+  currUserImgState,
 }) => {
-  useEffect(() => {
-    if (currUserName == undefined) return;
-    getUserImg(currUserName, setThumbnailImg);
-  }, [currUserName]);
+  const currImg = useSelector((state) => state.onImg);
 
   return (
     <HeaderComponent paint={paint} icon={icon} text={text}>
@@ -53,7 +49,7 @@ const Header = ({
                     className="header_innerBox_center_loggedin_Mypage"
                   >
                     <div className="header_innerBox_center_loggedin_logo">
-                      <img src={thumbnailImg} alt="아바타" />
+                      <img src={currImg} alt="아바타" />
                     </div>
                   </Link>
                   <div className="header_innerBox_center_loggedin_text">
@@ -120,8 +116,7 @@ export default Header;
 const HeaderComponent = styled.div`
   position: relative;
   height: 310px;
-  background-image: url(${(props) =>
-    props.paint || "../Img/header_banner/header_banner_community.png"});
+  background-image: url(${(props) => props.paint});
   background-repeat: no-repeat;
   background-position: center;
 

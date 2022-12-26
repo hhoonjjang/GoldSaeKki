@@ -78,9 +78,8 @@ const MyBoardBox = styled.div`
 `;
 
 const MyBoardListBox = styled.div`
-  margin: 10px;
   padding: 10px;
-  border: 2px solid #5e7bcb;
+  border: 1px solid #5e7bcb;
   color: #666;
 
   .pagination {

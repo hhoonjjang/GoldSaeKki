@@ -266,7 +266,7 @@ const AllBox = styled.div`
   width: 1200px;
   min-height: inherit;
 
-  margin-top: 64px;
+  /* margin-top: 64px; */
   display: flex;
   justify-content: space-between;
 
@@ -284,9 +284,11 @@ const AllBox = styled.div`
   } 
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
   @media all and (min-width:480px) and (max-width:767px) {
+    width: 500px;
   } 
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
+    width: 300px;
   }
 `;
 
@@ -332,9 +334,11 @@ const NewsBox = styled.div`
   } 
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
   @media all and (min-width:480px) and (max-width:767px) {
+    display: none;
   } 
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
+    display: none;
   }
 `;
 
@@ -579,7 +583,7 @@ const HeartIcon = styled.div`
 
 const SmileImg = styled.img`
   width: 130px;
-  height: 100px;
+  height: 50px;
   margin-left: 50px;
   
   /* 드래그 금지 */

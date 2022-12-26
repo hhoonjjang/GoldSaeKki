@@ -132,7 +132,7 @@ const NavigationWrap = styled.div`
   z-index: 1;
 
   width: 100%;
-  float: left;
+  /* float: left; */
 `;
 
 const NavigationBox = styled.div`

@@ -97,6 +97,7 @@ const BoardRankingRaw = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
+    list-style: none;
 
     width: 100%;
   }
@@ -108,9 +109,11 @@ const BoardRankingRaw = styled.div`
   .user-img {
     width: 45%;
     display: flex;
+    column-gap: 5%;
     align-items: center;
     img {
-      width: 50%;
+      width: 10%;
+      height: 50px;
     }
   }
 

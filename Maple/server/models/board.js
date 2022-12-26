@@ -1,4 +1,4 @@
-import Sequelize from "sequelize";
+import Sequelize, { INTEGER } from "sequelize";
 
 export default class Board extends Sequelize.Model {
     static init(sequelize) {
@@ -35,6 +35,10 @@ export default class Board extends Sequelize.Model {
                 userWorld: {
                     type: Sequelize.STRING(255),
                 },
+                report:{
+                    type:Sequelize.INTEGER,
+                    defaultValue: 0,
+                }
             },
             {
                 sequelize,

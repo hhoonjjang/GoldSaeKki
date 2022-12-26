@@ -101,5 +101,18 @@ router.post("/count", async(req,res)=>{
     }
 });
 
+router.post("/reportcomment",async(req,res)=>{
+    const tempCommnet= await db.Comment.findOne({
+      where:{id:req.body.id}
+    })
+    const counting = tempCommnet.dataValues.report
+    await db.Comment.update({
+      report:counting+1,
+    },{
+      where:{id:req.body.id}
+    })
+  res.send("성공적으로 신고가 되었습니다.");
+
+  })
 
 export default router;

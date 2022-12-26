@@ -28,6 +28,11 @@ export default class Comment extends Sequelize.Model {
           allowNull: false,
           defaultValue: "리부트2",
         },
+        report:{
+          type:Sequelize.INTEGER,
+          defaultValue: 0,
+      }
+
       },
       {
         sequelize,

@@ -17,7 +17,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import EditContainer from '../Edit/Container';
 
-const DetailComponent = () => {
+const DetailComponent = ({reportBoard, reportComment}) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -195,7 +195,7 @@ const DetailComponent = () => {
                             </IconWrap>
                             <IconWrap>
                                 <BoardOtherIcon src={AlarmIcon} alt='신고 아이콘' onClick={() => {
-                                    window.location.href = 'https://ecrm.police.go.kr/minwon/main';
+                                    reportBoard(boardId);
                                 }} />
                             </IconWrap>
                         </IconBox>
@@ -363,9 +363,9 @@ const DetailComponent = () => {
                                             </> : ""}
 
                                             {/* 신고할 수 있도록 보내주기 */}
-                                            <Link to={"/Support/BugReport/Create"}>
-                                                <img src={reportImg} alt={"신고 버튼"} style={{ cursor: "pointer" }}></img>
-                                            </Link>
+                                                <img src={reportImg} alt={"신고 버튼"} onClick={()=>{
+                                                    reportComment(comment.id)
+                                                }} style={{ cursor: "pointer" }}></img>
                                         </span>
                                     </CommentUserInfo>
                                     {/* 댓글내용 */}

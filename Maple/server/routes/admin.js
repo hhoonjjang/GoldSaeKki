@@ -318,4 +318,16 @@ router.post("/delusercomment", async (req, res) => {
   res.send({ tempUser, msg: "성공적으로지워졌습니다." });
 });
 
+router.post("/reportboard",async (req,res)=>{
+  const tempReport = await db.Board.findAll({
+  }) 
+  res.send(tempReport)
+})
+
+router.post("/reportcomment",async (req,res)=>{
+  const tempReport = await db.Comment.findAll({
+  }) 
+  res.send(tempReport)
+})
+
 export default router;

@@ -6,8 +6,13 @@ import AccountContainer from "./Account/Container";
 import AdminLoginContainer from "./AdminLogin/Container";
 import FirstContainer from "./HelpCategoryDisplay/Container1";
 import UserManageContainer from "./UserManage/Container";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
+import UserReportContainer from "./Report/Container";
+import UserReportContainerComment from "./Report/Container1";
 const AdministratorComponet = () => {
+  const [commentArr,setComment] = useState([])
+  const [boardArr,setBoard] = useState([])
+  const [reportArr,setReportArr] = useState([])
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(action.header("Administrator"));
@@ -32,9 +37,11 @@ const AdministratorComponet = () => {
             <></>
           )}
 
-          <BugCSContainer />
+          <BugCSContainer reportArr={reportArr} setReportArr={setReportArr}/>
           <FirstContainer />
-          <UserManageContainer />
+          <UserManageContainer setComment={setComment} setBoard={setBoard} setReportArr={setReportArr}/>
+          <UserReportContainer boardArr={boardArr} setBoard={setBoard}/>
+          <UserReportContainerComment setComment={setComment} commentArr={commentArr}/>
         </>
       )}
     </AdminBox>

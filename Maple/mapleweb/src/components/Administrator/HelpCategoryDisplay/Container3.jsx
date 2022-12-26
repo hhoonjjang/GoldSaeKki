@@ -1,6 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import HelpCategoryDisplayComponent from "./Component";
+const CommentArrFun = async (setComment) =>{
+  try{
+     let commentArr = (await axios.post("http://localhost:8080/api/admin/reportcomment")).data;
+     setComment(commentArr);
+  }catch(err){
+     console.error(err);
+  }
+ }
+ 
 
 const tempArrFun = async (setText) => {
   try {
@@ -55,7 +64,8 @@ const ThirdContainer = ({ propsArr }) => {
       .then(() => {
         alert("삭제되었습니다");
         tempChildFun(setChildText);
-      });
+        
+      })
   };
   const editBtn = (idx, text) => {
     if (idx == isBool) {

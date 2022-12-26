@@ -12,8 +12,7 @@ const tempFun = async (setReportArr) => {
   }
 };
 
-const BugCSContainer = () => {
-  const [reportArr, setReportArr] = useState([]);
+const BugCSContainer = ({reportArr, setReportArr}) => {
   const [isBoolen, setBoolen] = useState(-1);
 
   useEffect(() => {

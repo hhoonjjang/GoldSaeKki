@@ -152,7 +152,9 @@ const UserManageComponent = ({
             </tbody>
           </table>
           <div>{tempUser.userName} 유저님의 활동내역</div>
-          <div>작성 게시글</div>
+
+          <div className="board">
+            <div>작성 게시글</div>
 
           <table>
             <colgroup>
@@ -178,11 +180,17 @@ const UserManageComponent = ({
               {tempUser.Board.map((item, idx) => (
                 <tr key={`board-${idx}`}>
                   <td key={`boardIdx-${idx}`}>{idx + 1}</td>
-                  <td key={`boardTitle-${idx}`}>
+                  {item.report != 0 ? <td  key={`boardTitle-${idx}`}>
+                  <Link className="red" to={`/Community/board/${item.id}`}>
+                  {item.title}
+                  </Link>
+                  </td>:<td key={`boardTitle-${idx}`}>
                   <Link to={`/Community/board/${item.id}`}>
                   {item.title}
                   </Link>
-                  </td>
+                  </td>}
+                  
+
                   <td key={`boardCategory-${idx}`}>{item.category}</td>
                   <td key={`boardEyeCount-${idx}`}>{item.eyeCount}</td>
                   <td key={`boardCreated-${idx}`}>
@@ -201,7 +209,8 @@ const UserManageComponent = ({
               ))}
             </tbody>
           </table>
-
+          </div>
+          <div className="board">
           <div>작성 댓글</div>
           <table>
             <colgroup>
@@ -219,14 +228,24 @@ const UserManageComponent = ({
             <tbody>
               {tempUser.Comment.map((item, idx) => (
                 <tr key={`Comment-${idx}`}>
+                  {item.report != 0?<> 
                   <td key={`idx-${idx}`}>{idx + 1}</td>
+                  <td key={`CommentText-${idx}`}>
+                  <Link className="red" to={`/Community/board/${item.boardId}`}>
+                    {item.text}
+                  </Link>
+                  </td>
+                  </>:
+                  <><td key={`idx-${idx}`}>{idx + 1}</td>
                   <td key={`CommentText-${idx}`}>
                   <Link to={`/Community/board/${item.boardId}`}>
                     {item.text}
                   </Link>
-                  </td>
+                  </td></>}
+
+               
                   <td>
-                  <button
+                  <button 
                       onClick={() => {
                         commentDel(item.id, tempUser.userName);
                       }}
@@ -235,9 +254,10 @@ const UserManageComponent = ({
                     </button>
                   </td>
                 </tr>
+                
               ))}
             </tbody>
-          </table>
+          </table></div>
         </Blank>
       ) : (
         <></>
@@ -249,6 +269,7 @@ const UserManageComponent = ({
 export default UserManageComponent;
 
 const UserManageBox = styled.div`
+
   table {
     text-align: center;
 
@@ -260,6 +281,19 @@ const UserManageBox = styled.div`
   }
   a {
     color:black;
+  }
+  .red {
+    color:red
+  }
+  .board{
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    background-color : rgb(245,245,245);
+    margin-top : 10px;
+    & div:first-child {
+      font-size: 20px;
+      font-weight:bold;
+  }
   }
 `;
 

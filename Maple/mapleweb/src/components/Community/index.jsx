@@ -254,6 +254,7 @@ const CommunityBox = styled.div`
 const AllWrap = styled.div`
   min-height: 1165px;
   width: 100%;
+
   border-top: 1px solid #ebebeb;
   border-bottom: 1px solid #ebebeb;
 `;
@@ -263,8 +264,10 @@ const AllBox = styled.div`
   margin: 0 auto;
   width: 1200px;
   min-height: inherit;
+
   display: flex;
   justify-content: space-between;
+
   /* 게시글 목록 반응형 : 전체너비 */
   @media screen and (max-width: 1280px) {
     margin: 0 auto;
@@ -294,6 +297,7 @@ const ContentBox = styled.div`
   min-height: inherit;
   display: inline-block;
   width: 930px;
+
   /* 게시글 목록 반응형 : 내용영역 */
   @media screen and (max-width: 1280px) {
     /* margin: 0 55px; */
@@ -330,6 +334,7 @@ const NewsBox = styled.div`
   min-height: inherit;
   display: inline-block;
   width: 230px;
+
   /* 게시글 목록 반응형 : 뉴스전체 */
   @media screen and (max-width: 1280px) {
     margin-right: 55px;
@@ -359,6 +364,7 @@ const NewsContentWrap = styled.div`
   margin-top: 60px;
   border-top: 2px solid #343536;
   background-color: white;
+
   padding: 0 5px;
   box-sizing: border-box;
 `;
@@ -380,6 +386,7 @@ const NewsH2 = styled.h2`
   font-weight: 500;
   color: #333;
   margin-top: 17px;
+
   float: left;
   cursor: default;
 `;
@@ -398,10 +405,12 @@ const NewsContent = styled.div`
 `;
 const NewsItem = styled.div`
   /* 이 안의 항목들은 나중에 Link a 태그로 감싸 해당 라우터 주소로 보내준다. */
+
   color: #333;
   font-size: 13px;
   margin-bottom: 10px;
   cursor: pointer;
+
   &:hover {
     text-decoration: underline;
   }
@@ -414,6 +423,7 @@ const BannerBox = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 192px;
+
   float: left;
   border: 1px solid #e3e3e3;
   background-color: white;
@@ -441,10 +451,12 @@ const BannerText = styled.div`
 const StyledSlide = styled(Slider)`
   width: 230px;
   min-height: 120px;
+
   /* 슬라이드 크기 조절 */
   .slick-list {
     width: 230px;
     min-height: 120px;
+
     position: relative;
     display: block;
     box-sizing: border-box;
@@ -458,6 +470,7 @@ const StyledSlide = styled(Slider)`
     touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
   }
+
   .slick-dots {
     width: 120px;
     margin-left: 54px;
@@ -469,6 +482,7 @@ const StyledSlide = styled(Slider)`
       color: #ca5196;
     }
   }
+
   .slick-prev:before,
   .slick-next:before {
     font-size: 20px;
@@ -565,6 +579,7 @@ const IssueTag = styled.span`
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-user-select: none;
+
   & > a {
     color: white;
     width: 100%;

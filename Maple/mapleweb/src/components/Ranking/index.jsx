@@ -35,27 +35,29 @@ const RankComponent = () => {
   return (
     <RankingMain>
       <NavigateComp categorys={CATEGORY} />
-      <div>{""}
-      <Routes>
-        <Route path={"/:sword/*"} element={<TotalRankingContainer />}></Route>
-        <Route path={"*"} element={<TotalRankingContainer />}></Route>
-        <Route
-          path={"/BoardRanking/:sword/*"}
-          element={<BoardRankingContainer />}
-        ></Route>
-        <Route
-          path={"/BoardRanking/*"}
-          element={<BoardRankingContainer />}
-        ></Route>
-        <Route
-          path={"/CommentRanking/:sword/*"}
-          element={<CommentRankingContainer />}
-        ></Route>
-        <Route
-          path={"/CommentRanking/*"}
-          element={<CommentRankingContainer />}
-        ></Route>
-      </Routes></div>
+      <div>
+        {""}
+        <Routes>
+          <Route path={"/:sword/*"} element={<TotalRankingContainer />}></Route>
+          <Route path={"*"} element={<TotalRankingContainer />}></Route>
+          <Route
+            path={"/BoardRanking/:sword/*"}
+            element={<BoardRankingContainer />}
+          ></Route>
+          <Route
+            path={"/BoardRanking/*"}
+            element={<BoardRankingContainer />}
+          ></Route>
+          <Route
+            path={"/CommentRanking/:sword/*"}
+            element={<CommentRankingContainer />}
+          ></Route>
+          <Route
+            path={"/CommentRanking/*"}
+            element={<CommentRankingContainer />}
+          ></Route>
+        </Routes>
+      </div>
     </RankingMain>
   );
 };

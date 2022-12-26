@@ -53,6 +53,16 @@ const CommunityComponet = () => {
     slidesToScroll: 1, //1장씩 넘어가게 해줌
   };
 
+  // 태그를 가져오는 요청
+  // 공감수가 1 이상이면서 태그가 있는 게시글 중에
+  // 공감수가 높은 순으로 정렬해 7개까지 뽑아내
+  // 맨 첫 번째 태그를 가져와
+  // 이슈 태그에 넣어주고
+  // 이슈 태그를 누르면 해당 게시글로 이동하도록 하기
+  // 일단 요청 보내기
+  
+
+
   return (
     <CommunityBox className="communityBox">
       {/* 네비게이션 카테고리, 카데고리와 라우터 값을 리듀서에서 불러와 객체로 보내줌. */}
@@ -179,14 +189,10 @@ const CommunityComponet = () => {
                 <TagListBox>
                   {/* 여기서 이 놈(IssueTag)을 map 돌리면 된다. 태그 개수는 최대 10개까지만 */}
                   <IssueTag>
-                    {/* a 태그 : 나중에 Link to로 바꾸기 */}
-                    {/* <a href="/Common/Search?t=어쩌구저쩌구#$23#$" title="메이플스토리"></a> */}
-                    {/* <a href="/" title="검색어"> */}
                     <Link to={"/"}>
                       {/* 텍스트 앞의 #은 map에서 돌려 붙여줘야 한다. */}
                       #던파모바일
                     </Link>
-                    {/* </a> */}
                   </IssueTag>
 
                   <IssueTag>

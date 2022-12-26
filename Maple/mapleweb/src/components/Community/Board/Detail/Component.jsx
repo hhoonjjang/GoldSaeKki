@@ -208,13 +208,6 @@ const DetailComponent = () => {
 
                 {/* 공감영역 */}
                 <LikeWrap>
-
-
-                    {/* 하트 아이콘 */}
-                    {/* <HeartIcon onClick={(e) => {
-                        e.target.classList.toggle("is-active");
-                    }}></HeartIcon> */}
-
                     <LikeBtn onClick={async (e) => {
                         // 공감 클릭시 요청 보내기 : 보드 아이디 보내야 함 board.id
                         // useState도 사용하여 값 변한 것처럼 보이게 한다.
@@ -446,11 +439,6 @@ const DetailComponent = () => {
                     </CommentAdd>
                 </CommentAddWrap>
             </ContentBox>
-
-            {/* 하트 아이콘 */}
-            <HeartIcon onClick={(e) => {
-                e.target.classList.toggle("is-active");
-            }}></HeartIcon>
 
         </>
     );
@@ -823,7 +811,7 @@ const CommentBtnItem = styled.span`
 `;
 
 const HeartIcon = styled.div`
-background-color: #ff00003d;
+    background-color: #ff00003d;
     width: 100px;
     height: 100px;
     background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;

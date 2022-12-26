@@ -17,6 +17,7 @@ import { action } from "./modules/user";
 import { useDispatch } from "react-redux";
 import { action as adminaction } from "./modules/admin";
 import RankComponent from "./components/Ranking";
+import NotFound from "./NotFound";
 function App() {
   // const location = useLocation();
   // useEffect(() => {
@@ -37,9 +38,9 @@ function App() {
         });
     }
   };
-console.log(document.cookie.split("=")[0])
+  console.log(document.cookie.split("=")[0])
   const loginCheck = () => {
-    if (document.cookie.split("=")[0]=="login") {
+    if (document.cookie.split("=")[0] == "login") {
       console.log("쿠키 들어왔다.");
       axios
         .post("http://localhost:8080/api/user/logincheck")
@@ -54,7 +55,7 @@ console.log(document.cookie.split("=")[0])
   };
   console.log(location);
   document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck()
-  
+
   return (
     <div id="body_wrapper">
       <div id="body_content">
@@ -104,6 +105,8 @@ console.log(document.cookie.split("=")[0])
             path="/Search/*"
             element={<MainSearchResultContainer />}
           ></Route>
+
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
       <Footer></Footer>

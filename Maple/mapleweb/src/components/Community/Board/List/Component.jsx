@@ -76,6 +76,7 @@ const ListComponent = () => {
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
   let boards = useSelector((state) => state.community.list);
 <<<<<<< HEAD
+<<<<<<< HEAD
   // 월드 필터에 해당하는 보드들
   let worldBoards = [];
 
@@ -100,30 +101,37 @@ const ListComponent = () => {
         }
       });
 =======
+=======
+  // 월드 필터에 해당하는 보드들
+  let worldBoards = [];
+>>>>>>> ee1d6ee (월드 필터 작업중)
 
   // 현재 월드가 바뀔 때 // 여기부터
   useEffect(()=>{
     // console.log(nowWorld);
-    // boards에서 world이름이 nowWorld이름과 같은 것만 다시 boards에 저장 -> 리덕스에도 재저장
     // console.log(boards);
+    // boards에서 world이름이 nowWorld이름과 같은 것만 다시 boards에 저장 -> 리덕스에도 재저장
 
     if(nowWorld=="전체월드"){
       console.log("전체월드임");
       return;
     }else{
       console.log("전체월드아님"+nowWorld+"임");
-      console.log(boards);
-      boards = [];
       boards?.map((item, idx)=>{
         // item.world == nowWorld
         if(item.world == nowWorld){
-          console.log(item.world);
-          boards.push(item.world);
+          // console.log(item);
+          // 새로운 배열에 item들만 다시 담아준 뒤 boards를 대체시켜준다.
+          worldBoards.push(item);
+          // boards = worldBoards;
         }
       });
+<<<<<<< HEAD
       console.log(boards);
 
 >>>>>>> 3454761 (현재 선택된 월드 출력)
+=======
+>>>>>>> ee1d6ee (월드 필터 작업중)
     }
   }, [nowWorld]);
 

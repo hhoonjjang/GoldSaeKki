@@ -17,7 +17,9 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
   const route = useParams();
   const currUserName = useSelector((state) => state.user.currUserName);
   const currUserWorld = useSelector((state) => state.user.currServerName);
-  dispatch(action.header("Mypage"));
+  useEffect(() => {
+    dispatch(action.header("Mypage"));
+  }, []);
   const CATEGORY = [
     {
       name: "내정보 관리",

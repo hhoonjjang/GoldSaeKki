@@ -284,9 +284,11 @@ const AllBox = styled.div`
   } 
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
   @media all and (min-width:480px) and (max-width:767px) {
+    width: 500px;
   } 
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
+    width: 300px;
   }
 `;
 
@@ -332,9 +334,11 @@ const NewsBox = styled.div`
   } 
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
   @media all and (min-width:480px) and (max-width:767px) {
+    display: none;
   } 
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
+    display: none;
   }
 `;
 

@@ -18,12 +18,10 @@ const TotalRankingContainer = () => {
 
   const serverTotalRanking = (server) => {
     console.log(server);
-    axios
-      .post("/api/rank/totalServer", { server: server })
-      .then((data) => {
-        console.log(data);
-        setServerData(data.data);
-      });
+    axios.post("/api/rank/totalServer", { server: server }).then((data) => {
+      console.log(data);
+      setServerData(data.data);
+    });
   };
 
   const searchTotalRanking = (searchData) => {

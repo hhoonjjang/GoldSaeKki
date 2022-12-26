@@ -38,26 +38,24 @@ import EditContainer from "./Board/Edit/Container";
 import NotFound from "./NotFound";
 import axios from "axios";
 
-const CommunityComponet = ({ }) => {
+const CommunityComponet = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(action.header("Community"));
 
     // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
-    axios
-      .post("/api/board/getLikeSevenBoards", {})
-      .then((boards) => {
-        // 해당 게시글 목록을 리덕스에 저장한다.
-        console.log(boards.data);
-        const boardsData = boards.data;
-        let likeTagBoards = [];
-        boardsData.map((board, index) => {
-          if (board.tags != "") {
-            likeTagBoards.push(board);
-          }
-        });
-        dispatch(communityAction.tags(likeTagBoards));
+    axios.post("/api/board/getLikeSevenBoards", {}).then((boards) => {
+      // 해당 게시글 목록을 리덕스에 저장한다.
+      console.log(boards.data);
+      const boardsData = boards.data;
+      let likeTagBoards = [];
+      boardsData.map((board, index) => {
+        if (board.tags != "") {
+          likeTagBoards.push(board);
+        }
       });
+      dispatch(communityAction.tags(likeTagBoards));
+    });
   }, []);
 
   // 사이드 슬라이드 라이브러리 세팅 : 슬라이드의 기능 조정
@@ -76,13 +74,17 @@ const CommunityComponet = ({ }) => {
   const boardTags = useSelector((state) => state?.community?.tags);
   console.log(boardTags);
 
-
   // 태그 검색
   const [searchType, setSearchType] = useState("태그");
   const [searchData, setSearchData] = useState("");
   const navigate = useNavigate();
   // 검색 함수
-  const navigateToSearch = async (searchType, searchData, navigate, dispatch) => {
+  const navigateToSearch = async (
+    searchType,
+    searchData,
+    navigate,
+    dispatch
+  ) => {
     dispatch(searchAction.search(searchType, searchData));
     navigate("/Search", {
       state: {
@@ -91,7 +93,6 @@ const CommunityComponet = ({ }) => {
       },
     });
   };
-
 
   return (
     <CommunityBox className="communityBox">
@@ -221,24 +222,28 @@ const CommunityComponet = ({ }) => {
                 {/* 태그 검색 인풋 영역 */}
                 <TagInputWrap>
                   {/* 여기부터~~ */}
-                  <TagInput type={"text"} onInput={(e) => {
-                    setSearchData(e.target.value);
-                  }} onKeyUp={() => {
-                    if (window.event.keyCode == 13) {
-                      if (searchData.match(/\S/g)) {
-                        navigateToSearch(
-                          searchType,
-                          searchData,
-                          navigate,
-                          dispatch
-                        );
-                        return;
-                      } else {
-                        console.log("searchData가 공백입니다.");
-                        alert("검색어를 입력하세요");
+                  <TagInput
+                    type={"text"}
+                    onInput={(e) => {
+                      setSearchData(e.target.value);
+                    }}
+                    onKeyUp={() => {
+                      if (window.event.keyCode == 13) {
+                        if (searchData.match(/\S/g)) {
+                          navigateToSearch(
+                            searchType,
+                            searchData,
+                            navigate,
+                            dispatch
+                          );
+                          return;
+                        } else {
+                          console.log("searchData가 공백입니다.");
+                          alert("검색어를 입력하세요");
+                        }
                       }
-                    }
-                  }} />
+                    }}
+                  />
                   <TagSerachBtnSpan>
                     {/* a 태그 :나중에 Link to로 바꾸기(중요) */}
                     {/* <a href="/Community/Free">
@@ -466,7 +471,7 @@ const NewsItem = styled.div`
     text-decoration: underline;
   }
 
-  &>a{
+  & > a {
     color: #333;
   }
 `;

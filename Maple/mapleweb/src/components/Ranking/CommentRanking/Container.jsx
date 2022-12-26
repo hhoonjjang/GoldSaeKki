@@ -18,12 +18,10 @@ const CommentRankingContainer = () => {
 
   const serverCommentRanking = (server) => {
     console.log(server);
-    axios
-      .post("/api/rank/commentServer", { server: server })
-      .then((data) => {
-        console.log(data);
-        setServerData(data.data);
-      });
+    axios.post("/api/rank/commentServer", { server: server }).then((data) => {
+      console.log(data);
+      setServerData(data.data);
+    });
   };
 
   const searchCommentRanking = (searchData) => {

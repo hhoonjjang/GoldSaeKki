@@ -83,25 +83,23 @@ const NicknameChangeContainer = () => {
       //   // changeName, serverName 받아옴
       // });
       .then((userInfo) => {
-        axios
-          .post("/api/user/changename", userInfo)
-          .then((data) => {
-            console.log("바뀐닉네임", data.data);
-            dispacth(
-              action.check({
-                server: data.data.data.currServerName,
-                name: data.data.data.currUserName,
-              })
-            );
-            dispacth(
-              action.login({
-                currServerName: data.data.data.currServerName,
-                currUserName: data.data.data.currUserName,
-              })
-            );
-            alert("성공적으로 닉네임을 변경했습니다.");
-            navigate("/mypage");
-          });
+        axios.post("/api/user/changename", userInfo).then((data) => {
+          console.log("바뀐닉네임", data.data);
+          dispacth(
+            action.check({
+              server: data.data.data.currServerName,
+              name: data.data.data.currUserName,
+            })
+          );
+          dispacth(
+            action.login({
+              currServerName: data.data.data.currServerName,
+              currUserName: data.data.data.currUserName,
+            })
+          );
+          alert("성공적으로 닉네임을 변경했습니다.");
+          navigate("/mypage");
+        });
       });
   };
 

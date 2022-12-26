@@ -93,6 +93,7 @@ const SecondContainer = ({ propsArr }) => {
       a="text"
       b="helpCategory"
       c="category"
+      d="카테고리"
     >
       <ThirdContainer propsArr={textArr} />
     </HelpCategoryDisplayComponent>

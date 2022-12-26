@@ -30,10 +30,10 @@ const Menubar = () => {
     ["도움말/1:1문의", "버그악용/불법프로그램 신고"],
   ];
 
-  const routeAddress = ["News", "Ranking", "Community/Free", "Support/Service"];
+  const routeAddress = ["News/Notice", "Ranking", "Community/Free", "Support/Service"];
 
   const routeAddressSubGroup = [
-    ["/", "/", "/", "/", "/"],
+    ["News/Notice", "News/Update", "News/Event", "News/CashShop", "News/NoticeMapleBoard"],
     ["/Ranking", "/Ranking/BoardRanking", "/Ranking/CommentRanking"],
     [
       "/Community/Free",

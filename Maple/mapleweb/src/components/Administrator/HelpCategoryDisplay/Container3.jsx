@@ -99,6 +99,7 @@ const ThirdContainer = ({ propsArr }) => {
       a="textChild"
       b="textCategory"
       c="text"
+      d="텍스트"
     />
   );
 };

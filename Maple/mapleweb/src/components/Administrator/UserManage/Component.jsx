@@ -25,7 +25,7 @@ const UserManageComponent = ({
   }, [stateAdmin]);
   return (
     <UserManageBox>
-      <div>유저관리디스플레이</div>
+      <div className="title">유저관리 목록</div>
       <table>
         <colgroup>
           <col width={"30%"} />
@@ -72,6 +72,7 @@ const UserManageComponent = ({
       </form>
       {tempUser != "" ? (
         <Blank>
+          <div className="title">유저검색 결과</div>
           <table>
             <colgroup>
               <col width={"30%"} />
@@ -151,7 +152,7 @@ const UserManageComponent = ({
               )}
             </tbody>
           </table>
-          <div>{tempUser.userName} 유저님의 활동내역</div>
+          <div className="title">{tempUser.userName} 유저님의 활동내역</div>
 
           <div className="board">
             <div>작성 게시글</div>
@@ -269,11 +270,11 @@ const UserManageComponent = ({
 export default UserManageComponent;
 
 const UserManageBox = styled.div`
-
-  table {
+  
+  & table {
     text-align: center;
-
-    width: 100%;
+    background-color : rgb(245,245,245);
+    width: 100%;    
   }
   textarea {
     width: 80%;
@@ -295,6 +296,19 @@ const UserManageBox = styled.div`
       font-weight:bold;
   }
   }
+ .title{
+    margin-top: 30px;
+    font-size: 28px;
+    font-weight:bold;
+  } 
+  form {
+    margin-top:30px;
+    margin-bottom:30px;
+  }
+  
 `;
 
-const Blank = styled.div``;
+const Blank = styled.div`
+
+  
+`;

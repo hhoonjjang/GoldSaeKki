@@ -25,6 +25,7 @@ const FirstContainer = () => {
   useEffect(() => {}, [categoryArr]);
 
   const textSubmit = async (category, text) => {
+    if(text == "") return alert("내용을 입력하세요")
     axios
       .post("http://localhost:8080/api/admin/category", { category, text })
       .then(() => {
@@ -75,6 +76,7 @@ const FirstContainer = () => {
       a="category"
       b=""
       c=""
+      d="문의유형"
     >
       <SecondContainer propsArr={categoryArr} />
     </HelpCategoryDisplayComponent>

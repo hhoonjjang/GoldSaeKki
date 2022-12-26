@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { action as adminaction } from "./modules/admin";
 import RankComponent from "./components/Ranking";
 import NotFound from "./NotFound";
+import NewsComponet from "./components/News";
 function App() {
   // const location = useLocation();
   // useEffect(() => {
@@ -90,7 +91,7 @@ function App() {
         <Link to={"/Administrator"}>관리자</Link>
         <Routes>
           <Route path="/" element={<HomeComponet />}></Route>
-          <Route path="/news"></Route>
+          <Route path="/News/*" element={<NewsComponet/>}></Route>
           <Route path="/Support/*" element={<SupportComponet />}></Route>
           <Route
             path="/Administrator/*"

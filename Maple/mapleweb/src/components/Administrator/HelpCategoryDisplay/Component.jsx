@@ -14,6 +14,7 @@ const HelpCategoryDisplayComponent = ({
   a,
   b,
   c,
+  d,
   children,
 }) => {
   const [category, setCategory] = useState("");
@@ -27,8 +28,7 @@ const HelpCategoryDisplayComponent = ({
           textSubmit(category, text);
         }}
       >
-        <div>ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ</div>
-        <div>온라인상담문의유형선택 카테고리 텍스트</div>
+        <div className="title">온라인상담문의 {d}</div>
         {categoryArr == "" ? (
           <></>
         ) : (
@@ -108,7 +108,18 @@ const HelpCategoryDisplayComponent = ({
 
 export default HelpCategoryDisplayComponent;
 
-const DisplayBox = styled.div``;
+const DisplayBox = styled.div`
+.title{
+  margin-top: 30px;
+  font-size: 28px;
+  font-weight:bold;
+ 
+}`;
 const Blank = styled.div`
   display: flex;
+  background-color : rgb(245,245,245);
+  button {
+    margin-left: 10px;
+  }
+  
 `;

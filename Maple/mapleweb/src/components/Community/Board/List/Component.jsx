@@ -227,6 +227,7 @@ const ListComponent = () => {
         {/* 게시글 목록 */}
         <ListBox>
           {/* 여기서 map 돌리기 */}
+          {newBoards?.length ? "" : <OneBoardList style={{fontSize : "13px", color : "#666"}}>해당 게시글 목록이 존재하지 않습니다.</OneBoardList>}
           {newBoards &&
             newBoards?.map((board, idx) => {
               return (

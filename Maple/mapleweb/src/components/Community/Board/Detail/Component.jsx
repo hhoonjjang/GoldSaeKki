@@ -298,9 +298,9 @@ const DetailComponent = ({reportBoard, reportComment}) => {
                                         <CommentTimeSpan key={`createTime-${idx}`}>{moment(comment.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(comment.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</CommentTimeSpan>
 
                                         <span style={{ float: "right" }}>
-                                            <CommentBtnItem onClick={() => {
+                                            {/* <CommentBtnItem onClick={() => {
                                                 alert("답글버튼 클릭");
-                                            }}>답글</CommentBtnItem>
+                                            }}>답글</CommentBtnItem> */}
 
                                             {/* 유저 아이디가 댓글 작성 유저 아이디와 같으면 띄운다. */}
                                             {comment.userName == userName ? <>

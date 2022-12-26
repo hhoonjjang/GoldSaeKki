@@ -208,6 +208,13 @@ const DetailComponent = () => {
 
                 {/* 공감영역 */}
                 <LikeWrap>
+
+
+                    {/* 하트 아이콘 */}
+                    {/* <HeartIcon onClick={(e) => {
+                        e.target.classList.toggle("is-active");
+                    }}></HeartIcon> */}
+
                     <LikeBtn onClick={async (e) => {
                         // 공감 클릭시 요청 보내기 : 보드 아이디 보내야 함 board.id
                         // useState도 사용하여 값 변한 것처럼 보이게 한다.
@@ -443,8 +450,8 @@ const DetailComponent = () => {
             {/* 하트 아이콘 */}
             <HeartIcon onClick={(e) => {
                 e.target.classList.toggle("is-active");
-            }}>❤</HeartIcon>
-            
+            }}></HeartIcon>
+
         </>
     );
 };
@@ -824,6 +831,7 @@ background-color: #ff00003d;
     cursor: pointer;
     transition: background-position 1s steps(28);
     transition-duration: 0s;
+    display: inline-block;
   
     &.is-active {
         transition-duration: 1s;

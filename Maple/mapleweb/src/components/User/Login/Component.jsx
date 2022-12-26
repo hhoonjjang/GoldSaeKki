@@ -73,7 +73,7 @@ const LoginComponent = ({ loginClick }) => {
             <div>금쪽이ID</div>
             <div>
               <input
-                placeholder={"메이플ID"}
+                placeholder={"금쪽이ID"}
                 value={loginId}
                 type={"text"}
                 onInput={(e) => {

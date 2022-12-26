@@ -247,7 +247,10 @@ router.post("/pwchange", (req, res) => {
 //   if (err) {
 //     console.error(err.message);
 //   } else {
+//     console.log(data && JSON.parse(data).length);
+//     console.log(count);
 //     if (data && JSON.parse(data).length > count) {
+//       console.log("실행");
 //       JSON.parse(data).forEach((item) => {
 //         try {
 //           db.User.create(item);
@@ -258,4 +261,5 @@ router.post("/pwchange", (req, res) => {
 //     }
 //   }
 // });
+
 export default router;

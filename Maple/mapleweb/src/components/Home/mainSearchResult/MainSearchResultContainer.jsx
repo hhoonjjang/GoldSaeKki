@@ -14,15 +14,21 @@ const getSearchList = async (searchType, searchData, setSearchResultData) => {
     searchType: searchType,
     searchData: searchData,
   });
-  console.log(data);
-  console.log(data?.data?.searchResult);
-  setSearchResultData(data?.data?.searchResult[0]);
+  const searchResult = data.data.searchResult;
+  console.log(searchResult);
+  for (let i = 0; i < searchResult.length; i++) {
+    const year = searchResult[i].createdAt.slice(0, 4);
+    const month = searchResult[i].createdAt.slice(5, 7);
+    const date = searchResult[i].createdAt.slice(8, 10);
+    searchResult[i].createdAt = `${year}.${month}.${date}`;
+  }
+  setSearchResultData(searchResult);
 };
 
 const MainSearchResultContainer = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const [searchResultData, setSearchResultData] = useState({});
+  const [searchResultData, setSearchResultData] = useState([]);
   dispatch(action.header("Search"));
 
   useEffect(() => {

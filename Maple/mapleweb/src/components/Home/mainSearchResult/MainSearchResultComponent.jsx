@@ -13,6 +13,7 @@ const MainSearchResultComponent = ({
   console.log(searchResultData);
   useEffect(() => {
     console.log(searchResultData);
+    console.log(searchResultData.length);
   }, [searchResultData]);
   return (
     <MainSearchResult>
@@ -34,36 +35,51 @@ const MainSearchResultComponent = ({
             <tr>
               <td>커뮤니티</td>
               <td>
-                {!searchResultData ? (
+                {searchResultData.length == 0 ? (
                   <div className="mainSearchResult_innerBox_resultTable_noneResult">
-                    {/* <img src={exclamationIcon} alt="!" /> */}
+                    <img src={exclamationIcon} alt="!" />
                     검색된 글이 없습니다.
                   </div>
                 ) : searchResultData != undefined ? (
                   <>
-                    {/* {searchResultData && */}
-                    {/* searchResultData?.map((item, index) => { */}
-                    {/* return item.category == "금쪽이아트" ? ( */}
-                    {/* <div> */}
-                    {/* <div></div> */}
-                    {/* <div></div> */}
-                    {/* </div> */}
-                    {/* ) : ( */}
-                    {/* // 나중에 금쪽이아트 기능이 추가되면.. */}
-                    {/* <div> */}
-                    {/* <div> */}
-                    {/* <span>{item.category}</span> */}
-                    {/* <span>{item.world}</span> */}
-                    {/* <Link to={`/Community/board/${item.id}`}> */}
-                    {/* <span>{item.title}</span> */}
-                    {/* </Link>{" "} */}
-                    {/* <span>{item.writer}</span> */}
-                    {/* <span>{item.createdAt}</span> */}
-                    {/* </div> */}
-                    <div></div>
-                    {/* </div> */}
-                    {/* ); */}
-                    {/* })} */}
+                    {searchResultData?.map((item, index) => {
+                      return item.category == "금쪽이아트" ? (
+                        <div>
+                          <div></div>
+                          <div></div>
+                        </div>
+                      ) : (
+                        // 나중에 금쪽이아트 기능이 추가되면..
+                        <div className="mainSearchResult_innerBox_resultTable_textBoard">
+                          <div className="mainSearchResult_innerBox_resultTable_title">
+                            <span className="mainSearchResult_innerBox_resultTable_title_category">
+                              [{item.category}]
+                            </span>
+                            <span className="mainSearchResult_innerBox_resultTable_title_world">
+                              [{item.world}]
+                            </span>
+                            <Link to={`/Community/board/${item.id}`}>
+                              <span>{item.title}</span>
+                            </Link>
+                            <span className="mainSearchResult_innerBox_resultTable_title_userName">
+                              {item.userName}
+                            </span>
+                            <span className="mainSearchResult_innerBox_resultTable_title_createdAt">
+                              {item.createdAt}
+                            </span>
+                          </div>
+                          <div className="mainSearchResult_innerBox_resultTable_content">
+                            <Link to={`/Community/board/${item.id}`}>
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: item.contents,
+                                }}
+                              ></span>
+                            </Link>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </>
                 ) : (
                   <></>
@@ -123,6 +139,63 @@ const MainSearchResult = styled.div`
 
         .mainSearchResult_innerBox_resultTable_noneResult {
           color: #888;
+          display: flex;
+          justify-content: center;
+        }
+
+        .mainSearchResult_innerBox_resultTable_textBoard {
+          margin-bottom: 10px;
+
+          .mainSearchResult_innerBox_resultTable_title {
+            font-size: 14px;
+
+            .mainSearchResult_innerBox_resultTable_title_category {
+              color: #1c6ac3;
+              margin-right: 7px;
+            }
+            .mainSearchResult_innerBox_resultTable_title_world {
+              color: #1c6ac3;
+              margin-right: 7px;
+            }
+            a {
+              margin-right: 7px;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+              max-width: 460px;
+
+              span {
+                color: #333;
+              }
+            }
+            .mainSearchResult_innerBox_resultTable_title_userName {
+              margin-right: 7px;
+              font-size: 12px;
+              color: #888888;
+            }
+            .mainSearchResult_innerBox_resultTable_title_createdAt {
+              font-size: 12px;
+              color: #888888;
+            }
+          }
+          .mainSearchResult_innerBox_resultTable_content {
+            width: 100%;
+
+            span {
+              max-width: 100%;
+              color: #828282;
+              font-size: 13px;
+
+              // white-space: nowrap;
+
+              p {
+                max-height: 63px;
+                line-height: 21px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+              }
+            }
+          }
         }
       }
     }

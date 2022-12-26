@@ -10,9 +10,6 @@ router.post("/mainSearch", async (req, res) => {
     console.log("req.body.searchData : ", req.body.searchData);
     switch (req.body.searchType) {
       case "제목": {
-        //let searchData = req.params.searchData;
-        //searchData = searchData.replace(" ", "%");
-
         const searchResult = await db.Board.findAll({
           where: {
             title: {
@@ -24,7 +21,7 @@ router.post("/mainSearch", async (req, res) => {
         res.send({ searchResult: searchResult });
         break;
       }
-      case "writer": {
+      case "작성자": {
         const searchResult = await db.Board.findAll({
           where: {
             userName: {
@@ -36,10 +33,10 @@ router.post("/mainSearch", async (req, res) => {
         res.send({ searchResult: searchResult });
         break;
       }
-      case "tag":
+      case "태그":
         const searchResult = await db.Board.findAll({
           where: {
-            title: {
+            tags: {
               [Op.like]: `%${req.body.searchData}%`,
             },
           },

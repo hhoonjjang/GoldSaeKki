@@ -8,6 +8,13 @@ import ServiceContainer from "./Service/Container";
 import BugReportContainer from "./BugReport/Container";
 import { useEffect } from "react";
 
+import NavigationComponent from "../Community/Navigation/Component";
+
+const CATEGORY = [
+    { name: '도움말/1:1문의', label: "Service" },
+    { name: '버그악용/불법프로그램신고', label: "BugReport" },
+];
+
 const SupportComponet = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -15,6 +22,7 @@ const SupportComponet = () => {
   }, []);
   return (
     <SupportBox>
+      <NavigationComponent categorys={CATEGORY} />
       <Routes>
         <Route path="/Service/*" element={<ServiceContainer />}></Route>
         <Route path="/BugReport/*" element={<BugReportContainer />}></Route>

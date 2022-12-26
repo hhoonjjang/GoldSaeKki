@@ -208,6 +208,13 @@ const DetailComponent = ({reportBoard, reportComment}) => {
 
                 {/* 공감영역 */}
                 <LikeWrap>
+
+
+                    {/* 하트 아이콘 */}
+                    {/* <HeartIcon onClick={(e) => {
+                        e.target.classList.toggle("is-active");
+                    }}></HeartIcon> */}
+
                     <LikeBtn onClick={async (e) => {
                         // 공감 클릭시 요청 보내기 : 보드 아이디 보내야 함 board.id
                         // useState도 사용하여 값 변한 것처럼 보이게 한다.

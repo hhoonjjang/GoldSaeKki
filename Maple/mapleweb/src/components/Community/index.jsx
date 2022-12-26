@@ -228,18 +228,21 @@ const CommunityComponet = () => {
               </TagContentBox>
             </TagSearchBox>
 
-
             {/* 하트 아이콘 */}
-            <HeartIcon onClick={(e) => {
-              e.target.classList.toggle("is-active");
-            }}></HeartIcon>
-            <HeartIcon style={{ marginLeft: "30px" }} onClick={(e) => {
-              e.target.classList.toggle("is-active");
-            }}></HeartIcon>
+            <HeartIcon
+              onClick={(e) => {
+                e.target.classList.toggle("is-active");
+              }}
+            ></HeartIcon>
+            <HeartIcon
+              style={{ marginLeft: "30px" }}
+              onClick={(e) => {
+                e.target.classList.toggle("is-active");
+              }}
+            ></HeartIcon>
             {/* <SmileImg src={smile} alt="웃음"></SmileImg> */}
             {/* <SmileImg src={tasty} alt="웃음"></SmileImg> */}
             <SmileImg src={happiness} alt="웃음"></SmileImg>
-
           </NewsBox>
         </AllBox>
       </AllWrap>
@@ -274,20 +277,20 @@ const AllBox = styled.div`
   @media screen and (max-width: 1280px) {
     width: 1000px;
   }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
     width: 780px;
-  } 
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
+  }
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
     width: 720px;
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
-  @media all and (min-width:480px) and (max-width:767px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
     width: 500px;
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
-  @media all and (max-width:479px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
     width: 300px;
   }
 `;
@@ -302,17 +305,17 @@ const ContentBox = styled.div`
     /* margin-right : 55px; */
     margin: 0 55px;
   }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
-  } 
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
-  @media all and (min-width:480px) and (max-width:767px) {
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
-  @media all and (max-width:479px) {
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+  }
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
   }
 `;
 
@@ -325,19 +328,19 @@ const NewsBox = styled.div`
   @media screen and (max-width: 1280px) {
     margin-right: 55px;
   }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
-  } 
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+  }
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
     display: none;
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
-  @media all and (min-width:480px) and (max-width:767px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
     display: none;
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
-  @media all and (max-width:479px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
     display: none;
   }
 `;
@@ -561,31 +564,31 @@ const IssueTag = styled.span`
   }
 `;
 
-
 const HeartIcon = styled.div`
-    background-color: #ff00003d;
-    width: 100px;
-    height: 100px;
-    background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
-    background-position: 0 0;
-    cursor: pointer;
-    transition: background-position 1s steps(28);
-    transition-duration: 0s;
-    display: inline-block;
-    /* margin-top: 300px; */
-    /* margin-top: 10px; */
-  
-    &.is-active {
-        transition-duration: 1s;
-        background-position: -2800px 0; 
-    }
+  background-color: #ff00003d;
+  width: 100px;
+  height: 100px;
+  background: url("https://cssanimation.rocks/images/posts/steps/heart.png")
+    no-repeat;
+  background-position: 0 0;
+  cursor: pointer;
+  transition: background-position 1s steps(28);
+  transition-duration: 0s;
+  display: inline-block;
+  /* margin-top: 300px; */
+  /* margin-top: 10px; */
+
+  &.is-active {
+    transition-duration: 1s;
+    background-position: -2800px 0;
+  }
 `;
 
 const SmileImg = styled.img`
   width: 130px;
   height: 50px;
   margin-left: 50px;
-  
+
   /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;

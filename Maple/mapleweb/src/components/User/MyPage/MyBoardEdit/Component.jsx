@@ -13,7 +13,7 @@ const MyBoardEditComponent = ({ getMyBoard, boardList, currUser }) => {
 
   let newBoards = [];
   if (boardList) {
-    boardList?.map((item, idx) => {
+    boardList?.reverse().map((item, idx) => {
       if (idx >= (nowPage - 1) * 5 && idx < nowPage * 5) {
         newBoards.push(item);
       }
@@ -26,15 +26,30 @@ const MyBoardEditComponent = ({ getMyBoard, boardList, currUser }) => {
   return (
     <MyBoardBox>
       <MyBoardListBox>
+        <div style={{ fontWeight: "bold" }}>
+          총 게시글 수 : {boardList.length}개
+        </div>
         {newBoards?.map((item, idx) => {
+          const tempDate = item.createdAt;
+          const boardDate = tempDate.split("T");
+          console.log(boardDate[0]);
           return (
             <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "10px",
+              }}
               key={`board-${idx}`}
               onClick={() => {
                 navigate(`/Community/board/${item.id}`);
               }}
             >
-              {item.title}
+              <div style={{ display: "inline-block" }}>
+                <span>【{item.category}】</span>
+                <span> {item.title}</span>
+              </div>
+              <span className="board_time">{boardDate[0]}</span>
             </div>
           );
         })}

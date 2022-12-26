@@ -21,7 +21,7 @@ const MypageComponent = ({ getUserImg, checkLogin }) => {
   useEffect(() => {
     dispatch(action.header("Mypage"));
   }, []);
-    const currImg = useSelector((state) => state.onImg);
+  const currImg = useSelector((state) => state.onImg);
   const CATEGORY = [
     {
       name: "내정보 관리",
@@ -31,7 +31,7 @@ const MypageComponent = ({ getUserImg, checkLogin }) => {
   ];
 
   useEffect(() => {
-    checkLogin(currUserName);
+    checkLogin();
   }, []);
 
   useEffect(() => {
@@ -42,43 +42,43 @@ const MypageComponent = ({ getUserImg, checkLogin }) => {
 
   const myDiv = () => {
     switch (route.route) {
-      case "userInfo1":
+      case "ImgChange":
         return <ImgChangeContainer />;
 
-      case "userInfo2":
+      case "NickChange":
         return <NicknameChangeContainer />;
 
-      case "userInfo3":
+      case "MyBoard":
         return <MyBoardEditContainer />;
 
-      case "userInfo4":
+      case "MyComment":
         return <MyCommentEditContainer />;
 
-      case "userInfo5":
+      case "PasswordChange":
         return <PasswordChangeContainer />;
 
-      case "userInfo6":
+      case "UserOut":
         return <UserOutContainer />;
 
       default:
         return (
           <ul>
-            <Link to={"/mypage/userInfo1"}>
+            <Link to={"/mypage/ImgChange"}>
               <li>- 대표이미지 변경</li>
             </Link>
-            <Link to={"/mypage/userInfo2"}>
+            <Link to={"/mypage/NickChange"}>
               <li>- 닉네임 변경</li>
             </Link>
-            <Link to={"/mypage/userInfo3"}>
+            <Link to={"/mypage/MyBoard"}>
               <li>- 내가 쓴 글 관리</li>
             </Link>
-            <Link to={"/mypage/userInfo4"}>
+            <Link to={"/mypage/MyComment"}>
               <li>- 내가 쓴 댓글 관리</li>
             </Link>
-            <Link to={"/mypage/userInfo5"}>
+            <Link to={"/mypage/PasswordChange"}>
               <li>- 비밀번호 변경</li>
             </Link>
-            <Link to={"/mypage/userInfo6"}>
+            <Link to={"/mypage/UserOut"}>
               <li>- 회원탈퇴</li>
             </Link>
           </ul>

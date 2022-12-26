@@ -21,22 +21,33 @@ const MyCommentEditComponent = ({ commentList, getMycomment, currUser }) => {
   }
 
   useEffect(() => {
-    console.log("currUser 뭐임?", currUser);
     if (currUser) getMycomment();
   }, [currUser]);
   return (
     <MyCommentBox>
       <MyCommentListBox>
+        <div style={{ fontWeight: "bold" }}>
+          총 댓글 수 : {commentList.length}개
+        </div>
         {newBoards?.map((item, idx) => {
-          console.log(item);
+          const tempDate = item.createdAt;
+          const commentDate = tempDate.split("T");
           return (
             <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "10px",
+              }}
               key={`comment-${idx}`}
               onClick={() => {
                 navigate(`/Community/board/${item.boardId}`);
               }}
             >
-              {item.text}
+              <div style={{ display: "inline-block" }}>
+                <span> {item.text}</span>
+              </div>
+              <span className="board_time">{commentDate[0]}</span>
             </div>
           );
         })}

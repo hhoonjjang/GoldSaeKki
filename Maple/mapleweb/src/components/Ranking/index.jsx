@@ -37,13 +37,22 @@ const RankComponent = () => {
       <NavigateComp categorys={CATEGORY} />
       <div>{""}
       <Routes>
-        <Route path={"/"} element={<TotalRankingContainer />}></Route>
+        <Route path={"/:sword/*"} element={<TotalRankingContainer />}></Route>
+        <Route path={"*"} element={<TotalRankingContainer />}></Route>
         <Route
-          path={"/BoardRanking"}
+          path={"/BoardRanking/:sword/*"}
           element={<BoardRankingContainer />}
         ></Route>
         <Route
-          path={"/CommentRanking"}
+          path={"/BoardRanking/*"}
+          element={<BoardRankingContainer />}
+        ></Route>
+        <Route
+          path={"/CommentRanking/:sword/*"}
+          element={<CommentRankingContainer />}
+        ></Route>
+        <Route
+          path={"/CommentRanking/*"}
           element={<CommentRankingContainer />}
         ></Route>
       </Routes></div>
@@ -54,5 +63,6 @@ const RankComponent = () => {
 export default RankComponent;
 
 const RankingMain = styled.div`
- margin:0 auto;
-`
+  margin: 0 auto;
+  min-height: 1200px;
+`;

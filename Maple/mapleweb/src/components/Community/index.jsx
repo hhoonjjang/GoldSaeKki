@@ -21,6 +21,7 @@ import four from "./images/4.png";
 import prev from "./images/prev.png";
 import next from "./images/next.png";
 import smile from "./images/smile.png";
+import heart from "./images/heart.png";
 import AddContainer from "./Board/Add/Container";
 import { useEffect } from "react";
 

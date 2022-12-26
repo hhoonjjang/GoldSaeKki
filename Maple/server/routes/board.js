@@ -58,6 +58,25 @@ router.post("/getList", async (req, res) => {
   }
 });
 
+// 카테고리와 월드가 일치하는 게시글 목록
+router.post("/getWorldList", async (req, res) => {
+  try {
+    // 게시판 db의 category가 유저가 보낸 category와 같은 것을 모두 찾아온다.
+    const tempBoards = await db.Board.findAll({
+      where: {
+        category: req.body.category,
+        world: req.body.world,
+      },
+      order: [["id", "DESC"]],
+    });
+
+    res.send(tempBoards);
+  } catch (error) {
+    console.error(error);
+    res.send(error);
+  }
+});
+
 // 보드 id에 해당하는 게시글 내용
 router.post("/getBoard", async (req, res) => {
   try {

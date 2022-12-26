@@ -78,18 +78,42 @@ const ListComponent = () => {
 
     if (nowWorld == "전체월드") {
       console.log("전체월드임");
+
+      // 리덕스에 전체 카테고리들을 저장해준다.
+      // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
+      axios.post("http://localhost:8080/api/board/getList", {
+        category: category.name,
+      }).then((boards) => {
+        // DB에 값이 없으면 에러가 뜨지 않게 해준다.
+        if (boards.data.name == "SequelizeDatabaseError") {
+          return;
+        }
+        // 해당 게시글 목록을 리덕스에 저장한다.
+        // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
+        dispatch(action.list(boards.data));
+      });
+
       return;
     } else {
       console.log("전체월드아님" + nowWorld + "임");
-      boards?.map((item, idx) => {
-        // item.world == nowWorld
-        if (item.world == nowWorld) {
-          // console.log(item);
-          // 새로운 배열에 item들만 다시 담아준 뒤 boards를 대체시켜준다.
-          worldBoards.push(item);
-          // boards = worldBoards;
+
+      // 리덕스에 해당 카테고리들만 저장해준다. (item)
+      // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
+      axios.post("http://localhost:8080/api/board/getWorldList", {
+        category: category.name,
+        // 여기부터
+        world: nowWorld,
+      }).then((boards) => {
+        console.log(boards);
+        // DB에 값이 없으면 에러가 뜨지 않게 해준다.
+        if (boards.data.name == "SequelizeDatabaseError") {
+          return;
         }
+        // 해당 게시글 목록을 리덕스에 저장한다.
+        // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
+        dispatch(action.list(boards.data));
       });
+
     }
   }, [nowWorld]);
 

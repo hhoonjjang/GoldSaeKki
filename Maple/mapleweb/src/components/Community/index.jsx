@@ -568,8 +568,7 @@ const HeartIcon = styled.div`
     transition: background-position 1s steps(28);
     transition-duration: 0s;
     display: inline-block;
-    /* margin-top: 300px; */
-    /* margin-top: 10px; */
+    margin-top: 10px;
   
     &.is-active {
         transition-duration: 1s;

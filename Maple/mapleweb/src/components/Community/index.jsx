@@ -220,20 +220,6 @@ const CommunityComponet = () => {
                 </TagListBox>
               </TagContentBox>
             </TagSearchBox>
-
-            {/* 하트 아이콘 */}
-            <HeartIcon
-              onClick={(e) => {
-                e.target.classList.toggle("is-active");
-              }}
-            ></HeartIcon>
-            <HeartIcon
-              style={{ marginLeft: "30px" }}
-              onClick={(e) => {
-                e.target.classList.toggle("is-active");
-              }}
-            ></HeartIcon>
-            <SmileImg src={happiness} alt="웃음"></SmileImg>
           </NewsBox>
         </AllBox>
       </AllWrap>
@@ -591,37 +577,4 @@ const IssueTag = styled.span`
     color: #edf1f3;
     border: none;
   }
-`;
-
-const HeartIcon = styled.div`
-  background-color: #ff00003d;
-  width: 100px;
-  height: 100px;
-  background: url("https://cssanimation.rocks/images/posts/steps/heart.png")
-    no-repeat;
-  background-position: 0 0;
-  cursor: pointer;
-  transition: background-position 1s steps(28);
-  transition-duration: 0s;
-  display: inline-block;
-  margin-top: 10px;
-  /* margin-top: 300px; */
-
-  &.is-active {
-    transition-duration: 1s;
-    background-position: -2800px 0;
-  }
-`;
-
-const SmileImg = styled.img`
-  width: 130px;
-  height: 50px;
-  margin-left: 50px;
-
-  /* 드래그 금지 */
-  -webkit-touch-callout: none;
-  user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -webkit-user-select: none;
 `;

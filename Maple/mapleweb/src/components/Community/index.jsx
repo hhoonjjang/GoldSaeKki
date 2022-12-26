@@ -236,9 +236,7 @@ const CommunityComponet = () => {
             <HeartIcon style={{ marginLeft: "30px" }} onClick={(e) => {
               e.target.classList.toggle("is-active");
             }}></HeartIcon>
-            {/* <SmileImg src={smile} alt="웃음"></SmileImg> */}
-            {/* <SmileImg src={tasty} alt="웃음"></SmileImg> */}
-            <SmileImg src={happiness} alt="웃음"></SmileImg>
+            <SmileImg src={smile} alt="웃음"></SmileImg>
 
           </NewsBox>
         </AllBox>
@@ -568,7 +566,7 @@ const HeartIcon = styled.div`
     transition: background-position 1s steps(28);
     transition-duration: 0s;
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 20px;
   
     &.is-active {
         transition-duration: 1s;

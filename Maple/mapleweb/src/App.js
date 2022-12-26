@@ -37,9 +37,9 @@ function App() {
         });
     }
   };
-console.log(document.cookie.split("=")[0])
+  console.log(document.cookie.split("=")[0]);
   const loginCheck = () => {
-    if (document.cookie.split("=")[0]=="login") {
+    if (document.cookie.split("=")[0] == "login") {
       console.log("쿠키 들어왔다.");
       axios
         .post("http://localhost:8080/api/user/logincheck")
@@ -53,8 +53,8 @@ console.log(document.cookie.split("=")[0])
     }
   };
   console.log(location);
-  document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck()
-  
+  document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck();
+
   return (
     <div id="body_wrapper">
       <div id="body_content">
@@ -67,10 +67,8 @@ console.log(document.cookie.split("=")[0])
         <Routes>
           {/* 메인페이지 헤더 */}
           <Route path="/News/*" element={<HeaderContainer />}></Route>
-          <Route path="/Guide/*" element={<HeaderContainer />}></Route>
           <Route path="/Ranking/*" element={<HeaderContainer />}></Route>
           <Route path="/Community/*" element={<HeaderContainer />}></Route>
-          <Route path="/Media/*" element={<HeaderContainer />}></Route>
           <Route path="/Support/*" element={<HeaderContainer />}></Route>
           <Route path="/Administrator/*" element={<HeaderContainer />}></Route>
           <Route path="/Mypage/*" element={<HeaderContainer />}></Route>

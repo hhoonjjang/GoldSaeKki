@@ -14,7 +14,7 @@ const Menubar = () => {
     setBGColor(false);
   };
 
-  const menu = ["뉴스", "랭킹", "커뮤니티", "미디어", "고객지원"];
+  const menu = ["뉴스", "랭킹", "커뮤니티", "고객지원"];
 
   const dropDownMenu = [
     ["공지사항", "업데이트", "이벤트", "캐시샵 공지", "메이플 알림판"],
@@ -27,17 +27,10 @@ const Menubar = () => {
       "금쪽이아트",
       "이벤트게시판",
     ],
-    ["웹툰", "메이플스토리 서체", "영상", "음악", "아트웍"],
     ["도움말/1:1문의", "버그악용/불법프로그램 신고"],
   ];
 
-  const routeAddress = [
-    "News",
-    "Ranking",
-    "Community/Free",
-    "Media",
-    "Support/Service",
-  ];
+  const routeAddress = ["News", "Ranking", "Community/Free", "Support/Service"];
 
   const routeAddressSubGroup = [
     ["/", "/", "/", "/", "/"],
@@ -49,7 +42,6 @@ const Menubar = () => {
       "/Community/Art",
       "/Community/Coordination",
     ],
-    ["/", "/", "/", "/", "/"],
     ["/Support/Service", "/Support/BugReport"],
   ];
 
@@ -241,7 +233,7 @@ const MenubarComponent = styled.div`
   }
 
   .menubar_item_outsideLi {
-    width: 207px;
+    width: 260px;
     position: relative;
     text-align: center;
   }

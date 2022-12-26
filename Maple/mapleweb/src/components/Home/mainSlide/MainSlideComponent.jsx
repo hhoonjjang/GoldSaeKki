@@ -24,39 +24,31 @@ const MainSlideComponent = ({
 
   const onlyUpdateCurrSlide = useRef(true);
 
-  useEffect(() => {
-    setInterval(() => {
-      setCurrSlide((state) => state + 1);
-    }, 5000);
-  }, []);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setCurrSlide((state) => state + 1);
+  //   }, 5000);
+  // }, []);
 
   useEffect(() => {
     if (onlyUpdateCurrSlide.current) {
       onlyUpdateCurrSlide.current = false;
       // 마운트 될 때 실행되지 않게
     } else {
-      console.log(currSlide);
       if (bool) {
-        console.log("bool : ", bool);
-        console.log(currSlide, "이동한다이");
         if (currSlide == 0) {
           // 마지막에서 뒤로 갔을 때
           container.current.style.transform = `translate(0px)`;
           setCurrSlideTranslate(0);
-          console.log("");
         } else {
           if (currSlide % 4 == 0) {
             container.current.style.transform = `translate(${
               currSlideTranslate - 1100
             }px)`;
             setCurrSlideTranslate(currSlideTranslate - 1100);
-            console.log(currSlideTranslate - 1100);
-            console.log("");
           }
         }
       } else if (!bool) {
-        console.log("bool : ", bool);
-        console.log(currSlide, "이동한다이");
         if (currSlide + 1 == carouselImgArr.length) {
           container.current.style.transform = `translate(${
             // parseInt((carouselImgArr.length / 4 - 1) * -1100)
@@ -65,16 +57,12 @@ const MainSlideComponent = ({
           setCurrSlideTranslate(
             parseInt((carouselImgArr.length - 1) / 4) * -1100
           );
-          console.log((parseInt((carouselImgArr.length - 1) / 4) + 1) * -1100);
-          console.log("");
         } else {
           if (currSlide % 4 == 3) {
             container.current.style.transform = `translate(${
               currSlideTranslate + 1100
             }px)`;
             setCurrSlideTranslate(currSlideTranslate + 1100);
-            console.log(currSlideTranslate + 1100);
-            console.log("");
           }
         }
       }
@@ -186,6 +174,7 @@ export default MainSlideComponent;
 const MainSlide = styled.div`
   position: relative;
   height: 560px;
+  width: 100%;
 `;
 
 const CarouselBackground = styled.div`
@@ -195,18 +184,24 @@ const CarouselBackground = styled.div`
   transition: background 200ms linear;
   width: 100%;
   height: 100%;
-  position: relative;
+  display: flex;
+  justify-content: center;
 
   .CarouselBackground_innerBox {
-    position: absolute;
-    top: 35%;
-    right: 43%;
-    left: 100x;
+    position: relative;
+    min-width: 1200px;
 
     .CarouselBackground_innerBox_title {
       color: white;
       font-size: 60px;
       white-space: nowrap;
+      position: absolute;
+      top: 35%;
+      // right: 43%;
+      left: 100px;
+
+      p {
+      }
     }
   }
 `;
@@ -223,7 +218,7 @@ const Carousel = styled.div`
   justify-content: center;
 
   .carousel_innerBox {
-    width: 1200px;
+    min-width: 1200px;
     padding-top: 20px;
     position: relative;
 
@@ -266,7 +261,7 @@ const Carousel = styled.div`
       .carousel_slide_innerBox {
         display: flex;
         justify-content: space-between;
-        width: 100%;
+        min-width: 100%;
         position: relative;
 
         .carousel_slide_innerBox_prevBtn {
@@ -277,7 +272,7 @@ const Carousel = styled.div`
         }
 
         .carousel_slide_itemBox_cover {
-          width: 1100px;
+          min-width: 1100px;
           margin-left: 50px;
           margin-right: 50px;
           overflow: hidden;

@@ -14,10 +14,7 @@ import MainSearchContainer from "./mainSearch/MainSearchContainer";
 const HomeComponet = () => {
   return (
     <div>
-      {/* <MainSlide></MainSlide> */}
-      {/* 임시로 배너를 채워넣었습니다 */}
       <MainSlideContainer></MainSlideContainer>
-      {/* <TempSlide></TempSlide> */}
       <MainGamestartContainer></MainGamestartContainer>
       <MainNoticeContainer></MainNoticeContainer>
       <MainSearchContainer></MainSearchContainer>
@@ -33,11 +30,14 @@ const HomeComponet = () => {
 
 export default HomeComponet;
 
-const TempSlide = styled.div``;
-
 const MainArchive = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 60px;
-  padding-bottom: 60px;
+  @media only screen and (min-width: 1024px) {
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  @media only screen and (max-width: 1024px) {
+    display: none;
+  }
 `;

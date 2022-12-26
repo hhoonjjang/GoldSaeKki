@@ -116,10 +116,13 @@ const EditComponent = ({ contentsValue }) => {
 
         {/* 취소, 등록 버튼 */}
         <ButtonBox>
-          {/* 이놈 href 말고 Link to로 보내야 한다. ! */}
-          <CancelBtn href={`/Community/${route}`} className="btn03_g">취소</CancelBtn>
-          <RegistBtn className="btn03_g" onClick={async (e) => {
+          {/* 취소 */}
+          <Link to={`/Community/${route}`}>
+            <CancelBtn href={`/Community/${route}`} className="btn03_g">취소</CancelBtn>
+          </Link>
 
+          {/* 등록 */}
+          <RegistBtn className="btn03_g" onClick={async (e) => {
             // 서버쪽에 수정 요청을 보낸다.
             const update = await axios.post("http://localhost:8080/api/board/update", {
               title: titleText,

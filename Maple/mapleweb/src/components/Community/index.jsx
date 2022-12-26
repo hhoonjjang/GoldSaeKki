@@ -221,12 +221,17 @@ const CommunityComponet = () => {
                 </TagListBox>
               </TagContentBox>
             </TagSearchBox>
-            
+
 
             {/* 하트 아이콘 */}
-            <HeartIcon onClick={(e) => {
+            <div style={{display : "flex"}}>
+              <HeartIcon onClick={(e) => {
                 e.target.classList.toggle("is-active");
-            }}></HeartIcon>
+              }}></HeartIcon>
+              <HeartIcon onClick={(e) => {
+                e.target.classList.toggle("is-active");
+              }}></HeartIcon>
+            </div>
 
 
           </NewsBox>
@@ -557,6 +562,7 @@ const HeartIcon = styled.div`
     transition: background-position 1s steps(28);
     transition-duration: 0s;
     display: inline-block;
+    margin-top: 10px;
   
     &.is-active {
         transition-duration: 1s;

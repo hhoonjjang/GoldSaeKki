@@ -103,6 +103,7 @@ const MainSearchComponent = ({
             </div>
           </div>
         </div>
+        <div className="mainSearch_innerBox_flex"></div>
       </div>
     </MainSearch>
   );
@@ -207,6 +208,9 @@ const MainSearch = styled.div`
         padding-right:10px;
       }
     }
+  }
+  .mainSearch_innerBox_flex{
+    width:600px;
   }
  
 `;

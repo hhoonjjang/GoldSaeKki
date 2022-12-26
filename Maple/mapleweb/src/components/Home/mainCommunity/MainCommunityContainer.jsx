@@ -26,25 +26,33 @@ const getCommunityList = async (setCommunityNewestPost) => {
   }
 };
 
-// const getCommunityArtList = async (setCommunityArtList) => {};
-// 커뮤니티에서 아트 기능이 생기면 추가할 예정
-
 const MainCommunityContainer = () => {
   const [communityNewestPost, setCommunityNewestPost] = useState([]);
-  const [comunityArtList, setCommunityArtList] = useState([]);
+  const [totalData, setTotalData] = useState([]);
   const onlyMainCommunity = useRef(false);
+
+  const totalRanking = () => {
+    axios.post("http://localhost:8080/api/rank/total").then((data) => {
+      console.log(data.data);
+      setTotalData(data.data.slice(0, 5));
+    });
+  };
 
   useEffect(() => {
     getCommunityList(setCommunityNewestPost);
     // getCommunityArtList(setCommunityArtList);
   }, []);
+
   useEffect(() => {
     if (onlyMainCommunity.current) console.log(communityNewestPost[0]);
     else onlyMainCommunity.current = true;
   }, [communityNewestPost]);
+
   return (
     <MainCommunityComponent
       communityNewestPost={communityNewestPost}
+      totalData={totalData}
+      totalRanking={totalRanking}
     ></MainCommunityComponent>
   );
 };

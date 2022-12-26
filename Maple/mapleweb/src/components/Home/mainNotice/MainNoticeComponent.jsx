@@ -160,7 +160,7 @@ const MainNoticeComponent = styled.div`
   justify-content: center;
 
   .mainNotice_innerBox {
-    width: 1200px;
+    min-width: 1200px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -170,6 +170,7 @@ const MainNoticeComponent = styled.div`
     .mainNotice_innerBox_top {
       display: flex;
       justify-content: space-between;
+      min-width: 1200px;
 
       .mainNotice_innerBox_top_left {
         width: 380px;
@@ -292,6 +293,7 @@ const MainNoticeComponent = styled.div`
     .mainNotice_innerBox_bottom {
       display: flex;
       justify-content: space-between;
+      min-width: 1200px;
 
       .mainNotice_innerBox_bottom_left {
         width: 380px;

@@ -22,6 +22,8 @@ import prev from "./images/prev.png";
 import next from "./images/next.png";
 import smile from "./images/smile.png";
 import heart from "./images/heart.png";
+import tasty from "./images/tasty.png";
+import happiness from "./images/happiness.png";
 import AddContainer from "./Board/Add/Container";
 import { useEffect } from "react";
 
@@ -232,7 +234,9 @@ const CommunityComponet = () => {
             <HeartIcon style={{ marginLeft: "30px" }} onClick={(e) => {
               e.target.classList.toggle("is-active");
             }}></HeartIcon>
-            <SmileImg src={smile} alt="웃음"></SmileImg>
+            {/* <SmileImg src={smile} alt="웃음"></SmileImg> */}
+            {/* <SmileImg src={tasty} alt="웃음"></SmileImg> */}
+            <SmileImg src={happiness} alt="웃음"></SmileImg>
 
           </NewsBox>
         </AllBox>
@@ -562,7 +566,7 @@ const HeartIcon = styled.div`
     transition: background-position 1s steps(28);
     transition-duration: 0s;
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 300px;
   
     &.is-active {
         transition-duration: 1s;

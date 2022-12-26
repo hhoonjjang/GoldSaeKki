@@ -17,8 +17,11 @@ const MypageComponent = ({ getUserImg, checkLogin }) => {
   const route = useParams();
   const currUserName = useSelector((state) => state.user.currUserName);
   const currUserWorld = useSelector((state) => state.user.currServerName);
-  dispatch(action.header("Mypage"));
-  const currImg = useSelector((state) => state.onImg);
+
+  useEffect(() => {
+    dispatch(action.header("Mypage"));
+  }, []);
+    const currImg = useSelector((state) => state.onImg);
   const CATEGORY = [
     {
       name: "내정보 관리",

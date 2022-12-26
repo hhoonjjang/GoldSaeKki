@@ -25,11 +25,7 @@ const MainSearchResultComponent = ({
         <table className="mainSearchResult_innerBox_resultTable">
           <tbody>
             <tr>
-              <td>업데이트 정보센터</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>가이드</td>
+              <td>공지사항</td>
               <td></td>
             </tr>
             <tr>

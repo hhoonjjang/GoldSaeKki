@@ -15,24 +15,20 @@ const MainSlideComponent = ({
 }) => {
   const [currSlide, setCurrSlide] = useState(0);
   // 현재 바라보는 곳
-  const [_, setRender] = useState(false);
   const [currSlideTranslate, setCurrSlideTranslate] = useState(0);
 
   const [bool, setBool] = useState(true);
   // 왼쪽 버튼인지 오른쪽 버튼인지 판별한다.
 
-  const [allSlide] = useState(9);
-  // 원래는 서버에 연결해서 SlideContainer에서 적당히 받아오지만 임시로 9를 주었다.
-
   const container = useRef();
 
   const onlyUpdateCurrSlide = useRef(true);
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     setCurrSlide((state) => state + 1);
-  //   }, 5000);
-  // }, []);
+  useEffect(() => {
+    setInterval(() => {
+      setCurrSlide((state) => state + 1);
+    }, 5000);
+  }, []);
 
   useEffect(() => {
     if (onlyUpdateCurrSlide.current) {

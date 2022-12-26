@@ -14,27 +14,25 @@ const Menubar = () => {
     setBGColor(false);
   };
 
-  const menu = ["뉴스", "가이드", "랭킹", "커뮤니티", "미디어", "고객지원"];
+  const menu = ["뉴스", "랭킹", "커뮤니티", "미디어", "고객지원"];
 
   const dropDownMenu = [
     ["공지사항", "업데이트", "이벤트", "캐시샵 공지", "메이플 알림판"],
-    [
-      "게임정보",
-      "퀘스트정보",
-      "직업소개",
-      "확률형 아이템",
-      "확률형 아이템 결과",
-      "NEXON NOW",
-    ],
     ["종합 랭킹", "게시판 랭킹", "댓글 랭킹"],
-    ["자유게시판", "정보게시판", "토론게시판", "메이플 아트", "메이플 코디"],
+    [
+      "자유게시판",
+      "정보게시판",
+      "토론게시판",
+      "연재소설",
+      "금쪽이아트",
+      "이벤트게시판",
+    ],
     ["웹툰", "메이플스토리 서체", "영상", "음악", "아트웍"],
     ["도움말/1:1문의", "버그악용/불법프로그램 신고"],
   ];
 
   const routeAddress = [
     "News",
-    "Guide",
     "Ranking",
     "Community/Free",
     "Media",
@@ -43,7 +41,6 @@ const Menubar = () => {
 
   const routeAddressSubGroup = [
     ["/", "/", "/", "/", "/"],
-    ["/", "/", "/", "/", "/", "/"],
     ["/Ranking", "/Ranking/BoardRanking", "/Ranking/CommentRanking"],
     [
       "/Community/Free",
@@ -244,7 +241,7 @@ const MenubarComponent = styled.div`
   }
 
   .menubar_item_outsideLi {
-    width: 173px;
+    width: 207px;
     position: relative;
     text-align: center;
   }

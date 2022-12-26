@@ -1,6 +1,6 @@
 import styled from "styled-components";
 // import { Link, Routes, Route } from "react-router-dom";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useDispatch, useSelector } from "react-redux";
 import { action } from "../../modules/header";
 import { action as communityAction } from "../../modules/community";
+import { action as searchAction } from "../../modules/search";
 
 import NavigationComponent from "./Navigation/Component";
 import ListContainer from "./Board/List/Container";
@@ -26,7 +27,7 @@ import heart from "./images/heart.png";
 import tasty from "./images/tasty.png";
 import happiness from "./images/happiness.png";
 import AddContainer from "./Board/Add/Container";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
 // import { action as communityAction, CATEGORY, CATEGORY2 } from "../../modules/community";
@@ -34,10 +35,10 @@ import { CATEGORY, CATEGORY2 } from "../../modules/community";
 import CommentContainer from "./Pagination/Container";
 import DetailContainer from "./Board/Detail/Container";
 import EditContainer from "./Board/Edit/Container";
-import NotFound from "../../NotFound";
+import NotFound from "./NotFound";
 import axios from "axios";
 
-const CommunityComponet = () => {
+const CommunityComponet = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(action.header("Community"));
@@ -75,6 +76,23 @@ const CommunityComponet = () => {
   const boardTags = useSelector((state) => state?.community?.tags);
   console.log(boardTags);
 
+
+  // 태그 검색
+  const [searchType, setSearchType] = useState("태그");
+  const [searchData, setSearchData] = useState("");
+  const navigate = useNavigate();
+  // 검색 함수
+  const navigateToSearch = async (searchType, searchData, navigate, dispatch) => {
+    dispatch(searchAction.search(searchType, searchData));
+    navigate("/Search", {
+      state: {
+        searchType: searchType,
+        searchData: searchData,
+      },
+    });
+  };
+
+
   return (
     <CommunityBox className="communityBox">
       {/* 네비게이션 카테고리, 카데고리와 라우터 값을 리듀서에서 불러와 객체로 보내줌. */}
@@ -100,7 +118,7 @@ const CommunityComponet = () => {
                 path="/board/:boardId"
                 element={<DetailContainer />}
               ></Route>
-              <Route path="/board/hi" element={<NotFound />} />
+              {/* <Route path="/board/hi" element={<NotFound />} /> */}
 
               {/* 수정 페이지 */}
               <Route
@@ -186,7 +204,25 @@ const CommunityComponet = () => {
               <TagContentBox>
                 {/* 태그 검색 인풋 영역 */}
                 <TagInputWrap>
-                  <TagInput />
+                  {/* 여기부터~~ */}
+                  <TagInput type={"text"} onInput={(e)=>{
+                    setSearchData(e.target.value);
+                  }} onKeyUp={()=>{
+                    if (window.event.keyCode == 13) {
+                      if (searchData.match(/\S/g)) {
+                        navigateToSearch(
+                          searchType,
+                          searchData,
+                          navigate,
+                          dispatch
+                        );
+                        return;
+                      } else {
+                        console.log("searchData가 공백입니다.");
+                        alert("검색어를 입력하세요");
+                      }
+                    }
+                  }} />
                   <TagSerachBtnSpan>
                     {/* a 태그 :나중에 Link to로 바꾸기(중요) */}
                     {/* <a href="/Community/Free">
@@ -220,6 +256,20 @@ const CommunityComponet = () => {
                 </TagListBox>
               </TagContentBox>
             </TagSearchBox>
+
+            {/* 하트 아이콘 */}
+            <HeartIcon
+              onClick={(e) => {
+                e.target.classList.toggle("is-active");
+              }}
+            ></HeartIcon>
+            <HeartIcon
+              style={{ marginLeft: "30px" }}
+              onClick={(e) => {
+                e.target.classList.toggle("is-active");
+              }}
+            ></HeartIcon>
+            <SmileImg src={happiness} alt="웃음"></SmileImg>
           </NewsBox>
         </AllBox>
       </AllWrap>
@@ -229,20 +279,19 @@ const CommunityComponet = () => {
 export default CommunityComponet;
 
 const CommunityBox = styled.div`
-  min-height: 1600px;
-
+  /* min-height: 1600px; */
   *::selection {
-    background-color: #f1b4d1;
-    color: white;
+    background-color: #ffebf6cc;
+    /* color: white; */
   }
 `;
 
 const AllWrap = styled.div`
-  min-height: 1165px;
+  /* min-height: 1165px; */
+  margin-bottom: 100px;
   width: 100%;
-
   border-top: 1px solid #ebebeb;
-  border-bottom: 1px solid #ebebeb;
+  /* border-bottom: 1px solid #ebebeb; */
 `;
 
 const AllBox = styled.div`
@@ -265,7 +314,7 @@ const AllBox = styled.div`
   }
   /* 테블릿 세로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
-    width: 840px;
+    width: 650px;
   }
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
   @media all and (min-width: 480px) and (max-width: 767px) {
@@ -577,4 +626,37 @@ const IssueTag = styled.span`
     color: #edf1f3;
     border: none;
   }
+`;
+
+const HeartIcon = styled.div`
+  background-color: #ff00003d;
+  width: 100px;
+  height: 100px;
+  background: url("https://cssanimation.rocks/images/posts/steps/heart.png")
+    no-repeat;
+  background-position: 0 0;
+  cursor: pointer;
+  transition: background-position 1s steps(28);
+  transition-duration: 0s;
+  display: inline-block;
+  margin-top: 10px;
+  /* margin-top: 300px; */
+
+  &.is-active {
+    transition-duration: 1s;
+    background-position: -2800px 0;
+  }
+`;
+
+const SmileImg = styled.img`
+  width: 130px;
+  height: 50px;
+  margin-left: 50px;
+
+  /* 드래그 금지 */
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 `;

@@ -10,9 +10,9 @@ import UserOutContainer from "./UserOut/Container";
 import { useSelector } from "react-redux";
 import MyCommentEditContainer from "./MyCommentEdit/Container";
 import PasswordChangeContainer from "./PasswordChange/Container";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
+const MypageComponent = ({ getUserImg, checkLogin }) => {
   const dispatch = useDispatch();
   const route = useParams();
   const currUserName = useSelector((state) => state.user.currUserName);
@@ -20,6 +20,7 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
   useEffect(() => {
     dispatch(action.header("Mypage"));
   }, []);
+  const currImg = useSelector((state) => state.onImg);
   const CATEGORY = [
     {
       name: "내정보 관리",
@@ -27,6 +28,11 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
       link: "/mypage",
     },
   ];
+
+  useEffect(() => {
+    checkLogin(currUserName);
+  }, []);
+
   useEffect(() => {
     console.log(currUserName, "asdf");
     if (currUserName == undefined) return;
@@ -36,7 +42,7 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
   const myDiv = () => {
     switch (route.route) {
       case "userInfo1":
-        return <ImgChangeContainer setThumbnailImg={setThumbnailImg} />;
+        return <ImgChangeContainer />;
 
       case "userInfo2":
         return <NicknameChangeContainer />;
@@ -85,7 +91,7 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
       <MypageBox>
         <MypageContents>
           <LeftContent>
-            <img src={thumbnailImg} alt="프로필사진" />
+            <img src={currImg} alt="프로필사진" />
             <p>닉네임 : {currUserName}</p>
             <p> 월드 : {currUserWorld}</p>
           </LeftContent>
@@ -97,7 +103,6 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
           </RightContent>
         </MypageContents>
       </MypageBox>
-      :<></>
     </>
   );
 };
@@ -111,23 +116,27 @@ const MypageBox = styled.div`
 const MypageContents = styled.div`
   width: 100%;
   display: flex;
-  float: left;
 `;
 
 const LeftContent = styled.div`
+  width: 20%;
   padding: 20px;
+  margin-top: 30px;
+
   & > img {
-    width: 200px;
+    width: 100%;
+    height: 200px;
   }
 
   & > p {
     text-align: center;
+    font-weight: bold;
   }
 `;
 
 const RightContent = styled.div`
   padding: 20px;
-  width: 100%;
+  width: 80%;
 
   & > div:first-child {
     background-color: #5e7bcb;

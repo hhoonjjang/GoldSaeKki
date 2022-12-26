@@ -2,8 +2,11 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import ImgChangeComponent from "./Component";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { action } from "../../../../modules/onImg";
 
-const ImgChangeContainer = ({ setThumbnailImg }) => {
+const ImgChangeContainer = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const currUser = useSelector((state) => state.user.currUserName);
   const imgUploadSubmit = (e) => {
@@ -33,10 +36,9 @@ const ImgChangeContainer = ({ setThumbnailImg }) => {
       .post("http://localhost:8080/api/user/imgchange", { currUser, currImg })
       .then((data) => {
         console.log("바뀐이미지 정보 받아온거", data);
-        setThumbnailImg(data.data);
         navigate("/mypage");
-        // window.location.reload();
-        // HeaderComponent와 state가 달라서 생기는 프로필이미지 차이 오류에 대한 긴급조지
+
+        dispatch(action.onImg(data.data));
         // 이 주소로 src get통신을 날리는거임 router/index.js 쪽 changeImg함수
       });
   };

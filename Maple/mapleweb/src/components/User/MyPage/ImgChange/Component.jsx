@@ -26,6 +26,8 @@ const ImgChangeComponent = ({ imgUploadSubmit }) => {
 export default ImgChangeComponent;
 
 const ImgChangeBox = styled.div`
+  border: 1px solid #5e7bcb;
+  padding: 10px;
   & > h5 {
     margin: 0;
     padding-left: 20px;

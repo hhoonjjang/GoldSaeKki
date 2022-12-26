@@ -65,7 +65,7 @@ const FindDiv = styled.div`
     background-image: url(${findImg});
     opacity: 0.8;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
     position: absolute;
     border-radius: 20px;
     z-index: -1;

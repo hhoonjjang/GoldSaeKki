@@ -9,7 +9,7 @@ const LoginHeadComp = () => {
           <Link to={"/News"}>
             <div>뉴스</div>
           </Link>
-          <div>
+          <div className="link-list">
             <li>공지사항</li>
             <li>업데이트</li>
             <li>이벤트</li>
@@ -21,7 +21,7 @@ const LoginHeadComp = () => {
           <Link to={"/Guide"}>
             <div>가이드</div>
           </Link>
-          <div>
+          <div className="link-list">
             <li>게임정보</li>
             <li>퀘스트정보</li>
             <li>직업소개</li>
@@ -34,31 +34,48 @@ const LoginHeadComp = () => {
           <Link to={"/Ranking"}>
             <div>랭킹</div>
           </Link>
-          <div>
-            <li>월드 랭킹</li>
-            <li>유니온 랭킹</li>
-            <li>업적 랭킹</li>
-            <li>명예의 전당</li>
-            <li>유니온 아레나</li>
+          <div className="link-list">
+            <Link to={"/Ranking"}>
+              <li>종합 랭킹</li>
+            </Link>
+            <Link to={"/Ranking/BoardRanking"}>
+              <li>게시판 랭킹</li>
+            </Link>
+            <Link to={"/Ranking/CommentRanking"}>
+              <li>댓글 랭킹</li>
+            </Link>
           </div>
         </ul>
         <ul className="head-title">
           <Link to={"/Community/Free"}>
             <div>커뮤니티</div>
           </Link>
-          <div>
-            <li>자유게시판</li>
-            <li>정보게시판</li>
-            <li>토론게시판</li>
-            <li>메이플 아트</li>
-            <li>메이플 코디</li>
+          <div className="link-list">
+            <Link to={"/Community/Free"}>
+              <li>자유게시판</li>
+            </Link>
+            <Link to={"/Community/Information"}>
+              <li>정보게시판</li>
+            </Link>
+            <Link to={"/Community/TopicDiscussion"}>
+              <li>토론게시판</li>
+            </Link>
+            <Link to={"/Community/Novel"}>
+              <li>연재 소설</li>
+            </Link>
+            <Link to={"/Community/Art"}>
+              <li>금쪽이 아트</li>
+            </Link>
+            <Link to={"/Community/Event"}>
+              <li>이벤트게시판</li>
+            </Link>
           </div>
         </ul>
         <ul className="head-title">
           <Link to={"/Media"}>
             <div>미디어</div>
           </Link>
-          <div>
+          <div className="link-list">
             <li>웹툰</li>
             <li>메이플스토리 서체</li>
             <li>영상</li>
@@ -70,10 +87,13 @@ const LoginHeadComp = () => {
           <Link to={"/Support/Service"}>
             <div>고객지원</div>
           </Link>
-          <div>
-            <li>도움말/ 1:1문의</li>
-            <li>아이템 봉인해제</li>
-            <li>버그악용/불법프로그램 신고</li>
+          <div className="link-list">
+            <Link to={"/Support/Service"}>
+              <li>도움말/ 1:1문의</li>
+            </Link>
+            <Link to={"/Support/BugReport"}>
+              <li>버그악용/불법프로그램 신고</li>
+            </Link>
           </div>
         </ul>
       </HeadList>
@@ -123,17 +143,26 @@ const HeadList = styled.div`
     cursor: pointer;
   }
 
-  .head-title > div:last-child {
+  .link-list > li {
+    text-align: center;
+    padding: 5px 0;
     font-size: 13px;
     color: #a7acbc;
   }
 
-  .head-title > div:last-child > li {
+  .link-list > a > li {
+    font-size: 13px;
+    color: #a7acbc;
     text-align: center;
     padding: 5px 0;
   }
 
-  .head-title > div:last-child > li:hover {
+  .link-list > li:hover {
+    color: #f68500;
+    cursor: pointer;
+  }
+
+  .link-list > a > li:hover {
     color: #f68500;
     cursor: pointer;
   }

@@ -96,7 +96,7 @@ router.post("/findId", (req, res) => {
 
 router.post("/findPw", (req, res) => {
   db.User.update(
-    { userPw: crypto.SHA256("goldsaekki!").toString() },
+    { userPw: crypto.SHA256(req.body.findId + "12!@").toString() },
     {
       where: { userId: req.body.findId },
     }
@@ -105,7 +105,7 @@ router.post("/findPw", (req, res) => {
     if (data[0] === 0) {
       res.send({ message: 504 });
     } else {
-      res.send({ pw: "goldsaekki!" });
+      res.send({ pw: req.body.findId + "12!@" });
     }
   });
 });

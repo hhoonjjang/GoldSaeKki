@@ -265,6 +265,7 @@ const MainCommunityBox = styled.div`
               height: 100%;
 
               .mainCommunity_innerBox_community_item_mid_innerBox_contents {
+                overflow: hidden;
                 height: 100%;
               }
               .mainCommunity_innerBox_community_item_mid_innerBox_contents

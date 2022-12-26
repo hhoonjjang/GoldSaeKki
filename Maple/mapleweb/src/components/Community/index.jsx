@@ -573,7 +573,7 @@ const HeartIcon = styled.div`
 const SmileImg = styled.img`
   width: 130px;
   height: 100px;
-  margin-left: 55px;
+  margin-left: 50px;
   
   /* 드래그 금지 */
   -webkit-touch-callout: none;

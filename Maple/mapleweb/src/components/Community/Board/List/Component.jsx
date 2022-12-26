@@ -215,6 +215,7 @@ const ListComponent = () => {
   return (
     <AllWrap>
       {/* 현재 게시판 이름을 가져와 띄운다. */}
+      {/* <CategoryTitle>{category?.name}</CategoryTitle> */}
       <CategoryTitle>{category?.name}</CategoryTitle>
       <ContentBox>
         {/* 월드 선택 */}
@@ -485,14 +486,26 @@ const AllWrap = styled.div`
   }
 `;
 const CategoryTitle = styled.h1`
-  font-size: 28px;
+  /* font-size: 28px;
   color: #333;
   margin-top: 60px;
   font-weight: 600;
   width: 100%;
   height: 40px;
   margin-bottom: 40px;
+  cursor: default; */
+
+  font-size: 28px;
+  color: #333;
+  margin-top: 20px;
+  font-weight: 600;
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  margin-bottom: 40px;
   cursor: default;
+
+
 `;
 
 const ContentBox = styled.div`

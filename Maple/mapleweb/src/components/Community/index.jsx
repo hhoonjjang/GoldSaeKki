@@ -33,6 +33,7 @@ import { CATEGORY, CATEGORY2 } from "../../modules/community";
 import CommentContainer from "./Pagination/Container";
 import DetailContainer from "./Board/Detail/Container";
 import EditContainer from "./Board/Edit/Container";
+import NotFound from "./NotFound";
 
 const CommunityComponet = () => {
   const dispatch = useDispatch();
@@ -77,6 +78,7 @@ const CommunityComponet = () => {
                 path="/board/:boardId"
                 element={<DetailContainer />}
               ></Route>
+              <Route path="/board/hi" element={<NotFound />} />
 
               {/* 수정 페이지 */}
               <Route
@@ -566,7 +568,8 @@ const HeartIcon = styled.div`
     transition: background-position 1s steps(28);
     transition-duration: 0s;
     display: inline-block;
-    margin-top: 300px;
+    /* margin-top: 300px; */
+    /* margin-top: 10px; */
   
     &.is-active {
         transition-duration: 1s;

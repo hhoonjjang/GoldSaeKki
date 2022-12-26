@@ -147,6 +147,7 @@ const ListComponent = () => {
         });
 
       });
+
     }
   }, [nowWorld]);
 

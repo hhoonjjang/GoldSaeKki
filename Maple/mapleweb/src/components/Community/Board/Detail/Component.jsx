@@ -9,6 +9,7 @@ import eyeImg from "../../images/info_eye_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
 import lineImg from "../../images/btn_line_img.png";
 import goldImg from "../../images/goldImg.png";
+import monaImg from "../../images/mona-loading-dark.gif";
 import reportImg from "../../images/report_btn.png";
 
 import moment from 'moment';
@@ -410,8 +411,13 @@ const DetailComponent = () => {
                             setText(e.target.value);
                         }}></CommentTextArea>
                         <CommentBtnWrap>
-                            <div style={{ fontSize: "25px", marginLeft: "5px" }}>
-                                <img src={goldImg} alt='금쪽이' />
+                            <div style={{ fontSize: "25px", marginLeft: "5px", display: "flex" }}>
+                                {/* <img src={goldImg} alt='금쪽이' /> */}
+                                <Link to={`/Community/board/hi`}>
+                                <img src={monaImg} alt='금쪽이' style={{width : "35px"}} onClick={()=>{
+                                    // window.location.href ="/Community/board/hi";
+                                }} />
+                                </Link>
                             </div>
                             <CommentAddBtn onClick={async () => {
                                 if (!userName) {

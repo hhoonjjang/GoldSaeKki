@@ -38,8 +38,9 @@ const Menubar = () => {
       "/Community/Free",
       "/Community/Information",
       "/Community/TopicDiscussion",
+      "/Community/Novel",
       "/Community/Art",
-      "/Community/Coordination",
+      "/Community/Event",
     ],
     ["/Support/Service", "/Support/BugReport"],
   ];

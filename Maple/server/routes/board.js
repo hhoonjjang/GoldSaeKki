@@ -13,7 +13,7 @@ import cloudinary from "cloudinary";
 // npm install multer, npm install cloudinary
 // multer 기본 세팅 : 저장 경로와 파일명을 설정한다.
 const storage = multer.diskStorage({
-  filename : (req, res, callback) =>{
+  filename: (req, res, callback) => {
     callback(null, Date.now() + file.originalname);
   },
   // 저장 위치는 cloudinary를 사용할 것이므로 설정해주지 않음
@@ -22,19 +22,19 @@ const storage = multer.diskStorage({
   // },
 });
 // 이미지 확장자 필터
-const imageFilter = (req, file, callback) =>{
-  if(!file.originalname.match(/\.(jpg|jpeg|png)$/i)){
+const imageFilter = (req, file, callback) => {
+  if (!file.originalname.match(/\.(jpg|jpeg|png)$/i)) {
     return callback(new Error("이미지 파일만 넣어주세요."), false);
   }
   callback(null, true);
 }
 // 이미지 업로드
-const upload = multer({storage : storage, fileFilter : imageFilter});
+const upload = multer({ storage: storage, fileFilter: imageFilter });
 // 저장 위치 설정 https://cloudinary.com/ : 무료 이미지 저장 공간
 cloudinary.config({
-  cloud_name : process.env.CLOUDINARY_CLOAD_NAME,
-  api_key : process.env.CLOUDINARY_API_KEY,
-  api_secret : process.env.CLOUDINARY_API_SECRET,
+  cloud_name: process.env.CLOUDINARY_CLOAD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 
@@ -251,6 +251,27 @@ router.post("/commentCountDown", async (req, res) => {
   );
   res.end();
 });
+
+// 전체 게시글 중 공감수가 높은 게시글 7개를 가져온다.
+router.post("/getLikeSevenBoards", async (req, res) => {
+  try {
+    // 모든 게시글 목록을 가져온다.
+    const tempBoard = await db.Board.findAll({
+      where: {
+        id: req.body.boardId,
+      },
+      order: [["likeCount", "DESC"]],
+      limit: 7,
+      // offset: 1,
+    });
+    res.send(tempBoard);
+  } catch (error) {
+    console.error(error);
+    res.send(error);
+  }
+});
+
+
 
 router.post("/mainCommunity", async (req, res) => {
   try {

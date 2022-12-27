@@ -275,7 +275,7 @@ const AllBox = styled.div`
   display: flex;
   justify-content: space-between;
 
-  /* 반응형 */
+  /* 게시글 목록 반응형 */
   @media screen and (max-width: 1280px) {
     margin: 0 auto;
     width: 1050px;
@@ -305,7 +305,7 @@ const ContentBox = styled.div`
   display: inline-block;
   width: 930px;
 
-  /* 반응형 */
+  /* 게시글 목록 반응형 */
   @media screen and (max-width: 1280px) {
     /* margin: 0 55px; */
   }
@@ -340,7 +340,7 @@ const NewsBox = styled.div`
   display: inline-block;
   width: 230px;
 
-  /* 반응형 */
+  /* 게시글 목록 반응형 */
   @media screen and (max-width: 1280px) {
     margin-right: 55px;
     margin-left: 40px;

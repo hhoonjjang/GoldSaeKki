@@ -69,7 +69,12 @@ const TabsBox = styled.div`
  margin-top:40px;
  .flex-column{
   width:fit-content;
-  // background-color:gray;
+  flex-direction:row;
+
+  background-color:gray;
+  // display:flex;
+  min-width:120px;
+  // margin-right:150px;
   // border-radius: 20px 20px
  }
  .tab1{
@@ -78,5 +83,24 @@ const TabsBox = styled.div`
  }
  .tab2{
   width:85%;
+ }
+
+ @media screen and (max-width:1280px){
+
+ }
+ @media screen and (max-width:1023px){
+  width:100%;
+ margin:0px;
+ .tab2{
+  width:80%;
+  text-align:center;
+ }
+
+ }
+ @media screen and (max-width:768px){
+
+ }
+ @media screen and (max-width:480px){
+
  }
 `;

@@ -37,9 +37,7 @@ console.log(tempAdmin.name)
       <Tab eventKey="online" title="온라인상담문의">
       <FirstContainer/>
       </Tab>
-      <Tab eventKey="News" title="뉴스 등록">
-      {/* <FirstContainer/> */}
-      </Tab>
+    
     </Tabs>
   );
 }

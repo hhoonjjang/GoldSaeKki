@@ -14,11 +14,11 @@ const BugReportComponent = ({ isCookie }) => {
             금쪽이스토리는 [버그악용/불법프로그램 신고 보상 프로그램]을 운영하고
             있습니다.
           </div>
-          <div>
+          <div className="text-child">
             깨끗한 금쪽이월드를 위해 힘써주신 용사님들께는 제보의 심각성에 따라
             금쪽이포인트, 게임 아이템 등의 보상을 지급해 드립니다.
           </div>
-          <div>
+          <div className="text-child">
             게임에 영향이 큰 문제를 제보할수록 더 좋은 보상이 지급되니 적극적인
             신고 부탁드립니다.
           </div>
@@ -84,31 +84,32 @@ const BugReportBox = styled.div`
   margin: auto;
   padding: 10px 30px;
 
+  @media only~~~~~ {
+      >h5 {
+        fontsoze
+      }
+
+  }
+ 
   .displayBox {
-    width: 1200px;
+    width: 100% ;
     height: 306px;
-    /* background-color: black; */
-    /* color: red; */
     padding: 20px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 20px solid #d0d0d0;
-    /* box-shadow: 5px 5px 5px 5px #664e37; */
-    /* border: 1px solid #000; */
-    /* background-clip: content-box; */
     margin-bottom: 30px;
   }
   & .imgBox {
-    width: 15%;
+    width: 152px;
     & img {
-      /* border: 1px solid #000000; */
-      /* box-shadow: 3px 3px 3px 3px lightgreen; */
       border-radius: 10px;
-
       width: 100%;
       height: 100%;
     }
+    
+   
   }
 
   button {
@@ -116,7 +117,7 @@ const BugReportBox = styled.div`
     padding: 10px 20px;
     background-color: gray;
     color: white;
-    font-size: 15px;
+    font-size: 1rem;
     font: bold;
     cursor: pointer;
   }
@@ -131,13 +132,13 @@ const BugReportBox = styled.div`
     color: #646464;
     margin-left: 30px;
     & div:first-child {
-      font-size: 25px;
+      font-size: 1.3rem;
       color: black;
-      margin-bottom: 40px;
+      // margin-bottom: 40px;
     }
 
     & div:nth-child(3) {
-      margin-bottom: 40px;
+      // margin-bottom: 40px;
     }
   }
   .describe {
@@ -149,7 +150,7 @@ const BugReportBox = styled.div`
   .describe div:first-child {
     padding: 40px 30px;
     width: 230px;
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: bold;
     color: black;
   }
@@ -159,4 +160,85 @@ const BugReportBox = styled.div`
   li {
     list-style-type: disc;
   }
+  
+@media screen and (max-width:1280px){
+  width:80%;
+  // background-color: black;
+  // > div >div>div{
+  //   width:300px;
+  // }
+  .imgBox {
+    width:300px;
+  }
+  .text {
+    font-size:1rem;
+  }
+}
+
+@media screen and (max-width:1023px){
+  width:100%;
+  // background-color: black;
+  // > div >div>div{
+  //   width:300px;
+  // }
+  .imgBox {
+    width:250px;
+  }
+  .text {
+    font-size:0.4rem;
+  }
+  .text-child {
+    display:none;
+  }
+}
+@media screen and (max-width:768px){
+  width:100%;
+  // background-color: black;
+  // > div >div>div{
+  //   width:300px;
+  // }
+  .imgBox {
+    width:200px;
+  }
+  .text{
+    font-size:0.3rem;
+
+  }
+  .text div:first-child {
+   display: none;
+  }
+  button {
+    font-size:1.3rem;
+  }
+}
+@media screen and (max-width:480px){
+  .displayBox{
+    flex-direction: column;
+    border: none;
+    justify-content:center;
+    align-items:center
+  }
+  .imgBox {
+    width:150px;
+  }
+  .text{
+    font-size:0.3rem;
+    margin-left: 0px;
+  }
+
+  .describe{
+    flex-direction: column;
+
+  }
+  button {
+    margin: auto;
+    width:150px;
+    font-size:0.1rem;
+  }
+}
+
+
+
+
+}
 `;

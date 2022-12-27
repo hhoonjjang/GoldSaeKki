@@ -47,7 +47,8 @@ const AccountComponent = ({ onSubmit, listArr, onClick }) => {
       <table>
         <colgroup>
           <col width={"30%"} />
-          <col width={"50%"} />
+          <col width={"40%"} />
+          <col width={"20%"} />
           <col width={"20%"} />
         </colgroup>
         <thead>
@@ -55,6 +56,7 @@ const AccountComponent = ({ onSubmit, listArr, onClick }) => {
             <th>번호</th>
             <th>관리자이름</th>
             <th>날짜</th>
+            <th>삭제버튼</th>
           </tr>
         </thead>
         <tbody>
@@ -90,4 +92,8 @@ const AccountComponent = ({ onSubmit, listArr, onClick }) => {
 
 export default AccountComponent;
 
-const AccountBox = styled.div``;
+const AccountBox = styled.div`
+  table{
+    width:100%
+  }
+`;

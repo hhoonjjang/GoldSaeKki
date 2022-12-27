@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 import { useDispatch } from "react-redux";
 import { action } from "../../modules/header";
 
@@ -37,5 +36,9 @@ const SupportBox = styled.div`
 .category-title {
   font-size: 28px;
   font-weight:bold;
+
 }
 `;
+
+
+

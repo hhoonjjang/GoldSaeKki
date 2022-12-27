@@ -36,6 +36,9 @@ const CategoryBox = styled.div`
   display: flex;
   width: 100%;
   flex-wrap: wrap;
+  .mb-3 {
+    background-color:black;
+  }
   .category {
     width: 25%;
     margin-bottom: 50px;
@@ -44,6 +47,8 @@ const CategoryBox = styled.div`
 
     & .title{
       margin: 15px 0px;
+    text-align:left;
+
     }
   }
   .textbox {
@@ -52,11 +57,30 @@ const CategoryBox = styled.div`
     font-weight: 500;
     color: gray;
     margin-bottom:10px;
+    text-align:left;
     &:hover {
       color: blue;
       cursor: pointer;
       border-bottom: 1px solid blue;
       width: fit-content;
+    }
+  }
+  @media screen and (max-width:1170px){
+    .category{
+      width:33%;
+
+    }
+  }
+  @media screen and (max-width:1070px){
+    .category{
+      width:50%;
+
+    }
+  }
+  @media screen and (max-width:575px){
+    .category{
+      width:100%;
+
     }
   }
 `;

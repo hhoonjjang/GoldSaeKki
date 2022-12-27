@@ -24,5 +24,35 @@ export default OnlineComponent;
 const OnlineBox = styled.div`
 .request-box{
   margin-bottom:20px;
+
+  
+  @media screen and (max-width:1023px){
+    width:100%;
+    table{
+      margin:auto;
+    }
+    & > div:nth-child(2){
+      display:none;
+    }
+  }
+  @media screen and (max-width:800px){
+    & > div:nth-child(3){
+      display:none;
+    }
+    .category-title{
+      margin-bottom:100px;
+    }
+  }
+  @media screen and (max-width:540px){
+    margin-left:20px;
+   
+  }
+  @media screen and (max-width:435px){
+    margin-left:45px;
+    
+  } 
+
+
+
 }
 `;

@@ -3,7 +3,6 @@ import LoginContainer from "../User/Login/Container";
 
 import MypageContainer from "./MyPage/Container";
 import { Route, Routes, useLocation } from "react-router-dom";
-
 const UserComponent = () => {
   console.log(useLocation());
 
@@ -21,3 +20,4 @@ const UserComponent = () => {
 };
 
 export default UserComponent;
+

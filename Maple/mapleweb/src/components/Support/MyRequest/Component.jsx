@@ -19,10 +19,10 @@ const MyRequestComponent = ({ requestArr, onClick, isBoolen }) => {
       <table>
         <colgroup>
           <col width={"5%"} />
-          <col width={"50%"} />
+          <col width={"45%"} />
           <col width={"25%"} />
           <col width={"10%"} />
-          <col width={"10%"} />
+          <col width={"15%"} />
         </colgroup>
 
         <thead>
@@ -158,7 +158,7 @@ const Component = ({ item, idx, onClick, isBoolen }) => {
 const MyRequestBox = styled.div`
   table {
     border: solid 1px black;
-    width: 100%;
+    width: 80%;
     text-align: center;
     /* border-collapse: collapse; */
   }
@@ -190,5 +190,30 @@ const MyRequestBox = styled.div`
     display: flex;
   } */
 
-
+  @media screen and (max-width:1280px){
+  }
+  @media screen and (max-width:1023px){
+    width:100%;
+    table{
+      margin:auto;
+    }
+    & > div:nth-child(2){
+      display:none;
+    }
+  }
+  @media screen and (max-width:768px){
+    & div:nth-child(2){
+      display:none;
+    }
+  }
+  @media screen and (max-width:540px){
+    margin-left:20px;
+    // width:250px;
+  }
+  @media screen and (max-width:435px){
+    margin-left:45px;
+    .category-title{
+      display:none;
+    }
+  }
 `;

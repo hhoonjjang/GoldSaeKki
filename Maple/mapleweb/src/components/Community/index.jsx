@@ -6,8 +6,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { action } from "../../modules/header";
+import { action as communityAction } from "../../modules/community";
 
 import NavigationComponent from "./Navigation/Component";
 import ListContainer from "./Board/List/Container";
@@ -34,11 +35,29 @@ import CommentContainer from "./Pagination/Container";
 import DetailContainer from "./Board/Detail/Container";
 import EditContainer from "./Board/Edit/Container";
 import NotFound from "./NotFound";
+import axios from "axios";
 
 const CommunityComponet = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(action.header("Community"));
+
+
+    // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
+    axios.post("http://localhost:8080/api/board/getLikeSevenBoards", {
+    }).then((boards) => {
+      // 해당 게시글 목록을 리덕스에 저장한다.
+      console.log(boards.data);
+      const boardsData = boards.data;
+      let likeTagBoards = [];
+      boardsData.map((board, index) => {
+        if (board.tags != "") {
+          likeTagBoards.push(board);
+        }
+      });
+      dispatch(communityAction.tags(likeTagBoards));
+    });
+
   }, []);
 
   // 사이드 슬라이드 라이브러리 세팅 : 슬라이드의 기능 조정
@@ -53,16 +72,14 @@ const CommunityComponet = () => {
     slidesToScroll: 1, //1장씩 넘어가게 해줌
   };
 
-  // 태그를 가져오는 요청
-  // 공감수가 1 이상이면서 태그가 있는 게시글 중에
-  // 공감수가 높은 순으로 정렬해 7개까지 뽑아내
-  // 맨 첫 번째 태그를 가져와
-  // 이슈 태그에 넣어주고
-  // 이슈 태그를 누르면 해당 게시글로 이동하도록 하기
-  // 일단 요청 보내기
-  
 
 
+
+
+  // 이슈 게시글 정보를 리덕스에서 가져온다.
+  const boardTags = useSelector((state) => state?.community?.tags);
+  console.log(boardTags);
+  let tags = [];
 
   return (
     <CommunityBox className="communityBox">
@@ -188,7 +205,49 @@ const CommunityComponet = () => {
                 </TagInputWrap>
                 {/* 태그들이 들어있는 영역 : 태그는 게시물의 하트가 많은 게시물 안에서 맨처음 한개만 가져온다.(시간이 된다면) */}
                 <TagListBox>
+
                   {/* 여기서 이 놈(IssueTag)을 map 돌리면 된다. 태그 개수는 최대 10개까지만 */}
+                  {boardTags?.map((board, idx) => {
+                    return <div key={`tagDiv-${idx}`}>
+                      <IssueTag key={`issueTag-${idx}`}>
+                        <Link to={`/Community/board/${board.id}`} key={`tagLink-${idx}`}>
+
+
+                          {
+                            // console.log(board.tags.split("#").length)
+                            // console.log(board.tags.split("#")[1])
+                            board.tags.split("#").length==1 ? "#"+board.tags : "#"+board.tags.split("#")[1]
+                          }
+
+                          {/* 텍스트 앞의 #은 map에서 돌려 붙여줘야 한다. */}
+                          {/* {board?.tags?.split("#")?.map((item, idx) => {
+                            if (item !== "") {
+                              tags.push("#" + item.replace(" ", ""));
+                              console.log(tags);
+                            }
+                          })}
+                          {tags.map((tag, idx)=>{
+                            if(idx < 1){
+                              console.log(tag.split("#")[1]);
+                              return tag.split("#")[1];
+                            }
+                          })} */}
+
+
+
+                        </Link>
+                      </IssueTag>
+                    </div>
+                  })}
+
+                  <IssueTag>
+                    <Link to={"/"}>
+                      {/* 텍스트 앞의 #은 map에서 돌려 붙여줘야 한다. */}
+                      #던파모바일
+                    </Link>
+                  </IssueTag>
+
+
                   <IssueTag>
                     <Link to={"/"}>
                       {/* 텍스트 앞의 #은 map에서 돌려 붙여줘야 한다. */}

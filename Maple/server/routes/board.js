@@ -252,16 +252,14 @@ router.post("/commentCountDown", async (req, res) => {
   res.end();
 });
 
-// 전체 게시글 중 공감수가 높은 게시글 7개를 가져온다.
+// 공감수가 높은 게시글 30개 (이슈 태그를 가져오기 위함)
 router.post("/getLikeSevenBoards", async (req, res) => {
+  // console.log("하이하이");
   try {
-    // 모든 게시글 목록을 가져온다.
+    // 태그가 있으면서 공감수가 높은 게시글 7개 목록을 가져온다.
     const tempBoard = await db.Board.findAll({
-      where: {
-        id: req.body.boardId,
-      },
       order: [["likeCount", "DESC"]],
-      limit: 7,
+      limit: 30,
       // offset: 1,
     });
     res.send(tempBoard);

@@ -70,12 +70,20 @@ export const WORLDLIST = [
 
 
 const TYPE = {
+    TAGS : "community/tags",
     LIST: "/community/list",
     BOARD: "/community/board",
     COMMENTS: "/community/comments",
     COMMENTCOUNTS : "/community/commentCounts",
 }
 
+// 커뮤니티 이슈 태그 목록
+const tags = (tags) =>{
+    return {
+        type : TYPE.TAGS,
+        payload : { tags }
+    }
+}
 // 해당 커뮤니티 게시글 목록
 const list = (list) => {
     // console.log(list);
@@ -110,7 +118,7 @@ const commentCounts = (counts) =>{
     }
 }
 
-export const action = { list, board, comments, commentCounts };
+export const action = { tags, list, board, comments, commentCounts };
 
 export const initialize = {};
 
@@ -118,8 +126,13 @@ export const initialize = {};
 export const reducer = (state = initialize, action) => {
     const { type, payload } = action;
     switch (type) {
+        case TYPE.TAGS:
+            const { tags } = payload;
+            return {...state, tags};
         case TYPE.LIST:
-            return payload;
+            // return payload;
+            const { list } = payload;
+            return {...state, list};
         case TYPE.BOARD:
             const { board } = payload;
             return {...state, board};

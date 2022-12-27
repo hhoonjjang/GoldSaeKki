@@ -9,7 +9,11 @@ import { useEffect, useRef, useState } from "react";
 import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 
 import axios from "axios";
+<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
+=======
+import { useSelector } from "react-redux";
+>>>>>>> 20aa5cb (게시글 목록 반응형)
 import UploadAdapter from './UploadAdapter';
 import { Helmet } from 'react-helmet';
 

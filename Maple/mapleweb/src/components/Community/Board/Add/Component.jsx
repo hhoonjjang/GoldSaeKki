@@ -6,10 +6,10 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { useEffect, useRef, useState } from "react";
-import { CATEGORY, WORLDLIST } from "../../../../modules/community";
+import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UploadAdapter from './UploadAdapter';
 import { Helmet } from 'react-helmet';
 
@@ -49,9 +49,26 @@ const AddComponent = ({ }) => {
   const [selected, setSelected] = useState(userWorld);
   const nowSelect = (e) => { setSelected(e?.target?.value) };
 
+  const dispatch = useDispatch();
+
   // 페이지 도착시 스크롤 높이 변경
   useEffect(() => {
     window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+
+    // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
+    axios.post("http://localhost:8080/api/board/getLikeSevenBoards", {
+    }).then((boards) => {
+      // 해당 게시글 목록을 리덕스에 저장한다.
+      console.log(boards.data);
+      const boardsData = boards.data;
+      let likeTagBoards = [];
+      boardsData.map((board, index) => {
+        if (board.tags != "") {
+          likeTagBoards.push(board);
+        }
+      });
+      dispatch(action.tags(likeTagBoards));
+    });
   }, []);
 
   if (!userName) {

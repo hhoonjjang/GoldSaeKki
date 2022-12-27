@@ -484,7 +484,7 @@ const WorldBox = styled.div`
   margin-bottom: 30px;
   padding: 26px 0 20px 26px;
 
-  /* 반응형 */
+  /* 게시글 목록 반응형 */
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
     display: none;
@@ -556,7 +556,7 @@ const OneBoardList = styled.div`
   justify-content: space-between;
   cursor: pointer;
 
-  /* 반응형 */
+  /* 게시글 목록 반응형 */
   @media screen and (max-width: 1280px) {
   }
   /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
@@ -587,7 +587,7 @@ const BoardTitle = styled.div`
   float: left;
   max-width: 500px;
 
-  /* 반응형 */
+  /* 게시글 목록 반응형 */
   @media screen and (max-width: 1280px) {
     max-width: 250px;
   }
@@ -642,7 +642,7 @@ const OtherBoardInfo = styled.div`
   min-width: 324px;
   max-width: 380px;
 
-  /* 반응형 */
+  /* 게시글 목록 반응형 */
   @media screen and (max-width: 1280px) {
   }
   /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
@@ -692,7 +692,7 @@ const IconInfoWrap = styled.div`
   white-space: nowrap;
   overflow: hidden;
 
-  /* 반응형 */
+  /* 게시글 목록 반응형 */
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
     max-width: 220px;

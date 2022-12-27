@@ -211,85 +211,13 @@ const CommunityComponet = () => {
                     return <div key={`tagDiv-${idx}`}>
                       <IssueTag key={`issueTag-${idx}`}>
                         <Link to={`/Community/board/${board.id}`} key={`tagLink-${idx}`}>
-
-
-                          {
-                            // console.log(board.tags.split("#").length)
-                            // console.log(board.tags.split("#")[1])
-                            board.tags.split("#").length==1 ? "#"+board.tags : "#"+board.tags.split("#")[1]
-                          }
-
-                          {/* 텍스트 앞의 #은 map에서 돌려 붙여줘야 한다. */}
-                          {/* {board?.tags?.split("#")?.map((item, idx) => {
-                            if (item !== "") {
-                              tags.push("#" + item.replace(" ", ""));
-                              console.log(tags);
-                            }
-                          })}
-                          {tags.map((tag, idx)=>{
-                            if(idx < 1){
-                              console.log(tag.split("#")[1]);
-                              return tag.split("#")[1];
-                            }
-                          })} */}
-
-
-
+                          {/* 태그 가공 및 출력 */}
+                          {board.tags.split("#").length==1 ? "#"+board.tags : "#"+board.tags.split("#")[1]}
                         </Link>
                       </IssueTag>
                     </div>
                   })}
 
-                  <IssueTag>
-                    <Link to={"/"}>
-                      {/* 텍스트 앞의 #은 map에서 돌려 붙여줘야 한다. */}
-                      #던파모바일
-                    </Link>
-                  </IssueTag>
-
-
-                  <IssueTag>
-                    <Link to={"/"}>
-                      {/* 텍스트 앞의 #은 map에서 돌려 붙여줘야 한다. */}
-                      #던파모바일
-                    </Link>
-                  </IssueTag>
-
-                  <IssueTag>
-                    <Link to={`/Community/Free`}>
-                      {/* <a href="/Community/Free" title="검색어"> */}
-                      #메이플스토리
-                      {/* </a> */}
-                    </Link>
-                  </IssueTag>
-                  <IssueTag>
-                    <Link to={`/Community/Free`}>
-                      {/* <a href="/Community/Free" title="검색어"> */}
-                      #데미지스킨끄기
-                      {/* </a> */}
-                    </Link>
-                  </IssueTag>
-                  <IssueTag>
-                    <Link to={`/Community/Free`}>
-                      {/* <a href="/Community/Free" title="검색어"> */}
-                      #정재훈
-                      {/* </a> */}
-                    </Link>
-                  </IssueTag>
-                  <IssueTag>
-                    <Link to={`/Community/Free`}>
-                      {/* <a href="/Community/Free" title="검색어"> */}
-                      #월드리프
-                      {/* </a> */}
-                    </Link>
-                  </IssueTag>
-                  <IssueTag>
-                    <Link to={`/Community/Free`}>
-                      {/* <a href="/Community/Free" title="검색어"> */}
-                      #반뉴비
-                      {/* </a> */}
-                    </Link>
-                  </IssueTag>
                 </TagListBox>
               </TagContentBox>
             </TagSearchBox>
@@ -302,8 +230,6 @@ const CommunityComponet = () => {
             <HeartIcon style={{ marginLeft: "30px" }} onClick={(e) => {
               e.target.classList.toggle("is-active");
             }}></HeartIcon>
-            {/* <SmileImg src={smile} alt="웃음"></SmileImg> */}
-            {/* <SmileImg src={tasty} alt="웃음"></SmileImg> */}
             <SmileImg src={happiness} alt="웃음"></SmileImg>
 
           </NewsBox>

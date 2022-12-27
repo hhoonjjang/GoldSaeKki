@@ -259,7 +259,7 @@ router.post("/getLikeSevenBoards", async (req, res) => {
     // 태그가 있으면서 공감수가 높은 게시글 7개 목록을 가져온다.
     const tempBoard = await db.Board.findAll({
       order: [["likeCount", "DESC"]],
-      limit: 30,
+      limit: 40,
       // offset: 1,
     });
     res.send(tempBoard);

@@ -562,6 +562,14 @@ const BoardInfo = styled.div`
     float: right;
     margin-right: 27px;
     font-size: 13px;
+  
+    /* 드래그 금지 */
+    /* -webkit-touch-callout: none;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none; */
+    
     &>div{
         display: inline;
         /* background-color: rgb(245,245,245); */

@@ -442,6 +442,13 @@ const AllWrap = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 15px;
+  
+    /* 드래그 금지 */
+    -webkit-touch-callout: none;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
   }
   ul {
       list-style: none;
@@ -696,6 +703,13 @@ const OtherBoardInfo = styled.div`
   margin-right: 0;
   min-width: 324px;
   max-width: 380px;
+  
+  /* 드래그 금지 */
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 
   /* 게시글 목록 반응형 : 다른정보 */
   @media screen and (max-width: 1280px) {

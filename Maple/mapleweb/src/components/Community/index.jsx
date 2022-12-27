@@ -241,6 +241,11 @@ export default CommunityComponet;
 
 const CommunityBox = styled.div`
   min-height: 1600px;
+  
+  *::selection{
+    background-color: #f1b4d1;
+    color: white;
+  }
 `;
 
 const AllWrap = styled.div`
@@ -363,6 +368,13 @@ const NewsTitle = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 62px;
+  
+  /* 드래그 금지 */
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 `;
 const NewsH2 = styled.h2`
   font-size: 18px;

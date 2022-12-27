@@ -90,6 +90,22 @@ const ListComponent = () => {
         if (boards.data.name == "SequelizeDatabaseError") {
           return;
         }
+
+        // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
+        axios.post("http://localhost:8080/api/board/getLikeSevenBoards", {
+        }).then((boards) => {
+          // 해당 게시글 목록을 리덕스에 저장한다.
+          console.log(boards.data);
+          const boardsData = boards.data;
+          let likeTagBoards = [];
+          boardsData.map((board, index) => {
+            if (board.tags != "") {
+              likeTagBoards.push(board);
+            }
+          });
+          dispatch(action.tags(likeTagBoards));
+        });
+
         // 해당 게시글 목록을 리덕스에 저장한다.
         // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
         dispatch(action.list(boards.data));
@@ -129,6 +145,7 @@ const ListComponent = () => {
           });
           dispatch(action.tags(likeTagBoards));
         });
+
       });
 
     }

@@ -79,7 +79,6 @@ const CommunityComponet = () => {
   // 이슈 게시글 정보를 리덕스에서 가져온다.
   const boardTags = useSelector((state) => state?.community?.tags);
   console.log(boardTags);
-  let tags = [];
 
   return (
     <CommunityBox className="communityBox">
@@ -209,12 +208,12 @@ const CommunityComponet = () => {
                   {/* 여기서 이 놈(IssueTag)을 map 돌리면 된다. 태그 개수는 최대 10개까지만 */}
                   {boardTags?.map((board, idx) => {
                     return <div key={`tagDiv-${idx}`}>
-                      <IssueTag key={`issueTag-${idx}`}>
-                        <Link to={`/Community/board/${board.id}`} key={`tagLink-${idx}`}>
+                      <Link to={`/Community/board/${board.id}`} key={`tagLink-${idx}`}>
+                        <IssueTag key={`issueTag-${idx}`}>
                           {/* 태그 가공 및 출력 */}
-                          {board.tags.split("#").length==1 ? "#"+board.tags : "#"+board.tags.split("#")[1]}
-                        </Link>
-                      </IssueTag>
+                          {board.tags.split("#").length == 1 ? "#" + board.tags : "#" + board.tags.split("#")[1]}
+                        </IssueTag>
+                      </Link>
                     </div>
                   })}
 
@@ -555,6 +554,15 @@ const IssueTag = styled.span`
   background-color: #f1b4d1;
   margin-right: 6px;
   margin-bottom: 6px;
+  cursor: pointer;
+  
+  /* 드래그 금지 */
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+
   & > a {
     color: white;
     width: 100%;

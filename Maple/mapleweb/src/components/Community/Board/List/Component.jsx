@@ -461,9 +461,8 @@ const CategoryTitle = styled.h1`
   width: 100%;
   height: 100px;
   line-height: 100px;
-  margin-bottom: 40px;
   cursor: default;
-
+  margin-bottom: 20px;
 
 `;
 
@@ -484,6 +483,12 @@ const WorldBox = styled.div`
   background-color: #fbf9fa;
   margin-bottom: 30px;
   padding: 26px 0 20px 26px;
+
+  /* 반응형 */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
+  @media all and (max-width:479px) {
+    display: none;
+  }
 `;
 const WorldSpan = styled.span`
   float: left;

@@ -670,6 +670,10 @@ const BoardTitle = styled.div`
   @media all and (max-width:479px) {
     margin-bottom: 5px;
     max-width: 285px;
+
+    font-size: 15px;
+    /* max-width: 320px; */
+    max-width: 300px;
   }
 
 

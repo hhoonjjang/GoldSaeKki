@@ -10,10 +10,14 @@ import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 
 import axios from "axios";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 =======
 import { useSelector } from "react-redux";
 >>>>>>> 20aa5cb (게시글 목록 반응형)
+=======
+import { useDispatch, useSelector } from "react-redux";
+>>>>>>> 704c1fd (게시글 작성시 이슈태그 안나오는 에러 해결)
 import UploadAdapter from './UploadAdapter';
 import { Helmet } from 'react-helmet';
 

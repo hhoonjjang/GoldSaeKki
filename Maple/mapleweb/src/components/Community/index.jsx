@@ -307,18 +307,20 @@ const ContentBox = styled.div`
 
   /* 반응형 */
   @media screen and (max-width: 1280px) {
-    margin: 0 55px;
+    /* margin: 0 55px; */
   }
   /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
   @media all and (min-width:768px) and (max-width:1023px) { 
+    margin: 0 55px;
   } 
   /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
   @media all and (min-width:768px) and (max-width:1023px) { 
+    margin: 0 55px;
   } 
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
   @media all and (min-width:480px) and (max-width:767px) {
-    margin: none;
     margin: 0 auto;
+    margin: none;
     width: 450px;
   } 
   @media all and (min-width:450px) and (max-width:550px) {
@@ -327,9 +329,9 @@ const ContentBox = styled.div`
   } 
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
-    margin: none;
     width: 370px;
     margin-left: 0;
+    margin: none;
   }
 `;
 
@@ -341,9 +343,11 @@ const NewsBox = styled.div`
   /* 반응형 */
   @media screen and (max-width: 1280px) {
     margin-right: 55px;
+    margin-left: 40px;
   }
   /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
   @media all and (min-width:768px) and (max-width:1023px) { 
+    margin-left: 40px;
   } 
   /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
   @media all and (min-width:768px) and (max-width:1023px) { 

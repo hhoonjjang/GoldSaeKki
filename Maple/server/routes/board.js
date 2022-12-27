@@ -4,8 +4,39 @@ const router = Router();
 
 import db from "../models/index.js";
 import { Op } from "sequelize";
-
 import fs from "fs";
+import multer from "multer";
+import cloudinary from "cloudinary";
+
+
+// 이미지 업로드를 위한 multer 기본 세팅
+// npm install multer, npm install cloudinary
+// multer 기본 세팅 : 저장 경로와 파일명을 설정한다.
+const storage = multer.diskStorage({
+  filename : (req, res, callback) =>{
+    callback(null, Date.now() + file.originalname);
+  },
+  // 저장 위치는 cloudinary를 사용할 것이므로 설정해주지 않음
+  // destination: function (req, file, cb) {
+  //   cb(null, "public/");
+  // },
+});
+// 이미지 확장자 필터
+const imageFilter = (req, file, callback) =>{
+  if(!file.originalname.match(/\.(jpg|jpeg|png)$/i)){
+    return callback(new Error("이미지 파일만 넣어주세요."), false);
+  }
+  callback(null, true);
+}
+// 이미지 업로드
+const upload = multer({storage : storage, fileFilter : imageFilter});
+// 저장 위치 설정 https://cloudinary.com/ : 무료 이미지 저장 공간
+cloudinary.config({
+  cloud_name : process.env.CLOUDINARY_CLOAD_NAME,
+  api_key : process.env.CLOUDINARY_API_KEY,
+  api_secret : process.env.CLOUDINARY_API_SECRET,
+});
+
 
 // 게시글 추가
 router.post("/create", async (req, res) => {

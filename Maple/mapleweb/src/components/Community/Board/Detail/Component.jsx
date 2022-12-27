@@ -209,7 +209,8 @@ const DetailComponent = () => {
                         {/* 오른쪽 아이콘 영역 */}
                         <IconInfo>
                             <span style={{ margin: "0px 10px" }}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board?.eyeCount}{" "}{" "}</span>
-                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</span>
+                            {/* <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</span> */}
+                            <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</span>
                         </IconInfo><img src={lineImg} alt={"구분선 이미지"} style={{ margin: "0px 10px" }} />
                         <IconBox>
                             <IconWrap>

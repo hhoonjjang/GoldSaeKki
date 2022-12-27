@@ -602,6 +602,7 @@ const BoardTitle = styled.div`
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
     margin-bottom: 5px;
+    max-width: 285px;
   }
 
 

@@ -509,7 +509,6 @@ const CategoryTitle = styled.h1`
   height: 40px;
   margin-bottom: 40px;
   cursor: default; */
-  
   font-size: 28px;
   color: #333;
   margin-top: 20px;
@@ -573,7 +572,6 @@ const WorldSpan = styled.span`
   position: relative;
   cursor: pointer;
   padding-left: 8px;
-
   /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;

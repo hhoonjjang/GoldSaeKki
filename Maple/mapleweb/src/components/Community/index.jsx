@@ -401,7 +401,7 @@ const NewsTitle = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 62px;
-
+  
   /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;
@@ -600,7 +600,7 @@ const IssueTag = styled.span`
   margin-right: 6px;
   margin-bottom: 6px;
   cursor: pointer;
-  
+
   /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;

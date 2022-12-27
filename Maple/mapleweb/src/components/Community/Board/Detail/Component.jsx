@@ -45,12 +45,20 @@ const DetailComponent = ({reportBoard, reportComment}) => {
 
     // 보드 번호가 변경될 때 Redux에 서버에서 가져온 리스트를 저장해준다.
     useEffect(() => {
+        // 댓글을 한 번 비워줘야 함
+        dispatch(communityAction.comments([]));
+
         boardReq.then((board) => {
             dispatch(communityAction.board(board?.data));
         });
 
         commentReq.then((comment) => {
             if (comment.data.length == 0) return;
+            if (comment.data.length) {
+                console.log(comment.data.length);
+                dispatch(communityAction.comments());
+                console.log(comment.data.length);
+            }
             dispatch(communityAction.comments(comment?.data));
         });
 

@@ -126,13 +126,13 @@ export const initialize = {};
 export const reducer = (state = initialize, action) => {
     const { type, payload } = action;
     switch (type) {
-        case TYPE.TAGS:
-            const { tags } = payload;
-            return {...state, tags};
         case TYPE.LIST:
             // return payload;
             const { list } = payload;
-            return {...state, list};
+            return {list};
+        case TYPE.TAGS:
+            const { tags } = payload;
+            return {...state, tags};
         case TYPE.BOARD:
             const { board } = payload;
             return {...state, board};

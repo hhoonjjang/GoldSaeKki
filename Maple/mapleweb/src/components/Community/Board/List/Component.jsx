@@ -11,6 +11,7 @@ import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 import eyeImg from "../../images/info_eye_new.png";
 import heartImg from "../../images/info_heart2_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
+import searchImg from "../../images/search.png";
 // import DetailContainer from "../Detail/Container";
 
 const tempArr = [
@@ -227,7 +228,9 @@ const ListComponent = () => {
         {/* 게시글 목록 */}
         <ListBox>
           {/* 여기서 map 돌리기 */}
-          {newBoards?.length ? "" : <OneBoardList style={{fontSize : "13px", color : "#666"}}>해당 게시글 목록이 존재하지 않습니다.</OneBoardList>}
+          {newBoards?.length ? "" : <OneBoardList style={{ fontSize: "13px", color: "#666" }}>
+            <div style={{display : "flex", alignItems : "center"}}><img src={searchImg} alt={"게시글 없음 표시"} />{" "} <span style={{marginLeft : "5px", color: "#8b8b8b"}}>해당 게시글 목록이 존재하지 않습니다.</span></div>
+          </OneBoardList>}
           {newBoards &&
             newBoards?.map((board, idx) => {
               return (

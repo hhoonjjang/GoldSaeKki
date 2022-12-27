@@ -96,6 +96,7 @@ const Header = ({
                 className="header_innerBox_center_start"
                 onClick={() => {
                   alert("게임 스타트");
+                  window.location.href="https://play2048.co/";
                 }}
               >
                 <img src={gameStart} />

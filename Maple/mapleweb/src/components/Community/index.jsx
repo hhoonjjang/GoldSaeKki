@@ -302,10 +302,12 @@ const ContentBox = styled.div`
   /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
   @media all and (min-width:768px) and (max-width:1023px) { 
     margin: 0 55px;
+    margin: 0 auto;
   } 
   /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
   @media all and (min-width:768px) and (max-width:1023px) { 
     margin: 0 55px;
+    margin: 0 auto;
   } 
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
   @media all and (min-width:480px) and (max-width:767px) {

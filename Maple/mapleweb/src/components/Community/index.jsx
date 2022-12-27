@@ -237,14 +237,21 @@ const CommunityComponet = ({}) => {
                 <TagListBox>
                   {/* 여기서 이 놈(IssueTag)을 map 돌리면 된다. 태그 개수는 최대 10개까지만 */}
                   {boardTags?.map((board, idx) => {
-                    return <div key={`tagDiv-${idx}`}>
-                      <Link to={`/Community/board/${board.id}`} key={`tagLink-${idx}`}>
-                        <IssueTag key={`issueTag-${idx}`}>
-                          {/* 태그 가공 및 출력 */}
-                          {board.tags.split("#").length == 1 ? "#" + board.tags : "#" + board.tags.split("#")[1]}
-                        </IssueTag>
-                      </Link>
-                    </div>
+                    return (
+                      <div key={`tagDiv-${idx}`}>
+                        <Link
+                          to={`/Community/board/${board.id}`}
+                          key={`tagLink-${idx}`}
+                        >
+                          <IssueTag key={`issueTag-${idx}`}>
+                            {/* 태그 가공 및 출력 */}
+                            {board.tags.split("#").length == 1
+                              ? "#" + board.tags
+                              : "#" + board.tags.split("#")[1]}
+                          </IssueTag>
+                        </Link>
+                      </div>
+                    );
                   })}
                 </TagListBox>
               </TagContentBox>
@@ -401,7 +408,7 @@ const NewsTitle = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 62px;
-  
+
   /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;

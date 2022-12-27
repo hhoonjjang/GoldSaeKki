@@ -228,7 +228,7 @@ const ListComponent = () => {
         <ListBox>
           {/* 여기서 map 돌리기 */}
           {newBoards?.length ? "" : <OneBoardList style={{ fontSize: "13px", color: "#666" }}>
-            <div style={{display : "flex", alignItems : "center"}}><img src={searchImg} alt={"게시글 없음 표시"} />{" "} <span style={{marginLeft : "5px", color: "#8b8b8b"}}>해당 게시글 목록이 존재하지 않습니다.</span></div>
+            <div style={{ display: "flex", alignItems: "center" }}><img src={searchImg} alt={"게시글 없음 표시"} />{" "} <span style={{ marginLeft: "10px", color: "#8b8b8b" }}>해당 게시글 목록이 존재하지 않습니다.</span></div>
           </OneBoardList>}
           {newBoards &&
             newBoards?.map((board, idx) => {
@@ -540,19 +540,68 @@ const OneBoardList = styled.div`
   float: left;
   padding-left: 27px;
   padding-right: 20px;
-  height: 68px;
+  min-height: 68px;
   border-bottom: 1px solid #e3e3e3;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+
+  /* 반응형 */
+  @media screen and (max-width: 1280px) {
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+  } 
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
+  @media all and (min-width:480px) and (max-width:767px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px 12px 10px 27px;
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
+  @media all and (max-width:479px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px 12px 10px 27px;
+  }
+
 `;
 const BoardTitle = styled.div`
   font-size: 16px;
   color: #333;
   float: left;
   max-width: 500px;
+
+  /* 반응형 */
+  @media screen and (max-width: 1280px) {
+    max-width: 250px;
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+    max-width: 320px;
+  } 
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+    max-width: 320px;
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
+  @media all and (min-width:480px) and (max-width:767px) {
+    max-width: 600px;
+    margin-bottom: 5px;
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
+  @media all and (max-width:479px) {
+    margin-bottom: 5px;
+  }
+
+
   & > span:first-child {
     color: #ca5196;
   }
@@ -572,6 +621,8 @@ const BoardTitle = styled.div`
     white-space: nowrap;
     overflow: hidden;
   }
+
+
 `;
 const OtherBoardInfo = styled.div`
   float: right;
@@ -581,6 +632,33 @@ const OtherBoardInfo = styled.div`
   margin-right: 0;
   min-width: 324px;
   max-width: 380px;
+
+  /* 반응형 */
+  @media screen and (max-width: 1280px) {
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+  } 
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
+  @media all and (min-width:480px) and (max-width:767px) {
+    display: flex;
+    align-items: flex-start;
+    max-width: 475px;
+    width: 420px;
+    justify-content: space-between;
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
+  @media all and (max-width:479px) {
+    display: flex;
+    align-items: flex-start;
+    max-width: 475px;
+    width: 200px;
+    justify-content: space-between;
+  }
+
 `;
 const UserName = styled.span`
   float: left;
@@ -604,6 +682,15 @@ const IconInfoWrap = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+
+  /* 반응형 */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
+  @media all and (max-width:479px) {
+    max-width: 220px;
+    &>div{
+      margin: 0px 5px;
+    }
+  }
 `;
 const IconInfo = styled.div`
   float: left;

@@ -10,10 +10,20 @@ import { CATEGORY, WORLDLIST } from "../../../../modules/community";
 
 import axios from "axios";
 import { useSelector } from "react-redux";
+import UploadAdapter from './UploadAdapter';
+import { Helmet } from 'react-helmet';
+
 
 // CKEditor 이미지 업로드를 위한 multer 기본 세팅
 // const API_URL = "http://localhost:8080";
 // const UPLOAD_ENDPOINT = "upload_files";
+
+// 어댑터 연결 함수
+function MyCustomUploadAdapterPlugin(editor) {
+  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+    return new UploadAdapter(loader);
+  }
+}
 
 const AddComponent = ({ }) => {
 
@@ -56,6 +66,9 @@ const AddComponent = ({ }) => {
   return (
 
     <>
+      <Helmet>
+        {/* <script src="" type="text/javascript" /> */}
+      </Helmet>
       <CategoryTitle>{category}</CategoryTitle>
 
       <ContentBox>

@@ -16,16 +16,19 @@ const HelpCategoryDisplayComponent = ({
   c,
   d,
   children,
+  changeFromBtn,changeToBtn
 }) => {
   const [category, setCategory] = useState("");
   const [text, setText] = useState("");
   const [edit, setEdit] = useState("");
+  const [changeBool,setChangeBool] =useState(true);
   return (
     <DisplayBox>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           textSubmit(category, text);
+          setText("")
         }}
       >
         <div className="title">온라인상담문의 {d}</div>
@@ -49,6 +52,7 @@ const HelpCategoryDisplayComponent = ({
         <input
           type="text"
           placeholder="텍스트"
+          value={text}
           onInput={(e) => {
             setText(e.target.value);
           }}
@@ -83,20 +87,35 @@ const HelpCategoryDisplayComponent = ({
               <div key={`childTextDiv-${idx}`}>{item[a]}</div>
               <button
                 onClick={() => {
-                  delBtn(item[a]);
-                }}
-                key={`childDeleteBtn-${idx}`}
-              >
-                삭제
-              </button>
-              <button
-                onClick={() => {
                   editBtn(idx, item[a]);
                 }}
                 key={`childEditBtn-${idx}`}
               >
                 수정
               </button>
+              {changeBool ? <button onClick={()=>{
+                changeFromBtn(item.id,item[a])
+                setChangeBool(!changeBool)
+              }}>
+                위치변경
+              </button>:
+              <button onClick={()=>{
+                changeToBtn(item.id,item[a])
+                setChangeBool(!changeBool)
+
+              }}>
+                위치확인
+              </button>}
+            
+              <button
+                onClick={() => {
+                  delBtn(item[a]);
+                }}
+                key={`childDeleteBtn-${idx}`}
+              >
+                삭제
+              </button>
+             
             </Blank>
           )}
         </Blank>

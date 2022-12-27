@@ -19,6 +19,8 @@ const FirstContainer = () => {
   const [categoryArr, setCategory] = useState([]);
   const [editText, setEdit] = useState("");
   const [isBool, setBool] = useState(-1);
+  const [changeToArr,setChangeTo] = useState([]);
+  const [changeFromArr,setChangeFrom] =useState([])
   useEffect(() => {
     tempChildFun(setCategory);
   }, []);
@@ -62,6 +64,34 @@ const FirstContainer = () => {
         tempChildFun(setCategory);
       });
   };
+  const changeFromBtn = (id,category) =>{
+    console.log("체인지")
+    setChangeFrom({category,id})
+  }
+  const changeToBtn = (id,category)=>{
+    
+    setChangeTo({category,id})
+    console.log("프롬")
+    console.log(changeFromArr)
+    console.log("투")
+    console.log(changeToArr.length)
+  }
+  console.log(changeToArr)
+  console.log(changeToArr.length)
+  useEffect(()=>{ 
+    
+
+    if(changeToArr){
+      console.log(changeFromArr)
+    console.log(changeToArr)
+    if(changeToArr.id){
+      axios.post("http://localhost:8080/api/admin/changefirst", {changeFromArr,changeToArr}).then((data)=>{
+        alert(data.data);
+        tempChildFun(setCategory);
+
+      })
+    }}
+  },[changeToArr])
   return (
     <HelpCategoryDisplayComponent
       categoryArr={""}
@@ -77,6 +107,8 @@ const FirstContainer = () => {
       b=""
       c=""
       d="문의유형"
+      changeToBtn={changeToBtn}
+      changeFromBtn={changeFromBtn}
     >
       <SecondContainer propsArr={categoryArr} />
     </HelpCategoryDisplayComponent>

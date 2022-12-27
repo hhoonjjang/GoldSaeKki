@@ -3,11 +3,7 @@ import { action } from "../../modules/header";
 import styled from "styled-components";
 import AccountContainer from "./Account/Container";
 import AdminLoginContainer from "./AdminLogin/Container";
-import FirstContainer from "./HelpCategoryDisplay/Container1";
-import UserManageContainer from "./UserManage/Container";
 import { useEffect,useState } from "react";
-import UserReportContainer from "./Report/Container";
-import UserReportContainerComment from "./Report/Container1";
 import ControlledTabsExample from "./ControlledTabs/ControlledTabs";
 const AdministratorComponet = () => {
   
@@ -22,18 +18,12 @@ const AdministratorComponet = () => {
       {!isCookie ? (
         <>
           <AdminLoginContainer />
-          <AccountContainer />
+          {/* <AccountContainer /> */}
         </>
       ) : (
         <>
           <AdminLoginContainer />
-          {tempAdmin?.name == "정재훈" ? (
-            <>
-              <AccountContainer />
-            </>
-          ) : (
-            <></>
-          )}
+        
           <ControlledTabsExample />
          
         </>

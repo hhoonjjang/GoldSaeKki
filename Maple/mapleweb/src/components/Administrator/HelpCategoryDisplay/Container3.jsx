@@ -33,7 +33,8 @@ const ThirdContainer = ({ propsArr }) => {
   const [childArr, setChildText] = useState([]);
   const [isBool, setBool] = useState(-1);
   const [editText, setEdit] = useState("");
-
+  const [changeToArr,setChangeTo] = useState([]);
+  const [changeFromArr,setChangeFrom] =useState([])
   useEffect(() => {
     tempArrFun(setText);
     tempChildFun(setChildText);
@@ -85,6 +86,32 @@ const ThirdContainer = ({ propsArr }) => {
   const cancel = () => {
     setBool(-1);
   };
+  const changeFromBtn = (id,category) =>{
+    console.log("체인지")
+    setChangeFrom({category,id})
+  }
+  const changeToBtn = (id,category)=>{
+    
+    setChangeTo({category,id})
+    console.log("프롬")
+    console.log(changeFromArr)
+    console.log("투")
+    console.log(changeToArr.length)
+  }
+  useEffect(()=>{ 
+    
+
+    if(changeToArr){
+      console.log(changeFromArr)
+    console.log(changeToArr)
+    if(changeToArr.id){
+      axios.post("http://localhost:8080/api/admin/changethird", {changeFromArr,changeToArr}).then((data)=>{
+        alert(data.data);
+        tempChildFun(setChildText);
+
+      })
+    }}
+  },[changeToArr])
   return (
     <HelpCategoryDisplayComponent
       categoryArr={propsArr}
@@ -100,6 +127,8 @@ const ThirdContainer = ({ propsArr }) => {
       b="textCategory"
       c="text"
       d="텍스트"
+      changeToBtn={changeToBtn}
+      changeFromBtn={changeFromBtn}
     />
   );
 };

@@ -3,8 +3,8 @@ import RequestContainer from "./Request/Container";
 const OnlineComponent = () => {
   return (
     <OnlineBox>
-      <div>
-        <div>문의유형 선택</div>
+      <div className="request-box">
+        <div className="category-title">문의유형 선택</div>
         <div>
           문의유형을 선택하면 문의유형에 따라 [자주 찾는 도움말]을 확인할 수
           있습니다.
@@ -21,4 +21,8 @@ const OnlineComponent = () => {
 
 export default OnlineComponent;
 
-const OnlineBox = styled.div``;
+const OnlineBox = styled.div`
+.request-box{
+  margin-bottom:20px;
+}
+`;

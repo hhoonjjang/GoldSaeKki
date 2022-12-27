@@ -33,4 +33,9 @@ const SupportComponet = () => {
 
 export default SupportComponet;
 
-const SupportBox = styled.div``;
+const SupportBox = styled.div`
+.category-title {
+  font-size: 28px;
+  font-weight:bold;
+}
+`;

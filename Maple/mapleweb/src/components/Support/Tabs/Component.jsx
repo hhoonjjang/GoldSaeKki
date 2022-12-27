@@ -15,7 +15,7 @@ function LeftTabsExample() {
     <Tab.Container id="left-tabs-example" defaultActiveKey="first">
         {" "}
         <Row>
-          <Col sm={3}>
+          <Col sm={3} className="tab1">
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
                 <Nav.Link eventKey="first">온라인상담</Nav.Link>
@@ -28,7 +28,7 @@ function LeftTabsExample() {
               </Nav.Item>
             </Nav>
           </Col>
-          <Col sm={9}>
+          <Col sm={9} className="tab2">
             <Tab.Content>
               <Tab.Pane eventKey="first">
                 <div>
@@ -67,4 +67,16 @@ const TabsBox = styled.div`
  width:1200px;
  margin:auto;
  margin-top:40px;
+ .flex-column{
+  width:fit-content;
+  // background-color:gray;
+  // border-radius: 20px 20px
+ }
+ .tab1{
+  width:15%;
+  // background-color:red;
+ }
+ .tab2{
+  width:85%;
+ }
 `;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 const MessageComponent = ({ msgArr }) => {
   return (
     <MessageBox>
-      <div>메세지컴포넌트</div>
+      <div className="category-title">내 메세지함</div>
       <table>
         <colgroup>
           <col width={"15%"} />

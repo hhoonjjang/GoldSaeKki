@@ -15,7 +15,7 @@ function UncontrolledExample({ categoryArr }) {
           <CategoryBox key={`CategoryBox-${idx}`}>
             {item.Help.map((item, idx) => (
               <div key={`category-${idx}`} className="category">
-                {item.text}
+                <div className="title">{item.text}</div>
                 {item.Child.map((item, idx) => (
                   <TextBox key={`TextBox-${idx}`}>
                     <div className="textbox">{item.textChild}</div>
@@ -34,21 +34,24 @@ export default UncontrolledExample;
 
 const CategoryBox = styled.div`
   display: flex;
-  // justify-content: space-between;
-  width: 80%;
+  width: 100%;
   flex-wrap: wrap;
   .category {
-    // background-color: black;
-    width: 300px;
+    width: 25%;
     margin-bottom: 50px;
     font-size: 20px;
     font-weight: bold;
+
+    & .title{
+      margin: 15px 0px;
+    }
   }
   .textbox {
     width:100%
     font-size: 15px;
     font-weight: 500;
     color: gray;
+    margin-bottom:10px;
     &:hover {
       color: blue;
       cursor: pointer;
@@ -58,4 +61,6 @@ const CategoryBox = styled.div`
   }
 `;
 
-const TextBox = styled.div``;
+const TextBox = styled.div`
+font-size: 15px;
+`;

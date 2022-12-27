@@ -9,6 +9,7 @@ export default class Helptext extends Sequelize.Model {
           unique: true,
           allowNull: false,
         },
+   
       },
       {
         sequelize,

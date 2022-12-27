@@ -6,7 +6,7 @@ const MyRequestComponent = ({ requestArr, onClick, isBoolen }) => {
   return (
     <MyRequestBox>
       <div className="serviceDisplay">
-        <h3>내 문의내역</h3>{" "}
+        <div className="category-title">내 문의내역</div>{" "}
         <div>
           최근 6개월 동안 접수하신 1:1문의내역 및 답변 내용을 확인하실 수
           있습니다.
@@ -178,7 +178,6 @@ const MyRequestBox = styled.div`
       margin: auto;
     }
   }
-  padding: 20px 20px;
   .serviceDisplay {
     margin-bottom: 30px;
   }
@@ -191,7 +190,5 @@ const MyRequestBox = styled.div`
     display: flex;
   } */
 
-  h3 {
-    font-weight: bold;
-  }
+
 `;

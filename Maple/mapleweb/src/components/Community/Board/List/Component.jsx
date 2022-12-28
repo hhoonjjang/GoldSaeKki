@@ -55,7 +55,7 @@ const ListComponent = () => {
     setCategory(CATEGORY.find(item => item.label == nowParam));
 
     // 스크롤도 올려줌
-    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+    window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
 
     // 월드 초기화
     const active2 = document.querySelectorAll(".active2");
@@ -227,9 +227,9 @@ const ListComponent = () => {
   // }, []);
 
 
-  // 페이지 높이 변경
+  // 페이지 스크롤 높이 변경
   useEffect(() => {
-    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+    window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
   }, [nowPage]);
 
 

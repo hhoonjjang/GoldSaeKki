@@ -8,7 +8,7 @@ export const NotFound = () => {
 
     // 페이지 도착시 스크롤 높이 변경
     useEffect(() => {
-        window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+        window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
     }, []);
 
     return <NotFoundBox>

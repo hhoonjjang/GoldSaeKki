@@ -247,6 +247,7 @@ const CommunityBox = styled.div`
 
   *::selection {
     background-color: #f1b4d1;
+    background-color: #e785b4d6;;
     color: white;
   }
 `;

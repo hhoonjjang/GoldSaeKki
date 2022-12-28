@@ -17,6 +17,19 @@
 4. db 사용하기 (mySql or mongoDB)
 5. apache를 사용한 AWS에 배포
 
+### 이슈사항
+> :smile:팀장 정재훈
+- 원인
+    - 저게 거짓말함
+
+- 해결 방법
+```javascript
+const a = 1;
+```
+
+
+
+<img src="">
 
 
 

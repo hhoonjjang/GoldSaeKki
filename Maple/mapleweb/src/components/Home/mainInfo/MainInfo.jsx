@@ -8,7 +8,7 @@ const MainInfo = () => {
   // 나중에 Link 달아줘야 된다...
   return (
     <MainInfoComponent>
-      <div>
+      <div className="mainInfo_innerBox">
         <h1 className="mainInfo_intro">
           메이플스토리 게임정보
           {/* Link달아줘야 함 */}
@@ -26,7 +26,7 @@ const MainInfo = () => {
             </svg>
           </Link>
         </h1>
-        <div className="mainInfo_innerBox">
+        <div className="mainInfo_innerBox_itemBox">
           <div className="mainInfo_item mainInfo_item_1">
             <div>
               <img src={mainInfoImg1}></img>
@@ -84,7 +84,9 @@ const MainInfoComponent = styled.div`
     padding-top: 90px;
     padding-bottom: 90px;
     border-top: 1px solid gainsboro;
-
+    .mainInfo_innerBox {
+      width: 1200px;
+    }
     .mainInfo_intro {
       font-weight: lighter;
       font-size: 40px;
@@ -102,13 +104,13 @@ const MainInfoComponent = styled.div`
       fill: gray;
     }
 
-    .mainInfo_innerBox {
-      min-width: 1200px;
+    .mainInfo_innerBox_itemBox {
       display: flex;
       justify-content: space-between;
     }
 
     .mainInfo_item {
+      width: 33%;
       border-radius: 3px;
     }
 
@@ -116,10 +118,11 @@ const MainInfoComponent = styled.div`
       transform: scale(1.1);
     }
     .mainInfo_item > div {
-      width: 100;
       overflow: hidden;
+      width: 100%;
     }
     .mainInfo_item img {
+      width: 100%;
       display: block;
       overflow: hidden;
       z-index: 10;

@@ -117,13 +117,21 @@ const FooterComponent = styled.div`
     left: 0;
 
     .footer_innerBox {
-      min-width: 1200px;
       position: relative;
       display: flex;
       justify-content: space-between;
       margin-top: 30px;
       margin-bottom: 30px;
-
+      @media only screen and (min-width: 1024px) {
+        width: 1200px;
+      }
+      @media only screen and (max-width: 1024px) {
+        width: 100%;
+      }
+      @media only screen and (max-width: 1250px) {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
       ul {
         display: flex;
         padding-inline-start: 0px;
@@ -263,7 +271,7 @@ const FooterComponent = styled.div`
     left: 0;
 
     .footer_innerBox {
-      min-width: 1200px;
+      width: 1200px;
       position: relative;
       display: flex;
       justify-content: center;

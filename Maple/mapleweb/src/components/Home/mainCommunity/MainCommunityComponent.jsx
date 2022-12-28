@@ -52,89 +52,94 @@ const MainCommunityComponent = ({
             {/* </div> */}
             {communityList.map((item, index) => {
               return (
-                <div
-                  className={`mainCommunity_innerBox_community_item`}
-                  key={`communityLi${index}`}
-                >
-                  <div className={"mainCommunity_innerBox_community_item_top"}>
+                <div className="mainCommunity_innerBox_community_item_cover">
+                  <div
+                    className={`mainCommunity_innerBox_community_item`}
+                    key={`communityLi${index}`}
+                  >
                     <div
-                      className={
-                        "mainCommunity_innerBox_community_item_top_innerBox"
-                      }
+                      className={"mainCommunity_innerBox_community_item_top"}
                     >
                       <div
                         className={
-                          "mainCommunity_innerBox_community_item_top_innerBox_category"
+                          "mainCommunity_innerBox_community_item_top_innerBox"
                         }
-                      >
-                        [{communityNewestPost[index]?.category}]
-                      </div>
-                      <Link
-                        to={`/Community/board/${communityNewestPost[index]?.id}`}
-                        element={<CommunityComponet />}
                       >
                         <div
                           className={
-                            "mainCommunity_innerBox_community_item_top_innerBox_title"
+                            "mainCommunity_innerBox_community_item_top_innerBox_category"
                           }
                         >
-                          {communityNewestPost[index]?.title}
+                          [{communityNewestPost[index]?.category}]
                         </div>
-                      </Link>
-                    </div>
-                  </div>
-                  <div className={"mainCommunity_innerBox_community_item_mid"}>
-                    <div
-                      className={
-                        "mainCommunity_innerBox_community_item_mid_innerBox"
-                      }
-                    >
-                      <div
-                        className={
-                          "mainCommunity_innerBox_community_item_mid_innerBox_contents"
-                        }
-                      >
                         <Link
                           to={`/Community/board/${communityNewestPost[index]?.id}`}
                           element={<CommunityComponet />}
                         >
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: communityNewestPost[index]?.contents,
-                            }}
-                          ></span>
+                          <div
+                            className={
+                              "mainCommunity_innerBox_community_item_top_innerBox_title"
+                            }
+                          >
+                            {communityNewestPost[index]?.title}
+                          </div>
                         </Link>
                       </div>
                     </div>
-                  </div>
-                  <div
-                    className={"mainCommunity_innerBox_community_item_bottom"}
-                  >
                     <div
-                      className={
-                        "mainCommunity_innerBox_community_item_bottom_innerBox"
-                      }
+                      className={"mainCommunity_innerBox_community_item_mid"}
                     >
-                      <span
+                      <div
                         className={
-                          "mainCommunity_innerBox_community_item_bottom_innerBox_userName"
+                          "mainCommunity_innerBox_community_item_mid_innerBox"
                         }
                       >
-                        {communityNewestPost[index]?.user_name}
-                      </span>
-                      <span
+                        <div
+                          className={
+                            "mainCommunity_innerBox_community_item_mid_innerBox_contents"
+                          }
+                        >
+                          <Link
+                            to={`/Community/board/${communityNewestPost[index]?.id}`}
+                            element={<CommunityComponet />}
+                          >
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: communityNewestPost[index]?.contents,
+                              }}
+                            ></span>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className={"mainCommunity_innerBox_community_item_bottom"}
+                    >
+                      <div
                         className={
-                          "mainCommunity_innerBox_community_item_bottom_innerBox_createdAt"
+                          "mainCommunity_innerBox_community_item_bottom_innerBox"
                         }
                       >
-                        {communityNewestPost[index]?.created_at}
-                      </span>
+                        <span
+                          className={
+                            "mainCommunity_innerBox_community_item_bottom_innerBox_userName"
+                          }
+                        >
+                          {communityNewestPost[index]?.user_name}
+                        </span>
+                        <span
+                          className={
+                            "mainCommunity_innerBox_community_item_bottom_innerBox_createdAt"
+                          }
+                        >
+                          {communityNewestPost[index]?.created_at}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
               );
             })}
-            ;
           </div>
         </div>
         <div className="mainCommunity_innerBox_ranking">
@@ -199,348 +204,326 @@ const MainCommunityComponent = ({
 export default MainCommunityComponent;
 
 const MainCommunityBox = styled.div`
-  @media only screen and (min-width: 1024px) {
+  @media only screen and (min-width: 1025px) {
     background-image: url(${(props) => props.img});
-    background-position: center;
     height: 1056px;
-    display: flex;
-    justify-content: center;
-    background-repeat: no-repeat;
-    padding-top: 100px;
-    .mainCommunity_innerBox {
-      min-width: 1200px;
-      .mainCommunity_innerBox_community {
-        margin-bottom: 90px;
-        .mainCommunity_innerBox_community_title {
-          margin-bottom: 40px;
-          .mainCommunity_innerBox_community_intro {
-            color: white;
-            text-align: center;
-            font-weight: lighter;
-            font-size: 40px;
-            text-align: center;
-            position: relative;
-          }
-        }
-        .mainCommunity_innerBox_community_list {
-          display: flex;
-          justify-content: center;
-          .mainCommunity_innerBox_community_item {
-            background-color: white;
-            border-radius: 5px;
-            width: 279px;
-            height: 370px;
-            margin-right: 28px;
-            padding-top: 20px;
-            padding-left: 20px;
-            padding-right: 20px;
-            .mainCommunity_innerBox_community_item_top {
-              margin-top: 20px;
-              padding-bottom: 10px;
-              border-bottom: 1px solid gainsboro;
-              .mainCommunity_innerBox_community_item_top_innerBox {
-                .mainCommunity_innerBox_community_item_top_innerBox_category {
-                  color: #5897dc;
-                  font-size: 13px;
-                }
-                .mainCommunity_innerBox_community_item_top_innerBox_title {
-                  color: #333;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  white-space: nowrap;
-                  word-break: break-all;
-                }
-              }
-            }
-            .mainCommunity_innerBox_community_item_mid {
-              padding-top: 20px;
-              padding-bottom: 10px;
-              height: 230px;
-              .mainCommunity_innerBox_community_item_mid_innerBox {
-                height: 100%;
-                .mainCommunity_innerBox_community_item_mid_innerBox_contents {
-                  height: 100%;
-                }
-                .mainCommunity_innerBox_community_item_mid_innerBox_contents
-                  > a
-                  > span {
-                  height: 100%;
-                  color: #666;
-                  font-size: 13px;
-                }
-                .mainCommunity_innerBox_community_item_mid_innerBox_contents
-                  > a
-                  > span
-                  > p {
-                  height: 100%;
-                  overflow: hidden;
-                  line-height: 25px;
-                }
-              }
-            }
-            .mainCommunity_innerBox_community_item_bottom {
-              .mainCommunity_innerBox_community_item_bottom_innerBox {
-                display: flex;
-                justify-content: space-between;
-                .mainCommunity_innerBox_community_item_bottom_innerBox_userName {
-                  font-size: 13px;
-                  color: #888;
-                }
-                .mainCommunity_innerBox_community_item_bottom_innerBox_createdAt {
-                  font-size: 13px;
-                  color: #888;
-                }
-              }
-            }
-          }
-          & > div:last-child {
-            margin-right: 0px;
-          }
-        }
-      }
-      .mainCommunity_innerBox_ranking {
-        .mainCommunity_innerBox_ranking_title {
-          .mainCommunity_innerBox_ranking_intro {
-            font-weight: lighter;
-            font-size: 40px;
-            text-align: center;
-            position: relative;
-            .rankingPlusSVG {
-              position: absolute;
-              right: 0px;
-              fill: lightgray;
-            }
-          }
-        }
-        .mainCommunity_innerBox_ranking_ranking {
-          // display: flex;
-          // justify-content: center;
-          margin-top: 20px;
-          position: relative;
-          .mainCommunity_innerBox_ranking_ranking_1,
-          .mainCommunity_innerBox_ranking_ranking_2,
-          .mainCommunity_innerBox_ranking_ranking_3,
-          .mainCommunity_innerBox_ranking_ranking_4,
-          .mainCommunity_innerBox_ranking_ranking_5 {
-            width: 250px;
-            text-align: center;
-            font-weight: 1000;
-            font-size: 35px;
-          }
-          .mainCommunity_innerBox_ranking_ranking_2,
-          .mainCommunity_innerBox_ranking_ranking_3,
-          .mainCommunity_innerBox_ranking_ranking_4,
-          .mainCommunity_innerBox_ranking_ranking_5 {
-            color: rgb(90, 89, 105);
-          }
-          .mainCommunity_innerBox_ranking_ranking_1 {
-            position: absolute;
-            color: rgb(225, 131, 29);
-            left: 475px;
-          }
-          .mainCommunity_innerBox_ranking_ranking_2 {
-            position: absolute;
-            left: 225px;
-          }
-          .mainCommunity_innerBox_ranking_ranking_3 {
-            position: absolute;
-            left: 725px;
-          }
-          .mainCommunity_innerBox_ranking_ranking_4 {
-            position: absolute;
-            left: 0px;
-          }
-          .mainCommunity_innerBox_ranking_ranking_5 {
-            position: absolute;
-            left: 965px;
-          }
-        }
-        .mainCommunity_innerBox_ranking_avatar {
-          margin-top: 150px;
-          position: relative;
-          .mainCommunity_innerBox_ranking_avatar_1,
-          .mainCommunity_innerBox_ranking_avatar_2,
-          .mainCommunity_innerBox_ranking_avatar_3,
-          .mainCommunity_innerBox_ranking_avatar_4,
-          .mainCommunity_innerBox_ranking_avatar_5 {
-            img {
-              width: 100px;
-              height: 100px;
-              border-radius: 50%;
-            }
-          }
-          .mainCommunity_innerBox_ranking_avatar_1 {
-            position: absolute;
-            left: 550px;
-            bottom: -133px;
-          }
-          .mainCommunity_innerBox_ranking_avatar_2 {
-            position: absolute;
-            left: 310px;
-          }
-          .mainCommunity_innerBox_ranking_avatar_3 {
-            position: absolute;
-            left: 810px;
-          }
-          .mainCommunity_innerBox_ranking_avatar_4 {
-            position: absolute;
-            left: 65px;
-            bottom: -64px;
-          }
-          .mainCommunity_innerBox_ranking_avatar_5 {
-            position: absolute;
-            left: 1040px;
-            bottom: -64px;
-          }
-        }
-        .mainCommunity_innerBox_ranking_userName {
-          margin-top: 320px;
-          position: relative;
-          .mainCommunity_innerBox_ranking_userName_1,
-          .mainCommunity_innerBox_ranking_userName_2,
-          .mainCommunity_innerBox_ranking_userName_3,
-          .mainCommunity_innerBox_ranking_userName_4,
-          .mainCommunity_innerBox_ranking_userName_5 {
-            width: 250px;
-            color: white;
-            text-align: center;
-          }
-          .mainCommunity_innerBox_ranking_userName_1 {
-            position: absolute;
-            left: 475px;
-          }
-          .mainCommunity_innerBox_ranking_userName_2 {
-            position: absolute;
-            left: 225px;
-          }
-          .mainCommunity_innerBox_ranking_userName_3 {
-            position: absolute;
-            left: 725px;
-          }
-          .mainCommunity_innerBox_ranking_userName_4 {
-            position: absolute;
-            left: 0px;
-          }
-          .mainCommunity_innerBox_ranking_userName_5 {
-            position: absolute;
-            left: 965px;
-          }
-        }
-      }
-    }
-    .communityPlusSVG {
-      position: absolute;
-      right: 0px;
-      fill: lightgray;
-    }
   }
   @media only screen and (max-width: 1024px) {
     background-color: #eee;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    background-repeat: no-repeat;
+  }
+  background-position: center;
+
+  display: flex;
+  justify-content: center;
+  background-repeat: no-repeat;
+  @media only screen and (min-width: 1024px) {
     padding-top: 100px;
-    .mainCommunity_innerBox {
-      min-width: 1200px;
-      .mainCommunity_innerBox_community {
+  }
+  @media only screen and (max-width: 1024px) {
+    padding-top: 20px;
+  }
+
+  .mainCommunity_innerBox {
+    @media only screen and (min-width: 1024px) {
+      width: 1200px;
+    }
+
+    @media only screen and (max-width: 1024px) {
+      width: 100%;
+    }
+
+    .mainCommunity_innerBox_community {
+      @media only screen and (min-width: 1024px) {
         margin-bottom: 90px;
-        .mainCommunity_innerBox_community_title {
-          margin-bottom: 40px;
-          .mainCommunity_innerBox_community_intro {
+      }
+
+      @media only screen and (max-width: 1024px) {
+        margin-bottom: 30px;
+      }
+
+      .mainCommunity_innerBox_community_title {
+        margin-bottom: 40px;
+
+        .mainCommunity_innerBox_community_intro {
+          text-align: center;
+          font-weight: lighter;
+          font-size: 40px;
+          text-align: center;
+          position: relative;
+
+          @media only screen and (min-width: 1024px) {
+            color: white;
+          }
+          @media only screen and (max-width: 1024px) {
             color: #222;
-            text-align: center;
-            font-weight: lighter;
-            font-size: 40px;
-            text-align: center;
-            position: relative;
           }
         }
-        .mainCommunity_innerBox_community_list {
+      }
+      .mainCommunity_innerBox_community_list {
+        @media only screen and (min-width: 1024px) {
           display: flex;
           justify-content: center;
-          overflow: hidden;
-          .mainCommunity_innerBox_community_item {
-            background-color: white;
-            border-radius: 5px;
-            width: 279px;
-            height: 370px;
-            margin-right: 28px;
-            padding-top: 20px;
+        }
+
+        @media only screen and (max-width: 1024px) {
+          display: block;
+        }
+
+        .mainCommunity_innerBox_community_item_cover {
+          @media only screen and (min-width: 1024px) {
+            display: flex;
+            width: 25%;
+            padding-left: 10px;
+            padding-right: 10px;
+            justify-content: center;
+          }
+
+          @media only screen and (max-width: 1024px) {
+            display: flex;
+            width: 100%;
             padding-left: 20px;
             padding-right: 20px;
-            .mainCommunity_innerBox_community_item_top {
-              margin-top: 20px;
-              padding-bottom: 10px;
-              border-bottom: 1px solid gainsboro;
-              .mainCommunity_innerBox_community_item_top_innerBox {
-                .mainCommunity_innerBox_community_item_top_innerBox_category {
-                  color: #5897dc;
-                  font-size: 13px;
-                }
-                .mainCommunity_innerBox_community_item_top_innerBox_title {
-                  color: #333;
-                  overflow: hidden;
-                  text-overflow: ellipsis;
-                  white-space: nowrap;
-                  word-break: break-all;
-                }
+            justify-content: center;
+          }
+        }
+        .mainCommunity_innerBox_community_item {
+          background-color: white;
+          border-radius: 5px;
+
+          height: 370px;
+          margin-right: 28px;
+          padding-top: 20px;
+          padding-left: 20px;
+          padding-right: 20px;
+
+          @media only screen and (min-width: 1024px) {
+            width: 100%;
+          }
+
+          @media only screen and (max-width: 1024px) {
+            margin-right: 20px;
+            margin-left: 20px;
+            margin-bottom: 20px;
+            flex: 1;
+          }
+
+          .mainCommunity_innerBox_community_item_top {
+            margin-top: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid gainsboro;
+
+            .mainCommunity_innerBox_community_item_top_innerBox {
+              .mainCommunity_innerBox_community_item_top_innerBox_category {
+                color: #5897dc;
+                font-size: 13px;
               }
-            }
-            .mainCommunity_innerBox_community_item_mid {
-              padding-top: 20px;
-              padding-bottom: 10px;
-              height: 230px;
-              .mainCommunity_innerBox_community_item_mid_innerBox {
-                height: 100%;
-                .mainCommunity_innerBox_community_item_mid_innerBox_contents {
-                  height: 100%;
-                }
-                .mainCommunity_innerBox_community_item_mid_innerBox_contents
-                  > a
-                  > span {
-                  height: 100%;
-                  color: #666;
-                  font-size: 13px;
-                }
-                .mainCommunity_innerBox_community_item_mid_innerBox_contents
-                  > a
-                  > span
-                  > p {
-                  height: 100%;
-                  overflow: hidden;
-                  line-height: 25px;
-                }
-              }
-            }
-            .mainCommunity_innerBox_community_item_bottom {
-              .mainCommunity_innerBox_community_item_bottom_innerBox {
-                display: flex;
-                justify-content: space-between;
-                .mainCommunity_innerBox_community_item_bottom_innerBox_userName {
-                  font-size: 13px;
-                  color: #888;
-                }
-                .mainCommunity_innerBox_community_item_bottom_innerBox_createdAt {
-                  font-size: 13px;
-                  color: #888;
-                }
+              .mainCommunity_innerBox_community_item_top_innerBox_title {
+                color: #333;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                word-break: break-all;
               }
             }
           }
-          & > div:last-child {
-            margin-right: 0px;
+          .mainCommunity_innerBox_community_item_mid {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            height: 230px;
+
+            .mainCommunity_innerBox_community_item_mid_innerBox {
+              height: 100%;
+
+              .mainCommunity_innerBox_community_item_mid_innerBox_contents {
+                height: 100%;
+              }
+              .mainCommunity_innerBox_community_item_mid_innerBox_contents
+                > a
+                > span {
+                height: 100%;
+                color: #666;
+                font-size: 13px;
+              }
+              .mainCommunity_innerBox_community_item_mid_innerBox_contents
+                > a
+                > span
+                > p {
+                height: 100%;
+                overflow: hidden;
+                line-height: 25px;
+              }
+            }
+          }
+          .mainCommunity_innerBox_community_item_bottom {
+            .mainCommunity_innerBox_community_item_bottom_innerBox {
+              display: flex;
+              justify-content: space-between;
+
+              .mainCommunity_innerBox_community_item_bottom_innerBox_userName {
+                font-size: 13px;
+                color: #888;
+              }
+              .mainCommunity_innerBox_community_item_bottom_innerBox_createdAt {
+                font-size: 13px;
+                color: #888;
+              }
+            }
+          }
+        }
+        & > div:last-child {
+          margin-right: 0px;
+        }
+      }
+    }
+    .mainCommunity_innerBox_ranking {
+      @media only screen and (max-width: 1024px) {
+        display: none;
+      }
+      .mainCommunity_innerBox_ranking_title {
+        .mainCommunity_innerBox_ranking_intro {
+          font-weight: lighter;
+          font-size: 40px;
+          text-align: center;
+          position: relative;
+          color: white;
+
+          .rankingPlusSVG {
+            position: absolute;
+            right: 0px;
+            fill: lightgray;
           }
         }
       }
-      .mainCommunity_innerBox_ranking {
-        display: none;
+
+      .mainCommunity_innerBox_ranking_ranking {
+        // display: flex;
+        // justify-content: center;
+        margin-top: 20px;
+        position: relative;
+
+        .mainCommunity_innerBox_ranking_ranking_1,
+        .mainCommunity_innerBox_ranking_ranking_2,
+        .mainCommunity_innerBox_ranking_ranking_3,
+        .mainCommunity_innerBox_ranking_ranking_4,
+        .mainCommunity_innerBox_ranking_ranking_5 {
+          width: 250px;
+          text-align: center;
+          font-weight: 1000;
+          font-size: 35px;
+        }
+        .mainCommunity_innerBox_ranking_ranking_2,
+        .mainCommunity_innerBox_ranking_ranking_3,
+        .mainCommunity_innerBox_ranking_ranking_4,
+        .mainCommunity_innerBox_ranking_ranking_5 {
+          color: rgb(90, 89, 105);
+        }
+
+        .mainCommunity_innerBox_ranking_ranking_1 {
+          position: absolute;
+          color: rgb(225, 131, 29);
+          right: 475px;
+        }
+        .mainCommunity_innerBox_ranking_ranking_2 {
+          position: absolute;
+          right: 725px;
+        }
+        .mainCommunity_innerBox_ranking_ranking_3 {
+          position: absolute;
+          right: 225px;
+        }
+        .mainCommunity_innerBox_ranking_ranking_4 {
+          position: absolute;
+          right: 965px;
+        }
+        .mainCommunity_innerBox_ranking_ranking_5 {
+          position: absolute;
+          right: 0px;
+        }
+      }
+      .mainCommunity_innerBox_ranking_avatar {
+        margin-top: 150px;
+        position: relative;
+
+        .mainCommunity_innerBox_ranking_avatar_1,
+        .mainCommunity_innerBox_ranking_avatar_2,
+        .mainCommunity_innerBox_ranking_avatar_3,
+        .mainCommunity_innerBox_ranking_avatar_4,
+        .mainCommunity_innerBox_ranking_avatar_5 {
+          img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+          }
+        }
+
+        .mainCommunity_innerBox_ranking_avatar_1 {
+          position: absolute;
+          right: 550px;
+          bottom: -133px;
+        }
+        .mainCommunity_innerBox_ranking_avatar_2 {
+          position: absolute;
+          right: 810px;
+        }
+        .mainCommunity_innerBox_ranking_avatar_3 {
+          position: absolute;
+          right: 310px;
+        }
+        .mainCommunity_innerBox_ranking_avatar_4 {
+          position: absolute;
+          right: 1040px;
+          bottom: -64px;
+        }
+        .mainCommunity_innerBox_ranking_avatar_5 {
+          position: absolute;
+          right: 65px;
+          bottom: -64px;
+        }
+      }
+      .mainCommunity_innerBox_ranking_userName {
+        margin-top: 320px;
+        position: relative;
+
+        .mainCommunity_innerBox_ranking_userName_1,
+        .mainCommunity_innerBox_ranking_userName_2,
+        .mainCommunity_innerBox_ranking_userName_3,
+        .mainCommunity_innerBox_ranking_userName_4,
+        .mainCommunity_innerBox_ranking_userName_5 {
+          width: 250px;
+          color: white;
+          text-align: center;
+        }
+
+        .mainCommunity_innerBox_ranking_userName_1 {
+          position: absolute;
+          right: 475px;
+        }
+        .mainCommunity_innerBox_ranking_userName_2 {
+          position: absolute;
+          right: 725px;
+        }
+        .mainCommunity_innerBox_ranking_userName_3 {
+          position: absolute;
+          right: 225px;
+        }
+        .mainCommunity_innerBox_ranking_userName_4 {
+          position: absolute;
+          right: 965px;
+        }
+        .mainCommunity_innerBox_ranking_userName_5 {
+          position: absolute;
+          right: 0px;
+        }
       }
     }
-    .communityPlusSVG {
-      position: absolute;
-      right: 0px;
-      fill: lightgray;
+  }
+
+  .communityPlusSVG {
+    position: absolute;
+    right: 0px;
+    fill: lightgray;
+    @media only screen and (max-width: 1024px) {
+      display: none;
     }
   }
 `;

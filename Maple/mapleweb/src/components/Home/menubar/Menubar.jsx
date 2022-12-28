@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../Img/goldsaekki-logo2.png";
-
 import { useMemo, useState } from "react";
 
 const Menubar = () => {
@@ -143,6 +142,7 @@ const MenubarComponent = styled.div`
   justify-content: center;
   z-index: 999999;
   padding-top: 20px;
+  position: absolute;
 
   ul {
     list-style: none;
@@ -156,6 +156,7 @@ const MenubarComponent = styled.div`
     position: fixed;
     background-color: rgb(47, 47, 59);
     height: 64px;
+    top: 0;
 
     .menubar_logobox {
       top: -12px;
@@ -203,7 +204,7 @@ const MenubarComponent = styled.div`
   }
 
   .menubar_innerBox {
-    min-width: 1200px;
+    width: 1200px;
     height: 100%;
     display: flex;
     position: relative;
@@ -214,6 +215,12 @@ const MenubarComponent = styled.div`
     flex-direction: column;
     justify-content: center;
     position: absolute;
+    @media only screen and (min-width: 1024px) {
+      width: 11%;
+    }
+    @media only screen and (max-width: 1024px) {
+      display: none;
+    }
   }
 
   .menubar_item {
@@ -222,6 +229,13 @@ const MenubarComponent = styled.div`
     flex: 1;
     display: flex;
     justify-content: space-between;
+
+    @media only screen and (min-width: 1024px) {
+      width: 89%;
+    }
+    @media only screen and (max-width: 1024px) {
+      width: 100%;
+    }
   }
 
   .menubar_item:hover .menubar_dropdown {
@@ -233,9 +247,15 @@ const MenubarComponent = styled.div`
   }
 
   .menubar_item_outsideLi {
-    width: 260px;
-    position: relative;
-    text-align: center;
+    @media only screen and (min-width: 1024px) {
+      width: 25%;
+      position: relative;
+      text-align: center;
+    }
+    @media only screen and (max-width: 1024px) {
+      width: 25%;
+      text-align: center;
+    }
   }
 
   .menubar_item_outsideLi_text:hover {
@@ -252,9 +272,16 @@ const MenubarComponent = styled.div`
     display: none;
     position: absolute;
     font-size: 13px;
-    width: 100%;
+
     padding-inline-start: 0px;
     padding-top: 20px;
+
+    @media only screen and (min-width: 1024px) {
+      width: 100%;
+    }
+    @media only screen and (max-width: 1024px) {
+      width: 25%;
+    }
   }
 
   .menubar_dropdown li {

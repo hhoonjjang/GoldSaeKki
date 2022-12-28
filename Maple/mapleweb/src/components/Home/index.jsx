@@ -20,7 +20,9 @@ const HomeComponet = () => {
       <MainSearchContainer></MainSearchContainer>
       <MainCommunityContainer></MainCommunityContainer>
       <MainArchive>
-        <img src={archive} />
+        <div className="marinArchive_innerBox">
+          <img src={archive} />
+        </div>
       </MainArchive>
       <MainInfo></MainInfo>
       <Shortcut></Shortcut>
@@ -31,6 +33,13 @@ const HomeComponet = () => {
 export default HomeComponet;
 
 const MainArchive = styled.div`
+  .marinArchive_innerBox {
+    width: 1200px;
+
+    img {
+      width: 100%;
+    }
+  }
   @media only screen and (min-width: 1024px) {
     display: flex;
     justify-content: center;

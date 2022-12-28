@@ -124,6 +124,7 @@ const EditComponent = ({ contentsValue }) => {
           {/* 등록 */}
           <RegistBtn className="btn03_g" onClick={async (e) => {
             // 서버쪽에 수정 요청을 보낸다.
+            if (!titleText.match(/\S/g)) return alert("제목을 입력해주세요.");
             const update = await axios.post("http://localhost:8080/api/board/update", {
               title: titleText,
               world: selected,

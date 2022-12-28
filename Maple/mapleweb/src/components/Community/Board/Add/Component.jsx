@@ -357,11 +357,11 @@ const TagInput = styled.input`
   padding: 0 10px;
 
   /* 게시글 등록 반응형 : 태그 입력창 */
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   /* 게시글 등록 반응형 : 전체너비 */
   @media screen and (max-width: 1280px) {
     margin-right: 15px;
   }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
     margin: 0 5px;
     font-size: 12px;

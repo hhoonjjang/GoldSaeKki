@@ -61,7 +61,7 @@ export const WORLDLIST = [
     { name: '버닝', img: world16Img, label : "Burning" },
     { name: '버닝2', img: world16Img, label : "Burning2" },
     { name: '버닝3', img: world16Img, label : "Burning3" },
-    { name: '버닝4', img: world16Img, label : "Burning4" },
+    // { name: '버닝4', img: world16Img, label : "Burning4" },
 ];
 
 

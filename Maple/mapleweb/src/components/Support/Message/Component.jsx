@@ -20,10 +20,10 @@ const MessageComponent = ({ msgArr }) => {
         </thead>
         <tbody>
           {msgArr.map((item, idx) => (
-            <tr>
+            <tr key={`msgBox-${idx}`}>
               <td key={`msgBoxIdx-${idx}`}>{idx + 1}</td>
               <td key={`msgBoxContents-${idx}`}>
-                <pre>{item.text}</pre>
+                <pre key={`msgPreBox-${idx}`} >{item.text}</pre>
               </td>
               <td key={`msgBoxDate-${idx}`}>{item.createdAt.split("T")[0]}</td>
             </tr>

@@ -132,6 +132,8 @@ const UserManageComponent = ({
                         msgSubmit(msg, tempUser.userName);
                         setBool(!isBool);
                         setState(stateName.name);
+    setMsg(`안녕하세요 GM"${stateAdmin}"입니다.`);
+
                       }}
                     >
                       보내기

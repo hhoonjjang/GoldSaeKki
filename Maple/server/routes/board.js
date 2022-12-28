@@ -8,7 +8,6 @@ import fs from "fs";
 import multer from "multer";
 import cloudinary from "cloudinary";
 
-
 // 이미지 업로드를 위한 multer 기본 세팅
 // npm install multer, npm install cloudinary
 // multer 기본 세팅 : 저장 경로와 파일명을 설정한다.
@@ -27,7 +26,7 @@ const imageFilter = (req, file, callback) => {
     return callback(new Error("이미지 파일만 넣어주세요."), false);
   }
   callback(null, true);
-}
+};
 // 이미지 업로드
 const upload = multer({ storage: storage, fileFilter: imageFilter });
 // 저장 위치 설정 https://cloudinary.com/ : 무료 이미지 저장 공간
@@ -36,7 +35,6 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
 
 // 게시글 추가
 router.post("/create", async (req, res) => {
@@ -269,8 +267,6 @@ router.post("/getLikeSevenBoards", async (req, res) => {
   }
 });
 
-
-
 router.post("/mainCommunity", async (req, res) => {
   try {
     const result = await db.sequelize.query(
@@ -288,37 +284,37 @@ router.post("/mainCommunity", async (req, res) => {
   }
 });
 
-router.post("/reportboard",async(req,res)=>{
- const tempBoard= await db.Board.findOne({
-    where:{id:req.body.id}
-  })
-  const counting=tempBoard.dataValues.report
+router.post("/reportboard", async (req, res) => {
+  const tempBoard = await db.Board.findOne({
+    where: { id: req.body.id },
+  });
+  const counting = tempBoard.dataValues.report;
   await db.Board.update(
     {
-      report:counting+1,
-    },{
-    where:{id:req.body.id}
-  })
+      report: counting + 1,
+    },
+    {
+      where: { id: req.body.id },
+    }
+  );
   res.send("성공적으로 신고가 되었습니다.");
-})
+});
 
-
-
-// fs.readFile("./board.json", "utf-8", async function (err, data) {
-//   const count = await db.Board.count();
-//   if (err) {
-//     console.error(err.message);
-//   } else {
-//     if (data && JSON.parse(data).length > count) {
-//       JSON.parse(data).forEach((item) => {
-//         try {
-//           db.Board.create(item);
-//         } catch (err) {
-//           console.error(err);
-//         }
-//       });
-//     }
-//   }
-// });
+fs.readFile("./board.json", "utf-8", async function (err, data) {
+  const count = await db.Board.count();
+  if (err) {
+    console.error(err.message);
+  } else {
+    if (data && JSON.parse(data).length > count) {
+      JSON.parse(data).forEach((item) => {
+        try {
+          db.Board.create(item);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+  }
+});
 
 export default router;

@@ -18,7 +18,7 @@ import { action } from "./modules/user";
 import { useDispatch } from "react-redux";
 import { action as adminaction } from "./modules/admin";
 import RankComponent from "./components/Ranking";
-import NotFound from "./NotFound";
+// import NotFound from "./NotFound";
 import NewsComponet from "./components/News";
 import TopLogoContainer from "./components/Home/topLogo/TopLogoContainer";
 

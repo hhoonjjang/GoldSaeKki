@@ -22,6 +22,8 @@ import bottomRightImg1 from "../Img/main_notice_bottom_right_1.png";
 import bottomRightImg2 from "../Img/main_notice_bottom_right_2.png";
 import bottomRightImg3 from "../Img/main_notice_bottom_right_3.png";
 
+import NotFound from "../../Community/NotFound";
+
 import Slider from "react-slick";
 
 const MainNotice = () => {
@@ -88,7 +90,9 @@ const MainNotice = () => {
                   <div>공지</div>
                 </div>
                 <div className="mainNotice_innerBox_top_right_left_item_text">
-                  <Link to="/News">공지사항 텍스트</Link>
+                  <Link to="/Error" element={<NotFound />}>
+                    [점검완료] 12/22(목) 전체 월드 채널점검 (16:00~17:00)
+                  </Link>
                 </div>
               </div>
               <div className="mainNotice_innerBox_top_right_left_item">
@@ -96,7 +100,9 @@ const MainNotice = () => {
                   <div>공지</div>
                 </div>
                 <div className="mainNotice_innerBox_top_right_left_item_text">
-                  <Link to="/News">공지사항 텍스트</Link>
+                  <Link to="/Error" element={<NotFound />}>
+                    2022년 11월 확률형 아이템 검증 결과 공개
+                  </Link>
                 </div>
               </div>
               <div className="mainNotice_innerBox_top_right_left_item">
@@ -104,7 +110,9 @@ const MainNotice = () => {
                   <div>공지</div>
                 </div>
                 <div className="mainNotice_innerBox_top_right_left_item_text">
-                  <Link to="/News">공지사항 텍스트</Link>
+                  <Link to="/Error" element={<NotFound />}>
+                    12/26(월) 넥슨 고객상담실 시스템 점검 안내
+                  </Link>
                 </div>
               </div>
             </div>

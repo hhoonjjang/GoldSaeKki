@@ -7,6 +7,7 @@ import headerBanner6 from "../components/Home/Img/header_banner/header_banner_su
 import headerBanner7 from "../components/Home/Img/header_banner/header_banner_support.png";
 import headerBanner8 from "../components/Home/Img/header_banner/header_banner_news.png";
 import headerBanner9 from "../components/Home/Img/header_banner/header_banner_search.png";
+import headerBanner10 from "../components/Home/Img/header_banner/header_banner_news.png";
 
 import headericon1 from "../components/Home/Img/header_banner/header_icon_news.png";
 import headericon2 from "../components/Home/Img/header_banner/header_icon_guide.png";
@@ -17,6 +18,7 @@ import headericon6 from "../components/Home/Img/header_banner/header_icon_suppor
 import headericon7 from "../components/Home/Img/header_banner/header_icon_support.png";
 import headericon8 from "../components/Home/Img/header_banner/header_icon_support.png";
 import headericon9 from "../components/Home/Img/header_banner/header_icon_search.png";
+import headericon10 from "../components/Home/Img/header_banner/header_icon_news.png";
 const TYPE = {
   HEADER: "/header",
 };
@@ -60,8 +62,9 @@ export const reducer = (state = initialize, action) => {
           };
         case "Search":
           return { banner: headerBanner9, icon: headericon9, text: "검색" };
+
         default:
-          return state;
+          return { banner: headerBanner10, icon: headericon10, text: "ERROR!" };
       }
     default:
       return state;

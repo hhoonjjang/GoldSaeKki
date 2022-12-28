@@ -10,6 +10,7 @@ import SupportComponet from "./components/Support";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
 import UserComponent from "./components/User";
 import MainSearchResultContainer from "./components/Home/mainSearchResult/MainSearchResultContainer";
+import NotFound from "./components/Community/NotFound";
 import Footer from "./components/Home/footer/Footer";
 import Menubar from "./components/Home/menubar/Menubar";
 import axios from "axios";
@@ -78,6 +79,7 @@ function App() {
           <Route path="/Administrator/*" element={<HeaderContainer />}></Route>
           <Route path="/Mypage/*" element={<HeaderContainer />}></Route>
           <Route path="/Search/*" element={<HeaderContainer />}></Route>
+          <Route path="/Error/*" element={<HeaderContainer />}></Route>
           {/* 기타 등등 헤더 */}
         </Routes>
         <UserComponent />
@@ -94,7 +96,7 @@ function App() {
         {/* <Link to={"/Administrator"}>관리자</Link> */}
         <Routes>
           <Route path="/" element={<HomeComponet />}></Route>
-          <Route path="/News/*" element={<NewsComponet/>}></Route>
+          <Route path="/News/*" element={<NewsComponet />}></Route>
           <Route path="/Support/*" element={<SupportComponet />}></Route>
           <Route
             path="/Administrator/*"

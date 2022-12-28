@@ -209,6 +209,12 @@ const MenubarComponent = styled.div`
     height: 100%;
     display: flex;
     position: relative;
+
+    @media only screen and (max-width: 550px) {
+      ul {
+        padding-left: 0px;
+      }
+    }
   }
 
   .menubar_logobox {

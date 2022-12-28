@@ -52,7 +52,10 @@ const MainCommunityComponent = ({
             {/* </div> */}
             {communityList.map((item, index) => {
               return (
-                <div className="mainCommunity_innerBox_community_item_cover">
+                <div
+                  className="mainCommunity_innerBox_community_item_cover"
+                  key={`mainCommunity_innerBox_community_item_cover_${index}`}
+                >
                   <div
                     className={`mainCommunity_innerBox_community_item`}
                     key={`communityLi${index}`}

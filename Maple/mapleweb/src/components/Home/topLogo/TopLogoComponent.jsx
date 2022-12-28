@@ -32,6 +32,18 @@ const TopLogo = styled.div`
     padding-bottom: 20px;
     padding-left: 20px;
   }
+  @media screen and (max-width: 550px) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: white;
+    padding-top: 20px;
+    padding-bottom: 100px;
+    padding-left: 20px;
+    img {
+      // display: none;
+    }
+  }
   img {
     width: 150px;
     border-radius: 5px;

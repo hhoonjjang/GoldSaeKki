@@ -45,7 +45,10 @@ const MainSearchResultComponent = ({
                         </div>
                       ) : (
                         // 나중에 금쪽이아트 기능이 추가되면..
-                        <div className="mainSearchResult_innerBox_resultTable_textBoard">
+                        <div
+                          className="mainSearchResult_innerBox_resultTable_textBoard"
+                          key={`mainSearchResult_innerBox_resultTable_textBoard_${index}`}
+                        >
                           <div className="mainSearchResult_innerBox_resultTable_title">
                             <span className="mainSearchResult_innerBox_resultTable_title_category">
                               [{item.category}]
@@ -97,7 +100,7 @@ const MainSearchResult = styled.div`
   .mainSearchResult_innerBox {
     width: 1200px;
 
-    @media only screen and (max-width: 1024px) {
+    @media only screen and (max-width: 1280px) {
       padding-left: 20px;
       padding-right: 20px;
     }

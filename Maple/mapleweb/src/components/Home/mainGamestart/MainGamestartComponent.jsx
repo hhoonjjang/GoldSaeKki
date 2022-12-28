@@ -174,7 +174,7 @@ const MainGamestart = styled.div`
   }
 
   .mainGamestart_infomationCenter_innerBox {
-    min-width: 450px;
+    width: 450px;
     display: flex;
     @media only screen and (max-width: 1150px) {
       justify-content: center;
@@ -196,6 +196,7 @@ const MainGamestart = styled.div`
 
     a:last-child {
       color: #a9a9a9;
+      white-space: normal;
     }
   }
 
@@ -309,6 +310,7 @@ const MainGamestart = styled.div`
             margin-top: 9px;
             margin-bottom: 10px;
             color: white;
+
             @media only screen and (max-width: 1150px) {
               color: #222;
             }
@@ -325,6 +327,8 @@ const MainGamestart = styled.div`
             margin-top: 9px;
             margin-bottom: 10px;
             font-size: 11px;
+            white-space: nowrap;
+
             @media only screen and (max-width: 1150px) {
               color: #222;
             }
@@ -338,6 +342,7 @@ const MainGamestart = styled.div`
             font-size: 11px;
             padding-top: 5px;
             padding-bottom: 5px;
+            white-space: nowrap;
           }
         }
         .mainGamestart_logged_innerBox_briefProfile_mypage_inner {
@@ -347,7 +352,7 @@ const MainGamestart = styled.div`
           border-radius: 3px;
           width: 100%;
           height: 50px;
-
+          white-space: nowrap;
           @media only screen and (max-width: 1150px) {
             height: 30px;
           }

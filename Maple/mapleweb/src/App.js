@@ -17,6 +17,7 @@ import { action } from "./modules/user";
 import { useDispatch } from "react-redux";
 import { action as adminaction } from "./modules/admin";
 import RankComponent from "./components/Ranking";
+import TopLogoContainer from "./components/Home/topLogo/TopLogoContainer";
 function App() {
   // const location = useLocation();
   // useEffect(() => {
@@ -59,6 +60,7 @@ function App() {
     <div id="body_wrapper">
       <div id="body_content">
         {/* {(location.pathname = "/Adminstrator" ? <></> : <Menubar />)} */}
+        <TopLogoContainer></TopLogoContainer>
         {location.pathname == "/regist" || location.pathname == "/login" ? (
           <></>
         ) : (
@@ -86,7 +88,7 @@ function App() {
 
       <Link to={"/Support"}>고객지원</Link> */}
 
-        <Link to={"/Administrator"}>관리자</Link>
+        {/* <Link to={"/Administrator"}>관리자</Link> */}
         <Routes>
           <Route path="/" element={<HomeComponet />}></Route>
           <Route path="/news"></Route>

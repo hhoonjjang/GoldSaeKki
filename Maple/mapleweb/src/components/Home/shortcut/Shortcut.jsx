@@ -48,7 +48,7 @@ const ShortcutComponent = styled.div`
       text-decoration-line: none;
     }
     .shortcut_innerBox {
-      min-width: 1200px;
+      width: 1200px;
       display: flex;
       justify-content: space-between;
       /* padding-top: 10px; */
@@ -59,7 +59,7 @@ const ShortcutComponent = styled.div`
     }
 
     .shortcut_smallLink {
-      min-width: 65px;
+      width: 65px;
       display: inline-block;
       border-radius: 30px;
       background-color: #fff;

@@ -79,6 +79,11 @@ const LoginComponent = ({ loginClick }) => {
                 onInput={(e) => {
                   setloginId(e.target.value);
                 }}
+                onKeyUp={() => {
+                  if (window.event.keyCode == 13) {
+                    loginClick(loginId, loginPw);
+                  }
+                }}
               />
               <span>
                 <input type={"checkbox"} />
@@ -92,6 +97,11 @@ const LoginComponent = ({ loginClick }) => {
                 type={"password"}
                 onInput={(e) => {
                   setloginPw(e.target.value);
+                }}
+                onKeyUp={() => {
+                  if (window.event.keyCode == 13) {
+                    loginClick(loginId, loginPw);
+                  }
                 }}
               />
             </div>

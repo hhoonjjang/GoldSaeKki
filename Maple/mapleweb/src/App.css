@@ -46,6 +46,8 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
+  right: 965px;
+  /* overflow-x: hidden */
 }
 
 * {

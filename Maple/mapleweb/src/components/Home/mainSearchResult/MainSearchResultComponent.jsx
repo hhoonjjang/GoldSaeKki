@@ -98,6 +98,11 @@ const MainSearchResult = styled.div`
   .mainSearchResult_innerBox {
     width: 1200px;
 
+    @media only screen and (max-width: 1024px) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
     .mainSearchResult_innerBox_summaryBox {
       display: flex;
       background-color: #f7f7f7;
@@ -121,12 +126,19 @@ const MainSearchResult = styled.div`
       width: 100%;
       margin-bottom: 50px;
 
+      @media only screen and (max-width: 1024px) {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
       td:first-child {
         width: 20%;
         background-color: #f7f7f7;
         border-right: 1px solid #e3e3e3;
         border-bottom: 1px solid #e3e3e3;
         padding-left: 30px;
+        padding-right: 30px;
+        white-space: nowrap;
       }
       td:last-child {
         width: 80%;
@@ -137,6 +149,11 @@ const MainSearchResult = styled.div`
           color: #888;
           display: flex;
           justify-content: center;
+
+          img {
+            width: 24px;
+            height: 24px;
+          }
         }
 
         .mainSearchResult_innerBox_resultTable_textBoard {
@@ -148,10 +165,12 @@ const MainSearchResult = styled.div`
             .mainSearchResult_innerBox_resultTable_title_category {
               color: #1c6ac3;
               margin-right: 7px;
+              white-space: nowrap;
             }
             .mainSearchResult_innerBox_resultTable_title_world {
               color: #1c6ac3;
               margin-right: 7px;
+              white-space: nowrap;
             }
             a {
               margin-right: 7px;
@@ -168,10 +187,12 @@ const MainSearchResult = styled.div`
               margin-right: 7px;
               font-size: 12px;
               color: #888888;
+              white-space: nowrap;
             }
             .mainSearchResult_innerBox_resultTable_title_createdAt {
               font-size: 12px;
               color: #888888;
+              white-space: nowrap;
             }
           }
           .mainSearchResult_innerBox_resultTable_content {

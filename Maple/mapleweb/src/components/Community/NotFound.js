@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 // import catErrorImg from "../src/components/Community/images/mong03b.gif";
 import catErrorImg from "./images/mong03b.gif";
+import errorImg from "./images/errrrrrr.png";
 import monaImg from "./images/mona-loading-dark.gif";
 
 export const NotFound = () => {
@@ -9,6 +10,7 @@ export const NotFound = () => {
     // 페이지 도착시 스크롤 높이 변경
     useEffect(() => {
         window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
+        window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
     }, []);
 
     return <NotFoundBox>
@@ -21,6 +23,10 @@ export const NotFound = () => {
         <NotFoundImg src={catErrorImg} alt="404페이지" onClick={()=>{
             window.location.href = "https://github.com/hhoonjjang/GoldSaeKki";
         }}></NotFoundImg>
+        {/* <NotFoundImg src={errorImg} alt="404페이지" onClick={() => {
+            window.location.href = "https://github.com/hhoonjjang/GoldSaeKki";
+        }}></NotFoundImg> */}
+
 
         {/* <NotFoundImg src={monaImg} alt="404페이지" onClick={()=>{
             window.location.href = "https://github.com/efforthye";
@@ -43,4 +49,6 @@ const NotFoundBox = styled.div`
 `;
 const NotFoundImg = styled.img`
     cursor: pointer;
+    height: 100vh;
+    /* width: 100vw; */
 `;

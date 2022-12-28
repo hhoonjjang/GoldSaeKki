@@ -100,7 +100,7 @@ const CommunityComponet = () => {
                 path="/board/:boardId"
                 element={<DetailContainer />}
               ></Route>
-              <Route path="/board/hi" element={<NotFound />} />
+              {/* <Route path="/board/hi" element={<NotFound />} /> */}
 
               {/* 수정 페이지 */}
               <Route

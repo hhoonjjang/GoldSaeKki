@@ -186,6 +186,7 @@ const CommunityComponet = () => {
               <TagContentBox>
                 {/* 태그 검색 인풋 영역 */}
                 <TagInputWrap>
+                  {/* 여기부터~~ */}
                   <TagInput />
                   <TagSerachBtnSpan>
                     {/* a 태그 :나중에 Link to로 바꾸기(중요) */}

@@ -585,6 +585,8 @@ const BoardInfo = styled.div`
         display: inline;
         /* background-color: rgb(245,245,245); */
     }
+
+    white-space: nowrap;
 `;
 
 const BoardContent = styled.div`
@@ -629,11 +631,13 @@ const LikeWrap = styled.div`
     @media all and (min-width: 480px) and (max-width: 767px) {
         height: 45px;
         line-height: 45px;
+        margin-bottom: 40px;
     }
     /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
     @media all and (max-width: 479px) {
         height: 45px;
         line-height: 45px;
+        margin-bottom: 40px;
     }
 
 `;
@@ -934,10 +938,6 @@ const HeartIcon = styled.div`
 const GuImg = styled.img`
 
     /* 게시글 상세 반응형 : 구분선 이미지  */
-    /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
-    @media all and (min-width: 480px) and (max-width: 767px) {
-        display: none;
-    }
     /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
     @media all and (max-width: 479px) {
         display: none;

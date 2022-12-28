@@ -246,9 +246,8 @@ const CommunityBox = styled.div`
   min-height: 1600px;
 
   *::selection {
-    background-color: #f1b4d1;
-    background-color: #e785b4d6;;
-    color: white;
+    background-color: #ffebf6cc;
+    /* color: white; */
   }
 `;
 

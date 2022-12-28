@@ -162,7 +162,7 @@ const NavigationBox = styled.div`
   }
   /* 테블릿 세로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
-    width: 740px;
+    width: 650px;
     padding: 0 5px;
   }
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/

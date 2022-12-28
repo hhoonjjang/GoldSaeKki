@@ -51,7 +51,13 @@ const Menubar = () => {
   ];
 
   window.onscroll = () => {
+    console.log("스크롤 내림");
     if (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1) {
+      console.log("document.body.scrollTop : ", document.body.scrollTop);
+      console.log(
+        "document.documentElement.scrollTop : ",
+        document.documentElement.scrollTop
+      );
       setHeaderScroll(true);
     } else {
       setHeaderScroll(false);
@@ -163,6 +169,7 @@ const MenubarComponent = styled.div`
     background-color: rgb(47, 47, 59);
     height: 64px;
     top: 0;
+    width: 100%;
 
     .menubar_logobox {
       top: -12px;
@@ -278,6 +285,13 @@ const MenubarComponent = styled.div`
     font-size: 22px;
     color: white;
     font-weight: bold;
+
+    @media only screen and (max-width: 420px) {
+      font-size: 18px;
+    }
+    @media only screen and (max-width: 350px) {
+      font-size: 16px;
+    }
   }
 
   .menubar_dropdown {

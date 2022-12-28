@@ -498,8 +498,10 @@ const MainCommunityBox = styled.div`
         .mainCommunity_innerBox_ranking_userName_4,
         .mainCommunity_innerBox_ranking_userName_5 {
           width: 250px;
-          color: white;
           text-align: center;
+          a {
+            color: white;
+          }
         }
 
         .mainCommunity_innerBox_ranking_userName_1 {

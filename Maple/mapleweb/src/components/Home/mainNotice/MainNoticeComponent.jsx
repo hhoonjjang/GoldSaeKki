@@ -181,7 +181,7 @@ const MainNoticeComponent = styled.div`
     justify-content: space-between;
     flex-direction: column;
 
-    @media only screen and (min-width: 1024px) {
+    @media only screen and (min-width: 1025px) {
       margin-top: 70px;
       margin-bottom: 70px;
       width: 1200px;
@@ -273,16 +273,18 @@ const MainNoticeComponent = styled.div`
         display: flex;
         padding: 30px;
 
-        @media only screen and (min-width: 1024px) {
+        @media only screen and (min-width: 1025px) {
           width: 66%;
           height: 320px;
         }
         @media only screen and (max-width: 1024px) {
-          margin: 20px;
+          width: 100%;
+          padding-left: 20px;
+          padding-right: 20px;
         }
 
         .mainNotice_innerBox_top_right_left {
-          @media only screen and (min-width: 1024px) {
+          @media only screen and (min-width: 1025px) {
             width: 66%;
             padding-right: 30px;
             border-right: 1px solid gainsboro;

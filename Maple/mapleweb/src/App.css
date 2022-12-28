@@ -47,9 +47,16 @@ body {
   height: 100%;
   width: 100%;
   /* right: 965px; */
-  /* overflow-x: hidden */
+  /* overflow-x: hidden; */
 }
+/* .no-scroll { */
+/* -ms-overflow-style: none; IE, Edge */
+/* scrollbar-width: none; Firefox */
+/* } */
 
+/* body::-webkit-scrollbar {
+  display: none;
+} */
 * {
   box-sizing: border-box;
   word-break: break-all;

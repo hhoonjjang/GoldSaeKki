@@ -136,6 +136,12 @@ const NavigationWrap = styled.div`
 
   width: 100%;
   /* float: left; */
+
+  /* 네비바 반응형 : Wrap */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    display: none;
+  }
 `;
 
 const NavigationBox = styled.div`
@@ -156,16 +162,19 @@ const NavigationBox = styled.div`
   }
   /* 테블릿 세로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
-    width: 840px;
+    width: 740px;
+    padding: 0 5px;
   }
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
   @media all and (min-width: 480px) and (max-width: 767px) {
     width: 440px;
     margin: 0 auto;
+    padding: 0 4px;
   }
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
     width: 370px;
+    padding: 0 5px;
   }
 `;
 

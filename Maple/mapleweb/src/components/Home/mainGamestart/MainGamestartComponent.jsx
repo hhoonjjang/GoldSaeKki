@@ -54,6 +54,7 @@ const MainGamestartComponent = ({
               className="header_innerBox_center_start"
               onClick={() => {
                 alert("게임스타트");
+                window.location.href = "https://play2048.co/";
               }}
             >
               <img src={gameStart} alt="게임 스타트" />

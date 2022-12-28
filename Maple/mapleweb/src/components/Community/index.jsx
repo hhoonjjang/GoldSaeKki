@@ -38,7 +38,7 @@ import EditContainer from "./Board/Edit/Container";
 import NotFound from "./NotFound";
 import axios from "axios";
 
-const CommunityComponet = ({}) => {
+const CommunityComponet = ({ }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(action.header("Community"));
@@ -143,28 +143,36 @@ const CommunityComponet = ({}) => {
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  버그악용/불법프로그램 신고 보상 지급 안내
+                  <Link to="/Error" element={<NotFound />}>
+                    버그악용/불법프로그램 신고 보상 지급 안내
+                  </Link>
                 </NewsItem>
                 <NewsItem className="newsItem">
                   {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  12/9(금) 운영정책위반 단속결과
+                  <Link to="/Error" element={<NotFound />}>
+                    12/9(금) 운영정책위반 단속결과
+                  </Link>
                 </NewsItem>
                 <NewsItem className="newsItem">
                   {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  넥슨플레이 "게임 접속 이벤트" 진행 안내
+                  <Link to="/Error" element={<NotFound />}>
+                    넥슨플레이 "게임 접속 이벤트" 진행 안내
+                  </Link>
                 </NewsItem>
                 <NewsItem className="newsItem">
                   {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  12월 지속 가능한 보안캠페인 진행 안내
+                  <Link to="/Error" element={<NotFound />}>
+                    12월 지속 가능한 보안캠페인 진행 안내
+                  </Link>
                 </NewsItem>
               </NewsContent>
             </NewsContentWrap>
@@ -175,24 +183,32 @@ const CommunityComponet = ({}) => {
                 {/* 슬라이더 라이브러리 사용 */}
                 <StyledSlide {...settings}>
                   <div>
-                    <BannerImg
-                      src={one}
-                      alt="현생 용사를 위한 겨울 버전 메꾸 패키지"
-                    />
+                    <Link to="/Error" element={<NotFound />}>
+                      <BannerImg
+                        src={one}
+                        alt="현생 용사를 위한 겨울 버전 메꾸 패키지"
+                      />
+                    </Link>
                     <BannerText>
                       현생 용사를 위한 겨울 버전 메꾸 패키지
                     </BannerText>
                   </div>
                   <div>
-                    <BannerImg src={two} alt="썬데이 메이플" />
+                    <Link to="/Error" element={<NotFound />}>
+                      <BannerImg src={two} alt="썬데이 메이플" />
+                    </Link>
                     <BannerText>썬데이 메이플</BannerText>
                   </div>
                   <div>
-                    <BannerImg src={three} alt="돌의 정령을 키워달람!" />
+                    <Link to="/Error" element={<NotFound />}>
+                      <BannerImg src={three} alt="돌의 정령을 키워달람!" />
+                    </Link>
                     <BannerText>돌의 정령을 키워달람!</BannerText>
                   </div>
                   <div>
-                    <BannerImg src={four} alt="페어리 브로의 황금마차" />
+                    <Link to="/Error" element={<NotFound />}>
+                      <BannerImg src={four} alt="페어리 브로의 황금마차" />
+                    </Link>
                     <BannerText>페어리 브로의 황금마차</BannerText>
                   </div>
                 </StyledSlide>
@@ -205,9 +221,9 @@ const CommunityComponet = ({}) => {
                 {/* 태그 검색 인풋 영역 */}
                 <TagInputWrap>
                   {/* 여기부터~~ */}
-                  <TagInput type={"text"} onInput={(e)=>{
+                  <TagInput type={"text"} onInput={(e) => {
                     setSearchData(e.target.value);
-                  }} onKeyUp={()=>{
+                  }} onKeyUp={() => {
                     if (window.event.keyCode == 13) {
                       if (searchData.match(/\S/g)) {
                         navigateToSearch(
@@ -448,6 +464,10 @@ const NewsItem = styled.div`
 
   &:hover {
     text-decoration: underline;
+  }
+
+  &>a{
+    color: #333;
   }
 `;
 const NewsItemTitle = styled.span`

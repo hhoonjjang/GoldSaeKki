@@ -112,7 +112,12 @@ function App() {
           {/* <Route path="/*" element={<NotFound />} /> */}
         </Routes>
       </div>
-      <Footer></Footer>
+      {location.pathname =="/Error" ? (
+          <></>
+        ) : (
+          <Footer></Footer>
+        )}
+      
     </div>
   );
 }

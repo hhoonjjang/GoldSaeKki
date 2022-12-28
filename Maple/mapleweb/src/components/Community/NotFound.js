@@ -49,6 +49,8 @@ const NotFoundBox = styled.div`
 `;
 const NotFoundImg = styled.img`
     cursor: pointer;
-    height: 100vh;
+    /* height: 100vh; */
     /* width: 100vw; */
+    width: 810px;
+    margin-top: 117px;
 `;

@@ -19,14 +19,15 @@ const MainSearchResultComponent = ({
     <MainSearchResult>
       <div className="mainSearchResult_innerBox">
         <div className="mainSearchResult_innerBox_summaryBox">
-          '<span>{searchData}</span>'(으)로 '<span>{searchType}</span>' 검색한 결과입니다.
+          '<span>{searchData}</span>'(으)로 '<span>{searchType}</span>' 검색한
+          결과입니다.
         </div>
         <table className="mainSearchResult_innerBox_resultTable">
           <tbody>
-            <tr>
-              <td>공지사항</td>
-              <td></td>
-            </tr>
+            {/* <tr> */}
+            {/* <td>공지사항</td> */}
+            {/* <td></td> */}
+            {/* </tr> */}
             <tr>
               <td>커뮤니티</td>
               <td>

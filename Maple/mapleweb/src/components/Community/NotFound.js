@@ -21,7 +21,7 @@ export const NotFound = () => {
         {/* }}>404~</h1> */}
 
         <NotFoundImg src={catErrorImg} alt="404페이지" onClick={()=>{
-            window.location.href = "https://github.com/hhoonjjang/GoldSaeKki";
+            window.location.href = "../";
         }}></NotFoundImg>
         {/* <NotFoundImg src={errorImg} alt="404페이지" onClick={() => {
             window.location.href = "https://github.com/hhoonjjang/GoldSaeKki";
@@ -40,7 +40,7 @@ export default NotFound;
 const NotFoundBox = styled.div`
     /* display: flex; */
     /* justify-content: center; */
-    margin-top: 50px;
+    /* margin-top: 50px; */
     /* margin-top: 200px; */
     text-align: center;
     text-shadow: -1.5px 0 #000, 0 1.5px #000, 1.5px 0 #000, 0 -1.5px #000;

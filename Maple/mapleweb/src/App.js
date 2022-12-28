@@ -65,7 +65,7 @@ function App() {
       <div id="body_content">
         {/* {(location.pathname = "/Adminstrator" ? <></> : <Menubar />)} */}
         <TopLogoContainer></TopLogoContainer>
-        {location.pathname == "/regist" || location.pathname == "/login" ? (
+        {location.pathname == "/regist" || location.pathname == "/login" || location.pathname =="/Error" ? (
           <></>
         ) : (
           <Menubar />
@@ -79,7 +79,6 @@ function App() {
           <Route path="/Administrator/*" element={<HeaderContainer />}></Route>
           <Route path="/Mypage/*" element={<HeaderContainer />}></Route>
           <Route path="/Search/*" element={<HeaderContainer />}></Route>
-          <Route path="/Error/*" element={<HeaderContainer />}></Route>
           {/* 기타 등등 헤더 */}
         </Routes>
         <UserComponent />

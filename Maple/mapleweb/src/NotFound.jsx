@@ -6,10 +6,7 @@ import catErrorImg from "../src/components/Community/images/mong03b.gif";
 import { action } from "./modules/header";
 
 export const NotFound = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(action.header("Error"));
-  }, []);
+ 
   return (
     <NotFoundBox>
       <NotFoundImg src={catErrorImg} alt="404페이지"></NotFoundImg>

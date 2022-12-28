@@ -9,15 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 
 import axios from "axios";
-<<<<<<< HEAD
-<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
-=======
-import { useSelector } from "react-redux";
->>>>>>> 20aa5cb (게시글 목록 반응형)
-=======
-import { useDispatch, useSelector } from "react-redux";
->>>>>>> 704c1fd (게시글 작성시 이슈태그 안나오는 에러 해결)
 import UploadAdapter from './UploadAdapter';
 import { Helmet } from 'react-helmet';
 
@@ -154,9 +146,7 @@ const AddComponent = ({ }) => {
 
           {/* 등록 */}
           <RegistBtn className="btn03_g" onClick={async (e) => {
-            // if(!titleText) return alert("제목을 입력해라.");
-            if (!titleText.match(/\S/g)) return alert("ㅋ");
-
+            if (!titleText.match(/\S/g)) return alert("제목을 입력해주세요.");
             // 서버쪽에 등록 요청을 보낸다.
             const regist = await axios.post("http://localhost:8080/api/board/create", {
               title: titleText,

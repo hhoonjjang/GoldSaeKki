@@ -74,6 +74,10 @@ const PasswordBox = styled.div`
     background-color: lightblue;
     border-radius: 5px;
     height: 50px;
+
+    @media only screen and (max-width: 400px) {
+      width: 93%;
+    }
   }
 
   .red {
@@ -120,5 +124,14 @@ const PwchangeBtnBox = styled.div`
     color: #5e7bcb;
     font-size: 18px;
     margin-left: 5px;
+  }
+
+  @media only screen and (max-width: 500px) {
+    .pwchange-btn,
+    .pwcancel-btn {
+      width: 60px;
+      height: 40px;
+      font-size: 14px;
+    }
   }
 `;

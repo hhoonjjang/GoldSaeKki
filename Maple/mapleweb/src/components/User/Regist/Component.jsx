@@ -128,7 +128,7 @@ const RegistComponent = ({
               <Link to={"/login"}>
                 <button
                   onClick={() => {
-                    registClick(userId, userPw, userName, server);
+                    registClick(userId, userPw, userName, server, pwReCheck);
                   }}
                 >
                   회원가입
@@ -143,7 +143,7 @@ const RegistComponent = ({
               <Link to={"#"}>
                 <button
                   onClick={() => {
-                    registClick(userId, userPw, userName, server);
+                    registClick(userId, userPw, userName, server, pwReCheck);
                   }}
                 >
                   회원가입
@@ -163,17 +163,61 @@ const RegistComponent = ({
 export default RegistComponent;
 
 const RegistBox = styled.div`
+  width: 100%;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   background-image: url(${backgroundImg});
   background-size: contain;
+  overflow: hidden;
 
+  .select {
+    font-size: 1rem;
+  }
   & > h2 {
     padding-top: 20px;
     text-align: center;
     margin-bottom: 20px;
     color: white;
+  }
+
+  @media only screen and (max-width: 1280px) {
+    width: 100%;
+    background-size: cover;
+    & > div {
+      width: 100%;
+      background-size: initial;
+    }
+  }
+
+  @media only screen and (max-width: 1024px) {
+    & > div > div:last-child > a > button {
+      width: 100px;
+      height: 40px;
+    }
+  }
+
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media only screen and (max-width: 768px) {
+    & > div > div {
+      & > p:first-child {
+        font-size: 16px;
+      }
+      & > p:last-child {
+        font-size: 10px;
+      }
+
+      &:last-child > a > button {
+        width: 80px;
+        height: 30px;
+      }
+      input {
+        width: 300px;
+      }
+    }
+    .select {
+      width: 100px;
+    }
   }
 `;
 
@@ -256,7 +300,7 @@ const ButtonBox = styled.div`
 `;
 
 const SelectBox = styled.div`
-  .select {
+  select {
     width: 150px;
     height: 35px;
     border-radius: 3px;

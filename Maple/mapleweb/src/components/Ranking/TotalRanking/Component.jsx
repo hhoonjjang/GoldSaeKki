@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import searchImg from "../../User/Img/search.png";
 import { useParams } from "react-router-dom";
 import Pagination from "react-js-pagination";
@@ -30,20 +30,35 @@ const TotalRankingComponent = ({
     serverTotalRanking(server);
   }, [server]);
 
+  const RankingArr = useMemo(() => {
+    console.log(server);
+    console.log("종합데이터", totalData);
+    if (route.sword) {
+      if (searchList.length) return searchList;
+      return [];
+    } else if (server === "서버 선택") {
+      return totalData;
+    } else {
+      return serverData;
+    }
+  }, [server, route, totalData, serverData, searchList]);
+
   let newBoards = [];
-  if (serverData) {
-    serverData?.map((item, idx) => {
-      if (idx >= (nowPage - 1) * 5 && idx < nowPage * 5) {
+  if (RankingArr) {
+    RankingArr?.map((item, idx) => {
+      if (idx >= (nowPage - 1) * 10 && idx < nowPage * 10) {
         newBoards.push(item);
       }
     });
   }
+
   return (
     <TotalRankBox>
       <div className="ranking-title">종합 랭킹</div>
       <div>
-        <div>유저 랭킹 검색</div>
+        <div style={{ marginBottom: "10px" }}>유저 랭킹 검색</div>
         <input
+          style={{ border: "2px solid lightgray", borderRadius: "5px" }}
           type={"text"}
           value={searchData}
           onInput={(e) => {
@@ -51,6 +66,11 @@ const TotalRankingComponent = ({
           }}
         />
         <button
+          style={{
+            border: "2px solid lightgray",
+            borderRadius: "5px",
+            marginLeft: "5px",
+          }}
           onClick={() => {
             searchTotalRanking(searchData);
           }}
@@ -59,10 +79,10 @@ const TotalRankingComponent = ({
         </button>
       </div>
       <TotalRankingList>
-        <h5>
+        <h6 style={{ margin: "10px 0" }}>
           종합 랭킹의 경우 게시글 건당 3, 댓글 건당 1로 점수를 매겨 나온
           순위입니다.
-        </h5>
+        </h6>
         <RankingSelectBox>
           <select
             name="server"
@@ -96,74 +116,36 @@ const TotalRankingComponent = ({
           <li>총점</li>
         </ul>
       </TotalRankingList>
-      {route.sword ? (
-        <TotalRankingRaw>
-          {searchList.length != 0 ? (
-            searchList?.map((item, idx) => {
-              return (
-                <ul key={`rankingList${idx}`} className="ranking-data">
-                  <li key={`ranking${idx}`} className="ranking">
-                    {idx + 1}
-                  </li>
-                  <UserImgBox key={`userInfo${idx}`} item={item} />
-                  <li key={`server${idx}`} className="server-name">
-                    {item.userWorld}
-                  </li>
-                  <li key={`count${idx}`} className="count-data">
-                    {item.count}
-                  </li>
-                </ul>
-              );
-            })
-          ) : (
-            <div>검색 결과가 없습니다.</div>
-          )}
-        </TotalRankingRaw>
-      ) : (
-        <TotalRankingRaw>
-          {server === "서버 선택"
-            ? totalData?.map((item, idx) => {
-                return (
-                  <ul key={`rankingList${idx}`} className="ranking-data">
-                    <li key={`ranking${idx}`} className="ranking">
-                      {idx + 1}
-                    </li>
-                    <UserImgBox key={`userInfo${idx}`} item={item} />
-                    <li key={`server${idx}`} className="server-name">
-                      {item.userWorld}
-                    </li>
-                    <li key={`count${idx}`} className="count-data">
-                      {item.count}
-                    </li>
-                  </ul>
-                );
-              })
-            : serverData?.map((item, idx) => {
-                return (
-                  <ul key={`rankingList${idx}`} className="ranking-data">
-                    <li key={`ranking${idx}`} className="ranking">
-                      {idx + 1}
-                    </li>
-                    <UserImgBox key={`userInfo${idx}`} item={item} />
-                    <li key={`server${idx}`} className="server-name">
-                      {item.userWorld}
-                    </li>
-                    <li key={`count${idx}`} className="count-data">
-                      {item.count}
-                    </li>
-                  </ul>
-                );
-              })}
-        </TotalRankingRaw>
-      )}
+      <TotalRankingRaw>
+        {RankingArr.length ? (
+          newBoards?.map((item, idx) => {
+            return (
+              <ul key={`rankingList${idx}`} className="ranking-data">
+                <li key={`ranking${idx}`} className="ranking">
+                  {idx + 1 + (nowPage - 1) * 10}
+                </li>
+                <UserImgBox key={`userInfo${idx}`} item={item} />
+                <li key={`server${idx}`} className="server-name">
+                  {item.userWorld}
+                </li>
+                <li key={`count${idx}`} className="count-data">
+                  {item.count}
+                </li>
+              </ul>
+            );
+          })
+        ) : (
+          <div style={{ textAlign: "center" }}>검색 결과가 없습니다.</div>
+        )}
+      </TotalRankingRaw>
       <PagenationWrap>
         <Pagination
           // 현재 페이지
           activePage={nowPage}
           // 띄울 게시글 개수
-          itemsCountPerPage={5}
+          itemsCountPerPage={10}
           // 총 게시글 개수
-          totalItemsCount={serverData?.length || 0}
+          totalItemsCount={RankingArr?.length || 0}
           // 표시할 개수
           pageRangeDisplayed={10}
           // 이전을 나타낼 아이콘
@@ -196,9 +178,18 @@ const TotalRankBox = styled.div`
   box-sizing: border-box;
   width: 1200px;
 
+  @media only screen and (max-width: 1280px) {
+    width: 90%;
+  }
+
+  @media only screen and (max-width: 768px) {
+    width: 80%;
+  }
+
   .ranking-title {
     font-size: 25px;
     margin-top: 40px;
+    font-weight: bold;
   }
 
   .pagination {
@@ -271,6 +262,28 @@ const TotalRankingList = styled.div`
     display: flex;
     list-style: none;
     justify-content: space-around;
+    margin: 0;
+    white-space: nowrap;
+
+    @media only screen and (max-width: 768px) {
+      font-size: 13px;
+    }
+
+    @media only screen and (max-width: 480px) {
+      font-size: 11px;
+    }
+
+    @media only screen and (max-width: 420px) {
+      font-size: 10px;
+      white-space: normal;
+    }
+  }
+
+  .ranking-header > li {
+    background-color: #5e7bcb;
+    padding: 10px;
+    color: white;
+    font-weight: 600;
   }
 
   .ranking-header li:first-child {
@@ -291,17 +304,32 @@ const TotalRankingList = styled.div`
 `;
 
 const TotalRankingRaw = styled.div`
+  border: 1px solid lightgray;
+  border-bottom: none;
+
+  @media only screen and (max-width: 1280px) {
+    & > ul > li:nth-child(2) > img {
+      width: 50px;
+    }
+  }
+
   .ranking-data {
     display: flex;
     justify-content: space-around;
     align-items: center;
     list-style: none;
+    border-bottom: 1px solid lightgray;
 
     width: 100%;
   }
 
+  .ranking-data > li {
+    padding: 10px;
+  }
+
   .ranking {
     width: 15%;
+    font-size: 24px;
   }
 
   .user-img {

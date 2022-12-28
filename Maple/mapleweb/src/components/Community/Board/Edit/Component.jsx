@@ -21,7 +21,7 @@ const EditComponent = ({ contentsValue }) => {
 
   // 페이지 도착시 스크롤 높이 변경
   useEffect(() => {
-    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+    window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
   }, []);
 
   // 현재 로그인 유저 정보

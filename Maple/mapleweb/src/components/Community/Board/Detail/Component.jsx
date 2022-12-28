@@ -79,7 +79,7 @@ const DetailComponent = ({reportBoard, reportComment}) => {
         });
 
         // 스크롤 높이 변경
-        window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+        window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
 
     }, [boardId]);
 

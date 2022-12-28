@@ -61,7 +61,7 @@ const AddComponent = ({ }) => {
 
   // 페이지 도착시 스크롤 높이 변경
   useEffect(() => {
-    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+    window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
 
     // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
     axios.post("http://localhost:8080/api/board/getLikeSevenBoards", {

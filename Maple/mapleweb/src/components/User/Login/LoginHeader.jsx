@@ -6,28 +6,22 @@ const LoginHeadComp = () => {
     <HeadDiv>
       <HeadList>
         <ul className="head-title">
-          <Link to={"/News"}>
+          <Link to={"/News/Notice"}>
             <div>뉴스</div>
           </Link>
           <div className="link-list">
-            <li>공지사항</li>
-            <li>업데이트</li>
-            <li>이벤트</li>
-            <li>캐시샵 공지</li>
-            <li>메이플 알림판</li>
-          </div>
-        </ul>
-        <ul className="head-title">
-          <Link to={"/Guide"}>
-            <div>가이드</div>
-          </Link>
-          <div className="link-list">
-            <li>게임정보</li>
-            <li>퀘스트정보</li>
-            <li>직업소개</li>
-            <li>확률형 아이템</li>
-            <li>확률형 아이템 결과</li>
-            <li>NEXON NOW</li>
+            <Link to={"/News/Notice"}>
+              <li>공지사항</li>
+            </Link>
+            <Link to={"/News/Update"}>
+              <li>업데이트</li>
+            </Link>
+            <Link to={"/News/Event"}>
+              <li>이벤트</li>
+            </Link>
+            <Link to={"/News/CashShop"}>
+              <li>캐시샵 공지</li>
+            </Link>
           </div>
         </ul>
         <ul className="head-title">
@@ -63,24 +57,6 @@ const LoginHeadComp = () => {
             <Link to={"/Community/Novel"}>
               <li>연재 소설</li>
             </Link>
-            <Link to={"/Community/Art"}>
-              <li>금쪽이 아트</li>
-            </Link>
-            <Link to={"/Community/Event"}>
-              <li>이벤트게시판</li>
-            </Link>
-          </div>
-        </ul>
-        <ul className="head-title">
-          <Link to={"/Media"}>
-            <div>미디어</div>
-          </Link>
-          <div className="link-list">
-            <li>웹툰</li>
-            <li>메이플스토리 서체</li>
-            <li>영상</li>
-            <li>음악</li>
-            <li>아트웍</li>
           </div>
         </ul>
         <ul className="head-title">
@@ -103,10 +79,32 @@ const LoginHeadComp = () => {
 export default LoginHeadComp;
 
 const HeadDiv = styled.div`
+  z-index: 1000;
   background-color: rgba(0, 0, 0, 1);
   position: absolute;
-  width: 100vw;
-  height: 40vh;
+  width: 100%;
+
+  @media only screen and (max-width: 900px) {
+    & > div {
+      margin-left: 60px;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    & > div {
+      margin-left: 80px;
+    }
+  }
+
+  @media only screen and (max-width: 630px) {
+    & > div {
+      flex-direction: column;
+      margin-bottom: 0;
+    }
+    & > div > ul > div:last-child {
+      display: none;
+    }
+  }
 `;
 
 const HeadList = styled.div`

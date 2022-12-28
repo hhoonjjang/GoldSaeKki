@@ -117,7 +117,7 @@ const FooterComponent = styled.div`
     left: 0;
 
     .footer_innerBox {
-      min-width: 1200px;
+      /* min-width: 1200px; */
       position: relative;
       display: flex;
       justify-content: space-between;
@@ -263,7 +263,7 @@ const FooterComponent = styled.div`
     left: 0;
 
     .footer_innerBox {
-      min-width: 1200px;
+      /* min-width: 1200px; */
       position: relative;
       display: flex;
       justify-content: center;

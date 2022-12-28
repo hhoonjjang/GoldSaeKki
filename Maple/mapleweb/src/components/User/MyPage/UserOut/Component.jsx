@@ -5,7 +5,8 @@ const UserOutComponent = ({ signOutBtn }) => {
   return (
     <UserOutBox>
       <p className="alert-msg">
-        회원 탈퇴 후 복구가 불가능하니 신중하게 결정하시기 바랍니다.
+        <span>회원 탈퇴 후 복구가 불가능하니 </span>
+        <span>신중하게 결정하시기 바랍니다.</span>
       </p>
       <UserOutBtnBox>
         <button
@@ -31,6 +32,25 @@ const UserOutBox = styled.div`
     font-size: 20px;
     font-weight: 600;
     color: black;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: 680px) {
+    .alert-msg {
+      font-size: 1.3rem;
+    }
+  }
+  @media only screen and (max-width: 590px) {
+    .alert-msg {
+      font-size: 1.1rem;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    .alert-msg {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 `;
 
@@ -58,5 +78,14 @@ const UserOutBtnBox = styled.div`
     border-radius: 5px;
     background-color: white;
     color: #5e7bcb;
+  }
+
+  @media only screen and (max-width: 590px) {
+    & > button:first-child,
+    button:last-child {
+      width: 100px;
+      height: 40px;
+      font-size: 16px;
+    }
   }
 `;

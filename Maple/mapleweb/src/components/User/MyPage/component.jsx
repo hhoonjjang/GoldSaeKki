@@ -87,12 +87,12 @@ const MypageComponent = ({ getUserImg, checkLogin }) => {
   };
 
   return (
-    <>
+    <MediaMypage>
       <NavigateComp categorys={CATEGORY} />
       <MypageBox>
         <MypageContents>
           <LeftContent>
-            <img src={currImg} alt="프로필사진" />
+            <img src={currImg} alt="프로필사진" className="cat_img" />
             <p>닉네임 : {currUserName}</p>
             <p> 월드 : {currUserWorld}</p>
           </LeftContent>
@@ -104,25 +104,46 @@ const MypageComponent = ({ getUserImg, checkLogin }) => {
           </RightContent>
         </MypageContents>
       </MypageBox>
-    </>
+    </MediaMypage>
   );
 };
 export default MypageComponent;
 
-const MypageBox = styled.div`
+const MediaMypage = styled.div`
   width: 1200px;
+  margin: 0 auto;
+`;
+
+const MypageBox = styled.div`
   min-height: 500px;
   margin: 0 auto;
 `;
 const MypageContents = styled.div`
   width: 100%;
   display: flex;
+
+  @media only screen and (max-width: 960px) {
+    width: 100vw;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    & img.cat_img {
+      width: 200px;
+    }
+
+    & > div {
+      width: 90%;
+    }
+  }
 `;
 
 const LeftContent = styled.div`
   width: 20%;
   padding: 20px;
   margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   & > img {
     width: 100%;
@@ -138,6 +159,14 @@ const LeftContent = styled.div`
 const RightContent = styled.div`
   padding: 20px;
   width: 80%;
+
+  @media only screen and (max-width: 1200px) {
+    width: 70%;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 60%;
+  }
 
   & > div:first-child {
     background-color: #5e7bcb;

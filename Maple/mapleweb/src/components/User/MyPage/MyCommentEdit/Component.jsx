@@ -33,22 +33,32 @@ const MyCommentEditComponent = ({ commentList, getMycomment, currUser }) => {
           const tempDate = item.createdAt;
           const commentDate = tempDate.split("T");
           return (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "10px",
-              }}
-              key={`comment-${idx}`}
-              onClick={() => {
-                navigate(`/Community/board/${item.boardId}`);
-              }}
-            >
-              <div style={{ display: "inline-block" }}>
-                <span> {item.text}</span>
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "10px",
+                }}
+                key={`comment-${idx}`}
+                onClick={() => {
+                  navigate(`/Community/board/${item.boardId}`);
+                }}
+              >
+                <div style={{ display: "inline-block" }}>
+                  <span> {item.text}</span>
+                </div>
+                <span className="board_time">{commentDate[0]}</span>
               </div>
-              <span className="board_time">{commentDate[0]}</span>
-            </div>
+              <div
+                className="back-btn"
+                onClick={() => {
+                  navigate("/mypage");
+                }}
+              >
+                뒤로가기
+              </div>
+            </>
           );
         })}
         <PagenationWrap>
@@ -87,6 +97,15 @@ const MyCommentBox = styled.div`
     font-size: 16px;
     font-weight: 600;
     border-radius: 10px;
+  }
+  .back-btn {
+    cursor: pointer;
+    background-color: #5e7bcb;
+    width: 90px;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
   }
   .pagination {
     display: flex;

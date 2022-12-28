@@ -64,6 +64,7 @@ const MainSearchComponent = ({
         </div>
         <div className="mainSearch_innerBox_inputBox_cover">
           <div className="mainSearch_innerBox_inputBox">
+            {/* 여기 */}
             <input
               type="text"
               className="mainSearch_innerBox_inputBox_input"

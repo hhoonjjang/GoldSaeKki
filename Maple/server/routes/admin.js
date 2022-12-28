@@ -2,6 +2,8 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import Cryptojs from "crypto-js";
 import db from "../models/index.js";
+import fs from "fs";
+
 const router = Router();
 
 router.post("/regist", async (req, res) => {
@@ -488,5 +490,27 @@ router.post("/changethird",async(req,res)=>{
   )
   res.send("성공적으로 바꿨습니다.");
 })
+
+fs.readFile("./admin.json", "utf-8", async function (err, data) {
+  const count = await db.Admin.count();
+  if (err) {
+    console.error(err.message);
+  } else {
+    console.log(data && JSON.parse(data).length);
+    console.log(count);
+    if (data && JSON.parse(data).length > count) {
+      console.log("실행");
+      JSON.parse(data).forEach((item) => {
+        try {
+          db.Admin.create(item);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+  }
+});
+
+
 
 export default router;

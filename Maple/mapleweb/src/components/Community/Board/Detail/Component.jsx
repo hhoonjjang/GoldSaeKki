@@ -17,6 +17,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import EditContainer from '../Edit/Container';
+import NotFound from '../../NotFound';
 
 const DetailComponent = ({ reportBoard, reportComment }) => {
 
@@ -414,7 +415,7 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                         <CommentBtnWrap>
                             <div style={{ fontSize: "25px", marginLeft: "5px", display: "flex" }}>
                                 {/* <img src={goldImg} alt='금쪽이' /> */}
-                                <Link to={`/Community/board/hi`}>
+                                <Link to={`/Error`} element = {NotFound}>
                                     <img src={monaImg} alt='금쪽이' style={{ width: "35px" }} onClick={() => {
                                         // window.location.href ="/Community/board/hi";
                                     }} />

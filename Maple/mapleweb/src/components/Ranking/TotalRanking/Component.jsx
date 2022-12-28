@@ -56,6 +56,7 @@ const TotalRankingComponent = ({
       }
     });
   }
+
   return (
     <TotalRankBox>
       <div className="ranking-title">종합 랭킹</div>

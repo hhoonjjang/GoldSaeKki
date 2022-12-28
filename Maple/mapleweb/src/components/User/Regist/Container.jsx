@@ -171,7 +171,8 @@ const RegistContainer = () => {
     } else {
       if (idresult === false || pwresult === false || nameresult === false) {
         return alert("양식에 맞는 정보를 입력하세요.");
-      } else if (userPw != pwReCheck) {
+      }
+      if (userPw != pwReCheck) {
         return alert("비밀번호와 비밀번호확인 정보가 일치하지 않습니다.");
       }
       if (userPw != pwReCheck) {

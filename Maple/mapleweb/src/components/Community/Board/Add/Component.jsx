@@ -146,6 +146,9 @@ const AddComponent = ({ }) => {
 
           {/* 등록 */}
           <RegistBtn className="btn03_g" onClick={async (e) => {
+            // if(!titleText) return alert("제목을 입력해라.");
+            if (!titleText.match(/\S/g)) return alert("ㅋ");
+
             // 서버쪽에 등록 요청을 보낸다.
             const regist = await axios.post("http://localhost:8080/api/board/create", {
               title: titleText,

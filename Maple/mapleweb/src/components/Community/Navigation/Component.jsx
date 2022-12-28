@@ -132,7 +132,7 @@ const NavigationWrap = styled.div`
   top: 62px;
   border-top: 1px solid #ebebeb;
   border-bottom: 1px solid #ebebeb;
-  z-index: 1;
+  z-index: 2;
 
   width: 100%;
   /* float: left; */

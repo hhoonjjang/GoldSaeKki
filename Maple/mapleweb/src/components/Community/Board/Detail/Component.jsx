@@ -18,7 +18,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import EditContainer from '../Edit/Container';
 
-const DetailComponent = ({reportBoard, reportComment}) => {
+const DetailComponent = ({ reportBoard, reportComment }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -211,7 +211,7 @@ const DetailComponent = ({reportBoard, reportComment}) => {
                             <span style={{ margin: "0px 10px" }}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board?.eyeCount}{" "}{" "}</span>
                             {/* <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</span> */}
                             <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</span>
-                        </IconInfo><img src={lineImg} alt={"구분선 이미지"} style={{ margin: "0px 10px" }} />
+                        </IconInfo><GuImg src={lineImg} alt={"구분선 이미지"} style={{ margin: "0px 10px" }} />
                         <IconBox>
                             <IconWrap>
                                 <BoardOtherIcon src={LinkIcon} alt='링크 아이콘' onClick={() => {
@@ -388,9 +388,9 @@ const DetailComponent = ({reportBoard, reportComment}) => {
                                             </> : ""}
 
                                             {/* 신고할 수 있도록 보내주기 */}
-                                                <img src={reportImg} alt={"신고 버튼"} onClick={()=>{
-                                                    reportComment(comment.id)
-                                                }} style={{ cursor: "pointer" }}></img>
+                                            <img src={reportImg} alt={"신고 버튼"} onClick={() => {
+                                                reportComment(comment.id)
+                                            }} style={{ cursor: "pointer" }}></img>
                                         </span>
                                     </CommentUserInfo>
                                     {/* 댓글내용 */}
@@ -415,9 +415,9 @@ const DetailComponent = ({reportBoard, reportComment}) => {
                             <div style={{ fontSize: "25px", marginLeft: "5px", display: "flex" }}>
                                 {/* <img src={goldImg} alt='금쪽이' /> */}
                                 <Link to={`/Community/board/hi`}>
-                                <img src={monaImg} alt='금쪽이' style={{width : "35px"}} onClick={()=>{
-                                    // window.location.href ="/Community/board/hi";
-                                }} />
+                                    <img src={monaImg} alt='금쪽이' style={{ width: "35px" }} onClick={() => {
+                                        // window.location.href ="/Community/board/hi";
+                                    }} />
                                 </Link>
                             </div>
                             <CommentAddBtn onClick={async () => {
@@ -496,6 +496,7 @@ const CategoryTitle = styled.h1`
 const CategoryRight = styled.div`
     margin-top: 15px;
     cursor: pointer;
+    white-space: nowrap;
     & span{
         display: inline-block;
         font-size: 13px;
@@ -546,6 +547,9 @@ const BoardInfoBox = styled.div`
     line-height: 55px;
     border-top: 1px solid #e3e3e3;
     border-bottom: 1px solid #e3e3e3;
+
+    display: flex;
+    justify-content: space-between;
 `;
 const BoardUserName = styled.div`
     /* a태그 안의 이미지 아래에 유저 이름을 적는다. */
@@ -592,6 +596,17 @@ const BoardContent = styled.div`
     &>p{
         margin-bottom: 0.9rem;
     }
+
+    /* 게시글 상세 반응형 : 게시글 내용 */
+    /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+    @media all and (min-width: 480px) and (max-width: 767px) {
+        padding: 40px 30px;
+    }
+    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+    @media all and (max-width: 479px) {
+        padding: 30px 30px;
+    }
+
 `;
 
 const LikeWrap = styled.div`
@@ -608,6 +623,19 @@ const LikeWrap = styled.div`
         cursor: pointer;
         box-sizing: border-box;
     }
+
+    /* 게시글 상세 반응형 : 공감하기 */
+    /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+    @media all and (min-width: 480px) and (max-width: 767px) {
+        height: 45px;
+        line-height: 45px;
+    }
+    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+    @media all and (max-width: 479px) {
+        height: 45px;
+        line-height: 45px;
+    }
+
 `;
 const LikeBtn = styled.div`
     width: 140px;
@@ -669,6 +697,12 @@ const IconWrap = styled.div`
     width: 31px;
     height: 31px;
     margin: 0 5px;
+
+    /* 게시글 상세 반응형 : 게시글 아이콘 영역  */
+    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+    @media all and (max-width: 479px) {
+        display: none;
+    }
 `;
 const BoardOtherIcon = styled.img`
     cursor: pointer;
@@ -715,11 +749,19 @@ const CommentAddWrap = styled.div`
     width: 100%;
     height: 205px;
     margin-bottom: 40px;
+
 `;
 const CommentAdd = styled.div`
     height: 203px;
     background-color: #e8eaee;
     border: 1px solid #dcdde1;
+
+    /* 게시글 상세 반응형 : 댓글 영역 */
+    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+    @media all and (max-width: 479px) {
+        height: 182px;
+    }
+
 `;
 const CommentTextArea = styled.textarea`
     float: left;
@@ -733,6 +775,29 @@ const CommentTextArea = styled.textarea`
     overflow: hidden;
     overflow-y: auto;
     border: none;
+
+    /* 게시글 상세 반응형 : 댓글 입력 */
+    @media screen and (max-width: 1280px) {
+        width: 97%;
+    }
+    /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+    @media all and (min-width: 768px) and (max-width: 1023px) {
+        width: 98%;
+    }
+    /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+    @media all and (min-width: 768px) and (max-width: 1023px) {
+        width: 96.5%;
+    }
+    /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+    @media all and (min-width: 480px) and (max-width: 767px) {
+        width: 95.5%;
+    }
+    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+    @media all and (max-width: 479px) {
+        width: 350px;
+        height: 115px;
+    }
+
 `;
 const CommentBtnWrap = styled.div`
     position: relative;
@@ -847,4 +912,35 @@ const CommentBtnItem = styled.span`
     border: 1px solid #e3e3e3;
     color: #313131;
     box-sizing: border-box;
+`;
+
+const HeartIcon = styled.div`
+    background-color: #ff00003d;
+    width: 100px;
+    height: 100px;
+    background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
+    background-position: 0 0;
+    cursor: pointer;
+    transition: background-position 1s steps(28);
+    transition-duration: 0s;
+    display: inline-block;
+  
+    &.is-active {
+        transition-duration: 1s;
+        background-position: -2800px 0; 
+    }
+`;
+
+const GuImg = styled.img`
+
+    /* 게시글 상세 반응형 : 구분선 이미지  */
+    /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+    @media all and (min-width: 480px) and (max-width: 767px) {
+        display: none;
+    }
+    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+    @media all and (max-width: 479px) {
+        display: none;
+    }
+
 `;

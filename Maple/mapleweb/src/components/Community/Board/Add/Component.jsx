@@ -213,6 +213,13 @@ const ContentBox = styled.div`
   /* ckEditor css 설정 */
   & .ck-content {
     height: 560px;
+
+    /* 게시글 등록 반응형 : CK-EDITOR 높이 */
+    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+    @media all and (max-width: 479px) {
+      height : 400px;
+    }
+
   }
   & .ck-rounded-corners {
     width: 100%;
@@ -222,6 +229,29 @@ const ContentBox = styled.div`
   }
   & .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
     border: 1px solid #ccced1;
+  }
+
+  /* 게시글 등록 반응형 : 전체너비 */
+  @media screen and (max-width: 1280px) {
+    width: 700px;
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+    width: 620px;
+  }
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+    width: 650px;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
+    width: 440px;
+    margin: 0 auto;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    width: 310px;
+    margin-left: 20px;
   }
 `;
 
@@ -239,6 +269,13 @@ const TitleWrap = styled.div`
   border-top: 1px solid #7e7e7e;
   /* border-bottom: 1px solid #CCCED1; */
   /* border-bottom: 1px solid #CCCED1; */
+
+  /* 게시글 등록 반응형 : 제목 영역 */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    padding : 0 10px;
+  }
+
 `;
 const CategorySelector = styled.select`
   font-size: 13px;
@@ -247,6 +284,14 @@ const CategorySelector = styled.select`
   margin-right: 10px;
   border: 1px solid #ccced1;
   cursor: pointer;
+
+  /* 게시글 등록 반응형 : 월드 선택 */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    margin-right: 5px;
+    padding: 0 0 0 5px;
+  }
+
 `;
 const TitleInput = styled.input`
   height: 32px;
@@ -254,6 +299,13 @@ const TitleInput = styled.input`
   padding: 0 10px;
   font-size: 15px;
   border: 1px solid #ccced1;
+
+  /* 게시글 등록 반응형 : 월드 선택 */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    width: 310px;
+    padding: 0 10px;
+  }
 `;
 
 const CategoryTitle = styled.h1`
@@ -264,7 +316,7 @@ const CategoryTitle = styled.h1`
   width: 100%;
   float: left;
   height: 40px;
-  margin-bottom: 80px;
+  margin-bottom: 50px; /* 이놈이 맞음 */
   cursor: default;
 `;
 
@@ -277,6 +329,7 @@ const TagWrap = styled.div`
   border-top: none;
   display: flex;
   align-items: center;
+
 `;
 const TagSpan = styled.span`
   line-height: 50px;
@@ -287,6 +340,20 @@ const TagSpan = styled.span`
   padding-right: 21px;
   background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/tag_title_bg.png)
     right 17px no-repeat;
+
+  /* 게시글 등록 반응형 : 태그 달기 */
+  /* 게시글 등록 반응형 : 전체너비 */
+  @media screen and (max-width: 1280px) {
+    white-space: nowrap;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    width: 140px;
+    margin-left: 12px;
+    font-size: 10px;
+    padding-right: 0px;
+  }
+
 `;
 const TagInput = styled.input`
   margin-left: 20px;
@@ -296,6 +363,20 @@ const TagInput = styled.input`
   border: 1px solid #ccced1;
   font-size: 15px;
   padding: 0 10px;
+
+  /* 게시글 등록 반응형 : 태그 입력창 */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  /* 게시글 등록 반응형 : 전체너비 */
+  @media screen and (max-width: 1280px) {
+    margin-right: 15px;
+  }
+  @media all and (max-width: 479px) {
+    margin: 0 5px;
+    font-size: 12px;
+    padding-right: 0px;
+    margin-right: 5px;
+  }
+
 `;
 
 const ButtonBox = styled.div`

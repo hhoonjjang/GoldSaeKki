@@ -118,7 +118,8 @@ const MainSearchResult = styled.div`
       margin-bottom: 40px;
 
       span {
-        color: #1c6ac3;
+        /* color: #1c6ac3; */
+        color: #ca5196;
       }
     }
 
@@ -165,12 +166,14 @@ const MainSearchResult = styled.div`
             font-size: 14px;
 
             .mainSearchResult_innerBox_resultTable_title_category {
-              color: #1c6ac3;
+              /* color: #1c6ac3; */
+              color: #ca5196;
               margin-right: 7px;
               white-space: nowrap;
             }
             .mainSearchResult_innerBox_resultTable_title_world {
-              color: #1c6ac3;
+              /* color: #1c6ac3; */
+              color: #ca5196;
               margin-right: 7px;
               white-space: nowrap;
             }

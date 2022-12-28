@@ -318,4 +318,175 @@ router.post("/delusercomment", async (req, res) => {
   res.send({ tempUser, msg: "성공적으로지워졌습니다." });
 });
 
+router.post("/reportboard",async (req,res)=>{
+  const tempReport = await db.Board.findAll({
+  }) 
+  res.send(tempReport)
+})
+
+router.post("/reportcomment",async (req,res)=>{
+  const tempReport = await db.Comment.findAll({
+  }) 
+  res.send(tempReport)
+})
+
+router.post("/changefirst",async(req,res)=>{
+  console.log(req.body)
+  const changeFrom = req.body.changeFromArr;
+  const changeTo = req.body.changeToArr;
+  console.log(changeFrom.id)
+  console.log(changeTo.id)
+
+  await db.Category.update(
+    {
+      id:100
+    },{
+      where:{
+      category:changeFrom.category
+
+      }
+    }
+  )
+  await db.Category.update(
+    {
+      id:200
+    },{
+      where:{
+      category:changeTo.category
+
+      }
+    }
+  )
+
+  await db.Category.update(
+    {
+      id:changeFrom.id
+
+    },{
+      where:{
+      category:changeTo.category
+
+      }
+    }
+  )
+  await db.Category.update(
+    {
+      id:changeTo.id
+
+    },{
+      where:{
+      category:changeFrom.category
+
+      }
+    }
+  )
+
+  res.send("성공적으로 바꿨습니다.");
+})
+
+router.post("/changesecond",async(req,res)=>{
+  console.log(req.body)
+  const changeFrom = req.body.changeFromArr;
+  const changeTo = req.body.changeToArr;
+  console.log(changeFrom.id)
+  console.log(changeTo.id)
+  await db.Helptext.update(
+    {
+      id:1000000
+    },{
+      where:{
+      text:changeFrom.category
+
+      }
+    }
+  )
+  await db.Helptext.update(
+    {
+      id:1000001
+    },{
+      where:{
+      text:changeTo.category
+
+      }
+    }
+  )
+
+  await db.Helptext.update(
+    {
+      id:changeFrom.id
+
+    },{
+      where:{
+      text:changeTo.category
+
+      }
+    }
+  )
+  await db.Helptext.update(
+    {
+      id:changeTo.id
+
+    },{
+      where:{
+      text:changeFrom.category
+
+      }
+    }
+  )
+  res.send("성공적으로 바꿨습니다.");
+})
+
+
+router.post("/changethird",async(req,res)=>{
+  console.log(req.body)
+  const changeFrom = req.body.changeFromArr;
+  const changeTo = req.body.changeToArr;
+  console.log(changeFrom.id)
+  console.log(changeTo.id)
+  await db.Helptextchild.update(
+    {
+      id:1000000
+    },{
+      where:{
+      textChild:changeFrom.category
+
+      }
+    }
+  )
+  await db.Helptextchild.update(
+    {
+      id:1000001
+    },{
+      where:{
+      textChild:changeTo.category
+
+      }
+    }
+  )
+
+  await db.Helptextchild.update(
+    {
+      id:changeFrom.id
+
+    },{
+      where:{
+      textChild:changeTo.category
+
+      }
+    }
+  )
+  await db.Helptextchild.update(
+    {
+      id:changeTo.id
+
+    },{
+      where:{
+      textChild:changeFrom.category
+
+      }
+    }
+  )
+  res.send("성공적으로 바꿨습니다.");
+})
+
 export default router;

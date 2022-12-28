@@ -21,23 +21,44 @@ const MyCommentEditComponent = ({ commentList, getMycomment, currUser }) => {
   }
 
   useEffect(() => {
-    console.log("currUser 뭐임?", currUser);
     if (currUser) getMycomment();
   }, [currUser]);
   return (
     <MyCommentBox>
       <MyCommentListBox>
+        <div style={{ fontWeight: "bold" }}>
+          총 댓글 수 : {commentList.length}개
+        </div>
         {newBoards?.map((item, idx) => {
-          console.log(item);
+          const tempDate = item.createdAt;
+          const commentDate = tempDate.split("T");
           return (
-            <div
-              key={`comment-${idx}`}
-              onClick={() => {
-                navigate(`/Community/board/${item.boardId}`);
-              }}
-            >
-              {item.text}
-            </div>
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  padding: "10px",
+                }}
+                key={`comment-${idx}`}
+                onClick={() => {
+                  navigate(`/Community/board/${item.boardId}`);
+                }}
+              >
+                <div style={{ display: "inline-block" }}>
+                  <span> {item.text}</span>
+                </div>
+                <span className="board_time">{commentDate[0]}</span>
+              </div>
+              <div
+                className="back-btn"
+                onClick={() => {
+                  navigate("/mypage");
+                }}
+              >
+                뒤로가기
+              </div>
+            </>
           );
         })}
         <PagenationWrap>
@@ -76,6 +97,15 @@ const MyCommentBox = styled.div`
     font-size: 16px;
     font-weight: 600;
     border-radius: 10px;
+  }
+  .back-btn {
+    cursor: pointer;
+    background-color: #5e7bcb;
+    width: 90px;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
   }
   .pagination {
     display: flex;

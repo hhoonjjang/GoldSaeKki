@@ -29,13 +29,18 @@ const SecondContainer = ({ propsArr }) => {
   const [textArr, setText] = useState([]);
   const [editText, setEdit] = useState("");
   const [isBool, setBool] = useState(-1);
+  const [changeToArr,setChangeTo] = useState([]);
+  const [changeFromArr,setChangeFrom] =useState([])
   useEffect(() => {
     tempArrFun(setCategory);
     tempChildFun(setText);
   }, []);
-  useEffect(() => {}, [setText]);
+  useEffect(() => {
+    tempChildFun(setText);
+
+  }, [propsArr]);
   const textSubmit = (category, text) => {
-    if (!category) return alert("카테고리를 선택하세요");
+    if (!category || category=="선택하시오") return alert("카테고리를 선택하세요");
     if (!text) return alert("내용을 입력하세요");
 
     console.log("category:" + category);
@@ -76,6 +81,32 @@ const SecondContainer = ({ propsArr }) => {
         tempChildFun(setText);
       });
   };
+  const changeFromBtn = (id,category) =>{
+    console.log("체인지")
+    setChangeFrom({category,id})
+  }
+  const changeToBtn = (id,category)=>{
+    
+    setChangeTo({category,id})
+    console.log("프롬")
+    console.log(changeFromArr)
+    console.log("투")
+    console.log(changeToArr.length)
+  }
+    useEffect(()=>{ 
+    
+
+    if(changeToArr){
+      console.log(changeFromArr)
+    console.log(changeToArr)
+    if(changeToArr.id){
+      axios.post("http://localhost:8080/api/admin/changesecond", {changeFromArr,changeToArr}).then((data)=>{
+        alert(data.data);
+        tempChildFun(setText);
+
+      })
+    }}
+  },[changeToArr])
   return (
     <HelpCategoryDisplayComponent
       categoryArr={propsArr}
@@ -90,6 +121,9 @@ const SecondContainer = ({ propsArr }) => {
       a="text"
       b="helpCategory"
       c="category"
+      d="카테고리"
+      changeToBtn={changeToBtn}
+      changeFromBtn={changeFromBtn}
     >
       <ThirdContainer propsArr={textArr} />
     </HelpCategoryDisplayComponent>

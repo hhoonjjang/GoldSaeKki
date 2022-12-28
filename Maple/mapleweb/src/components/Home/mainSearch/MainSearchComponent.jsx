@@ -103,6 +103,7 @@ const MainSearchComponent = ({
             </div>
           </div>
         </div>
+        <div className="mainSearch_innerBox_flex"></div>
       </div>
     </MainSearch>
   );
@@ -121,6 +122,11 @@ const MainSearch = styled.div`
     width: 1200px;
     position: relative;
     display: flex;
+    @media only screen and (max-width: 1024px) {
+      justify-content: center;
+      padding-left: 20px;
+      padding-right:20px;
+    }
 
     .mainSearch_innerBox_selectType {
       width: 200px;
@@ -129,6 +135,8 @@ const MainSearch = styled.div`
       justify-content: center;
       position: relative;
       margin-right: 20px;
+      
+      
   
       .mainSearch_innerBox_selectType_title {
         background-color: white;
@@ -184,13 +192,25 @@ const MainSearch = styled.div`
     flex-direction: column;
     justify-content: center;
 
+    @media only screen and (max-width: 1024px) {
+      flex: 1;
+    }
+
     .mainSearch_innerBox_inputBox {
       display: flex;
       background-color: rgb(71, 110, 139);
-      width: 400px;
+      
       font-size: 13px;
       padding-top: 10px;
       padding-bottom: 10px;
+      
+      @media only screen and (max-width: 1024px) {
+        width:100%;
+      }
+
+      @media only screen and (min-width: 1024px) {
+        width: 400px;
+      }
 
       .mainSearch_innerBox_inputBox_input{
         flex:1;

@@ -18,6 +18,9 @@ import { useDispatch } from "react-redux";
 import { action as adminaction } from "./modules/admin";
 import RankComponent from "./components/Ranking";
 import NotFound from "./NotFound";
+import NewsComponet from "./components/News";
+import TopLogoContainer from "./components/Home/topLogo/TopLogoContainer";
+
 function App() {
   // const location = useLocation();
   // useEffect(() => {
@@ -38,7 +41,7 @@ function App() {
         });
     }
   };
-  console.log(document.cookie.split("=")[0])
+  console.log(document.cookie.split("=")[0]);
   const loginCheck = () => {
     if (document.cookie.split("=")[0] == "login") {
       console.log("쿠키 들어왔다.");
@@ -54,12 +57,13 @@ function App() {
     }
   };
   console.log(location);
-  document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck()
+  document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck();
 
   return (
     <div id="body_wrapper">
       <div id="body_content">
         {/* {(location.pathname = "/Adminstrator" ? <></> : <Menubar />)} */}
+        <TopLogoContainer></TopLogoContainer>
         {location.pathname == "/regist" || location.pathname == "/login" ? (
           <></>
         ) : (
@@ -68,10 +72,8 @@ function App() {
         <Routes>
           {/* 메인페이지 헤더 */}
           <Route path="/News/*" element={<HeaderContainer />}></Route>
-          <Route path="/Guide/*" element={<HeaderContainer />}></Route>
           <Route path="/Ranking/*" element={<HeaderContainer />}></Route>
           <Route path="/Community/*" element={<HeaderContainer />}></Route>
-          <Route path="/Media/*" element={<HeaderContainer />}></Route>
           <Route path="/Support/*" element={<HeaderContainer />}></Route>
           <Route path="/Administrator/*" element={<HeaderContainer />}></Route>
           <Route path="/Mypage/*" element={<HeaderContainer />}></Route>
@@ -89,10 +91,10 @@ function App() {
 
       <Link to={"/Support"}>고객지원</Link> */}
 
-        <Link to={"/Administrator"}>관리자</Link>
+        {/* <Link to={"/Administrator"}>관리자</Link> */}
         <Routes>
           <Route path="/" element={<HomeComponet />}></Route>
-          <Route path="/news"></Route>
+          <Route path="/News/*" element={<NewsComponet/>}></Route>
           <Route path="/Support/*" element={<SupportComponet />}></Route>
           <Route
             path="/Administrator/*"

@@ -3,7 +3,7 @@ import styled from "styled-components";
 const MessageComponent = ({ msgArr }) => {
   return (
     <MessageBox>
-      <div>메세지컴포넌트</div>
+      <div className="category-title">내 메세지함</div>
       <table>
         <colgroup>
           <col width={"15%"} />
@@ -52,5 +52,49 @@ const MessageBox = styled.div`
   }
   pre {
     margin: 10px 0px;
+  }
+  @media screen and (max-width:1280px){
+  }
+  @media screen and (max-width:1023px){
+    width:100%;
+    table{
+      margin:auto;
+    }
+    & > div:nth-child(2){
+      display:none;
+    }
+  }
+  @media screen and (max-width:768px){
+    & div:nth-child(2){
+      display:none;
+    }
+  }
+  @media screen and (max-width:540px){
+    margin-left:20px;
+    // width:250px;
+    pre{
+      width:200px;
+    }
+  }
+  @media screen and (max-width:435px){
+    margin-left:45px;
+    .category-title{
+      display:none;
+    }
+  }
+  @media screen and (max-width:400px){
+    table{
+      width:200px;
+     
+    }
+    pre{
+      width:150px;
+    }
+  }
+  @media screen and (max-width:400px){
+   
+    pre{
+      width:100px;
+    }
   }
 `;

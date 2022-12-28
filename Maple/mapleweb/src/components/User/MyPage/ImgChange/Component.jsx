@@ -61,4 +61,13 @@ const ImgchangeBtnBox = styled.div`
     font-size: 18px;
     margin-left: 5px;
   }
+
+  @media only screen and (max-width: 460px) {
+    & > button:first-child,
+    button:last-child {
+      width: 50px;
+      height: 40px;
+      font-size: 14px;
+    }
+  }
 `;

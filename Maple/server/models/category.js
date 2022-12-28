@@ -9,6 +9,7 @@ export default class Category extends Sequelize.Model {
           unique: true,
           allowNull: false,
         },
+      
       },
       {
         sequelize,

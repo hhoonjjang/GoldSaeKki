@@ -243,7 +243,6 @@ const ListComponent = () => {
         {/* 월드 선택 */}
         <WorldBox>
           {WORLDLIST.map((item, idx) => {
-
             return (
               // 현재 선택된 월드 allWorldRef
               <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active2" : ""}`} ref={idx === 0 ? allWorldRef : noRef} onClick={(e) => {
@@ -510,7 +509,6 @@ const CategoryTitle = styled.h1`
   height: 40px;
   margin-bottom: 40px;
   cursor: default; */
-
   font-size: 28px;
   color: #333;
   margin-top: 20px;
@@ -570,7 +568,6 @@ const WorldSpan = styled.span`
   position: relative;
   cursor: pointer;
   padding-left: 8px;
-
   /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;

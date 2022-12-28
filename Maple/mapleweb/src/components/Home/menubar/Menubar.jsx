@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../Img/goldsaekki-logo2.png";
-
 import { useMemo, useState } from "react";
 
 const Menubar = () => {
@@ -14,36 +13,26 @@ const Menubar = () => {
     setBGColor(false);
   };
 
-  const menu = ["뉴스", "가이드", "랭킹", "커뮤니티", "미디어", "고객지원"];
+  const menu = ["뉴스", "랭킹", "커뮤니티", "고객지원"];
 
   const dropDownMenu = [
     ["공지사항", "업데이트", "이벤트", "캐시샵 공지", "메이플 알림판"],
-    [
-      "게임정보",
-      "퀘스트정보",
-      "직업소개",
-      "확률형 아이템",
-      "확률형 아이템 결과",
-      "NEXON NOW",
-    ],
     ["종합 랭킹", "게시판 랭킹", "댓글 랭킹"],
-    ["자유게시판", "정보게시판", "토론게시판", "연재소설", "금쪽이아트", "이벤트게시판"],
-    ["웹툰", "메이플스토리 서체", "영상", "음악", "아트웍"],
+    [
+      "자유게시판",
+      "정보게시판",
+      "토론게시판",
+      "연재소설",
+      "금쪽이아트",
+      "이벤트게시판",
+    ],
     ["도움말/1:1문의", "버그악용/불법프로그램 신고"],
   ];
 
-  const routeAddress = [
-    "News",
-    "Guide",
-    "Ranking",
-    "Community/Free",
-    "Media",
-    "Support/Service",
-  ];
+  const routeAddress = ["News/Notice", "Ranking", "Community/Free", "Support/Service"];
 
   const routeAddressSubGroup = [
-    ["/", "/", "/", "/", "/"],
-    ["/", "/", "/", "/", "/", "/"],
+    ["News/Notice", "News/Update", "News/Event", "News/CashShop", "News/NoticeMapleBoard"],
     ["/Ranking", "/Ranking/BoardRanking", "/Ranking/CommentRanking"],
     [
       "/Community/Free",
@@ -53,7 +42,6 @@ const Menubar = () => {
       "/Community/Art",
       "/Community/Event",
     ],
-    ["/", "/", "/", "/", "/"],
     ["/Support/Service", "/Support/BugReport"],
   ];
 
@@ -155,6 +143,7 @@ const MenubarComponent = styled.div`
   justify-content: center;
   z-index: 999999;
   padding-top: 20px;
+  position: absolute;
 
   ul {
     list-style: none;
@@ -168,6 +157,7 @@ const MenubarComponent = styled.div`
     position: fixed;
     background-color: rgb(47, 47, 59);
     height: 64px;
+    top: 0;
 
     .menubar_logobox {
       top: -12px;
@@ -215,7 +205,7 @@ const MenubarComponent = styled.div`
   }
 
   .menubar_innerBox {
-    min-width: 1200px;
+    width: 1200px;
     height: 100%;
     display: flex;
     position: relative;
@@ -226,6 +216,12 @@ const MenubarComponent = styled.div`
     flex-direction: column;
     justify-content: center;
     position: absolute;
+    @media only screen and (min-width: 1024px) {
+      width: 11%;
+    }
+    @media only screen and (max-width: 1024px) {
+      display: none;
+    }
   }
 
   .menubar_item {
@@ -234,6 +230,13 @@ const MenubarComponent = styled.div`
     flex: 1;
     display: flex;
     justify-content: space-between;
+
+    @media only screen and (min-width: 1024px) {
+      width: 89%;
+    }
+    @media only screen and (max-width: 1024px) {
+      width: 100%;
+    }
   }
 
   .menubar_item:hover .menubar_dropdown {
@@ -245,9 +248,15 @@ const MenubarComponent = styled.div`
   }
 
   .menubar_item_outsideLi {
-    width: 173px;
-    position: relative;
-    text-align: center;
+    @media only screen and (min-width: 1024px) {
+      width: 25%;
+      position: relative;
+      text-align: center;
+    }
+    @media only screen and (max-width: 1024px) {
+      width: 25%;
+      text-align: center;
+    }
   }
 
   .menubar_item_outsideLi_text:hover {
@@ -264,9 +273,16 @@ const MenubarComponent = styled.div`
     display: none;
     position: absolute;
     font-size: 13px;
-    width: 100%;
+
     padding-inline-start: 0px;
     padding-top: 20px;
+
+    @media only screen and (min-width: 1024px) {
+      width: 100%;
+    }
+    @media only screen and (max-width: 1024px) {
+      width: 25%;
+    }
   }
 
   .menubar_dropdown li {

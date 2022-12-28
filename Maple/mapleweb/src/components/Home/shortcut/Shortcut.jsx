@@ -37,36 +37,55 @@ const Shortcut = () => {
 export default Shortcut;
 
 const ShortcutComponent = styled.div`
-  background-color: rgb(238, 238, 238);
-  display: flex;
-  justify-content: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
-
-  a {
-    text-decoration-line: none;
-  }
-  .shortcut_innerBox {
-    min-width: 1200px;
+  @media only screen and (min-width: 1024px) {
+    background-color: rgb(238, 238, 238);
     display: flex;
-    justify-content: space-between;
-    /* padding-top: 10px; */
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    a {
+      text-decoration-line: none;
+    }
+    .shortcut_innerBox {
+      width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      /* padding-top: 10px; */
+    }
+
+    .flexBox {
+      display: flex;
+    }
+
+    .shortcut_smallLink {
+      width: 65px;
+      display: inline-block;
+      border-radius: 30px;
+      background-color: #fff;
+      padding: 3px;
+      color: lightgray;
+      word-break: normal;
+      font-size: 14px;
+      text-align: center;
+    }
   }
 
-  .flexBox {
+  @media only screen and (max-width: 1024px) {
+    background-color: rgb(238, 238, 238);
     display: flex;
-  }
+    justify-content: start;
+    padding-top: 10px;
+    padding-bottom: 10px;
 
-  .shortcut_smallLink {
-    min-width: 65px;
-    display: inline-block;
-    border-radius: 30px;
-    background-color: #fff;
-    padding: 3px;
-    color: lightgray;
-    word-break: normal;
-    font-size: 14px;
-    text-align: center;
+    .shortcut_innerBox {
+      div:first-child {
+        padding-left: 20px;
+      }
+      div:nth-child(n + 2) {
+        display: none;
+      }
+    }
   }
 `;
 const HorizontalCenterBox = styled.div`

@@ -6,7 +6,7 @@ const MyRequestComponent = ({ requestArr, onClick, isBoolen }) => {
   return (
     <MyRequestBox>
       <div className="serviceDisplay">
-        <h3>내 문의내역</h3>{" "}
+        <div className="category-title">내 문의내역</div>{" "}
         <div>
           최근 6개월 동안 접수하신 1:1문의내역 및 답변 내용을 확인하실 수
           있습니다.
@@ -19,10 +19,10 @@ const MyRequestComponent = ({ requestArr, onClick, isBoolen }) => {
       <table>
         <colgroup>
           <col width={"5%"} />
-          <col width={"50%"} />
+          <col width={"45%"} />
           <col width={"25%"} />
           <col width={"10%"} />
-          <col width={"10%"} />
+          <col width={"15%"} />
         </colgroup>
 
         <thead>
@@ -158,7 +158,7 @@ const Component = ({ item, idx, onClick, isBoolen }) => {
 const MyRequestBox = styled.div`
   table {
     border: solid 1px black;
-    width: 100%;
+    width: 80%;
     text-align: center;
     /* border-collapse: collapse; */
   }
@@ -178,7 +178,6 @@ const MyRequestBox = styled.div`
       margin: auto;
     }
   }
-  padding: 20px 20px;
   .serviceDisplay {
     margin-bottom: 30px;
   }
@@ -191,7 +190,30 @@ const MyRequestBox = styled.div`
     display: flex;
   } */
 
-  h3 {
-    font-weight: bold;
+  @media screen and (max-width:1280px){
+  }
+  @media screen and (max-width:1023px){
+    width:100%;
+    table{
+      margin:auto;
+    }
+    & > div:nth-child(2){
+      display:none;
+    }
+  }
+  @media screen and (max-width:768px){
+    & div:nth-child(2){
+      display:none;
+    }
+  }
+  @media screen and (max-width:540px){
+    margin-left:20px;
+    // width:250px;
+  }
+  @media screen and (max-width:435px){
+    margin-left:45px;
+    .category-title{
+      display:none;
+    }
   }
 `;

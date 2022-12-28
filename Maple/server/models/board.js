@@ -1,4 +1,4 @@
-import Sequelize from "sequelize";
+import Sequelize, { INTEGER } from "sequelize";
 
 export default class Board extends Sequelize.Model {
     static init(sequelize) {
@@ -35,6 +35,10 @@ export default class Board extends Sequelize.Model {
                 userWorld: {
                     type: Sequelize.STRING(255),
                 },
+                report:{
+                    type:Sequelize.INTEGER,
+                    defaultValue: 0,
+                }
             },
             {
                 sequelize,
@@ -42,7 +46,7 @@ export default class Board extends Sequelize.Model {
                 underscored: true,
                 modelName: "Board",
                 tableName: "boards",
-                paranoid: true,
+                paranoid: false,
                 charset: "utf8mb4",
                 collate: "utf8mb4_general_ci",
             }
@@ -55,6 +59,8 @@ export default class Board extends Sequelize.Model {
             as: "BoardComments",      // 메서드명
             sourceKey: "id",   // 위에서 id 불러오겠다
             foreignKey: "boardId",   // 생성 컬럼 이름
+            onDelete: "cascade",
+
         });
 
         // 게시물들을 유저에 연결시켜줌

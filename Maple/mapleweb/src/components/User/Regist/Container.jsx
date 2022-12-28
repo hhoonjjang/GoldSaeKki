@@ -3,25 +3,28 @@ import { useDispatch } from "react-redux";
 import { action } from "../../../modules/regist";
 import crypto from "crypto-js";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
-const tempUserArr = [];
-
-axios
-  .post("http://localhost:8080/api/user/getUser")
-  .then((data) => {
-    console.log(data);
-    data?.data?.map((item) => {
-      tempUserArr.push(item);
-    });
-    console.log(tempUserArr);
-
-    // data.data.userId, data.data.userName
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 const RegistContainer = () => {
   const dispatch = useDispatch();
+  const tempUserArr = []; // 디비안에 정보들 담을 배열
+
+  const userInfo = () => {
+    axios
+      .post("http://localhost:8080/api/user/getUser")
+      .then((data) => {
+        console.log(data);
+        data?.data?.map((item) => {
+          tempUserArr.push(item);
+        });
+        console.log(tempUserArr);
+
+        // data.data.userId, data.data.userName
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   // 아이디 예외처리
   const idcheck = /^[a-z0-9_-]{5,20}$/;
@@ -106,6 +109,24 @@ const RegistContainer = () => {
     }
   };
 
+  const pwRecheckFunc = (pwReCheck, userPw) => {
+    if (pwReCheck.length === 0) {
+      return {
+        text: "비밀번호를 확인해주세요.",
+      };
+    }
+    if (userPw === pwReCheck) {
+      return {
+        class: "green",
+        text: "비밀번호가 일치합니다.",
+      };
+    } else {
+      return {
+        class: "red",
+        text: "비밀번호가 불일치합니다. 다시 확인해주세요.",
+      };
+    }
+  };
   const namecheckFunc = (userName) => {
     const findName = (elem) => {
       if (elem.userName === userName) return true;
@@ -138,13 +159,21 @@ const RegistContainer = () => {
     }
   };
 
-  const registClick = (userId, userPw, userName, server) => {
-    console.log("우선 해보자");
-    if (!userId || !userPw || !userName || server === "서버 선택") {
+  const registClick = (userId, userPw, userName, server, pwReCheck) => {
+    if (
+      !userId ||
+      !userPw ||
+      !userName ||
+      server === "서버 선택" ||
+      !pwReCheck
+    ) {
       return alert("정보를 입력해주세요!");
     } else {
       if (idresult === false || pwresult === false || nameresult === false) {
         return alert("양식에 맞는 정보를 입력하세요.");
+      }
+      if (userPw != pwReCheck) {
+        return alert("비밀번호와 비밀번호확인 정보가 일치하지 않습니다.");
       }
       userPw = crypto.SHA256(userPw).toString();
       axios
@@ -171,6 +200,8 @@ const RegistContainer = () => {
       idcheck={idcheckFunc}
       pwcheck={pwcheckFunc}
       namecheck={namecheckFunc}
+      pwRecheckFunc={pwRecheckFunc}
+      userInfo={userInfo}
     />
   );
 };

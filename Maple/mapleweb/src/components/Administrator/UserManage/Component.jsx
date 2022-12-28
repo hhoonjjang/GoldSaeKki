@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 const UserManageComponent = ({
   userSubmit,
   userArr,
@@ -24,7 +25,7 @@ const UserManageComponent = ({
   }, [stateAdmin]);
   return (
     <UserManageBox>
-      <div>유저관리디스플레이</div>
+      <div className="title">유저관리 목록</div>
       <table>
         <colgroup>
           <col width={"30%"} />
@@ -71,6 +72,7 @@ const UserManageComponent = ({
       </form>
       {tempUser != "" ? (
         <Blank>
+          <div className="title">유저검색 결과</div>
           <table>
             <colgroup>
               <col width={"30%"} />
@@ -150,8 +152,10 @@ const UserManageComponent = ({
               )}
             </tbody>
           </table>
-          <div>{tempUser.userName} 유저님의 활동내역</div>
-          <div>작성 게시글</div>
+          <div className="title">{tempUser.userName} 유저님의 활동내역</div>
+
+          <div className="board">
+            <div>작성 게시글</div>
 
           <table>
             <colgroup>
@@ -177,7 +181,17 @@ const UserManageComponent = ({
               {tempUser.Board.map((item, idx) => (
                 <tr key={`board-${idx}`}>
                   <td key={`boardIdx-${idx}`}>{idx + 1}</td>
-                  <td key={`boardTitle-${idx}`}>{item.title}</td>
+                  {item.report != 0 ? <td  key={`boardTitle-${idx}`}>
+                  <Link className="red" to={`/Community/board/${item.id}`}>
+                  {item.title}
+                  </Link>
+                  </td>:<td key={`boardTitle-${idx}`}>
+                  <Link to={`/Community/board/${item.id}`}>
+                  {item.title}
+                  </Link>
+                  </td>}
+                  
+
                   <td key={`boardCategory-${idx}`}>{item.category}</td>
                   <td key={`boardEyeCount-${idx}`}>{item.eyeCount}</td>
                   <td key={`boardCreated-${idx}`}>
@@ -196,7 +210,8 @@ const UserManageComponent = ({
               ))}
             </tbody>
           </table>
-
+          </div>
+          <div className="board">
           <div>작성 댓글</div>
           <table>
             <colgroup>
@@ -214,10 +229,24 @@ const UserManageComponent = ({
             <tbody>
               {tempUser.Comment.map((item, idx) => (
                 <tr key={`Comment-${idx}`}>
+                  {item.report != 0?<> 
                   <td key={`idx-${idx}`}>{idx + 1}</td>
                   <td key={`CommentText-${idx}`}>
+                  <Link className="red" to={`/Community/board/${item.boardId}`}>
                     {item.text}
-                    <button
+                  </Link>
+                  </td>
+                  </>:
+                  <><td key={`idx-${idx}`}>{idx + 1}</td>
+                  <td key={`CommentText-${idx}`}>
+                  <Link to={`/Community/board/${item.boardId}`}>
+                    {item.text}
+                  </Link>
+                  </td></>}
+
+               
+                  <td>
+                  <button 
                       onClick={() => {
                         commentDel(item.id, tempUser.userName);
                       }}
@@ -226,9 +255,10 @@ const UserManageComponent = ({
                     </button>
                   </td>
                 </tr>
+                
               ))}
             </tbody>
-          </table>
+          </table></div>
         </Blank>
       ) : (
         <></>
@@ -240,15 +270,45 @@ const UserManageComponent = ({
 export default UserManageComponent;
 
 const UserManageBox = styled.div`
-  table {
+  
+  & table {
     text-align: center;
-
-    width: 100%;
+    background-color : rgb(245,245,245);
+    width: 100%;    
   }
   textarea {
     width: 80%;
     height: 100px;
   }
+  a {
+    color:black;
+  }
+  .red {
+    color:red
+  }
+  .board{
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    background-color : rgb(245,245,245);
+    margin-top : 10px;
+    & div:first-child {
+      font-size: 20px;
+      font-weight:bold;
+  }
+  }
+ .title{
+    margin-top: 30px;
+    font-size: 28px;
+    font-weight:bold;
+  } 
+  form {
+    margin-top:30px;
+    margin-bottom:30px;
+  }
+  
 `;
 
-const Blank = styled.div``;
+const Blank = styled.div`
+
+  
+`;

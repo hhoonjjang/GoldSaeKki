@@ -79,11 +79,12 @@ const LoginComponent = ({ loginClick }) => {
                 onInput={(e) => {
                   setloginId(e.target.value);
                 }}
+                onKeyUp={() => {
+                  if (window.event.keyCode == 13) {
+                    loginClick(loginId, loginPw);
+                  }
+                }}
               />
-              <span>
-                <input type={"checkbox"} />
-                ID 저장
-              </span>
             </div>
             <div>
               <input
@@ -92,6 +93,11 @@ const LoginComponent = ({ loginClick }) => {
                 type={"password"}
                 onInput={(e) => {
                   setloginPw(e.target.value);
+                }}
+                onKeyUp={() => {
+                  if (window.event.keyCode == 13) {
+                    loginClick(loginId, loginPw);
+                  }
                 }}
               />
             </div>
@@ -125,6 +131,7 @@ const LoginComponent = ({ loginClick }) => {
               비밀번호 찾기{" "}
             </p>
           </LinkBox>
+          <img src={loginChar} alt="밑배경" />
         </LoginMain>
         <LoginFooter>
           <div>
@@ -140,7 +147,62 @@ export default LoginComponent;
 
 const LoginBox = styled.div`
   background-image: url(${backgroundImg});
-  background-size: contain;
+  background-size: cover;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+
+  @media only screen and (max-width: 1280px) {
+    width: 100%;
+    background-size: cover;
+
+    & > div {
+      width: 100%;
+      background-size: initial;
+      &:nth-child(2) {
+        width: 600px;
+        margin: auto;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1024px) {
+    & > div:first-child > div {
+      padding-top: 50px;
+      &:last-child {
+        display: none;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    & > div:nth-child(2) {
+      & > p {
+        font-size: 35px;
+      }
+      width: 450px;
+      margin: auto;
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    & > div:first-child > div {
+      padding: 20px 0;
+    }
+    & > div:nth-child(2) {
+      > div > * {
+        font-size: 20px;
+      }
+      & > div:nth-child(3) * {
+        font-size: 16px;
+      }
+      & > p {
+        font-size: 25px;
+      }
+      width: 300px;
+      margin: auto;
+    }
+  }
 `;
 
 const LoginHeader = styled.div`
@@ -179,10 +241,9 @@ const LoginHeader = styled.div`
 `;
 
 const LoginMain = styled.div`
-  background-image: url(${loginChar});
-  background-repeat: no-repeat;
-  background-position: bottom;
   height: 750px;
+  width: 600px;
+  margin: auto;
 
   & > p {
     font-size: 50px;
@@ -190,6 +251,14 @@ const LoginMain = styled.div`
     text-align: center;
     letter-spacing: -0.3rem;
     margin: 10px 0;
+  }
+  > img {
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    bottom: 150px;
+    min-width: 1500px;
+    pointer-events: none;
   }
 `;
 
@@ -201,7 +270,7 @@ const LoginText = styled.div`
   padding: 20px 0;
 
   & button {
-    width: 600px;
+    width: 100%;
     height: 80px;
     background-color: rgb(246, 133, 0);
     color: white;
@@ -212,7 +281,7 @@ const LoginText = styled.div`
   }
 
   & div:first-child {
-    width: 600px;
+    width: 100%;
     height: 80px;
     background-color: rgb(246, 133, 0);
     color: white;
@@ -227,40 +296,22 @@ const LoginText = styled.div`
   & div:nth-child(2) {
     background-color: #17151c;
     color: white;
-    width: 600px;
+    width: 100%;
     height: 80px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
   }
 
   & div:nth-child(3) {
     margin-top: 5px;
-    width: 600px;
+    width: 100%;
     height: 80px;
     border: none;
     background-color: #17151c;
     font-size: 20px;
   }
 
-  & div:nth-child(2) > input {
-    width: 450px;
-    height: 75px;
-    border: none;
-    background-color: #17151c;
-    font-size: 20px;
-    color: rgb(118, 118, 118);
-  }
-
-  & div:nth-child(2) input:last-child {
-    width: 1.5rem;
-    height: 1.5rem;
-    cursor: pointer;
-    accent-color: rgb(118, 118, 118);
-  }
-
+  & div:nth-child(2) > input,
   & div:nth-child(3) > input {
-    width: 500px;
+    width: 100%;
     height: 75px;
     border: none;
     background-color: #17151c;
@@ -294,7 +345,7 @@ const LoginFooter = styled.div`
 const LinkBox = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 600px;
+  width: 100%;
   margin: 0 auto;
 
   & > a > p {

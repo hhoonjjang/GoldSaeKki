@@ -45,6 +45,9 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  width: 100%;
+  right: 965px;
+  /* overflow-x: hidden */
 }
 
 * {
@@ -59,6 +62,7 @@ body {
 
 #body_wrapper {
   min-height: 100%;
+  min-width: 100%;
   position: relative;
 }
 

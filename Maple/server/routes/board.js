@@ -288,6 +288,22 @@ router.post("/mainCommunity", async (req, res) => {
   }
 });
 
+router.post("/reportboard",async(req,res)=>{
+ const tempBoard= await db.Board.findOne({
+    where:{id:req.body.id}
+  })
+  const counting=tempBoard.dataValues.report
+  await db.Board.update(
+    {
+      report:counting+1,
+    },{
+    where:{id:req.body.id}
+  })
+  res.send("성공적으로 신고가 되었습니다.");
+})
+
+
+
 // fs.readFile("./board.json", "utf-8", async function (err, data) {
 //   const count = await db.Board.count();
 //   if (err) {

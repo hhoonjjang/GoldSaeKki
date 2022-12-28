@@ -4,6 +4,35 @@ import { useSelector } from "react-redux";
 import { action } from "../../../modules/header";
 import UserManageComponent from "./Component";
 
+const tempFun = async (setReportArr) => {
+  try {
+    let reportArr = (await axios.post("http://localhost:8080/api/report/bugcs"))
+      .data;
+    setReportArr(reportArr);
+    console.log(reportArr);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const BoardArrFun = async (setBoard) =>{
+  try{
+     let boardArr = (await axios.post("http://localhost:8080/api/admin/reportboard")).data;
+     setBoard(boardArr);
+  }catch(err){
+     console.error(err);
+  }
+ }
+
+const CommentArrFun = async (setComment) =>{
+  try{
+     let commentArr = (await axios.post("http://localhost:8080/api/admin/reportcomment")).data;
+     setComment(commentArr);
+  }catch(err){
+     console.error(err);
+  }
+ }
+
 const userArrFun = async (setUser) => {
   try {
     let userArr = (
@@ -15,7 +44,7 @@ const userArrFun = async (setUser) => {
   }
 };
 
-const UserManageContainer = () => {
+const UserManageContainer = ({setComment,setBoard,setReportArr}) => {
   const [userArr, setUser] = useState([]);
   const [tempUser, setTemp] = useState([]);
   useEffect(() => {
@@ -44,6 +73,10 @@ const UserManageContainer = () => {
         alert(data.data);
         userArrFun(setUser);
         setTemp("");
+      }).then(()=>{
+        BoardArrFun(setBoard);
+        CommentArrFun(setComment);
+        tempFun(setReportArr);
       });
   };
   const msgSubmit = (msg, userName) => {
@@ -57,6 +90,8 @@ const UserManageContainer = () => {
       .then((data) => {
         alert(data.data.msg);
         setTemp(data.data.tempUser);
+      }).then(()=>{
+        BoardArrFun(setBoard);
       });
   };
   const commentDel = (id, user) => {
@@ -65,6 +100,8 @@ const UserManageContainer = () => {
       .then((data) => {
         alert(data.data.msg);
         setTemp(data.data.tempUser);
+      }).then(()=>{
+        CommentArrFun(setComment);
       });
   };
   return (

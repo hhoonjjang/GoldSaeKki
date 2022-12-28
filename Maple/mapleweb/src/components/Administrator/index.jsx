@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { action } from "../../modules/header";
 import styled from "styled-components";
-import BugCSContainer from "./BugCs/Container";
 import AccountContainer from "./Account/Container";
 import AdminLoginContainer from "./AdminLogin/Container";
-import FirstContainer from "./HelpCategoryDisplay/Container1";
-import UserManageContainer from "./UserManage/Container";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
+import ControlledTabsExample from "./ControlledTabs/ControlledTabs";
 const AdministratorComponet = () => {
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(action.header("Administrator"));
@@ -19,22 +18,14 @@ const AdministratorComponet = () => {
       {!isCookie ? (
         <>
           <AdminLoginContainer />
-          <AccountContainer />
+          {/* <AccountContainer /> */}
         </>
       ) : (
         <>
           <AdminLoginContainer />
-          {tempAdmin?.name == "정재훈" ? (
-            <>
-              <AccountContainer />
-            </>
-          ) : (
-            <></>
-          )}
-
-          <BugCSContainer />
-          <FirstContainer />
-          <UserManageContainer />
+        
+          <ControlledTabsExample />
+         
         </>
       )}
     </AdminBox>

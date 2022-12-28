@@ -547,6 +547,10 @@ const WorldBox = styled.div`
   padding: 26px 0 20px 26px;
 
   /* 게시글 목록 반응형 : 월드박스 */
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
+    display: none;
+  }
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
     display: none;

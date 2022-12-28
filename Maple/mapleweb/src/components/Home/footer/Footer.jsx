@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import NotFound from "../../../NotFound";
 
 // import "../CSS/footer.css";
 const Footer = () => {
@@ -14,33 +16,94 @@ const Footer = () => {
           <ul>
             <li>
               {/* 메이플스토리 사이트 내에서 움직이는 것이 아니기에 a 태그를 붙였음 */}
-              <a href="#">회사소개</a>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
+                회사소개
+              </Link>
             </li>
             <li>
-              <a href="#">채용안내</a>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
+                채용안내
+              </Link>
             </li>
             <li>
-              <a href="#">이용약관</a>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
+                이용약관
+              </Link>
             </li>
             <li>
-              <a href="#">게임이용등급안내</a>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
+                게임이용등급안내
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
                 <span className="footer_privacyPolicy">개인정보처리방침</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">청소년보호정책</a>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
+                청소년보호정책
+              </Link>
             </li>
             <li>
-              <a href="#">운영정책</a>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
+                운영정책
+              </Link>
             </li>
             <li>
-              <a href="#">넥슨PC방</a>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
+                넥슨PC방
+              </Link>
             </li>
             <li>
-              <a href="#">사이트맵</a>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
+                사이트맵
+              </Link>
             </li>
           </ul>
           <div className="footer_normalText">
@@ -67,34 +130,74 @@ const Footer = () => {
             className={`footer_familySite_items ${familySite ? "off" : "on"}`}
           >
             <div className="footer_familySite_item_1">
-              <a href="#" target="_blank">
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
                 <span>Global</span>
-              </a>
-              <a href="#" target="_blank">
+              </Link>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
                 <span>Japan</span>
-              </a>
-              <a href="#" target="_blank">
+              </Link>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
                 <span>China</span>
-              </a>
-              <a href="#" target="_blank">
+              </Link>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
                 <span>Taiwan</span>
-              </a>
+              </Link>
             </div>
             <div className="footer_familySite_item_2">
-              <a href="#" target="_blank">
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
                 <span>S.E.A</span>
-              </a>
-              <a href="#" target="_blank">
+              </Link>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
                 <span>North America</span>
-              </a>
-              <a href="#" target="_blank">
+              </Link>
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
                 <span>Thailand</span>
-              </a>
+              </Link>
             </div>
             <div className="footer_familySite_item_3">
-              <a href="#" target="_blank">
+              <Link
+                to="/Error"
+                element={<NotFound />}
+                rel="noopener noreferrer"
+                target="_blink"
+              >
                 <span>Maple Tester</span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

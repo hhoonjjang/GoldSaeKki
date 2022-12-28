@@ -73,7 +73,7 @@ const MainSlideComponent = ({
   return (
     <Cover>
       <MainSlide>
-        <Link to="/News/Event">
+        <Link to="/Error">
           <CarouselBackground bgImg={carouselBackgroundArr[currSlide]}>
             <div className="CarouselBackground_innerBox">
               <h2

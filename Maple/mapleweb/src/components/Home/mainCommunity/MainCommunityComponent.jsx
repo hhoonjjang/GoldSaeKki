@@ -177,9 +177,11 @@ const MainCommunityComponent = ({
                   }`}
                   key={`mainCommunity_innerBox_ranking_avatar_${index + 1}`}
                 >
-                  <img
-                    src={`http://localhost:8080/api/download${item.profileImg}`}
-                  />
+                  <Link to="/Ranking" element={<RankComponent />}>
+                    <img
+                      src={`http://localhost:8080/api/download${item.profileImg}`}
+                    />
+                  </Link>
                 </div>
               );
             })}
@@ -193,7 +195,9 @@ const MainCommunityComponent = ({
                   }`}
                   key={`mainCommunity_innerBox_ranking_userName_${index + 1}`}
                 >
-                  {item.tempUserName}
+                  <Link to="/Ranking" element={<RankComponent />}>
+                    {item.tempUserName}
+                  </Link>
                 </div>
               );
             })}

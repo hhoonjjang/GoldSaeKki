@@ -3,6 +3,8 @@ import hanz from "../Img/shortcut_maple_hanz.png";
 import facebook from "../Img/shortcut_facebook.png";
 import twitter from "../Img/shortcut_twitter.png";
 import youtube from "../Img/shortcut_youtube.png";
+import { Link } from "react-router-dom";
+import NotFound from "../../../NotFound";
 
 const Shortcut = () => {
   return (
@@ -11,24 +13,55 @@ const Shortcut = () => {
         <div className="flexBox">
           <img src={hanz} />{" "}
           <HorizontalCenterBox>
-            <a href="#" target={"_blank"}>
+            <Link
+              to="/Error"
+              element={<NotFound />}
+              rel="noopener noreferrer"
+              target="_blink"
+            >
               <span className="shortcut_smallLink">Android</span>
-            </a>
+            </Link>
           </HorizontalCenterBox>{" "}
           <HorizontalCenterBox>
-            <a href="#" target={"_blank"}>
+            <Link
+              to="/Error"
+              element={<NotFound />}
+              rel="noopener noreferrer"
+              target="_blink"
+            >
               <span className="shortcut_smallLink">ios</span>
-            </a>
+            </Link>
           </HorizontalCenterBox>
         </div>
         <div>
-          <img src={facebook} />
+          <Link
+            to="/Error"
+            element={<NotFound />}
+            rel="noopener noreferrer"
+            target="_blink"
+          >
+            <img src={facebook} />
+          </Link>
         </div>
         <div>
-          <img src={twitter} />
+          <Link
+            to="/Error"
+            element={<NotFound />}
+            rel="noopener noreferrer"
+            target="_blink"
+          >
+            <img src={twitter} />
+          </Link>
         </div>
         <div>
-          <img src={youtube} />
+          <Link
+            to="/Error"
+            element={<NotFound />}
+            rel="noopener noreferrer"
+            target="_blink"
+          >
+            <img src={youtube} />
+          </Link>
         </div>
       </div>
     </ShortcutComponent>

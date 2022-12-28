@@ -8,6 +8,20 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import store from "./modules/store";
 import axios from "axios";
+
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+export default function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -15,6 +29,7 @@ root.render(
   // <React.StrictMode>
   <Provider store={store}>
     <BrowserRouter>
+      <ScrollToTop />
       <App />
     </BrowserRouter>
   </Provider>

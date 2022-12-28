@@ -11,6 +11,7 @@ import UserComponent from "../../User";
 import badge from "../Img/main_gamestart_badge.png";
 import MypageContainer from "../../User/MyPage/Container";
 import { useEffect, useState } from "react";
+import NotFound from "../../../NotFound";
 
 const MainGamestartComponent = ({
   currUserName,
@@ -32,16 +33,16 @@ const MainGamestartComponent = ({
         <div className="mainGamestart_infomationCenter">
           <div className="mainGamestart_infomationCenter_innerBox">
             <div>
-              <Link to="/News" element={<HomeComponet />}>
+              <Link to="/Error" element={<NotFound />}>
                 <img src={badge} alt={"뱃지"} />
               </Link>
             </div>
             <div className="mainGamestart_infomationCenter_innerBox_text">
-              <Link to="/News" element={<HomeComponet />}>
+              <Link to="/Error" element={<NotFound />}>
                 <span>업데이트 정보센터</span>
-              </Link>{" "}
+              </Link>
               <br />
-              <Link to="/News" element={<HomeComponet />}>
+              <Link to="/Error" element={<NotFound />}>
                 <span>2022.11.24 / ver.1.2.371 업데이트 미리보기</span>
               </Link>
             </div>
@@ -49,23 +50,19 @@ const MainGamestartComponent = ({
         </div>
         <div className="mainGamestart_gameStart">
           <div className="mainGamestart_gameStart_start">
-            <Link to="/" element={<HomeComponet />}>
-              <div
-                className="header_innerBox_center_start"
-                onClick={() => {
-                  alert("게임스타트");
-                }}
-              >
-                <img src={gameStart} alt="게임 스타트" />
-              </div>
-            </Link>
+            <div
+              className="header_innerBox_center_start"
+              onClick={() => {
+                alert("게임스타트");
+              }}
+            >
+              <img src={gameStart} alt="게임 스타트" />
+            </div>
           </div>
           <div className="mainGamestart_gameStart_download">
-            <Link to="/" element={<HomeComponet />}>
-              <div className="header_innerBox_center_download">
-                <img src={download} alt={"다운로드"} />
-              </div>
-            </Link>
+            <div className="header_innerBox_center_download">
+              <img src={download} alt={"다운로드"} />
+            </div>
           </div>
         </div>
         {document.cookie.split("=")[0] == "login" ? (

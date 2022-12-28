@@ -10,7 +10,7 @@ import SupportComponet from "./components/Support";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
 import UserComponent from "./components/User";
 import MainSearchResultContainer from "./components/Home/mainSearchResult/MainSearchResultContainer";
-import NotFound from "./components/Community/NotFound";
+// import NotFound from "./components/Community/NotFound";
 import Footer from "./components/Home/footer/Footer";
 import Menubar from "./components/Home/menubar/Menubar";
 import axios from "axios";
@@ -18,7 +18,7 @@ import { action } from "./modules/user";
 import { useDispatch } from "react-redux";
 import { action as adminaction } from "./modules/admin";
 import RankComponent from "./components/Ranking";
-// import NotFound from "./NotFound";
+import NotFound from "./NotFound";
 import NewsComponet from "./components/News";
 import TopLogoContainer from "./components/Home/topLogo/TopLogoContainer";
 
@@ -110,7 +110,7 @@ function App() {
             element={<MainSearchResultContainer />}
           ></Route>
 
-          {/* <Route path="/*" element={<NotFound />} /> */}
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
       <Footer></Footer>

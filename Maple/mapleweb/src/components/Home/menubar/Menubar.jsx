@@ -29,10 +29,15 @@ const Menubar = () => {
     ["도움말/1:1문의", "버그악용/불법프로그램 신고"],
   ];
 
-  const routeAddress = ["News/Notice", "Ranking", "Community/Free", "Support/Service"];
+  const routeAddress = [
+    "Error",
+    "Ranking",
+    "Community/Free",
+    "Support/Service",
+  ];
 
   const routeAddressSubGroup = [
-    ["News/Notice", "News/Update", "News/Event", "News/CashShop", "News/NoticeMapleBoard"],
+    ["/Error", "/Error", "/Error", "/Error", "/Error"],
     ["/Ranking", "/Ranking/BoardRanking", "/Ranking/CommentRanking"],
     [
       "/Community/Free",

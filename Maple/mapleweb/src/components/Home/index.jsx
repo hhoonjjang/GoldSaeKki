@@ -10,6 +10,8 @@ import archive from "./Img/main_archive.png";
 import styled from "styled-components";
 import MainCommunityContainer from "./mainCommunity/MainCommunityContainer";
 import MainSearchContainer from "./mainSearch/MainSearchContainer";
+import NotFound from "../../NotFound";
+import { Link } from "react-router-dom";
 
 const HomeComponet = () => {
   return (
@@ -21,7 +23,14 @@ const HomeComponet = () => {
       <MainCommunityContainer></MainCommunityContainer>
       <MainArchive>
         <div className="marinArchive_innerBox">
-          <img src={archive} />
+          <Link
+            to="/Error"
+            element={<NotFound />}
+            rel="noopener noreferrer"
+            target="_blink"
+          >
+            <img src={archive} />
+          </Link>
         </div>
       </MainArchive>
       <MainInfo></MainInfo>

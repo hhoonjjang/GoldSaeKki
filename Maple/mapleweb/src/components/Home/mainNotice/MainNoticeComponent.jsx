@@ -22,7 +22,7 @@ import bottomRightImg1 from "../Img/main_notice_bottom_right_1.png";
 import bottomRightImg2 from "../Img/main_notice_bottom_right_2.png";
 import bottomRightImg3 from "../Img/main_notice_bottom_right_3.png";
 
-import NotFound from "../../Community/NotFound";
+import NotFound from "../../../NotFound";
 
 import Slider from "react-slick";
 
@@ -46,37 +46,37 @@ const MainNotice = () => {
             <div className="mainNotice_innerBox_top_left_innerBox">
               <Slider {...setting} dotsClass="mainNoticeSlider-css">
                 <div>
-                  <Link to="/News/cashShop">
+                  <Link to="/Error" element={<NotFound />}>
                     <img src={topLeftImg0} />
                   </Link>
                 </div>
                 <div>
-                  <Link to="/News/cashShop">
+                  <Link to="/Error" element={<NotFound />}>
                     <img src={topLeftImg1} />
                   </Link>
                 </div>
                 <div>
-                  <Link to="/News/cashShop">
+                  <Link to="/Error" element={<NotFound />}>
                     <img src={topLeftImg2} />
                   </Link>
                 </div>
                 <div>
-                  <Link to="/News/cashShop">
+                  <Link to="/Error" element={<NotFound />}>
                     <img src={topLeftImg3} />
                   </Link>
                 </div>
                 <div>
-                  <Link to="/News/cashShop">
+                  <Link to="/Error" element={<NotFound />}>
                     <img src={topLeftImg4} />
                   </Link>
                 </div>
                 <div>
-                  <Link to="/News/cashShop">
+                  <Link to="/Error" element={<NotFound />}>
                     <img src={topLeftImg5} />
                   </Link>
                 </div>
                 <div>
-                  <Link to="/News/cashShop">
+                  <Link to="/Error" element={<NotFound />}>
                     <img src={topLeftImg6} />
                   </Link>
                 </div>
@@ -118,12 +118,12 @@ const MainNotice = () => {
             </div>
             <div className="mainNotice_innerBox_top_right_right">
               <div className="mainNotice_innerBox_top_right_right_top">
-                <Link to="/Guide/gameInfomation">
+                <Link to="/Error" element={<NotFound />}>
                   <img src={topRightImg1} />
                 </Link>
               </div>
               <div className="mainNotice_innerBox_top_right_right_bottom">
-                <Link to="/Guide/gameInfomation">
+                <Link to="/Error" element={<NotFound />}>
                   <img src={topRightImg2} />
                 </Link>
               </div>
@@ -132,7 +132,7 @@ const MainNotice = () => {
         </div>
         <div className="mainNotice_innerBox_bottom">
           <div className="mainNotice_innerBox_bottom_left">
-            <Link to="/News/event" element={<HomeComponent />}>
+            <Link to="/Error" element={<NotFound />}>
               <img
                 src={bottomLeftImg}
                 className="mainNotice_innerBox_bottom_left_img"

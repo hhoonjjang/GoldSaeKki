@@ -34,7 +34,7 @@ import { CATEGORY, CATEGORY2 } from "../../modules/community";
 import CommentContainer from "./Pagination/Container";
 import DetailContainer from "./Board/Detail/Container";
 import EditContainer from "./Board/Edit/Container";
-import NotFound from "./NotFound";
+import NotFound from "../../NotFound";
 import axios from "axios";
 
 const CommunityComponet = () => {

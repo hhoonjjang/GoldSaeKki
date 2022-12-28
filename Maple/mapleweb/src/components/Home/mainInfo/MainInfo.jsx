@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import mainInfoImg1 from "../Img/main_info_1.png";
 import mainInfoImg2 from "../Img/main_info_2.png";
 import mainInfoImg3 from "../Img/main_info_3.png";
+import NotFound from "../../../NotFound";
 const MainInfo = () => {
   // 나중에 Link 달아줘야 된다...
   return (
@@ -12,10 +13,7 @@ const MainInfo = () => {
         <h1 className="mainInfo_intro">
           메이플스토리 게임정보
           {/* Link달아줘야 함 */}
-          <Link
-            to="/Guide"
-            // element={}
-          >
+          <Link to="/Error" element={<NotFound />}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
@@ -29,45 +27,56 @@ const MainInfo = () => {
         <div className="mainInfo_innerBox_itemBox">
           <div className="mainInfo_item mainInfo_item_1">
             <div>
-              <img src={mainInfoImg1}></img>
+              <Link to="/Error" element={<NotFound />}>
+                <img src={mainInfoImg1}></img>
+              </Link>
             </div>
-            <div className="mainInfo_caption_1">
-              <span className="mainInfo_title">파티퀘스트</span>
-              <br />
-              <span className="mainInfo_text">
-                이번 달의 파티퀘스트 일정 정복하기 !
+            <Link to="/Error" element={<NotFound />}>
+              <div className="mainInfo_caption_1">
+                <span className="mainInfo_title">파티퀘스트</span>
                 <br />
-                용사님과 함께 파티퀘스트 즐기는 방법
-              </span>
-            </div>
+                <span className="mainInfo_text">
+                  이번 달의 파티퀘스트 일정 정복하기 !
+                  <br />
+                  용사님과 함께 파티퀘스트 즐기는 방법
+                </span>
+              </div>
+            </Link>
           </div>
           <div className="mainInfo_item mainInfo_item_2">
             <div>
-              <img src={mainInfoImg2}></img>
+              <Link to="/Error" element={<NotFound />}>
+                <img src={mainInfoImg2}></img>
+              </Link>
             </div>
-            <div className="mainInfo_caption_2">
-              <span className="mainInfo_title">캐릭터&스킬</span>
-              <br />
-              <span className="mainInfo_text">
-                모든 직업과 스킬을 한눈에!
+            <Link to="/Error" element={<NotFound />}>
+              <div className="mainInfo_caption_2">
+                <span className="mainInfo_title">캐릭터&스킬</span>
                 <br />
-                메이플스토리의 캐릭터, 스킬 정보 확인하기
-              </span>
-            </div>
+                <span className="mainInfo_text">
+                  모든 직업과 스킬을 한눈에!
+                  <br />
+                  메이플스토리의 캐릭터, 스킬 정보 확인하기
+                </span>
+              </div>
+            </Link>
           </div>
           <div className="mainInfo_item mainInfo_item_3">
             <div>
-              {" "}
-              <img src={mainInfoImg3}></img>
+              <Link to="/Error" element={<NotFound />}>
+                <img src={mainInfoImg3} />
+              </Link>
             </div>
-            <div className="mainInfo_caption_3">
-              <span className="mainInfo_title">보안강화하기</span>
-              <br />
-              <span className="mainInfo_text">
-                편리와 보안을 한방에! <br />
-                안전하고 편하게 메이플스토리 즐기기
-              </span>
-            </div>
+            <Link to="/Error" element={<NotFound />}>
+              <div className="mainInfo_caption_3">
+                <span className="mainInfo_title">보안강화하기</span>
+                <br />
+                <span className="mainInfo_text">
+                  편리와 보안을 한방에! <br />
+                  안전하고 편하게 메이플스토리 즐기기
+                </span>
+              </div>
+            </Link>
           </div>
         </div>
       </div>

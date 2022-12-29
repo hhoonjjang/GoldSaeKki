@@ -36,10 +36,10 @@
 ### - 기간 : 2022. 12. 09. ~ 2022. 12. 12.
 > ### 핵심 기능
 > * animation이 적용된 메뉴바 : 네비게이션 바를 컴포넌트화 하여 랭킹, 커뮤니티, 고객지원 페이지 등 네비게이션 바를 사용하고 싶은 페이지에 이식시켜 사용 가능하게 하였다.
+> * 카테고리명 라우터 주소 : name과 label을 설정해 props로 보내주면 카테고리 클릭시 현재 링크의 해당 라우터로 이동 가능
 > 　　<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/264491c07402a.png">
 > 　　<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/7be58594809eb.png">
 > 　　<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/4555c8ecca382.png">
-> * 카테고리 이름과 라우터 주소만 설정해 props로 보내주면 카테고리 클릭시 현재 링크의 해당 라우터로 이동 가능하게 구현하였다.
 > ```
 >    export const CATEGORY = [
 >        { name: '자유게시판', label: "Free" },

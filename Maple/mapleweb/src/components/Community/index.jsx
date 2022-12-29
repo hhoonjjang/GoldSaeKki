@@ -38,7 +38,7 @@ import EditContainer from "./Board/Edit/Container";
 import NotFound from "./NotFound";
 import axios from "axios";
 
-const CommunityComponet = ({ }) => {
+const CommunityComponet = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(action.header("Community"));
@@ -76,13 +76,17 @@ const CommunityComponet = ({ }) => {
   const boardTags = useSelector((state) => state?.community?.tags);
   console.log(boardTags);
 
-
   // 태그 검색
   const [searchType, setSearchType] = useState("태그");
   const [searchData, setSearchData] = useState("");
   const navigate = useNavigate();
   // 검색 함수
-  const navigateToSearch = async (searchType, searchData, navigate, dispatch) => {
+  const navigateToSearch = async (
+    searchType,
+    searchData,
+    navigate,
+    dispatch
+  ) => {
     dispatch(searchAction.search(searchType, searchData));
     navigate("/Search", {
       state: {
@@ -91,7 +95,6 @@ const CommunityComponet = ({ }) => {
       },
     });
   };
-
 
   return (
     <CommunityBox className="communityBox">
@@ -221,24 +224,28 @@ const CommunityComponet = ({ }) => {
                 {/* 태그 검색 인풋 영역 */}
                 <TagInputWrap>
                   {/* 여기부터~~ */}
-                  <TagInput type={"text"} onInput={(e) => {
-                    setSearchData(e.target.value);
-                  }} onKeyUp={() => {
-                    if (window.event.keyCode == 13) {
-                      if (searchData.match(/\S/g)) {
-                        navigateToSearch(
-                          searchType,
-                          searchData,
-                          navigate,
-                          dispatch
-                        );
-                        return;
-                      } else {
-                        console.log("searchData가 공백입니다.");
-                        alert("검색어를 입력하세요");
+                  <TagInput
+                    type={"text"}
+                    onInput={(e) => {
+                      setSearchData(e.target.value);
+                    }}
+                    onKeyUp={() => {
+                      if (window.event.keyCode == 13) {
+                        if (searchData.match(/\S/g)) {
+                          navigateToSearch(
+                            searchType,
+                            searchData,
+                            navigate,
+                            dispatch
+                          );
+                          return;
+                        } else {
+                          console.log("searchData가 공백입니다.");
+                          alert("검색어를 입력하세요");
+                        }
                       }
-                    }
-                  }} />
+                    }}
+                  />
                   <TagSerachBtnSpan>
                     {/* a 태그 :나중에 Link to로 바꾸기(중요) */}
                     {/* <a href="/Community/Free">
@@ -285,6 +292,8 @@ const CommunityComponet = ({ }) => {
                 e.target.classList.toggle("is-active");
               }}
             ></HeartIcon>
+            {/* <SmileImg src={smile} alt="웃음"></SmileImg> */}
+            {/* <SmileImg src={tasty} alt="웃음"></SmileImg> */}
             <SmileImg src={happiness} alt="웃음"></SmileImg>
           </NewsBox>
         </AllBox>
@@ -326,21 +335,19 @@ const AllBox = styled.div`
   }
   /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
-    width: 620px;
+    width: 780px;
   }
   /* 테블릿 세로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
-    width: 650px;
+    width: 720px;
   }
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
   @media all and (min-width: 480px) and (max-width: 767px) {
-    width: 620px;
-    margin: none;
+    width: 500px;
   }
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
-    width: 370px;
-    margin: none;
+    width: 300px;
   }
 `;
 
@@ -358,26 +365,17 @@ const ContentBox = styled.div`
     margin: 0 55px;
     margin: 0 auto;
   }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+  }
   /* 테블릿 세로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
-    margin: 0 55px;
-    margin: 0 auto;
   }
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
   @media all and (min-width: 480px) and (max-width: 767px) {
-    margin: 0 auto;
-    margin: none;
-    width: 450px;
-  }
-  @media all and (min-width: 450px) and (max-width: 550px) {
-    margin-left: 30px;
-    margin: none;
   }
   /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
-    width: 370px;
-    margin-left: 0;
-    margin: none;
   }
 `;
 
@@ -393,7 +391,6 @@ const NewsBox = styled.div`
   }
   /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
-    margin-left: 40px;
   }
   /* 테블릿 세로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
@@ -466,7 +463,7 @@ const NewsItem = styled.div`
     text-decoration: underline;
   }
 
-  &>a{
+  & > a {
     color: #333;
   }
 `;
@@ -659,8 +656,8 @@ const HeartIcon = styled.div`
   transition: background-position 1s steps(28);
   transition-duration: 0s;
   display: inline-block;
-  margin-top: 10px;
   /* margin-top: 300px; */
+  /* margin-top: 10px; */
 
   &.is-active {
     transition-duration: 1s;

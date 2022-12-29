@@ -21,7 +21,7 @@ const ImgChangeContainer = () => {
     formData.append("selectimg", imgselectfile.files[0]);
 
     axios
-      .post("http://localhost:8080/api/user/imgUpload", formData)
+      .post("/api/user/imgUpload", formData)
       .then((data) => {
         console.log(data);
         setImgOnclick(e);
@@ -33,7 +33,7 @@ const ImgChangeContainer = () => {
     const { imgselectfile } = e.target;
     const currImg = imgselectfile.files[0].name;
     axios
-      .post("http://localhost:8080/api/user/imgchange", { currUser, currImg })
+      .post("/api/user/imgchange", { currUser, currImg })
       .then((data) => {
         console.log("바뀐이미지 정보 받아온거", data);
         navigate("/mypage");

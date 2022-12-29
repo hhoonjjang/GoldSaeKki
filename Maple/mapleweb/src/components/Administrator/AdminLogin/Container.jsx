@@ -19,14 +19,14 @@ const AdminLoginContainer = () => {
   const dispatch = useDispatch();
 
   const onClick = () => {
-    axios.post("http://localhost:8080/api/admin/logout").then(() => {
+    axios.post("/api/admin/logout").then(() => {
       dispatch(action.logout());
     });
     console.log("로그아웃버튼누름");
   };
 
   const infoSubmit = (value) => {
-    axios.post("http://localhost:8080/api/admin/login", value).then(
+    axios.post("/api/admin/login", value).then(
       function (data) {
         if (document.cookie) {
           // alert("성공적으로 로그인했습니다");
@@ -40,7 +40,7 @@ const AdminLoginContainer = () => {
   };
 
   // useEffect(() => {
-  //   axios.post("http://localhost:8080/api/admin/login", accountInfo).then(
+  //   axios.post("/api/admin/login", accountInfo).then(
   //     function (data) {
   //       if (document.cookie) {
   //         // alert("성공적으로 로그인했습니다");

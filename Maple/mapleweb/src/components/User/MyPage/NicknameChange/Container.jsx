@@ -14,7 +14,7 @@ const NicknameChangeContainer = () => {
   const userInfo = () => {
     // 닉네임 변경하기 전에 디비에 있는 내용 가져와서 temp에 저장. 추후 닉네임 중복 비교를 위해 쓸 예정
     axios
-      .post("http://localhost:8080/api/user/getUser")
+      .post("/api/user/getUser")
       .then((data) => {
         console.log(data);
         data?.data?.map((item) => {
@@ -67,7 +67,7 @@ const NicknameChangeContainer = () => {
       return alert("정보를 입력해주십쇼");
     }
     axios
-      .post("http://localhost:8080/api/user/clearCookie", {
+      .post("/api/user/clearCookie", {
         changeName,
         currUserName,
       })
@@ -84,7 +84,7 @@ const NicknameChangeContainer = () => {
       // });
       .then((userInfo) => {
         axios
-          .post("http://localhost:8080/api/user/changename", userInfo)
+          .post("/api/user/changename", userInfo)
           .then((data) => {
             console.log("바뀐닉네임", data.data);
             dispacth(

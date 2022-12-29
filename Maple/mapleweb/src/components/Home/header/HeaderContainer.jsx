@@ -9,7 +9,7 @@ import { action as imgAction } from "../../../modules/onImg";
 
 const logout = () => {
   try {
-    axios.post("http://localhost:8080/api/user/logout").then((data) => {});
+    axios.post("/api/user/logout").then((data) => {});
   } catch (error) {
     console.error(error);
   }
@@ -28,7 +28,7 @@ const HeaderContainer = () => {
   const dispatch = useDispatch();
 
   const getUserImg = async (currUserName) => {
-    const data = await axios.post("http://localhost:8080/api/user/getImg", {
+    const data = await axios.post("/api/user/getImg", {
       currUserName: currUserName,
     });
     console.log(data.data);

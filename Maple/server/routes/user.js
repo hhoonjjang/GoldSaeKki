@@ -36,7 +36,7 @@ router.post("/imgchange", (req, res) => {
         res.end(data);
       });
     });
-    res.send(`http://localhost:8080/api/download${req.body.currImg}`);
+    res.send(`/api/download${req.body.currImg}`);
   });
 });
 
@@ -50,7 +50,7 @@ router.post("/getImg", (req, res) => {
         console.log("data?.profileImg : ", data?.profileImg);
         if (data?.profileImg) {
           console.log("이미지 정보", data.profileImg);
-          res.send(`http://localhost:8080/api/download${data.profileImg}`);
+          res.send(`/api/download${data.profileImg}`);
         } else {
           res.send("/Img/catimg.png");
         }

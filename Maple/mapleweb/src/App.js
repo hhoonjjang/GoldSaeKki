@@ -33,7 +33,7 @@ function App() {
   const adminLogin = () => {
     if (document.cookie) {
       axios
-        .post("http://localhost:8080/api/admin/admincheck")
+        .post("/api/admin/admincheck")
         .then(function (data) {
           console.log(data);
           // window.location.reload();
@@ -47,7 +47,7 @@ function App() {
     if (document.cookie.split("=")[0] == "login") {
       console.log("쿠키 들어왔다.");
       axios
-        .post("http://localhost:8080/api/user/logincheck")
+        .post("/api/user/logincheck")
         .then((data) => {
           dispatch(action.check(data.data.userInfo));
           console.log("로그인정보를 받았다", data);

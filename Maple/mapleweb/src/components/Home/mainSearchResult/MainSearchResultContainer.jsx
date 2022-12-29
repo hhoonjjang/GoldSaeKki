@@ -10,7 +10,7 @@ const getSearchList = async (searchType, searchData, setSearchResultData) => {
   console.log("searchType : ", searchType);
   console.log("searchData : ", searchData);
 
-  const data = await axios.post("http://localhost:8080/api/search/mainSearch", {
+  const data = await axios.post("/api/search/mainSearch", {
     searchType: searchType,
     searchData: searchData,
   });

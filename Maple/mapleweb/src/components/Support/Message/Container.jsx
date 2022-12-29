@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 const msgArrFun = async (setMsg, userName) => {
   if (document.cookie) {
     const msgArr = (
-      await axios.post("http://localhost:8080/api/support/displaymsg", userName)
+      await axios.post("/api/support/displaymsg", userName)
     ).data;
     setMsg(msgArr);
   }

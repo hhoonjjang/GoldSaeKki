@@ -5,7 +5,7 @@ import ThirdContainer from "./Container3";
 const tempArrFun = async (setCategory) => {
   try {
     let categoryArr = (
-      await axios.post("http://localhost:8080/api/admin/addtext")
+      await axios.post("/api/admin/addtext")
     ).data;
 
     setCategory(categoryArr);
@@ -16,7 +16,7 @@ const tempArrFun = async (setCategory) => {
 
 const tempChildFun = async (setText) => {
   try {
-    let textArr = (await axios.post("http://localhost:8080/api/admin/addchild"))
+    let textArr = (await axios.post("/api/admin/addchild"))
       .data;
     setText(textArr);
   } catch (err) {
@@ -46,7 +46,7 @@ const SecondContainer = ({ propsArr }) => {
     console.log("category:" + category);
     console.log("text:" + text);
     axios
-      .post("http://localhost:8080/api/admin/helptext", { category, text })
+      .post("/api/admin/helptext", { category, text })
       .then(() => {
         alert("추가되었습니다");
 
@@ -56,7 +56,7 @@ const SecondContainer = ({ propsArr }) => {
 
   const delBtn = (text) => {
     console.log(text);
-    axios.post("http://localhost:8080/api/admin/deltext", { text }).then(() => {
+    axios.post("/api/admin/deltext", { text }).then(() => {
       alert("삭제되었습니다");
       tempChildFun(setText);
     });
@@ -76,7 +76,7 @@ const SecondContainer = ({ propsArr }) => {
     if (!text) return setBool(-1);
     setBool(-1);
     axios
-      .post("http://localhost:8080/api/admin/edittext", { text, id })
+      .post("/api/admin/edittext", { text, id })
       .then(() => {
         tempChildFun(setText);
       });
@@ -100,7 +100,7 @@ const SecondContainer = ({ propsArr }) => {
       console.log(changeFromArr)
     console.log(changeToArr)
     if(changeToArr.id){
-      axios.post("http://localhost:8080/api/admin/changesecond", {changeFromArr,changeToArr}).then((data)=>{
+      axios.post("/api/admin/changesecond", {changeFromArr,changeToArr}).then((data)=>{
         alert(data.data);
         tempChildFun(setText);
 

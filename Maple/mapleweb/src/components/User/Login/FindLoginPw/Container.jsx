@@ -4,7 +4,7 @@ import axios from "axios";
 const FindPwContainer = ({ findPw, setFindPw }) => {
   const findPwfunc = (findIdData) => {
     axios
-      .post("http://localhost:8080/api/user/findPw", { findId: findIdData })
+      .post("/api/user/findPw", { findId: findIdData })
       .then((data) => {
         console.log(data);
         if (data.data.message === 504) {

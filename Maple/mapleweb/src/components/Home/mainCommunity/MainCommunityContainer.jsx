@@ -5,7 +5,7 @@ import MainCommunityComponent from "./MainCommunityComponent";
 const getCommunityList = async (setCommunityNewestPost) => {
   try {
     const data = await axios.post(
-      "http://localhost:8080/api/board/mainCommunity"
+      "/api/board/mainCommunity"
     );
     const result = data.data.result.sort(function (a, b) {
       return a.category < b.category ? -1 : a.category < b.category ? 1 : 0;
@@ -32,7 +32,7 @@ const MainCommunityContainer = () => {
   const onlyMainCommunity = useRef(false);
 
   const totalRanking = () => {
-    axios.post("http://localhost:8080/api/rank/total").then((data) => {
+    axios.post("/api/rank/total").then((data) => {
       console.log(data.data);
       setTotalData(data.data.slice(0, 5));
     });

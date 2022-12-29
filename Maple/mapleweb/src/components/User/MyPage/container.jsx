@@ -11,7 +11,7 @@ const MypageContainer = () => {
     console.log("요청하고있니??", currUserName);
 
     axios
-      .post("http://localhost:8080/api/user/getImg", {
+      .post("/api/user/getImg", {
         currUserName: currUserName,
       })
       .then((data) => {

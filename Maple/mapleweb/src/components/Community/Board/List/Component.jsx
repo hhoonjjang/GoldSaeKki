@@ -83,7 +83,7 @@ const ListComponent = () => {
 
       // 리덕스에 전체 카테고리들을 저장해준다.
       // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
-      axios.post("http://localhost:8080/api/board/getList", {
+      axios.post("/api/board/getList", {
         category: category.name,
       }).then((boards) => {
         // DB에 값이 없으면 에러가 뜨지 않게 해준다.
@@ -92,7 +92,7 @@ const ListComponent = () => {
         }
 
         // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
-        axios.post("http://localhost:8080/api/board/getLikeSevenBoards", {
+        axios.post("/api/board/getLikeSevenBoards", {
         }).then((boards) => {
           // 해당 게시글 목록을 리덕스에 저장한다.
           console.log(boards.data);
@@ -117,7 +117,7 @@ const ListComponent = () => {
 
       // 리덕스에 해당 카테고리들만 저장해준다. (item)
       // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
-      axios.post("http://localhost:8080/api/board/getWorldList", {
+      axios.post("/api/board/getWorldList", {
         category: category.name,
         // 여기부터
         world: nowWorld,
@@ -132,7 +132,7 @@ const ListComponent = () => {
         dispatch(action.list(boards.data));
 
         // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
-        axios.post("http://localhost:8080/api/board/getLikeSevenBoards", {
+        axios.post("/api/board/getLikeSevenBoards", {
         }).then((boards) => {
           // 해당 게시글 목록을 리덕스에 저장한다.
           console.log(boards.data);
@@ -169,7 +169,7 @@ const ListComponent = () => {
     setNowPage(1);
 
     // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
-    axios.post("http://localhost:8080/api/board/getList", {
+    axios.post("/api/board/getList", {
       category: category.name,
     }).then((boards) => {
       // DB에 값이 없으면 에러가 뜨지 않게 해준다.
@@ -182,7 +182,7 @@ const ListComponent = () => {
 
 
       // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
-      axios.post("http://localhost:8080/api/board/getLikeSevenBoards", {
+      axios.post("/api/board/getLikeSevenBoards", {
       }).then((boards) => {
         // 해당 게시글 목록을 리덕스에 저장한다.
         console.log(boards.data);
@@ -215,7 +215,7 @@ const ListComponent = () => {
     newBoards.map(async (item, idx) => {
 
       // 해당 게시글의 댓글 개수를 가져오는 요청을 보낸다.
-      await axios.post("http://localhost:8080/api/comment/count", {
+      await axios.post("/api/comment/count", {
         boardId: item.id,
       }).then((item) => {
         commentCounts.push(item.data.number);

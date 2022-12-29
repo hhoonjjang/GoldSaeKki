@@ -10,7 +10,7 @@ const MyBoardEditContainer = () => {
   const getMyboard = () => {
     console.log("게시글 정보 불러왔다.");
     axios
-      .post("http://localhost:8080/api/user/board", { currUser: currUser })
+      .post("/api/user/board", { currUser: currUser })
       .then((data) => {
         console.log(data);
         setBoardList(data.data);

@@ -37,7 +37,9 @@
 <img style="width : 600px" src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/c0a943d178a64.gif">
 
 > ### 이슈 사항 
-* 귀여워야 하는데 그렇지 못함 -> 내가귀여워서 해결됨 :smile:
+1. 카테고리 클릭시 카테고리 엘리먼트의 width를 가져와 
+  아래 바의 크기를 변경시켜야 하는데 리랜더링 문제로 width크기가 한번씩 밀려서 
+  바로 적용안되는 문제 때문에 시간을 많이사용함. -> useEffect() 메서드를 사용해 state의 값이 변경될 때 리랜더링 되도록 설정해 해결하였다. :smile:
 
 
 <img src = "https://artyandbanana.com/wp-content/uploads/2022/10/%EB%B0%94%EB%82%98%EB%82%98-%EC%9E%89%EA%B8%80%EB%A6%AC%EC%89%AC-%EB%A1%9C%EA%B3%A0-2-1.jpg"><br><br>

@@ -1,11 +1,11 @@
 
 import styled from 'styled-components';
-import { Link, Routes, Route, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 
 import axios from "axios";
@@ -14,11 +14,6 @@ import UploadAdapter from './UploadAdapter';
 import { Helmet } from 'react-helmet';
 
 
-// CKEditor 이미지 업로드를 위한 multer 기본 세팅
-// const API_URL = "";
-// const UPLOAD_ENDPOINT = "upload_files";
-
-// 어댑터 연결 함수
 function MyCustomUploadAdapterPlugin(editor) {
   editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
     return new UploadAdapter(loader);
@@ -27,22 +22,16 @@ function MyCustomUploadAdapterPlugin(editor) {
 
 const AddComponent = ({ }) => {
 
-  // 라우터 이동
   const navigate = useNavigate();
 
-  // 현재 로그인 유저 정보
   const userWorld = useSelector((state) => state.user.currServerName);
   const userName = useSelector((state) => state.user.currUserName);
 
-  // 현재 주소의 카테고리 라우터
   const location = useLocation();
   const route = useParams(location).category;
-  console.log(route);
 
-  // 주소에서 카테고리 이름을 가져와 기본값으로 저장한다.
   const [category, setCategory] = useState(CATEGORY.find(item => item.label == route).name);
 
-  // 게시글에 추가할 값들
   const [titleText, setTitleText] = useState("");
   const [contentData, setContentData] = useState("");
   const [tags, setTags] = useState("");
@@ -51,15 +40,11 @@ const AddComponent = ({ }) => {
 
   const dispatch = useDispatch();
 
-  // 페이지 도착시 스크롤 높이 변경
   useEffect(() => {
     window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
 
-    // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
     axios.post("/api/board/getLikeSevenBoards", {
     }).then((boards) => {
-      // 해당 게시글 목록을 리덕스에 저장한다.
-      console.log(boards.data);
       const boardsData = boards.data;
       let likeTagBoards = [];
       boardsData.map((board, index) => {
@@ -72,19 +57,14 @@ const AddComponent = ({ }) => {
   }, []);
 
   if (!userName) {
-    console.log("유저 정보가 없습니다.");
     navigate("/");
     return;
   }
-
-  // 이미지 등록 시 폼 태그로 감싸주기
-
 
   return (
 
     <>
       <Helmet>
-        {/* <script src="" type="text/javascript" /> */}
       </Helmet>
       <CategoryTitle>{category}</CategoryTitle>
 
@@ -98,8 +78,6 @@ const AddComponent = ({ }) => {
           </CategorySelector>
 
 
-          {/* 제목값을 가져오기~~ */}
-          {/* 현재 게시판 이름을 저장해 가져와 띄운다. */}
           <TitleInput type={'text'} placeholder={"제목을 입력해주세요."} onInput={(e) => {
             setTitleText(e.target.value);
           }} />
@@ -110,23 +88,15 @@ const AddComponent = ({ }) => {
           editor={ClassicEditor}
           data="<p>&nbsp;</p>"
           onReady={(editor) => {
-            // console.log("Editor is ready to use!", editor);
-            console.log("저는 준비 되었습니다 주인님! -Editor", editor);
           }}
           onChange={(event, editor) => {
             const data = editor.getData();
-            console.log({ event, editor, data });
             setContentData(data);
           }}
           onBlur={(event, editor) => {
-            console.log("Blur.", editor);
           }}
           onFocus={(event, editor) => {
-            console.log("Focus.", editor);
           }}
-        // config={{ckfinder: {
-        //     uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json'
-        // }}}
         >
 
         </CKEditor>
@@ -137,17 +107,13 @@ const AddComponent = ({ }) => {
           }}></TagInput>
         </TagWrap>
 
-        {/* 취소, 등록 버튼 */}
         <ButtonBox>
-          {/* 취소 */}
           <Link to={`/Community/${route}`}>
             <CancelBtn className="btn03_g">취소</CancelBtn>
           </Link>
 
-          {/* 등록 */}
           <RegistBtn className="btn03_g" onClick={async (e) => {
             if (!titleText.match(/\S/g)) return alert("제목을 입력해주세요.");
-            // 서버쪽에 등록 요청을 보낸다.
             const regist = await axios.post("/api/board/create", {
               title: titleText,
               world: selected,
@@ -158,21 +124,12 @@ const AddComponent = ({ }) => {
               userWorld: userWorld,
             });
 
-            // status와 tempBoard의 요청 값이 출력됨
-            // console.log(regist.data);
             const boardId = regist.data?.tempBoard?.id;
 
-            // 응답 받아오기
             switch (regist.data.status) {
               case 200:
-                // 성공 알람, 게시물 상세 페이지로 리턴
                 alert("게시글 등록됨");
-
-                // 리듀서 업데이트 ㄱㄱ
-                // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
                 await axios.post("/api/board/getLikeSevenBoards", {}).then((boards) => {
-                  // 해당 게시글 목록을 리덕스에 저장한다.
-                  console.log(boards.data);
                   const boardsData = boards.data;
                   let likeTagBoards = [];
                   boardsData.map((board, index) => {
@@ -198,10 +155,6 @@ const AddComponent = ({ }) => {
           }}>등록</RegistBtn>
         </ButtonBox>
 
-        {/* 값을 보기 위해 임시로 만듬 : 일단 값 잘 받아와짐 */}
-        {/* 나중에 이미지도 추가할 수 있게 하기 */}
-        {/* <div>내용 : {contentData}</div> */}
-
       </ContentBox>
     </>
   );
@@ -219,12 +172,9 @@ const ContentBox = styled.div`
     outline: none;
   }
 
-  /* ckEditor css 설정 */
   & .ck-content {
     height: 560px;
 
-    /* 게시글 등록 반응형 : CK-EDITOR 높이 */
-    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
     @media all and (max-width: 479px) {
       height : 400px;
     }
@@ -240,24 +190,19 @@ const ContentBox = styled.div`
     border: 1px solid #ccced1;
   }
 
-  /* 게시글 등록 반응형 : 전체너비 */
   @media screen and (max-width: 1280px) {
     width: 700px;
   }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
     width: 620px;
   }
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
     width: 650px;
   }
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
   @media all and (min-width: 480px) and (max-width: 767px) {
     width: 440px;
     margin: 0 auto;
   }
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
     width: 310px;
     margin-left: 20px;
@@ -265,7 +210,6 @@ const ContentBox = styled.div`
 `;
 
 const TitleWrap = styled.div`
-  /* margin-top: 30px; */
   height: 50px;
   float: left;
   width: 100%;
@@ -276,11 +220,7 @@ const TitleWrap = styled.div`
   background-color: #f9f9f9;
   border: none;
   border-top: 1px solid #7e7e7e;
-  /* border-bottom: 1px solid #CCCED1; */
-  /* border-bottom: 1px solid #CCCED1; */
 
-  /* 게시글 등록 반응형 : 제목 영역 */
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
     padding : 0 10px;
   }
@@ -294,8 +234,6 @@ const CategorySelector = styled.select`
   border: 1px solid #ccced1;
   cursor: pointer;
 
-  /* 게시글 등록 반응형 : 월드 선택 */
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
     margin-right: 5px;
     padding: 0 0 0 5px;
@@ -309,8 +247,6 @@ const TitleInput = styled.input`
   font-size: 15px;
   border: 1px solid #ccced1;
 
-  /* 게시글 등록 반응형 : 월드 선택 */
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
     width: 310px;
     padding: 0 10px;
@@ -325,13 +261,12 @@ const CategoryTitle = styled.h1`
   width: 100%;
   float: left;
   height: 40px;
-  margin-bottom: 50px; /* 이놈이 맞음 */
+  margin-bottom: 50px; 
   cursor: default;
 `;
 
 const TagWrap = styled.div`
   border: 1px solid #ccced1;
-  /* margin-top: 30px; */
   height: 50px;
   float: left;
   width: 100%;
@@ -350,12 +285,9 @@ const TagSpan = styled.span`
   background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/tag_title_bg.png)
     right 17px no-repeat;
 
-  /* 게시글 등록 반응형 : 태그 달기 */
-  /* 게시글 등록 반응형 : 전체너비 */
   @media screen and (max-width: 1280px) {
     white-space: nowrap;
   }
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
     width: 140px;
     margin-left: 12px;
@@ -373,12 +305,9 @@ const TagInput = styled.input`
   font-size: 15px;
   padding: 0 10px;
 
-  /* 게시글 등록 반응형 : 태그 입력창 */
-  /* 게시글 등록 반응형 : 전체너비 */
   @media screen and (max-width: 1280px) {
     margin-right: 15px;
   }
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
     margin: 0 5px;
     font-size: 12px;
@@ -417,19 +346,15 @@ const RegistBtn = styled.span`
   font-size: 15px;
   color: #fff;
   text-align: center;
-  /* background-color: #485F9C; */
-  /* background-color: #D271A8; */
   background-color: #da63a6;
   border-radius: 2px;
   padding: 12px 24px;
-  /* border: 1px solid #747a86; */
   display: inline-block;
   line-height: 1;
   margin: 0 5px;
   cursor: pointer;
   &:hover {
     color: white;
-    /* background-color: #324B90; */
     background-color: #ca5196;
   }
 `;

@@ -10,7 +10,7 @@ import UserComponent from "../../User";
 
 import badge from "../Img/main_gamestart_badge.png";
 import MypageContainer from "../../User/MyPage/Container";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import NotFound from "../../../NotFound";
 
 const MainGamestartComponent = ({
@@ -53,7 +53,6 @@ const MainGamestartComponent = ({
             <div
               className="header_innerBox_center_start"
               onClick={() => {
-                alert("게임스타트");
                 window.location.href = "https://play2048.co/";
               }}
             >
@@ -72,7 +71,6 @@ const MainGamestartComponent = ({
               <div className="mainGamestart_logged_innerBox_hero_cover">
                 <div className="mainGamestart_logged_innerBox_hero">
                   <Link to="/Mypage" element={<MypageContainer />}>
-                    {/* <img src={""} alt="캐릭터" /> */}
                     <img src={thumbnailImg} alt="아바타" />
                   </Link>
                 </div>
@@ -83,7 +81,6 @@ const MainGamestartComponent = ({
                     <div
                       className="mainGamestart_logged_innerBox_briefProfile_name"
                       onClick={() => {
-                        console.log(document.cookie.split("=")[0]);
                       }}
                     >
                       {currUserName}
@@ -224,7 +221,6 @@ const MainGamestart = styled.div`
     div {
       width: 100%;
       display: flex;
-      // flex-direction: column;
       justify-content: center;
     }
     @media only screen and (min-width: 1150px) {

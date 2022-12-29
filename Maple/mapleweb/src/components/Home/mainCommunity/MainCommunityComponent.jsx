@@ -3,7 +3,7 @@ import communityBackground from "../Img/main_community_background.jpg";
 import CommunityComponet from "../../Community";
 import RankComponent from "../../Ranking";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const MainCommunityComponent = ({
   communityNewestPost,
@@ -14,7 +14,6 @@ const MainCommunityComponent = ({
   useEffect(() => {
     totalRanking();
   }, []);
-  console.log(totalData);
   return (
     <MainCommunityBox img={communityBackground}>
       <div className="mainCommunity_innerBox">
@@ -35,21 +34,6 @@ const MainCommunityComponent = ({
             </h1>
           </div>
           <div className="mainCommunity_innerBox_community_list">
-            {/* <div className="mainCommunity_innerBox_community_free"> */}
-            {/* <div></div> */}
-            {/* <div></div> */}
-            {/* <div></div> */}
-            {/* </div> */}
-            {/* <div className="mainCommunity_innerBox_community_infomation"> */}
-            {/* <div></div> */}
-            {/* <div></div> */}
-            {/* <div></div> */}
-            {/* </div> */}
-            {/* <div className="mainCommunity_innerBox_community_topicDiscussion"> */}
-            {/* <div></div> */}
-            {/* <div></div> */}
-            {/* <div></div> */}
-            {/* </div> */}
             {communityList.map((item, index) => {
               return (
                 <div

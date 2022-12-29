@@ -332,15 +332,11 @@ const ListComponent = () => {
 export default ListComponent;
 
 const AllWrap = styled.div`
-  /* & > div {
-    float: left;
-  } */
   .pagination {
     display: flex;
     justify-content: center;
     margin-top: 15px;
   
-    /* 드래그 금지 */
     -webkit-touch-callout: none;
     user-select: none;
     -moz-user-select: none;
@@ -363,16 +359,13 @@ const AllWrap = styled.div`
       font-size: 1rem;
   }
   ul.pagination li:first-child {
-      /* border-radius: 5px 0 0 5px; */
       border-radius: 3px 0 0 3px;
   }
   ul.pagination li:last-child {
-      /* border-radius: 0 5px 5px 0; */
       border-radius: 0 3px 3px 0;
   }
   ul.pagination li a {
       text-decoration: none;
-      /* color: #337ab7; */
       color: #DC7EB3;
       font-size: 1rem;
   }
@@ -382,30 +375,19 @@ const AllWrap = styled.div`
   }
 
   ul.pagination li.active {
-      /* background-color: #337ab7; */
       background-color: #DC7EB3;
   }
   ul.pagination li a:hover,
   ul.pagination li a.active {
-      /* color: blue; */
       color: #CA5196;
   }
   .page-selection {
       width: 48px;
       height: 30px;
-      /* color: #337ab7; */
       color: #DC7EB3;
   }
 `;
 const CategoryTitle = styled.h1`
-  /* font-size: 28px;
-  color: #333;
-  margin-top: 60px;
-  font-weight: 600;
-  width: 100%;
-  height: 40px;
-  margin-bottom: 40px;
-  cursor: default; */
   font-size: 28px;
   color: #333;
   margin-top: 20px;
@@ -416,8 +398,6 @@ const CategoryTitle = styled.h1`
   cursor: default;
   margin-bottom: 20px;
 
-  /* 게시글 목록 반응형 : 카테고리 */
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
     font-size: 22px;
     margin-bottom: 0px;
@@ -443,12 +423,9 @@ const WorldBox = styled.div`
   margin-bottom: 30px;
   padding: 26px 0 20px 26px;
 
-  /* 게시글 목록 반응형 : 월드박스 */
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
   @media all and (min-width: 480px) and (max-width: 767px) {
     display: none;
   }
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
     display: none;
   }
@@ -469,14 +446,12 @@ const WorldSpan = styled.span`
   position: relative;
   cursor: pointer;
   padding-left: 8px;
-  /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-user-select: none;
   
-  /* 이놈 : 자식 전부를 뜻함 */
   *{
     pointer-events: none;
   }
@@ -518,23 +493,12 @@ const OneBoardList = styled.div`
   justify-content: space-between;
   cursor: pointer;
 
-  /* 게시글 목록 반응형 : 게시글 */
-  @media screen and (max-width: 1280px) {
-  }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
-  } 
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
   @media all and (min-width:480px) and (max-width:767px) {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     padding: 10px 12px 10px 27px;
   } 
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
     flex-direction: column;
     justify-content: center;
@@ -549,31 +513,24 @@ const BoardTitle = styled.div`
   float: left;
   max-width: 500px;
 
-  /* 게시글 목록 반응형 : 타이틀 */
   @media screen and (max-width: 1280px) {
-    /* max-width: 250px; */
     max-width: 300px;
   }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
   @media all and (min-width:768px) and (max-width:1023px) { 
     max-width: 320px;
   } 
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
   @media all and (min-width:768px) and (max-width:1023px) { 
     max-width: 320px;
   } 
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
   @media all and (min-width:480px) and (max-width:767px) {
     max-width: 600px;
     margin-bottom: 5px;
   } 
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
     margin-bottom: 5px;
     max-width: 285px;
 
     font-size: 15px;
-    /* max-width: 320px; */
     max-width: 300px;
   }
 
@@ -609,23 +566,12 @@ const OtherBoardInfo = styled.div`
   min-width: 324px;
   max-width: 380px;
   
-  /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-user-select: none;
 
-  /* 게시글 목록 반응형 : 다른정보 */
-  @media screen and (max-width: 1280px) {
-  }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
-  } 
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
-  @media all and (min-width:768px) and (max-width:1023px) { 
-  } 
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
   @media all and (min-width:480px) and (max-width:767px) {
     display: flex;
     align-items: flex-start;
@@ -633,7 +579,6 @@ const OtherBoardInfo = styled.div`
     width: 420px;
     justify-content: space-between;
   } 
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
     display: flex;
     align-items: flex-start;
@@ -666,8 +611,6 @@ const IconInfoWrap = styled.div`
   white-space: nowrap;
   overflow: hidden;
 
-  /* 게시글 목록 반응형 : 아이콘DIV */
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
   @media all and (max-width:479px) {
     max-width: 220px;
     &>div{
@@ -684,11 +627,8 @@ const IconInfo = styled.div`
   white-space: nowrap;
   overflow: hidden;
   padding-left: 18px;
-  /* 보통은 그냥 바로 안띄우고 예외처리도 해준다(ex. 이미지가 안 들어왔을 때 무엇을 띄울 것인지) */
-  /* 이놈 뭔지 모르겠는데 조금 수정해야 할듯? */
   background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(props) => props.iconImg}.png") left 0px no-repeat;
   max-width: ${(props) => {
-    // 무엇을 기준으로 나눌건지
     switch (props.iconImg) {
       case "heart2_new":
         return 55;

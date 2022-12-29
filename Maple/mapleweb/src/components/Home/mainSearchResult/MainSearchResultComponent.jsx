@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { action } from "../../../modules/search";
 
-import searchBtn from "../Img/main_search_btn.png";
 import exclamationIcon from "../Img/main_search_noneResult.png";
 
 const MainSearchResultComponent = ({
@@ -27,8 +26,6 @@ const MainSearchResultComponent = ({
   const searchTypeList = ["제목", "작성자", "태그"];
 
   useEffect(() => {
-    console.log(searchResultData);
-    console.log(searchResultData.length);
   }, [searchResultData]);
 
   const searchTypeRedux = useSelector((state) => state.search.searchType);
@@ -98,7 +95,6 @@ const MainSearchResultComponent = ({
                         dispatch(action.search(researchType, researchData));
                         return;
                       } else {
-                        console.log("researchData가 공백입니다.");
                         alert("검색어를 입력하세요");
                       }
                     }
@@ -112,7 +108,6 @@ const MainSearchResultComponent = ({
                       dispatch(action.search(researchType, researchData));
                       return;
                     } else {
-                      console.log("researchData가 공백입니다.");
                       alert("검색어를 입력하세요");
                     }
                   }}
@@ -135,10 +130,6 @@ const MainSearchResultComponent = ({
         </div>
         <table className="mainSearchResult_innerBox_resultTable">
           <tbody>
-            {/* <tr> */}
-            {/* <td>공지사항</td> */}
-            {/* <td></td> */}
-            {/* </tr> */}
             <tr>
               <td>커뮤니티</td>
               <td>
@@ -156,7 +147,6 @@ const MainSearchResultComponent = ({
                           <div></div>
                         </div>
                       ) : (
-                        // 나중에 금쪽이아트 기능이 추가되면..
                         <div
                           className="mainSearchResult_innerBox_resultTable_textBoard"
                           key={`mainSearchResult_innerBox_resultTable_textBoard_${index}`}
@@ -301,7 +291,6 @@ const MainSearchResult = styled.div`
         }
 
         .mainSearchResult_innerBox_research_inputBox_input {
-          // flex: 1;
           margin-left: 10px;
           background-color: transparent;
           border: none;
@@ -329,7 +318,6 @@ const MainSearchResult = styled.div`
       margin-bottom: 40px;
 
       span {
-        /* color: #1c6ac3; */
         color: #ca5196;
       }
     }
@@ -377,13 +365,11 @@ const MainSearchResult = styled.div`
             font-size: 14px;
 
             .mainSearchResult_innerBox_resultTable_title_category {
-              /* color: #1c6ac3; */
               color: #ca5196;
               margin-right: 7px;
               white-space: nowrap;
             }
             .mainSearchResult_innerBox_resultTable_title_world {
-              /* color: #1c6ac3; */
               color: #ca5196;
               margin-right: 7px;
               white-space: nowrap;
@@ -418,8 +404,6 @@ const MainSearchResult = styled.div`
               max-width: 100%;
               color: #828282;
               font-size: 13px;
-
-              // white-space: nowrap;
 
               p {
                 max-height: 63px;

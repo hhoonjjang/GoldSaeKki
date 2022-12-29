@@ -12,9 +12,7 @@ const TotalRankingComponent = ({
   searchTotalRanking,
   searchList,
 }) => {
-  // 페이징 처리 : 현재 페이지
   const [nowPage, setNowPage] = useState(1);
-  // 페이지 변경 함수
   const handlePageChange = (page) => {
     setNowPage(page);
   };
@@ -31,8 +29,6 @@ const TotalRankingComponent = ({
   }, [server]);
 
   const RankingArr = useMemo(() => {
-    console.log(server);
-    console.log("종합데이터", totalData);
     if (route.sword) {
       if (searchList.length) {
         let tempAry = [...searchList];
@@ -94,7 +90,6 @@ const TotalRankingComponent = ({
             className="select"
             onChange={(e) => {
               setServer(e.target.value);
-              console.log("셋서버", e.target.value);
             }}
           >
             <option value="서버 선택">서버 선택</option>
@@ -145,19 +140,12 @@ const TotalRankingComponent = ({
       </TotalRankingRaw>
       <PagenationWrap>
         <Pagination
-          // 현재 페이지
           activePage={nowPage}
-          // 띄울 게시글 개수
           itemsCountPerPage={10}
-          // 총 게시글 개수
           totalItemsCount={RankingArr?.length || 0}
-          // 표시할 개수
           pageRangeDisplayed={10}
-          // 이전을 나타낼 아이콘
           prevPageText={"‹"}
-          // 다음을 나타낼 아이콘
           nextPageText={"›"}
-          // 페이지네이션 함수
           onChange={handlePageChange}
         />
       </PagenationWrap>
@@ -220,18 +208,15 @@ const TotalRankBox = styled.div`
   }
 
   ul.pagination li:first-child {
-    /* border-radius: 5px 0 0 5px; */
     border-radius: 3px 0 0 3px;
   }
 
   ul.pagination li:last-child {
-    /* border-radius: 0 5px 5px 0; */
     border-radius: 0 3px 3px 0;
   }
 
   ul.pagination li a {
     text-decoration: none;
-    /* color: #337ab7; */
     color: #5e7bcb;
     font-size: 1rem;
   }
@@ -241,20 +226,17 @@ const TotalRankBox = styled.div`
   }
 
   ul.pagination li.active {
-    /* background-color: #337ab7; */
     background-color: #5e7bcb;
   }
 
   ul.pagination li a:hover,
   ul.pagination li a.active {
-    /* color: blue; */
     color: #5e7bcb;
   }
 
   .page-selection {
     width: 48px;
     height: 30px;
-    /* color: #337ab7; */
     color: #5e7bcb;
   }
 `;

@@ -7,7 +7,7 @@ const getCommunityList = async (setCommunityNewestPost) => {
     const data = await axios.post(
       "/api/board/mainCommunity"
     );
-    const result = data.data.result.sort(function (a, b) {
+    const result = data?.data?.result?.sort(function (a, b) {
       return a.category < b.category ? -1 : a.category < b.category ? 1 : 0;
     });
     for (let i = 0; i < result.length; i++) {
@@ -33,19 +33,18 @@ const MainCommunityContainer = () => {
 
   const totalRanking = () => {
     axios.post("/api/rank/total").then((data) => {
-      console.log(data.data);
       setTotalData(data.data.slice(0, 5));
     });
   };
 
   useEffect(() => {
     getCommunityList(setCommunityNewestPost);
-    // getCommunityArtList(setCommunityArtList);
   }, []);
 
   useEffect(() => {
-    if (onlyMainCommunity.current) console.log(communityNewestPost[0]);
-    else onlyMainCommunity.current = true;
+    if (onlyMainCommunity.current) {
+
+    }else onlyMainCommunity.current = true;
   }, [communityNewestPost]);
 
   return (

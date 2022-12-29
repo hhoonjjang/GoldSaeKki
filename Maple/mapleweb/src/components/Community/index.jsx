@@ -1,5 +1,4 @@
 import styled from "styled-components";
-// import { Link, Routes, Route } from "react-router-dom";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 
 import Slider from "react-slick";
@@ -20,19 +19,11 @@ import one from "./images/1.png";
 import two from "./images/2.png";
 import three from "./images/3.png";
 import four from "./images/4.png";
-import prev from "./images/prev.png";
-import next from "./images/next.png";
-import smile from "./images/smile.png";
-import heart from "./images/heart.png";
-import tasty from "./images/tasty.png";
 import happiness from "./images/happiness.png";
 import AddContainer from "./Board/Add/Container";
 import { useEffect, useState } from "react";
 
-// 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
-// import { action as communityAction, CATEGORY, CATEGORY2 } from "../../modules/community";
-import { CATEGORY, CATEGORY2 } from "../../modules/community";
-import CommentContainer from "./Pagination/Container";
+import { CATEGORY } from "../../modules/community";
 import DetailContainer from "./Board/Detail/Container";
 import EditContainer from "./Board/Edit/Container";
 import NotFound from "./NotFound";
@@ -43,10 +34,7 @@ const CommunityComponet = ({}) => {
   useEffect(() => {
     dispatch(action.header("Community"));
 
-    // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
     axios.post("/api/board/getLikeSevenBoards", {}).then((boards) => {
-      // 해당 게시글 목록을 리덕스에 저장한다.
-      console.log(boards.data);
       const boardsData = boards.data;
       let likeTagBoards = [];
       boardsData.map((board, index) => {
@@ -58,27 +46,22 @@ const CommunityComponet = ({}) => {
     });
   }, []);
 
-  // 사이드 슬라이드 라이브러리 세팅 : 슬라이드의 기능 조정
   const settings = {
-    dots: true, // 점 보이게
-    infinite: true, // 무한으로 돌리게
-    speed: 1000, // 클릭시 1초에 걸쳐서 넘어가게
-    autoplay: true, // 자동으로 넘길 것인지(중요)
+    dots: true, 
+    infinite: true, 
+    speed: 1000, 
+    autoplay: true, 
 
-    autoplaySpeed: 4000, //4초마다 자동 넘김
-    slidesToShow: 1, //1장씩 보이게 해줌
-    slidesToScroll: 1, //1장씩 넘어가게 해줌
+    autoplaySpeed: 4000, 
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
 
-  // 이슈 게시글 정보를 리덕스에서 가져온다.
   const boardTags = useSelector((state) => state?.community?.tags);
-  console.log(boardTags);
 
-  // 태그 검색
   const [searchType, setSearchType] = useState("태그");
   const [searchData, setSearchData] = useState("");
   const navigate = useNavigate();
-  // 검색 함수
   const navigateToSearch = async (
     searchType,
     searchData,
@@ -96,32 +79,25 @@ const CommunityComponet = ({}) => {
 
   return (
     <CommunityBox className="communityBox">
-      {/* 네비게이션 카테고리, 카데고리와 라우터 값을 리듀서에서 불러와 객체로 보내줌. */}
       <NavigationComponent categorys={CATEGORY} />
 
       <AllWrap className="allWrap">
         <AllBox className="allBox">
           <ContentBox className="contentBox">
-            {/* 여기에 나머지 라우터를 띄움(map 돌리지 않기) */}
 
             <Routes>
-              {/* 카테고리에 해당하는 리스트 출력 */}
               <Route path="/:category" element={<ListContainer />}></Route>
 
-              {/* 카테고리에 게시글 추가 컴포넌트 라우터를 만듬 */}
               <Route
                 path="/:category/BoardAdd"
                 element={<AddContainer />}
               ></Route>
 
-              {/* 게시글 상세 페이지 띄우기 : Link to 로 이동할 때 그 보드 번호가 전달되어야 한다. */}
               <Route
                 path="/board/:boardId"
                 element={<DetailContainer />}
               ></Route>
-              {/* <Route path="/board/hi" element={<NotFound />} /> */}
 
-              {/* 수정 페이지 */}
               <Route
                 path="/board/:boardId/edit"
                 element={<EditContainer />}
@@ -129,18 +105,14 @@ const CommunityComponet = ({}) => {
             </Routes>
           </ContentBox>
 
-          {/* 우측의 뉴스, 슬라이드, 이슈 태그 박스 */}
           <NewsBox className="newsBox">
             <NewsContentWrap className="newsContentWrap">
               <NewsTitle className="newsTitle">
                 <NewsH2 className="newsH2">뉴스</NewsH2>
                 <NewsMoreSpan className="newsMoreSpan">+</NewsMoreSpan>
               </NewsTitle>
-              {/* 시간이 된다면 가장 최근의 뉴스 4개를 띄운다. */}
               <NewsContent className="newsContent">
-                {/* 이 안의 아이템 Map으로 최근 공지사항 4개 가져와 띄우기 */}
                 <NewsItem className="newsItem">
-                  {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
@@ -149,7 +121,6 @@ const CommunityComponet = ({}) => {
                   </Link>
                 </NewsItem>
                 <NewsItem className="newsItem">
-                  {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
@@ -158,7 +129,6 @@ const CommunityComponet = ({}) => {
                   </Link>
                 </NewsItem>
                 <NewsItem className="newsItem">
-                  {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
@@ -167,7 +137,6 @@ const CommunityComponet = ({}) => {
                   </Link>
                 </NewsItem>
                 <NewsItem className="newsItem">
-                  {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
@@ -178,10 +147,8 @@ const CommunityComponet = ({}) => {
               </NewsContent>
             </NewsContentWrap>
 
-            {/* 뉴스 아래의 이벤트 슬라이드 부분 : 시간이 된다면 이벤트 목록에서 최근것을 가져온다. */}
             <BannerBox>
               <BannerImgBox>
-                {/* 슬라이더 라이브러리 사용 */}
                 <StyledSlide {...settings}>
                   <div>
                     <Link to="/Error" element={<NotFound />}>
@@ -216,12 +183,9 @@ const CommunityComponet = ({}) => {
               </BannerImgBox>
             </BannerBox>
 
-            {/* 슬라이드 아래의 태그 검색 부분 : 시간이 된다면 태그를 검색할 수 있게 한다.(중요) */}
             <TagSearchBox>
               <TagContentBox>
-                {/* 태그 검색 인풋 영역 */}
                 <TagInputWrap>
-                  {/* 여기부터~~ */}
                   <TagInput
                     type={"text"}
                     onInput={(e) => {
@@ -238,25 +202,15 @@ const CommunityComponet = ({}) => {
                           );
                           return;
                         } else {
-                          console.log("searchData가 공백입니다.");
                           alert("검색어를 입력하세요");
                         }
                       }
                     }}
                   />
                   <TagSerachBtnSpan>
-                    {/* a 태그 :나중에 Link to로 바꾸기(중요) */}
-                    {/* <a href="/Community/Free">
-                      <SearchImg
-                        src="https://cdn.imweb.me/upload/S2020090710444c43a5dc5/255f6640fbc87.png"
-                        alt="검색 이미지"
-                      />
-                    </a> */}
                   </TagSerachBtnSpan>
                 </TagInputWrap>
-                {/* 태그들이 들어있는 영역 : 태그는 게시물의 하트가 많은 게시물 안에서 맨처음 한개만 가져온다.(시간이 된다면) */}
                 <TagListBox>
-                  {/* 여기서 이 놈(IssueTag)을 map 돌리면 된다. 태그 개수는 최대 10개까지만 */}
                   {boardTags?.map((board, idx) => {
                     return (
                       <div key={`tagDiv-${idx}`}>
@@ -265,7 +219,6 @@ const CommunityComponet = ({}) => {
                           key={`tagLink-${idx}`}
                         >
                           <IssueTag key={`issueTag-${idx}`}>
-                            {/* 태그 가공 및 출력 */}
                             {board.tags.split("#").length == 1
                               ? "#" + board.tags
                               : "#" + board.tags.split("#")[1]}
@@ -278,7 +231,6 @@ const CommunityComponet = ({}) => {
               </TagContentBox>
             </TagSearchBox>
 
-            {/* 하트 아이콘 */}
             <HeartIcon
               onClick={(e) => {
                 e.target.classList.toggle("is-active");
@@ -290,8 +242,6 @@ const CommunityComponet = ({}) => {
                 e.target.classList.toggle("is-active");
               }}
             ></HeartIcon>
-            {/* <SmileImg src={smile} alt="웃음"></SmileImg> */}
-            {/* <SmileImg src={tasty} alt="웃음"></SmileImg> */}
             <SmileImg src={happiness} alt="웃음"></SmileImg>
           </NewsBox>
         </AllBox>
@@ -302,19 +252,15 @@ const CommunityComponet = ({}) => {
 export default CommunityComponet;
 
 const CommunityBox = styled.div`
-  /* min-height: 1600px; */
   *::selection {
     background-color: #ffebf6cc;
-    /* color: white; */
   }
 `;
 
 const AllWrap = styled.div`
-  /* min-height: 1165px; */
   margin-bottom: 100px;
   width: 100%;
   border-top: 1px solid #ebebeb;
-  /* border-bottom: 1px solid #ebebeb; */
 `;
 
 const AllBox = styled.div`
@@ -326,24 +272,19 @@ const AllBox = styled.div`
   display: flex;
   justify-content: space-between;
 
-  /* 게시글 목록 반응형 : 전체너비 */
   @media screen and (max-width: 1280px) {
     margin: 0 auto;
     width: 1050px;
   }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
     width: 780px;
   }
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
     width: 720px;
   }
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
   @media all and (min-width: 480px) and (max-width: 767px) {
     width: 500px;
   }
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
     width: 300px;
   }
@@ -354,26 +295,9 @@ const ContentBox = styled.div`
   display: inline-block;
   width: 930px;
 
-  /* 게시글 목록 반응형 : 내용영역 */
-  @media screen and (max-width: 1280px) {
-    /* margin: 0 55px; */
-  }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
     margin: 0 55px;
     margin: 0 auto;
-  }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
-  @media all and (min-width: 768px) and (max-width: 1023px) {
-  }
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
-  @media all and (min-width: 768px) and (max-width: 1023px) {
-  }
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
-  @media all and (min-width: 480px) and (max-width: 767px) {
-  }
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
-  @media all and (max-width: 479px) {
   }
 `;
 
@@ -382,23 +306,16 @@ const NewsBox = styled.div`
   display: inline-block;
   width: 230px;
 
-  /* 게시글 목록 반응형 : 뉴스전체 */
   @media screen and (max-width: 1280px) {
     margin-right: 55px;
     margin-left: 40px;
   }
-  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
-  @media all and (min-width: 768px) and (max-width: 1023px) {
-  }
-  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
   @media all and (min-width: 768px) and (max-width: 1023px) {
     display: none;
   }
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
   @media all and (min-width: 480px) and (max-width: 767px) {
     display: none;
   }
-  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
   @media all and (max-width: 479px) {
     display: none;
   }
@@ -410,7 +327,6 @@ const NewsContentWrap = styled.div`
   margin-top: 60px;
   border-top: 2px solid #343536;
   background-color: white;
-
   padding: 0 5px;
   box-sizing: border-box;
 `;
@@ -419,8 +335,6 @@ const NewsTitle = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 62px;
-
-  /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;
   -moz-user-select: none;
@@ -432,7 +346,6 @@ const NewsH2 = styled.h2`
   font-weight: 500;
   color: #333;
   margin-top: 17px;
-
   float: left;
   cursor: default;
 `;
@@ -450,8 +363,6 @@ const NewsContent = styled.div`
   padding-bottom: 20px;
 `;
 const NewsItem = styled.div`
-  /* 이 안의 항목들은 나중에 Link a 태그로 감싸 해당 라우터 주소로 보내준다. */
-
   color: #333;
   font-size: 13px;
   margin-bottom: 10px;
@@ -502,7 +413,6 @@ const StyledSlide = styled(Slider)`
   width: 230px;
   min-height: 120px;
 
-  /* 슬라이드 크기 조절 */
   .slick-list {
     width: 230px;
     min-height: 120px;
@@ -559,7 +469,6 @@ const StyledSlide = styled(Slider)`
 const TagSearchBox = styled.div`
   float: left;
   margin-top: 30px;
-  /* 스타일드 컴포넌트에서는 이미지를 이렇게 가져오면 된다.  */
   background: url(${TagBackImg}) left top no-repeat;
   background-color: aliceblue;
   height: 229px;
@@ -598,9 +507,6 @@ const TagSerachBtnSpan = styled.span`
     text-decoration: none;
   }
 `;
-const SearchImg = styled.img`
-  /* 배경 이미지는 src로 넣었다. */
-`;
 
 const TagListBox = styled.div`
   width: 100%;
@@ -623,7 +529,6 @@ const IssueTag = styled.span`
   margin-bottom: 6px;
   cursor: pointer;
 
-  /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;
   -moz-user-select: none;
@@ -654,8 +559,6 @@ const HeartIcon = styled.div`
   transition: background-position 1s steps(28);
   transition-duration: 0s;
   display: inline-block;
-  /* margin-top: 300px; */
-  /* margin-top: 10px; */
 
   &.is-active {
     transition-duration: 1s;
@@ -668,7 +571,6 @@ const SmileImg = styled.img`
   height: 50px;
   margin-left: 50px;
 
-  /* 드래그 금지 */
   -webkit-touch-callout: none;
   user-select: none;
   -moz-user-select: none;

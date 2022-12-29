@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { action } from "../../../modules/header";
 import { action as imgAction } from "../../../modules/onImg";
 
 const logout = () => {
@@ -13,7 +12,6 @@ const logout = () => {
   } catch (error) {
     console.error(error);
   }
-  // document.cookie = "login" + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 };
 
 const HeaderContainer = () => {
@@ -31,7 +29,6 @@ const HeaderContainer = () => {
     const data = await axios.post("/api/user/getImg", {
       currUserName: currUserName,
     });
-    console.log(data.data);
     setCurrUserImgState(data.data);
   };
 
@@ -44,14 +41,12 @@ const HeaderContainer = () => {
 
   useEffect(() => {
     if (!currUserName) return;
-    console.log(currUserName);
     getUserImg(currUserName);
   }, [currUserName]);
 
   useEffect(() => {
     if (currUserImgState == "") return;
     else {
-      console.log(currUserImgState);
       dispatch(imgAction.onImg(currUserImgState));
     }
   }, [currUserImgState]);

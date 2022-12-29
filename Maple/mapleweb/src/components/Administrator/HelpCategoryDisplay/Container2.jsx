@@ -24,7 +24,6 @@ const tempChildFun = async (setText) => {
   }
 };
 const SecondContainer = ({ propsArr }) => {
-  console.log(propsArr);
   const [categoryArr, setCategory] = useState([]);
   const [textArr, setText] = useState([]);
   const [editText, setEdit] = useState("");
@@ -43,8 +42,6 @@ const SecondContainer = ({ propsArr }) => {
     if (!category || category=="선택하시오") return alert("카테고리를 선택하세요");
     if (!text) return alert("내용을 입력하세요");
 
-    console.log("category:" + category);
-    console.log("text:" + text);
     axios
       .post("http://localhost:8080/api/admin/helptext", { category, text })
       .then(() => {
@@ -55,7 +52,6 @@ const SecondContainer = ({ propsArr }) => {
   };
 
   const delBtn = (text) => {
-    console.log(text);
     axios.post("http://localhost:8080/api/admin/deltext", { text }).then(() => {
       alert("삭제되었습니다");
       tempChildFun(setText);
@@ -82,23 +78,16 @@ const SecondContainer = ({ propsArr }) => {
       });
   };
   const changeFromBtn = (id,category) =>{
-    console.log("체인지")
     setChangeFrom({category,id})
   }
   const changeToBtn = (id,category)=>{
     
     setChangeTo({category,id})
-    console.log("프롬")
-    console.log(changeFromArr)
-    console.log("투")
-    console.log(changeToArr.length)
   }
     useEffect(()=>{ 
     
 
     if(changeToArr){
-      console.log(changeFromArr)
-    console.log(changeToArr)
     if(changeToArr.id){
       axios.post("http://localhost:8080/api/admin/changesecond", {changeFromArr,changeToArr}).then((data)=>{
         alert(data.data);

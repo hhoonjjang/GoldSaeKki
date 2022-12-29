@@ -14,7 +14,6 @@ const MainSearchComponent = ({
 }) => {
   const [searchDropdown, setSearchDropdown] = useState("false");
   const toggleSearchDropdown = () => {
-    console.log(searchDropdown);
 
     setSearchDropdown((state) => !state);
   };
@@ -82,7 +81,6 @@ const MainSearchComponent = ({
                     );
                     return;
                   } else {
-                    console.log("searchData가 공백입니다.");
                     alert("검색어를 입력하세요");
                   }
                 }
@@ -95,7 +93,6 @@ const MainSearchComponent = ({
                   navigateToSearch(searchType, searchData, navigate, dispatch);
                   return;
                 } else {
-                  console.log("searchData가 공백입니다.");
                   alert("검색어를 입력하세요");
                 }
               }}

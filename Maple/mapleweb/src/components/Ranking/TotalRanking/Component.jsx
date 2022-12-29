@@ -34,7 +34,12 @@ const TotalRankingComponent = ({
     console.log(server);
     console.log("종합데이터", totalData);
     if (route.sword) {
-      if (searchList.length) return searchList;
+      if (searchList.length) {
+        let tempAry = [...searchList];
+        if (server != "서버 선택")
+          tempAry = tempAry.filter((item) => item.userWorld == server);
+        return tempAry;
+      }
       return [];
     } else if (server === "서버 선택") {
       return totalData;

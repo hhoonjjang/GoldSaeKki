@@ -7,7 +7,7 @@ const getCommunityList = async (setCommunityNewestPost) => {
     const data = await axios.post(
       "/api/board/mainCommunity"
     );
-    const result = data?.data?.result?.sort(function (a, b) {
+    const result = data.data.result.sort(function (a, b) {
       return a.category < b.category ? -1 : a.category < b.category ? 1 : 0;
     });
     for (let i = 0; i < result.length; i++) {
@@ -22,7 +22,7 @@ const getCommunityList = async (setCommunityNewestPost) => {
     )[0];
     setCommunityNewestPost(result);
   } catch (error) {
-    console.error(error);
+    setCommunityNewestPost([]);
   }
 };
 

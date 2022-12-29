@@ -1,6 +1,22 @@
 # 박혜림
+|순번|내용|기간|
+|:------:|:---:|:---:|
+|1|네비게이션 바 UI 및 라우터|<span style="color:red">강조3</span>|
+|2|커뮤니티 Component|2022.12.09. ~ 2022.12.28.|
+|3|**커뮤니티 Database**|2022.12.09. ~ 2022.12.28.|
+|4|테스트2|테스트3|
+
 ## 1. 네비게이션 바
 ### - 기간 : 2022. 12. 09. ~ 2022. 12. 12.
+### - 핵심 기능
+* 네비게이션 바를 컴포넌트화 하여 랭킹, 커뮤니티, 고객지원 페이지 등 네비게이션 바를 사용하고 싶은 페이지에 이식시켜 사용 가능하게 하였다.
+<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/264491c07402a.png">
+<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/7be58594809eb.png">
+<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/4555c8ecca382.png">
+
+* 카테고리 이름과 라우터 주소만 설정해 props로 보내주면 카테고리 클릭시 해당 라우터로 이동 가능하게 구현하였다.
+<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/2ba4afb10ffce.png">
+
 ### - 구현 사항
 * 귀엽게 만들었음
 * 이거이것 기능 추가했음
@@ -9,6 +25,9 @@
 
 
 <img src = "https://artyandbanana.com/wp-content/uploads/2022/10/%EB%B0%94%EB%82%98%EB%82%98-%EC%9E%89%EA%B8%80%EB%A6%AC%EC%89%AC-%EB%A1%9C%EA%B3%A0-2-1.jpg"><br><br>
+```
+let code = "하이";
+```
 
 
 ## 2. 커뮤니티 페이지
@@ -23,5 +42,5 @@
 * 어머나!
 * 바나나 먹으면 나한테 바나나
 
-<img src = "https://dimg.donga.com/wps/NEWS/IMAGE/2022/04/19/112966942.2.jpg">
+<img src="https://dimg.donga.com/wps/NEWS/IMAGE/2022/04/19/112966942.2.jpg" alt="바나나 이미지">
 

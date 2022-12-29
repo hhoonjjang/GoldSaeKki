@@ -167,6 +167,22 @@ const AddComponent = ({ }) => {
               case 200:
                 // 성공 알람, 게시물 상세 페이지로 리턴
                 alert("게시글 등록됨");
+
+                // 리듀서 업데이트 ㄱㄱ
+                // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
+                await axios.post("/api/board/getLikeSevenBoards", {}).then((boards) => {
+                  // 해당 게시글 목록을 리덕스에 저장한다.
+                  console.log(boards.data);
+                  const boardsData = boards.data;
+                  let likeTagBoards = [];
+                  boardsData.map((board, index) => {
+                    if (board.tags != "") {
+                      likeTagBoards.push(board);
+                    }
+                  });
+                  dispatch(action.tags(likeTagBoards));
+                });
+
                 navigate(`/Community/board/${boardId}`);
                 return;
               case 400:

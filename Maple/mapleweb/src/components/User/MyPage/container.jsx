@@ -8,21 +8,19 @@ const MypageContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const getUserImg = (currUserName) => {
-    console.log("요청하고있니??", currUserName);
 
     axios
       .post("/api/user/getImg", {
         currUserName: currUserName,
       })
       .then((data) => {
-        console.log(data);
         dispatch(action.onImg(data.data));
       });
   };
 
   const checkLogin = () => {
     if (!document.cookie) {
-      alert("로그인 후에 이용가능합니다."); // 이것때문에 뭔가 다음 처리가 안되거나 밀려서 navigate를 바로 쓰는 경우 안먹음 교수님께 물어볼것
+      alert("로그인 후에 이용가능합니다."); 
       setTimeout(() => {
         navigate("/login");
       }, 100);

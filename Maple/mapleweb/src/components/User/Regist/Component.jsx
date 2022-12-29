@@ -24,8 +24,6 @@ const RegistComponent = ({
   const idMemo = useMemo(() => {
     return idcheck(userId);
   }, [userId]);
-  // return값에 있는 idcheck가 돌아가고, 그 해당 idcheck는 container쪽에 있는
-  // idcheckFunc을 가르키며, 해당 함수가 돌아가면서 도출되는 return 객체값(현재는)이 idmemo값이된다.
 
   const pwMemo = useMemo(() => {
     return pwcheck(userPw);
@@ -50,9 +48,7 @@ const RegistComponent = ({
             value={userId}
             type={"text"}
             onInput={(e) => {
-              // setId(idcheck(e.target.value)); match방식
               setId(e.target.value);
-              // idcheck(userId);
             }}
           />
           <p className={idMemo.class}>{idMemo.text}</p>
@@ -65,7 +61,6 @@ const RegistComponent = ({
             type={"password"}
             onInput={(e) => {
               setPw(e.target.value);
-              // pwcheck(userPw);
             }}
           />
           <p className={pwMemo.class}>{pwMemo.text}</p>
@@ -78,7 +73,6 @@ const RegistComponent = ({
             type={"password"}
             onInput={(e) => {
               setPwReCheck(e.target.value);
-              // pwcheck(userPw);
             }}
           />
           <p className={checkMemo.class}>{checkMemo.text}</p>
@@ -91,7 +85,6 @@ const RegistComponent = ({
             type={"text"}
             onInput={(e) => {
               setName(e.target.value);
-              // namecheck(userName);
             }}
           />
           <p className={nameMemo.class}>{nameMemo.text}</p>
@@ -102,7 +95,6 @@ const RegistComponent = ({
             className="select"
             onChange={(e) => {
               setServer(e.target.value);
-              console.log(e.target.value);
             }}
           >
             <option value="서버 선택">서버 선택</option>
@@ -180,7 +172,6 @@ const RegistBox = styled.div`
     }
   }
 
-  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
   @media only screen and (max-width: 768px) {
     & > div > div {
       & > p:first-child {

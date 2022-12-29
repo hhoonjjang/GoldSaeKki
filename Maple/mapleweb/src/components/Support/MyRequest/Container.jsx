@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 // });
 
 const tempFun = async (setRequest, navigate) => {
-  console.log(document.cookie);
   if (document.cookie) {
     try {
       let requestArr = (
@@ -33,13 +32,10 @@ const MyRequestContainer = () => {
   const onClick = (idx) => {
     if (idx + 1 == isBoolen) setBoolen(-1);
     else setBoolen(idx + 1);
-    console.log(idx + 1);
   };
   useEffect(() => {
     tempFun(setRequest, navigate);
   }, []);
-  // const temp = tempFun();
-  // console.log(temp);
   return (
     <MyRequestComponent
       isBoolen={isBoolen}

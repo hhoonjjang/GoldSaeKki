@@ -5,7 +5,6 @@ import MypageContainer from "./MyPage/Container";
 import { Route, Routes, useLocation } from "react-router-dom";
 import NotFound from "../Community/NotFound";
 const UserComponent = () => {
-  console.log(useLocation());
 
   return (
     <div>

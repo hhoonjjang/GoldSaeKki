@@ -17,7 +17,6 @@ const RequestContainer = () => {
   useEffect(() => {
     categoryArrFun(setCategory);
   }, []);
-  console.log(categoryArr);
   return <UncontrolledExample categoryArr={categoryArr} />;
 };
 

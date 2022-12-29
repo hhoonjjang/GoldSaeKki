@@ -8,19 +8,13 @@ const router = Router();
 
 router.post("/regist", async (req, res) => {
   try {
-    console.log(req.body);
     await db.Admin.create({
       adminId: req.body.id,
       adminPw: Cryptojs.SHA256(req.body.password).toString(),
       adminName: req.body.adminName,
     }).then((data) => {
-      console.log(data.dataValues);
       res.send(req.body);
     });
-    // .catch((err) => {
-    //   console.log("err", err);
-    //   res.send("중복");
-    // });
   } catch (err) {
     console.error(err);
     res.send(err);
@@ -28,7 +22,6 @@ router.post("/regist", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  console.log(req.body);
   try {
     const tempAdmin = await db.Admin.findOne({
       where: { adminId: req.body.id },
@@ -80,7 +73,6 @@ router.post("/list", async (req, res) => {
 
 router.post("/delete", async (req, res) => {
   const tempId = req.body;
-  console.log(tempId);
   await db.Admin.destroy({
     where: {
       id: tempId.idx,
@@ -112,7 +104,6 @@ router.post("/addtext", async (req, res) => {
 });
 
 router.post("/delcategory", async (req, res) => {
-  console.log(req.body.category);
   await db.Category.destroy({
     where: {
       category: req.body.category,
@@ -122,7 +113,6 @@ router.post("/delcategory", async (req, res) => {
 });
 
 router.post("/editcategory", async (req, res) => {
-  console.log(req.body.category);
   await db.Category.update(
     {
       category: req.body.category,
@@ -138,7 +128,6 @@ router.post("/editcategory", async (req, res) => {
 
 router.post("/helptext", async (req, res) => {
   try {
-    console.log(req.body);
     const tempHelp = req.body;
     const tempCategory = await db.Category.findOne({
       where: {
@@ -148,7 +137,6 @@ router.post("/helptext", async (req, res) => {
     const tempHelpText = await db.Helptext.create({
       text: tempHelp.text,
     });
-    console.log(tempCategory);
     tempCategory.addHelp(tempHelpText);
 
     res.end();
@@ -159,7 +147,6 @@ router.post("/helptext", async (req, res) => {
 });
 
 router.post("/deltext", async (req, res) => {
-  console.log(req.body);
   await db.Helptext.destroy({
     where: {
       text: req.body.text,
@@ -169,7 +156,6 @@ router.post("/deltext", async (req, res) => {
 });
 
 router.post("/edittext", async (req, res) => {
-  console.log(req.body.text);
   await db.Helptext.update(
     {
       text: req.body.text,
@@ -221,7 +207,6 @@ router.post("/displaychild", async (req, res) => {
 });
 
 router.post("/delchild", async (req, res) => {
-  console.log(req.body.text);
   await db.Helptextchild.destroy({
     where: { textChild: req.body.text },
   });
@@ -229,7 +214,6 @@ router.post("/delchild", async (req, res) => {
 });
 
 router.post("/editchild", async (req, res) => {
-  console.log(req.body.text);
   await db.Helptextchild.update(
     {
       textChild: req.body.text,
@@ -269,7 +253,6 @@ router.post("/deluser", async (req, res) => {
 });
 
 router.post("/sendmsg", async (req, res) => {
-  console.log(req.body);
   const tempUser = await db.User.findOne({
     where: { userName: req.body.userName },
   });
@@ -281,7 +264,6 @@ router.post("/sendmsg", async (req, res) => {
 });
 
 router.post("/deluserboard", async (req, res) => {
-  console.log(req.body);
   await db.Board.destroy({
     where: {
       id: req.body.id,
@@ -298,7 +280,6 @@ router.post("/deluserboard", async (req, res) => {
   res.send({ tempUser, msg: "성공적으로지워졌습니다." });
 });
 router.post("/delusercomment", async (req, res) => {
-  console.log(req.body);
   await db.Comment.update(
     {
       text: "관리자에 의해 해당 댓글은 삭제되었습니다.",
@@ -333,11 +314,8 @@ router.post("/reportcomment",async (req,res)=>{
 })
 
 router.post("/changefirst",async(req,res)=>{
-  console.log(req.body)
   const changeFrom = req.body.changeFromArr;
   const changeTo = req.body.changeToArr;
-  console.log(changeFrom.id)
-  console.log(changeTo.id)
 
   await db.Category.update(
     {
@@ -387,11 +365,8 @@ router.post("/changefirst",async(req,res)=>{
 })
 
 router.post("/changesecond",async(req,res)=>{
-  console.log(req.body)
   const changeFrom = req.body.changeFromArr;
   const changeTo = req.body.changeToArr;
-  console.log(changeFrom.id)
-  console.log(changeTo.id)
   await db.Helptext.update(
     {
       id:1000000
@@ -440,11 +415,8 @@ router.post("/changesecond",async(req,res)=>{
 
 
 router.post("/changethird",async(req,res)=>{
-  console.log(req.body)
   const changeFrom = req.body.changeFromArr;
   const changeTo = req.body.changeToArr;
-  console.log(changeFrom.id)
-  console.log(changeTo.id)
   await db.Helptextchild.update(
     {
       id:1000000
@@ -496,10 +468,7 @@ fs.readFile("./admin.json", "utf-8", async function (err, data) {
   if (err) {
     console.error(err.message);
   } else {
-    console.log(data && JSON.parse(data).length);
-    console.log(count);
     if (data && JSON.parse(data).length > count) {
-      console.log("실행");
       JSON.parse(data).forEach((item) => {
         try {
           db.Admin.create(item);

@@ -1,4 +1,3 @@
-// 월드 이미지 import
 import world1Img from "../components/Community/images/worlds/icon_1.png";
 import world2Img from "../components/Community/images/worlds/icon_2.png";
 import world3Img from "../components/Community/images/worlds/icon_3.png";
@@ -17,10 +16,8 @@ import world15Img from "../components/Community/images/worlds/icon_15.png";
 import world16Img from "../components/Community/images/worlds/icon_16.png";
 
 
-// 커뮤니티 카테고리 목록
 export const CATEGORY = [
     { name: '자유게시판', label: "Free" },
-    // { name: '바다이야기', label: "Hi" },
     { name: '정보게시판', label: "Information" },
     { name: '토론게시판', label: "TopicDiscussion" },
     { name: '연재소설', label: "Novel" },
@@ -28,7 +25,6 @@ export const CATEGORY = [
     { name: '이벤트게시판', label: "Event" },
 ];
 
-// 개발용 임시 카테고리
 export const CATEGORY2 = [
     { name: '<게시판 목록>', label: "BoardList", link: "/BoardList" },
     { name: '<게시글 등록>', label: "BoardAdd", link: "/BoardAdd" },
@@ -41,7 +37,6 @@ export const CATEGORY2 = [
 ];
 
 
-// 서버(월드) 목록
 export const WORLDLIST = [
     { name: '전체월드', img: world1Img, label : "All" },
     { name: '리부트2', img: world2Img, label : "Reboot2" },
@@ -61,12 +56,7 @@ export const WORLDLIST = [
     { name: '버닝', img: world16Img, label : "Burning" },
     { name: '버닝2', img: world16Img, label : "Burning2" },
     { name: '버닝3', img: world16Img, label : "Burning3" },
-    // { name: '버닝4', img: world16Img, label : "Burning4" },
 ];
-
-
-
-
 
 
 const TYPE = {
@@ -77,41 +67,32 @@ const TYPE = {
     COMMENTCOUNTS : "/community/commentCounts",
 }
 
-// 커뮤니티 이슈 태그 목록
 const tags = (tags) =>{
     return {
         type : TYPE.TAGS,
         payload : { tags }
     }
 }
-// 해당 커뮤니티 게시글 목록
 const list = (list) => {
-    // console.log(list);
     return {
         type: TYPE.LIST,
         payload: { list }
     };
 };
-// 보드 id에 해당하는 게시글과 댓글 목록
 const board = (board) => {
-    // console.log(board);
     return {
         type: TYPE.BOARD,
         payload: { board }
     }
 }
-// 보드 id에 해당하는 댓글 목록
 const comments = (comments) => {
-    // console.log(comments);
     return {
         type: TYPE.COMMENTS,
         payload: { comments }
     }
 }
 
-// 게시글의 댓글 개수 배열
 const commentCounts = (counts) =>{
-    // console.log(counts);
     return{
         type : TYPE.COMMENTCOUNTS,
         payload : {counts}
@@ -122,12 +103,10 @@ export const action = { tags, list, board, comments, commentCounts };
 
 export const initialize = {};
 
-// 리듀서를 만들어준다. 그리고 state 초기값을 설정해준다.
 export const reducer = (state = initialize, action) => {
     const { type, payload } = action;
     switch (type) {
         case TYPE.LIST:
-            // return payload;
             const { list } = payload;
             return {list};
         case TYPE.TAGS:

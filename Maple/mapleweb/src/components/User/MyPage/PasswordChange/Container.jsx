@@ -7,7 +7,6 @@ const PasswordChangeContainer = () => {
   const navigate = useNavigate();
   const currUserName = useSelector((state) => state.user.currUserName);
 
-  // 패스워드 예외처리
   const pwcheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 
   let pwresult;
@@ -52,7 +51,6 @@ const PasswordChangeContainer = () => {
   };
 
   const pwchangeClick = (changePw, pwchangeCheck) => {
-    console.log("변경버튼눌렀다.");
     if (!changePw) {
       return alert("바꿀 비밀번호를 입력하세요.");
     } else if (!pwchangeCheck) {
@@ -69,7 +67,6 @@ const PasswordChangeContainer = () => {
         currUserName,
       })
       .then((data) => {
-        console.log(data.data.message);
         alert("비밀번호가 바뀌었으니 다시 로그인해주세요.");
         navigate("/login");
       });

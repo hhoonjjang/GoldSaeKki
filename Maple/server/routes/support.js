@@ -36,12 +36,7 @@ router.post("/displaycategory", async (req, res) => {
 });
 
 router.post("/displaymsg", async (req, res) => {
-  console.log("하이디플");
-
-  console.log(req.body);
-  console.log("하이디플");
   const tempUserInfo = jwt.verify(req.cookies.login, process.env.JWT_KEY);
-  console.log(tempUserInfo);
   const tempMsg = await db.Msg.findAll({
     where: {
       name: tempUserInfo.name,

@@ -10,15 +10,8 @@ const CreateContainer = () => {
   const onClick = (reportTitle, reportSelect, imgFile, contentsText) => {
     if (!reportTitle.match(/\S/g)) return alert("제목을 입력하세요");
     if (!imgFile) return alert("파일을 첨부하세요");
-    console.log(imgFile);
     let formData = new FormData();
     let img = imgFile[0];
-    console.log(img);
-    console.log(contentsText);
-    console.log(reportTitle);
-    console.log(reportSelect);
-    console.log(imgFile);
-    console.log(contentsText);
     if (reportSelect == "program") {
       reportSelect = "불법프로그램 신고";
     } else reportSelect = "버그악용 신고";
@@ -27,7 +20,6 @@ const CreateContainer = () => {
     formData.append("reportFile", img);
 
     formData.append("contentsText", contentsText);
-    console.log(formData);
     dispatch(
       action.report(reportTitle, reportSelect, imgFile[0].name, contentsText)
     );
@@ -35,7 +27,6 @@ const CreateContainer = () => {
       .post(
         "/api/report/uploadBugReport",
 
-        // formData
         formData
       )
       .then(

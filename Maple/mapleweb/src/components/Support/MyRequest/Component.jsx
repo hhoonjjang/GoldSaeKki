@@ -1,8 +1,5 @@
 import styled from "styled-components";
 const MyRequestComponent = ({ requestArr, onClick, isBoolen }) => {
-  // const a = tempFun();
-  // console.log(a);
-  console.log(requestArr);
   return (
     <MyRequestBox>
       <div className="serviceDisplay">
@@ -43,46 +40,6 @@ const MyRequestComponent = ({ requestArr, onClick, isBoolen }) => {
               isBoolen={isBoolen}
               key={`Componet-${idx}`}
             />
-            // <>
-            //   <tr key={`requestBox-${idx}`} className="requestBox">
-            //     <td key={`reportidx-${idx}`}>
-            //       <div>{idx + 1}</div>
-            //     </td>
-            //     <td key={`reportTitle-${idx}`}>
-            //       <button
-            //         onClick={() => {
-            //           onClick(idx);
-            //         }}
-            //       >
-            //         {item.reportTitle}
-            //       </button>
-            //     </td>
-            //     <td key={`reportSelect-${idx}`}>
-            //       <div>{item.reportSelect}</div>
-            //     </td>
-            //     <td key={`reportProcessing-${idx}`}>
-            //       <div>
-            //         {item.reportProcessing ? item.reportProcessing : "접수중"}
-            //       </div>
-            //     </td>
-            //     <td key={`dateNow-${idx}`}>
-            //       <div>{item.updatedAt.split("T")[0]}</div>
-            //     </td>
-            //   </tr>
-            //   <tr>
-            //     {isBoolen == idx + 1 ? (
-            //       <td
-            //         key={`contents-${idx + 1}`}
-            //         colSpan={5}
-            //         className="contents"
-            //         dangerouslySetInnerHTML={{ __html: item.contentsText }}
-            //       ></td>
-            //     ) : (
-            //       // <td>{item.contentsText}</td> react innerhtml
-            //       <></>
-            //     )}
-            //   </tr>
-            // </>
           ))}
         </tbody>
       </table>
@@ -127,7 +84,6 @@ const Component = ({ item, idx, onClick, isBoolen }) => {
             dangerouslySetInnerHTML={{ __html: item.contentsText }}
           ></td>
         ) : (
-          // <td>{item.contentsText}</td> react innerhtml
           <></>
         )}
       </tr>
@@ -144,7 +100,6 @@ const Component = ({ item, idx, onClick, isBoolen }) => {
               </td>
             </>
           ) : (
-            // <td>{item.contentsText}</td> react innerhtml
             <></>
           )}
         </tr>
@@ -160,16 +115,13 @@ const MyRequestBox = styled.div`
     border: solid 1px black;
     width: 80%;
     text-align: center;
-    /* border-collapse: collapse; */
   }
   th {
     border-bottom: 1px dashed black;
   }
   td {
-    /* width: 100%; */
     border: 1px dashed black;
 
-    /* border-bottom: 1px dashed black; */
     text-align: center;
     & div {
       background-color: lightblue;
@@ -186,9 +138,6 @@ const MyRequestBox = styled.div`
     border: none;
     border-radius: 5px;
   }
-  /* .requestBox {
-    display: flex;
-  } */
 
   @media screen and (max-width:1280px){
   }
@@ -208,7 +157,6 @@ const MyRequestBox = styled.div`
   }
   @media screen and (max-width:540px){
     margin-left:20px;
-    // width:250px;
   }
   @media screen and (max-width:435px){
     margin-left:45px;

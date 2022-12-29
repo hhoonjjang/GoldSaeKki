@@ -21,15 +21,12 @@ router.post("/viewBoard", (req, res) => {
       }
     });
     tempArr.sort((a, b) => b.count - a.count);
-    console.log(tempArr);
     let count = 0;
     for (let i = 0; i < tempArr.length; i++) {
       db.User.findOne({ where: { userName: tempArr[i].tempUserName } }).then(
         (data) => {
-          console.log("아이디찾음", data);
           count++;
           tempArr[i].profileImg = data.dataValues.profileImg;
-          //data.dataValues.profileImg
         }
       );
     }
@@ -60,15 +57,12 @@ router.post("/viewComment", (req, res) => {
       }
     });
     tempArr.sort((a, b) => b.count - a.count);
-    console.log(tempArr);
     let count = 0;
     for (let i = 0; i < tempArr.length; i++) {
       db.User.findOne({ where: { userName: tempArr[i].tempUserName } }).then(
         (data) => {
-          console.log("아이디찾음", data);
           count++;
           tempArr[i].profileImg = data.dataValues.profileImg;
-          //data.dataValues.profileImg
         }
       );
     }
@@ -99,7 +93,6 @@ router.post("/total", (req, res) => {
           tempArr[tempArr.length - 1].count += 3;
         }
       });
-      console.log("니가 선택한 배열이다.", tempArr);
       return tempArr;
     })
     .then((tempArr) => {
@@ -122,7 +115,7 @@ router.post("/total", (req, res) => {
                 profileImg: "",
               });
             }
-          }); // tempArr 완성됨
+          }); 
           return tempArr;
         })
         .then((tempArr) => {
@@ -132,10 +125,8 @@ router.post("/total", (req, res) => {
             db.User.findOne({
               where: { userName: tempArr[i].tempUserName },
             }).then((data) => {
-              console.log("아이디찾음", data);
               count++;
               tempArr[i].profileImg = data.dataValues.profileImg;
-              //data.dataValues.profileImg
             });
           }
           const intervalId = setInterval(() => {
@@ -156,7 +147,6 @@ router.post("/totalServer", (req, res) => {
     order: [["userName", "DESC"]],
   })
     .then((data) => {
-      console.log("서버선택한 배열", data);
       data.map((item) => {
         if (tempUserName != item.dataValues.userName) {
           tempUserName = item.dataValues.userName;
@@ -170,7 +160,6 @@ router.post("/totalServer", (req, res) => {
           tempArr[tempArr.length - 1].count += 3;
         }
       });
-      console.log("니가 선택한 배열이다.", tempArr);
       return tempArr;
     })
     .then((tempArr) => {
@@ -196,7 +185,7 @@ router.post("/totalServer", (req, res) => {
                 profileImg: "",
               });
             }
-          }); // tempArr 완성됨
+          }); 
           return tempArr;
         })
         .then((tempArr) => {
@@ -206,10 +195,8 @@ router.post("/totalServer", (req, res) => {
             db.User.findOne({
               where: { userName: tempArr[i].tempUserName },
             }).then((data) => {
-              console.log("아이디찾음", data);
               count++;
               tempArr[i].profileImg = data.dataValues.profileImg;
-              //data.dataValues.profileImg
             });
           }
           const intervalId = setInterval(() => {
@@ -313,15 +300,12 @@ router.post("/boardServer", (req, res) => {
       }
     });
     tempArr.sort((a, b) => b.count - a.count);
-    console.log(tempArr);
     let count = 0;
     for (let i = 0; i < tempArr.length; i++) {
       db.User.findOne({ where: { userName: tempArr[i].tempUserName } }).then(
         (data) => {
-          console.log("아이디찾음", data);
           count++;
           tempArr[i].profileImg = data.dataValues.profileImg;
-          //data.dataValues.profileImg
         }
       );
     }
@@ -355,15 +339,12 @@ router.post("/searchBoard", (req, res) => {
       }
     });
     tempArr.sort((a, b) => b.count - a.count);
-    console.log(tempArr);
     let count = 0;
     for (let i = 0; i < tempArr.length; i++) {
       db.User.findOne({ where: { userName: tempArr[i].tempUserName } }).then(
         (data) => {
-          console.log("아이디찾음", data);
           count++;
           tempArr[i].profileImg = data.dataValues.profileImg;
-          //data.dataValues.profileImg
         }
       );
     }
@@ -397,7 +378,6 @@ router.post("/commentServer", (req, res) => {
       }
     });
     tempArr.sort((a, b) => b.count - a.count);
-    console.log(tempArr);
     let count = 0;
     for (let i = 0; i < tempArr.length; i++) {
       db.User.findOne({ where: { userName: tempArr[i].tempUserName } }).then(
@@ -437,7 +417,6 @@ router.post("/searchComment", (req, res) => {
       }
     });
     tempArr.sort((a, b) => b.count - a.count);
-    console.log(tempArr);
     let count = 0;
     for (let i = 0; i < tempArr.length; i++) {
       db.User.findOne({ where: { userName: tempArr[i].tempUserName } }).then(

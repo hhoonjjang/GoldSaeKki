@@ -35,10 +35,9 @@ const MypageComponent = ({ getUserImg, checkLogin }) => {
   }, []);
 
   useEffect(() => {
-    console.log(currUserName, "asdf");
     if (currUserName == undefined) return;
     getUserImg(currUserName);
-  }, [currUserName]); // 2번째 매개변수로 아무것도 넣지 않은 경우 처음 component를 읽어올때만 실행된다.
+  }, [currUserName]); 
 
   const myDiv = () => {
     switch (route.route) {

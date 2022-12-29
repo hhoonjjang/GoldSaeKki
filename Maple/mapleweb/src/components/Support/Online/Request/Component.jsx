@@ -3,7 +3,6 @@ import Tabs from "react-bootstrap/Tabs";
 import styled from "styled-components";
 
 function UncontrolledExample({ categoryArr }) {
-  console.log(categoryArr);
   return (
     <Tabs
       defaultActiveKey="profile"
@@ -52,7 +51,7 @@ const CategoryBox = styled.div`
     }
   }
   .textbox {
-    width:100%
+    width:100%;
     font-size: 15px;
     font-weight: 500;
     color: gray;

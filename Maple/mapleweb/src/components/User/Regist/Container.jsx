@@ -8,47 +8,37 @@ import { useNavigate } from "react-router-dom";
 const RegistContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const tempUserArr = []; // 디비안에 정보들 담을 배열
+  const tempUserArr = []; 
 
   const userInfo = () => {
     axios
       .post("/api/user/getUser")
       .then((data) => {
-        console.log(data);
         data?.data?.map((item) => {
           tempUserArr.push(item);
         });
-        console.log(tempUserArr);
 
-        // data.data.userId, data.data.userName
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
-  // 아이디 예외처리
   const idcheck = /^[a-z0-9_-]{5,20}$/;
 
-  // 패스워드 예외처리
   const pwcheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
 
-  //닉네임 예외처리
   const namecheck = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
 
-  // 예외처리를 위한 세팅(회원가입)
   let idresult;
   let pwresult;
   let nameresult;
 
   const idcheckFunc = (userId) => {
-    // registText[0].addEventListener("focusout", (e) => {
-    // console.log(userId.match(idcheck));
     const findUser = (elem) => {
       if (elem.userId === userId) return true;
     };
     idresult = idcheck.test(userId);
-    console.log(idresult);
     if (userId.length === 0) {
       return {
         text: "사용하실 아이디를 입력해주세요.",
@@ -56,9 +46,7 @@ const RegistContainer = () => {
     }
     if (idresult) {
       const tempUser = tempUserArr.find(findUser);
-      console.log(tempUser);
       if (tempUser) {
-        // 이미 아이디가 있는거임
         idresult = false;
         return {
           class: "red",
@@ -69,25 +57,13 @@ const RegistContainer = () => {
         class: "green",
         text: "아이디로 사용 가능합니다.",
       };
-      // alertText[1].classList.add("green");
-      // alertText[1].classList.remove("red");
-      // alertText[1].innerText = "아이디로 사용 가능합니다!";
     } else {
       return {
         class: "red",
         text: "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.",
       };
-      // alertText[1].classList.remove("green");
-      // alertText[1].classList.add("red");
-      // alertText[1].innerText =
-      //   "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.";
-      // registText[0].value = "";
     }
-    // });
 
-    // const temp = userId.match(/[a-z0-9_-]/g);
-    // return temp ? temp.join("") : "";
-    // match 방법은 따로 공부해볼것
   };
 
   const pwcheckFunc = (userPw) => {
@@ -140,7 +116,6 @@ const RegistContainer = () => {
     }
     if (nameresult) {
       const tempName = tempUserArr.find(findName);
-      console.log(tempName);
       if (tempName) {
         nameresult = false;
         return {
@@ -188,7 +163,6 @@ const RegistContainer = () => {
           server,
         })
         .then((data) => {
-          console.log("데이터가 DB에 잘 도착했어");
         })
         .catch((err) => {
           console.error(err);

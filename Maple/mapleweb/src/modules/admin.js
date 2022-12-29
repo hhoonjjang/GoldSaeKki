@@ -5,7 +5,6 @@ const TYPE = {
 };
 
 const login = (name) => {
-  console.log(name);
   return {
     type: TYPE.LOGIN,
     payload: { name },
@@ -13,7 +12,6 @@ const login = (name) => {
 };
 
 const check = (name) => {
-  console.log(name);
   return {
     type: TYPE.CHECK,
     payload: name,
@@ -32,7 +30,6 @@ export const initialize = {};
 
 export const reducer = (state = initialize, action) => {
   const { type, payload } = action;
-  // console.log(payload);
   switch (type) {
     case TYPE.LOGIN:
       return { name: payload.name };

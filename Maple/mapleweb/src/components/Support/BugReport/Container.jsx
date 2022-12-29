@@ -3,7 +3,6 @@ import CreateContainer from "./Create/Container";
 import { Route, Routes } from "react-router-dom";
 
 const BugReportContainer = () => {
-  console.log(document.cookie);
   const isCookie = document.cookie;
   return (
     <>

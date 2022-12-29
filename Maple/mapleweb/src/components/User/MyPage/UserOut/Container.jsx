@@ -9,7 +9,6 @@ const UserOutContainer = () => {
   const dispatch = useDispatch();
 
   const signOutBtn = () => {
-    console.log(currUser);
     axios.post("/api/user/signOut", currUser).then(() => {
       axios.post("/api/user/logout").then(() => {
         dispatch(action.refresh());

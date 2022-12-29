@@ -6,8 +6,6 @@ import db from "../models/index.js";
 
 router.post("/mainSearch", async (req, res) => {
   try {
-    console.log("req.body.searchType : ", req.body.searchType);
-    console.log("req.body.searchData : ", req.body.searchData);
     switch (req.body.searchType) {
       case "제목": {
         const searchResult = await db.Board.findAll({
@@ -17,7 +15,6 @@ router.post("/mainSearch", async (req, res) => {
             },
           },
         });
-        console.log(searchResult);
         res.send({ searchResult: searchResult });
         break;
       }
@@ -29,7 +26,6 @@ router.post("/mainSearch", async (req, res) => {
             },
           },
         });
-        console.log(searchResult);
         res.send({ searchResult: searchResult });
         break;
       }
@@ -41,7 +37,6 @@ router.post("/mainSearch", async (req, res) => {
             },
           },
         });
-        console.log(searchResult);
         res.send({ searchResult: searchResult });
     }
   } catch (error) {

@@ -54,14 +54,12 @@ router.post("/request", async (req, res) => {
     where: { name: tempUserInfo.name },
     order: [["id", "DESC"]],
   });
-  console.log("템프리퀘스트");
 
   res.send(tempRequest);
 });
 
 router.post("/bugcs", async (req, res) => {
   const tempBugcs = await db.Report.findAll({
-    // include: { model: db.User },
   });
   res.send(tempBugcs);
 });
@@ -80,6 +78,5 @@ router.post("/buganswer", async (req, res) => {
     }
   );
   res.send();
-  console.log(answer);
 });
 export default router;

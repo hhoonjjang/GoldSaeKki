@@ -57,19 +57,14 @@ const CreateComponent = ({ onClick }) => {
               editor={ClassicEditor}
               data={contentsText}
               onReady={(editor) => {
-                console.log("Editor is ready to use!", editor);
               }}
               onChange={(event, editor) => {
                 const data = editor.getData();
-                console.log({ event, editor, data });
                 setContentsText(data.trim());
-                console.log(contentsText);
               }}
               onBlur={(event, editor) => {
-                console.log("Blur.", editor);
               }}
               onFocus={(event, editor) => {
-                console.log("Focus.", editor);
               }}
             ></CKEditor>
           </div>
@@ -124,7 +119,6 @@ const CreateComponent = ({ onClick }) => {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                console.log("작동해");
                 onClick(reportTitle, reportSelect, imgFile, contentsText);
               }}
             >
@@ -156,7 +150,6 @@ const CreateBox = styled.div`
     margin: auto;
   }
   form {
-    /* background-color: black; */
   }
   select {
     padding: 2px 0px;
@@ -200,8 +193,6 @@ const CreateBox = styled.div`
   }
 
   .selectBtn a {
-    /* padding: 8px 25px;
-    margin-left: 10px; */
     color: white;
     border: none;
 
@@ -214,7 +205,6 @@ const CreateBox = styled.div`
       border: none;
     }
     &:last-child:hover button {
-      background-color: #453333;
     }
   }
 

@@ -71,7 +71,6 @@ const MessageBox = styled.div`
   }
   @media screen and (max-width:540px){
     margin-left:20px;
-    // width:250px;
     pre{
       width:200px;
     }

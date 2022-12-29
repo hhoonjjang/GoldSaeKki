@@ -41,7 +41,6 @@ const TopLogo = styled.div`
     padding-bottom: 100px;
     padding-left: 20px;
     img {
-      // display: none;
     }
   }
   img {

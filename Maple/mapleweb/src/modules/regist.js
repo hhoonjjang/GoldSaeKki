@@ -27,6 +27,3 @@ export const reducer = (state = initialize, action) => {
   }
 };
 
-// 서버에 연결해서 데이터 저장할 때
-// payload.userPw = crypto.SHA256(payload.userPw).toString();
-// return [...state, payload];

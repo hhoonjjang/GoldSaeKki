@@ -63,7 +63,6 @@ const Header = ({
                     <button
                       onClick={() => {
                         setLogoutState((state) => !state);
-                        // logout();
                       }}
                     >
                       로그아웃
@@ -126,7 +125,6 @@ const HeaderComponent = styled.div`
     justify-content: center;
     width: 100%;
     height: 100%;
-    /* flex를 잡았는데 안보이는 문제가 있으면 세로 높이를 잡아주자. */
   }
   .header_innerBox_center {
     position: relative;
@@ -210,9 +208,6 @@ const HeaderComponent = styled.div`
   }
 
   .header_innerBox_center_login_logo {
-    /* position: absolute; */
-    /* bottom: 20px; */
-    /* left: -140px; */
     z-index: 4;
 
     @media only screen and (max-width: 1024px) {
@@ -227,13 +222,10 @@ const HeaderComponent = styled.div`
     border-radius: 50%;
   }
   .header_innerBox_center_login_text {
-    /* position: absolute; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     z-index: 4;
-    /* bottom: 20px;
-    left: -80px; */
   }
 
   .header_innerBox_center_login_text > span {

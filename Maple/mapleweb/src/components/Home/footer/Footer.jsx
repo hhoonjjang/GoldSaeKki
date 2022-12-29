@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NotFound from "../../../NotFound";
 
-// import "../CSS/footer.css";
 const Footer = () => {
   const [familySite, setFamilySite] = useState("false");
   const toggleFamilySite = () => {
@@ -15,7 +14,6 @@ const Footer = () => {
         <div>
           <ul>
             <li>
-              {/* 메이플스토리 사이트 내에서 움직이는 것이 아니기에 a 태그를 붙였음 */}
               <Link
                 to="/Error"
                 element={<NotFound />}

@@ -414,12 +414,10 @@ const CategoryRight = styled.div`
 `;
 
 const ContentBox = styled.div`
-    /* background-color: rgb(245,245,245); */
     min-height: 800px;
 `;
 
 const BoardTitle = styled.p`
-    /* margin-left: 30px; */
     float: left;
     width: 100%;
     line-height: 1.3;
@@ -427,10 +425,8 @@ const BoardTitle = styled.p`
     border-top: 1px solid #7e7e7e;
     color: #333;
     font-size: 24px;
-    /* background-color: #F9F9F9; */
     background-color: #FBF9FA;
     word-break: break-all;
-    /* font-weight: bold; */
     padding: 37px 27px 37px;
     margin-top: 0 !important;
     margin-bottom: 0px;
@@ -457,7 +453,6 @@ const BoardInfoBox = styled.div`
     justify-content: space-between;
 `;
 const BoardUserName = styled.div`
-    /* a태그 안의 이미지 아래에 유저 이름을 적는다. */
     float: left;
     margin-left: 27px;
     height: 100%;
@@ -479,16 +474,8 @@ const BoardInfo = styled.div`
     margin-right: 27px;
     font-size: 13px;
   
-    /* 드래그 금지 */
-    /* -webkit-touch-callout: none;
-    user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -webkit-user-select: none; */
-    
     &>div{
         display: inline;
-        /* background-color: rgb(245,245,245); */
     }
 
     white-space: nowrap;
@@ -498,18 +485,14 @@ const BoardContent = styled.div`
     width: 100%;
     float: left;
     padding: 50px 30px;
-    /* background-color: #f0808040; */
     min-height: 10px;
     &>p{
         margin-bottom: 0.9rem;
     }
 
-    /* 게시글 상세 반응형 : 게시글 내용 */
-    /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
     @media all and (min-width: 480px) and (max-width: 767px) {
         padding: 40px 30px;
     }
-    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
     @media all and (max-width: 479px) {
         padding: 30px 30px;
     }
@@ -531,14 +514,11 @@ const LikeWrap = styled.div`
         box-sizing: border-box;
     }
 
-    /* 게시글 상세 반응형 : 공감하기 */
-    /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
     @media all and (min-width: 480px) and (max-width: 767px) {
         height: 45px;
         line-height: 45px;
         margin-bottom: 40px;
     }
-    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
     @media all and (max-width: 479px) {
         height: 45px;
         line-height: 45px;
@@ -557,7 +537,6 @@ const LikeBtn = styled.div`
         background-color: #F57700;
         border: 1px solid #F6890A;
     }
-    /* 드래그 금지 */
     -webkit-touch-callout: none;
      user-select: none;
      -moz-user-select: none;
@@ -573,7 +552,6 @@ const LikeCheck = styled.div`
     &:hover{
         border: 1px solid #929192da;
     }
-    /* 드래그 금지 */
     -webkit-touch-callout: none;
      user-select: none;
      -moz-user-select: none;
@@ -588,9 +566,6 @@ const CommentInfo = styled.div`
     height: 55px;
     line-height: 55px;
     border-top: 1px solid #e3e3e3;
-    /* border-bottom: 1px solid #e3e3e3; */
-    /* background-color: #F9F9F9; */
-    /* background-color: #FBF9FA; */
     padding: 0 30px;
 `;
 const CommentCount = styled.div`
@@ -607,16 +582,12 @@ const IconWrap = styled.div`
     height: 31px;
     margin: 0 5px;
 
-    /* 게시글 상세 반응형 : 게시글 아이콘 영역  */
-    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
     @media all and (max-width: 479px) {
         display: none;
     }
 `;
 const BoardOtherIcon = styled.img`
     cursor: pointer;
-    /* width: 20px;
-    height: 20px; */
 `;
 
 const CommentBox = styled.div`
@@ -626,13 +597,11 @@ const CommentBox = styled.div`
 const CommentWrap = styled.div`
     float: left;
     width: 100%;
-    /* padding: 30px 27px 25px 27px; */
     border-bottom: 1px solid #e3e3e3;
 `;
 const Comment = styled.div`
     box-sizing: border-box;
     border-top: 1px solid #e3e3e3;
-    /* margin: 5px 0; */
     font-size: 15px;
     float: left;
     width: 100%;
@@ -665,8 +634,6 @@ const CommentAdd = styled.div`
     background-color: #e8eaee;
     border: 1px solid #dcdde1;
 
-    /* 게시글 상세 반응형 : 댓글 영역 */
-    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
     @media all and (max-width: 479px) {
         height: 182px;
     }
@@ -685,23 +652,18 @@ const CommentTextArea = styled.textarea`
     overflow-y: auto;
     border: none;
 
-    /* 게시글 상세 반응형 : 댓글 입력 */
     @media screen and (max-width: 1280px) {
         width: 97%;
     }
-    /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
     @media all and (min-width: 768px) and (max-width: 1023px) {
         width: 98%;
     }
-    /* 테블릿 세로 (해상도 768px ~ 1023px)*/
     @media all and (min-width: 768px) and (max-width: 1023px) {
         width: 96.5%;
     }
-    /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
     @media all and (min-width: 480px) and (max-width: 767px) {
         width: 95.5%;
     }
-    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
     @media all and (max-width: 479px) {
         width: 350px;
         height: 115px;
@@ -735,7 +697,6 @@ const CommentAddBtn = styled.div`
     border: 1px solid #747a86;
     display: inline-block;
     line-height: 1;
-    /* float: left; */
 `;
 
 const UserName = styled.span`
@@ -756,10 +717,6 @@ const UserWorldImg = styled.img`
 `;
 const IconInfo = styled.div`
     color : #888;
-    &>span{
-        /* display: flex;
-        align-items: center; */
-    }
 `;
 
 const UpDelBtnWrap = styled.div`
@@ -808,7 +765,6 @@ const CommentBtnItem = styled.span`
     border: 1px solid #c4c4c4;
     padding: 4.5px 5px;
     cursor: pointer;
-    /* float: left; */
     margin-right: 4px;
     width: 33px;
     height: 30px;
@@ -820,27 +776,8 @@ const CommentBtnItem = styled.span`
     box-sizing: border-box;
 `;
 
-const HeartIcon = styled.div`
-    background-color: #ff00003d;
-    width: 100px;
-    height: 100px;
-    background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
-    background-position: 0 0;
-    cursor: pointer;
-    transition: background-position 1s steps(28);
-    transition-duration: 0s;
-    display: inline-block;
-  
-    &.is-active {
-        transition-duration: 1s;
-        background-position: -2800px 0; 
-    }
-`;
-
 const GuImg = styled.img`
 
-    /* 게시글 상세 반응형 : 구분선 이미지  */
-    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
     @media all and (max-width: 479px) {
         display: none;
     }

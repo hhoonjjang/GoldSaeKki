@@ -83,13 +83,6 @@ const BugReportBox = styled.div`
   width: 1200px;
   margin: auto;
   padding: 10px 30px;
-
-  @media only~~~~~ {
-      >h5 {
-        fontsoze
-      }
-
-  }
  
   .displayBox {
     width: 100% ;
@@ -134,11 +127,9 @@ const BugReportBox = styled.div`
     & div:first-child {
       font-size: 1.3rem;
       color: black;
-      // margin-bottom: 40px;
     }
 
     & div:nth-child(3) {
-      // margin-bottom: 40px;
     }
   }
   .describe {
@@ -162,11 +153,7 @@ const BugReportBox = styled.div`
   }
   
 @media screen and (max-width:1280px){
-  width:80%;
-  // background-color: black;
-  // > div >div>div{
-  //   width:300px;
-  // }
+  width: 80%;
   .imgBox {
     width:300px;
   }
@@ -177,10 +164,6 @@ const BugReportBox = styled.div`
 
 @media screen and (max-width:1023px){
   width:100%;
-  // background-color: black;
-  // > div >div>div{
-  //   width:300px;
-  // }
   .imgBox {
     width:250px;
   }
@@ -193,10 +176,6 @@ const BugReportBox = styled.div`
 }
 @media screen and (max-width:768px){
   width:100%;
-  // background-color: black;
-  // > div >div>div{
-  //   width:300px;
-  // }
   .imgBox {
     width:200px;
   }
@@ -236,9 +215,6 @@ const BugReportBox = styled.div`
     font-size:0.1rem;
   }
 }
-
-
-
 
 }
 `;

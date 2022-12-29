@@ -1,7 +1,3 @@
-// import Col from "react-bootstrap/Col";
-// import Nav from "react-bootstrap/Nav";
-// import Row from "react-bootstrap/Row";
-// import Tab from "react-bootstrap/Tab";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 
 import styled from "styled-components";
@@ -72,14 +68,10 @@ const TabsBox = styled.div`
   flex-direction:row;
 
   background-color:gray;
-  // display:flex;
   min-width:120px;
-  // margin-right:150px;
-  // border-radius: 20px 20px
  }
  .tab1{
   width:15%;
-  // background-color:red;
  }
  .tab2{
   width:85%;

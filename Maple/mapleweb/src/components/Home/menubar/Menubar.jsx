@@ -63,7 +63,6 @@ const Menubar = () => {
       return (
         <li className="menubar_item_outsideLi" key={`outsideLi${index}`}>
           <Link to={`/${routeAddress[index]}`}>
-            {/* /가 붙으면 root부터 찾는다. */}
             <span className="menubar_item_outsideLi_text">{item}</span>
           </Link>
           <ul className="menubar_dropdown">
@@ -73,7 +72,6 @@ const Menubar = () => {
                   <Link to={routeAddressSubGroup[index][index2]}>
                     {dropDownMenu[index][index2]}
                   </Link>
-                  {/* 나중에 메뉴바의 상세한 하위 영역명이 정해지면 그 때 입력한다. */}
                 </li>
               );
             })}
@@ -111,30 +109,6 @@ const Menubar = () => {
           }}
         >
           {menuVersion2}
-          {/* <li className="menubar_item_outsideLi">
-            <Link to={"/"}>
-              <span className="menubar_item_outsideLi_text">뉴스</span>
-            </Link>
-            <ul className="menubar_dropdown">
-              <li>
-                <Link to={"/"}>공지사항</Link>
-              </li>
-              <li>
-                <Link to={"/"}>업데이트</Link>
-              </li>
-              <li>
-                <Link to={"/"}>이벤트</Link>
-              </li>
-              <li>
-                <Link to={"/"}>캐시샵 공지</Link>
-              </li>
-              <li>
-                <Link to={"/"}>메이플 알림판</Link>
-              </li>
-            </ul>
-          </li>
-          */}
-          {/* map()돌려서 짧게 나오는 것하고 깡으로 길게 박아넣는 것 중 원하는 것 선택합시다... */}
         </ul>
       </div>
     </MenubarComponent>

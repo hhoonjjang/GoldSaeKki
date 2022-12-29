@@ -236,7 +236,6 @@ const CommentRankBox = styled.div`
   .page-selection {
     width: 48px;
     height: 30px;
-    /* color: #337ab7; */
     color: #5e7bcb;
   }
 `;

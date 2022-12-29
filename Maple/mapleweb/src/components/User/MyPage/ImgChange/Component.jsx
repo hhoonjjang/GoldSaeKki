@@ -12,7 +12,7 @@ const ImgChangeComponent = ({ imgUploadSubmit }) => {
         }}
       >
         <input
-          name="imgselectfile" // 이 녀석으로 멀터 통신 시 name 지정
+          name="imgselectfile" 
           type="file"
         ></input>
         <ImgchangeBtnBox>

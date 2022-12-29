@@ -51,16 +51,13 @@ const BugCSBox = styled.div`
     border: solid 1px black;
     width: 100%;
     text-align: center;
-    /* border-collapse: collapse; */
   }
   th {
     border-bottom: 1px dashed black;
   }
   td {
-    /* width: 100%; */
     border: 1px dashed black;
 
-    /* border-bottom: 1px dashed black; */
     text-align: center;
     & div {
       background-color: lightblue;
@@ -78,9 +75,6 @@ const BugCSBox = styled.div`
     border: none;
     border-radius: 5px;
   }
-  /* .requestBox {
-    display: flex;
-  } */
   .answer {
     height: 200px;
   }

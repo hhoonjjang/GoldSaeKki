@@ -2,7 +2,6 @@ import React, { useMemo, useState } from "react";
 
 import slideBackground from "../Img/main_slide_background.png";
 
-// import "../CSS/mainSlide.css";
 import { useEffect } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
@@ -14,11 +13,9 @@ const MainSlideComponent = ({
   carouselTextArr,
 }) => {
   const [currSlide, setCurrSlide] = useState(0);
-  // 현재 바라보는 곳
   const [currSlideTranslate, setCurrSlideTranslate] = useState(0);
 
   const [bool, setBool] = useState(true);
-  // 왼쪽 버튼인지 오른쪽 버튼인지 판별한다.
 
   const container = useRef();
 
@@ -34,11 +31,9 @@ const MainSlideComponent = ({
   useEffect(() => {
     if (onlyUpdateCurrSlide.current) {
       onlyUpdateCurrSlide.current = false;
-      // 마운트 될 때 실행되지 않게
     } else {
       if (bool) {
         if (currSlide == 0) {
-          // 마지막에서 뒤로 갔을 때
           container.current.style.transform = `translate(0px)`;
           setCurrSlideTranslate(0);
         } else {
@@ -52,7 +47,6 @@ const MainSlideComponent = ({
       } else if (!bool) {
         if (currSlide + 1 == carouselImgArr.length) {
           container.current.style.transform = `translate(${
-            // parseInt((carouselImgArr.length / 4 - 1) * -1100)
             parseInt((carouselImgArr.length - 1) / 4) * -1100
           }px)`;
           setCurrSlideTranslate(
@@ -127,7 +121,6 @@ const MainSlideComponent = ({
                 <div className="carousel_slide_itemBox_cover">
                   <div className="carousel_slide_itemBox" ref={container}>
                     {
-                      // const tempCount = parseInt((carouselImgArr.length - 1) / 4) + 1;
                       carouselImgArr.map((item, index) => {
                         return (
                           <div
@@ -214,7 +207,6 @@ const CarouselBackground = styled.div`
       white-space: nowrap;
       position: absolute;
       top: 35%;
-      // right: 43%;
       left: 100px;
     }
   }
@@ -296,8 +288,6 @@ const Carousel = styled.div`
 
           .carousel_slide_itemBox {
             display: flex;
-            // width: 99999px;
-            /* justify-content: space-between; */
             transition: transform 0.5s;
 
             .carousel_slide_item {
@@ -308,7 +298,6 @@ const Carousel = styled.div`
 
               img {
                 width: 100px;
-                // height: 100%;
                 max-width: 210px;
               }
 

@@ -84,7 +84,6 @@ const ShortcutComponent = styled.div`
       width: 1200px;
       display: flex;
       justify-content: space-between;
-      /* padding-top: 10px; */
     }
 
     .flexBox {

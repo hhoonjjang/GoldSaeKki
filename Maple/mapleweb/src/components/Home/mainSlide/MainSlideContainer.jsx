@@ -46,7 +46,6 @@ const carouselTextArr = [
   "쓰던대로 쓰고 아케인셰이드 무기",
 ];
 
-// 본래 DB 페이지에서 찾아와야 합니다.
 const MainSlideContainer = () => {
   const [carouselBackgroundArr] = useState([
     bgImg0,

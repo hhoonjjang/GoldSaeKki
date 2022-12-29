@@ -6,13 +6,11 @@ import mainInfoImg2 from "../Img/main_info_2.png";
 import mainInfoImg3 from "../Img/main_info_3.png";
 import NotFound from "../../../NotFound";
 const MainInfo = () => {
-  // 나중에 Link 달아줘야 된다...
   return (
     <MainInfoComponent>
       <div className="mainInfo_innerBox">
         <h1 className="mainInfo_intro">
           메이플스토리 게임정보
-          {/* Link달아줘야 함 */}
           <Link to="/Error" element={<NotFound />}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

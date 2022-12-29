@@ -34,35 +34,35 @@ const MyBoardEditComponent = ({ getMyBoard, boardList, currUser }) => {
           const boardDate = tempDate.split("T");
           console.log(boardDate[0]);
           return (
-            <>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  padding: "10px",
-                }}
-                key={`board-${idx}`}
-                onClick={() => {
-                  navigate(`/Community/board/${item.id}`);
-                }}
-              >
-                <div style={{ display: "inline-block" }}>
-                  <span>【{item.category}】</span>
-                  <span> {item.title}</span>
-                </div>
-                <span className="board_time">{boardDate[0]}</span>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "10px",
+              }}
+              key={`board-${idx}`}
+              onClick={() => {
+                navigate(`/Community/board/${item.id}`);
+              }}
+            >
+              <div key={`data-${idx}`} style={{ display: "inline-block" }}>
+                <span key={`item-${idx}`}>【{item.category}】</span>
+                <span key={`title-${idx}`}> {item.title}</span>
               </div>
-              <div
-                className="back-btn"
-                onClick={() => {
-                  navigate("/mypage");
-                }}
-              >
-                뒤로가기
-              </div>
-            </>
+              <span key={`time-${idx}`} className="board_time">
+                {boardDate[0]}
+              </span>
+            </div>
           );
         })}
+        <div
+          className="back-btn"
+          onClick={() => {
+            navigate("/mypage");
+          }}
+        >
+          뒤로가기
+        </div>
         <PagenationWrap>
           <Pagination
             // 현재 페이지

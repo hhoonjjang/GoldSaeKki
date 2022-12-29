@@ -33,34 +33,34 @@ const MyCommentEditComponent = ({ commentList, getMycomment, currUser }) => {
           const tempDate = item.createdAt;
           const commentDate = tempDate.split("T");
           return (
-            <>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  padding: "10px",
-                }}
-                key={`comment-${idx}`}
-                onClick={() => {
-                  navigate(`/Community/board/${item.boardId}`);
-                }}
-              >
-                <div style={{ display: "inline-block" }}>
-                  <span> {item.text}</span>
-                </div>
-                <span className="board_time">{commentDate[0]}</span>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "10px",
+              }}
+              key={`comment-${idx}`}
+              onClick={() => {
+                navigate(`/Community/board/${item.boardId}`);
+              }}
+            >
+              <div key={`data-${idx}`} style={{ display: "inline-block" }}>
+                <span key={`comment-${idx}`}> {item.text}</span>
               </div>
-              <div
-                className="back-btn"
-                onClick={() => {
-                  navigate("/mypage");
-                }}
-              >
-                뒤로가기
-              </div>
-            </>
+              <span key={`time-${idx}`} className="board_time">
+                {commentDate[0]}
+              </span>
+            </div>
           );
         })}
+        <div
+          className="back-btn"
+          onClick={() => {
+            navigate("/mypage");
+          }}
+        >
+          뒤로가기
+        </div>
         <PagenationWrap>
           <Pagination
             // 현재 페이지

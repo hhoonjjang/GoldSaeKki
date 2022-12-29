@@ -29,7 +29,6 @@ const AdminLoginContainer = ( {setRender,_render}) => {
   };
 
   const infoSubmit = (value) => {
-    
     axios.post("/api/admin/login", value).then(
       function (data) {
         if (document.cookie.split("=")[0] == "admin") {

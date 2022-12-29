@@ -20,7 +20,7 @@
 
 ### - 구현 사항
 * 마우스를 따라 네비게이션 바의 위치가 이동하게 하였다.
-<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/c0a943d178a64.gif">
+<img style="width : 100%" src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/c0a943d178a64.gif">
 
 * 유저가 마우스를 댄 카테고리 이름의 길이에 맞게 네비게이션 바의 너비가 자동으로 길어지게 하였음
 ### - 이슈 사항 

@@ -1,23 +1,131 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import searchBtn from "../Img/main_search_btn.png";
 import exclamationIcon from "../Img/main_search_noneResult.png";
 
 const MainSearchResultComponent = ({
   searchType,
   searchData,
   searchResultData,
+  researchType,
+  researchData,
+  setResearchType,
+  setResearchData,
+  navigateToSearch,
+  navigate,
+  dispatch,
 }) => {
-  const listItem = ["업데이트 정보센터", "가이드", "커뮤니티"];
-  console.log(searchResultData);
+  const [searchDropdown, setSearchDropdown] = useState("false");
+  const toggleSearchDropdown = () => {
+    setSearchDropdown((state) => !state);
+  };
+  const searchTypeList = ["제목", "작성자", "태그"];
+
   useEffect(() => {
     console.log(searchResultData);
     console.log(searchResultData.length);
   }, [searchResultData]);
+
   return (
     <MainSearchResult>
       <div className="mainSearchResult_innerBox">
+        <div className="mainSearchResult_innerBox_researchBox">
+          <div className="mainSearchResult_innerBox_research">
+            <div className="mainSearchResult_innerBox_research_selectType">
+              <div
+                className="mainSearchResult_innerBox_research_selectType_title"
+                onClick={() => {
+                  toggleSearchDropdown();
+                }}
+              >
+                <span></span> {researchType}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  width="20px"
+                  height="20px"
+                >
+                  <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
+                </svg>
+              </div>
+              <div
+                className={`mainSearchResult_innerBox_research_selectType_items ${
+                  searchDropdown ? "off" : "on"
+                }`}
+              >
+                {searchTypeList.map((item, index) => {
+                  return (
+                    <div
+                      className="mainSearchResult_innerBox_research_selectType_item"
+                      key={`mainSearchResult_innerBox_research_selectType_item_${index}`}
+                      onClick={() => {
+                        toggleSearchDropdown();
+
+                        setResearchType(item);
+                      }}
+                    >
+                      <span>{item}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="mainSearchResult_innerBox_research_inputBox_cover">
+              <div className="mainSearchResult_innerBox_research_inputBox">
+                <input
+                  type="text"
+                  className="mainSearchResult_innerBox_research_inputBox_input"
+                  onInput={(e) => {
+                    setResearchData(e.target.value);
+                  }}
+                  onKeyUp={() => {
+                    if (window.event.keyCode == 13) {
+                      if (researchData.match(/\S/g)) {
+                        navigateToSearch(
+                          researchType,
+                          researchData,
+                          navigate,
+                          dispatch
+                        );
+                        return;
+                      } else {
+                        console.log("researchData가 공백입니다.");
+                        alert("검색어를 입력하세요");
+                      }
+                    }
+                  }}
+                />
+                <div
+                  className="mainSearchResult_innerBox_research_inputBox_img"
+                  onClick={() => {
+                    if (researchData.match(/\S/g)) {
+                      navigateToSearch(
+                        researchType,
+                        researchData,
+                        navigate,
+                        dispatch
+                      );
+                      return;
+                    } else {
+                      console.log("researchData가 공백입니다.");
+                      alert("검색어를 입력하세요");
+                    }
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                    width="20px"
+                  >
+                    <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="mainSearchResult_innerBox_summaryBox">
           '<span>{searchData}</span>'(으)로 '<span>{searchType}</span>' 검색한
           결과입니다.
@@ -105,7 +213,102 @@ const MainSearchResult = styled.div`
       padding-left: 20px;
       padding-right: 20px;
     }
+    .mainSearchResult_innerBox_research {
+      display: flex;
+      justify-content: end;
+      padding-top: 80px;
+      padding-bottom: 50px;
 
+      .mainSearchResult_innerBox_research_selectType {
+        width: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+
+        .mainSearchResult_innerBox_research_selectType_title {
+          background-color: white;
+          border: 1px solid #e3e3e3;
+          text-align: center;
+          font-size: 13px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          display: flex;
+          justify-content: space-between;
+
+          svg {
+            padding-right: 10px;
+          }
+        }
+
+        .mainSearchResult_innerBox_research_selectType_items {
+          position: absolute;
+          display: none;
+          background-color: white;
+          width: 100%;
+          bottom: -84px;
+          border: 1px solid gainsboro;
+
+          div {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            inSearch_innerBox_selectType_item:nth-child(3) {
+              border-top: 1px solid #474a51;
+            }
+          }
+          span {
+            padding-left: 5px;
+            padding-right: 5px;
+            font-size: 12px;
+            line-height: 20px;
+          }
+        }
+      }
+      .mainSearchResult_innerBox_research_selectType_items.on {
+        display: block;
+        overflow: auto;
+      }
+    }
+
+    .mainSearchResult_innerBox_research_inputBox_cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .mainSearchResult_innerBox_research_inputBox {
+        display: flex;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid gainsboro;
+        font-size: 13px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        @media only screen and (max-width: 1024px) {
+          width: 100%;
+        }
+
+        @media only screen and (min-width: 1024px) {
+          width: 200px;
+        }
+
+        .mainSearchResult_innerBox_research_inputBox_input {
+          // flex: 1;
+          margin-left: 10px;
+          background-color: transparent;
+          border: none;
+          color: #222;
+          outline: none;
+        }
+
+        .mainSearchResult_innerBox_research_inputBox_img {
+          cursor: pointer;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+    }
     .mainSearchResult_innerBox_summaryBox {
       display: flex;
       background-color: #f7f7f7;
@@ -115,7 +318,7 @@ const MainSearchResult = styled.div`
       border-top: 1px solid #e3e3e3;
       border-bottom: 1px solid #e3e3e3;
       justify-content: center;
-      margin-top: 80px;
+
       margin-bottom: 40px;
 
       span {

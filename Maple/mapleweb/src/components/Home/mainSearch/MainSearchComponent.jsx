@@ -123,6 +123,7 @@ const MainSearch = styled.div`
     width: 1200px;
     position: relative;
     display: flex;
+
     @media only screen and (max-width: 1024px) {
       justify-content: center;
       padding-left: 20px;
@@ -137,8 +138,6 @@ const MainSearch = styled.div`
       position: relative;
       margin-right: 20px;
       
-      
-  
       .mainSearch_innerBox_selectType_title {
         background-color: white;
         border: 1px solid #e3e3e3;
@@ -177,10 +176,7 @@ const MainSearch = styled.div`
           padding-right: 5px;
           font-size: 12px;
         }
-  
-        
       }
-      
     }
     .mainSearch_innerBox_selectType_items.on {
       display: block;

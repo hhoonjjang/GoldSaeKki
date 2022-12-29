@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { action } from "../../../modules/header";
+import { useLocation, useNavigate } from "react-router-dom";
+import { action as actionHeader } from "../../../modules/header";
+import { action as actionSearch } from "../../../modules/search";
 
 import MainSearchResultComponent from "./MainSearchResultComponent";
 
@@ -25,11 +26,30 @@ const getSearchList = async (searchType, searchData, setSearchResultData) => {
   setSearchResultData(searchResult);
 };
 
+const navigateToSearch = async (
+  researchType,
+  researchData,
+  navigate,
+  dispatch
+) => {
+  dispatch(actionSearch.search(researchType, researchData));
+  navigate("/Search", {
+    state: {
+      searchType: researchType,
+      searchData: researchData,
+    },
+  });
+  window.location.reload();
+};
+
 const MainSearchResultContainer = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const [researchType, setResearchType] = useState("제목");
+  const [researchData, setResearchData] = useState("");
+  const navigate = useNavigate();
   const [searchResultData, setSearchResultData] = useState([]);
-  dispatch(action.header("Search"));
+  dispatch(actionHeader.header("Search"));
 
   useEffect(() => {
     console.log(
@@ -48,6 +68,13 @@ const MainSearchResultContainer = () => {
   }, [searchResultData]);
   return (
     <MainSearchResultComponent
+      researchType={researchType}
+      researchData={researchData}
+      setResearchType={setResearchType}
+      setResearchData={setResearchData}
+      navigateToSearch={navigateToSearch}
+      navigate={navigate}
+      dispatch={dispatch}
       searchType={location.state.searchType}
       searchData={location.state.searchData}
       searchResultData={searchResultData}

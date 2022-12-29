@@ -40,6 +40,7 @@
 > 　　<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/7be58594809eb.png">
 > 　　<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/4555c8ecca382.png">
 > ```
+>   // props
 >    export const CATEGORY = [
 >        { name: '자유게시판', label: "Free" },
 >        { name: '정보게시판', label: "Information" },

@@ -47,6 +47,7 @@ router.post("/create", async (req, res) => {
     tempUser.addBoard(tempBoard);
     res.send({ tempBoard, status: 200 });
   } catch (error) {
+    console.log(error);
     res.send({ status: 400 });
   }
 });
@@ -112,6 +113,7 @@ router.post("/destroy", (req, res) => {
 });
 
 router.post("/update", (req, res) => {
+  console.log(req.body.title);
   try {
     db.Board.update(
       {
@@ -221,13 +223,35 @@ router.post("/getLikeSevenBoards", async (req, res) => {
 
 router.post("/mainCommunity", async (req, res) => {
   try {
-    const result = await db.sequelize.query(
-      'SELECT * FROM (SELECT * FROM maple.boards where category="자유게시판" or category="정보게시판" or category="토론게시판" or category="연재소설" ORDER BY created_at DESC LIMIT 50)as t group by t.category',
-      { type: db.Sequelize.QueryTypes.SELECT }
-    );
+    const resultFree = await db.Board.findOne({
+      where : {
+        category :"자유게시판",
+
+      },
+      order :[["createdAt","DESC"]]
+    });
+    const resultInfo = await db.Board.findOne({
+      where : {
+        category :"정보게시판"
+      },
+      order :[["createdAt","DESC"]]
+    });
+    const resultTopic = await db.Board.findOne({
+      where : {
+        category :"토론게시판"
+      },
+      order :[["createdAt","DESC"]]
+    });
+    const resultNovel = await db.Board.findOne({
+      where : {
+        category :"연재소설"
+      },
+      order :[["createdAt","DESC"]]
+    });
+
     res.send({
       status: 200,
-      result: result,
+      result: [resultFree, resultInfo, resultTopic,resultNovel],
     });
   } catch (error) {
     console.error(error);
@@ -269,3 +293,12 @@ fs.readFile("./board.json", "utf-8", async function (err, data) {
 });
 
 export default router;
+
+
+
+
+
+
+
+
+

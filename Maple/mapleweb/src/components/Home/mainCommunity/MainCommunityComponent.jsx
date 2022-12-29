@@ -10,7 +10,6 @@ const MainCommunityComponent = ({
   totalData,
   totalRanking,
 }) => {
-  const communityList = ["Free", "Infomation", "TopicDiscussion", "Novel"];
   useEffect(() => {
     totalRanking();
   }, []);
@@ -34,7 +33,7 @@ const MainCommunityComponent = ({
             </h1>
           </div>
           <div className="mainCommunity_innerBox_community_list">
-            {communityList.map((item, index) => {
+            {communityNewestPost.map((item, index) => {
               return (
                 <div
                   className="mainCommunity_innerBox_community_item_cover"
@@ -57,10 +56,10 @@ const MainCommunityComponent = ({
                             "mainCommunity_innerBox_community_item_top_innerBox_category"
                           }
                         >
-                          [{communityNewestPost[index]?.category}]
+                          [{item?.category}]
                         </div>
                         <Link
-                          to={`/Community/board/${communityNewestPost[index]?.id}`}
+                          to={`/Community/board/${item?.id}`}
                           element={<CommunityComponet />}
                         >
                           <div
@@ -68,7 +67,7 @@ const MainCommunityComponent = ({
                               "mainCommunity_innerBox_community_item_top_innerBox_title"
                             }
                           >
-                            {communityNewestPost[index]?.title}
+                            {item?.title}
                           </div>
                         </Link>
                       </div>
@@ -87,12 +86,12 @@ const MainCommunityComponent = ({
                           }
                         >
                           <Link
-                            to={`/Community/board/${communityNewestPost[index]?.id}`}
+                            to={`/Community/board/${item?.id}`}
                             element={<CommunityComponet />}
                           >
                             <span
                               dangerouslySetInnerHTML={{
-                                __html: communityNewestPost[index]?.contents,
+                                __html: item?.contents,
                               }}
                             ></span>
                           </Link>
@@ -112,14 +111,14 @@ const MainCommunityComponent = ({
                             "mainCommunity_innerBox_community_item_bottom_innerBox_userName"
                           }
                         >
-                          {communityNewestPost[index]?.user_name}
+                          {item?.user_name}
                         </span>
                         <span
                           className={
                             "mainCommunity_innerBox_community_item_bottom_innerBox_createdAt"
                           }
                         >
-                          {communityNewestPost[index]?.created_at}
+                          {item?.created_at}
                         </span>
                       </div>
                     </div>
@@ -391,6 +390,8 @@ const MainCommunityBox = styled.div`
       }
 
       .mainCommunity_innerBox_ranking_ranking {
+        // display: flex;
+        // justify-content: center;
         margin-top: 20px;
         position: relative;
 

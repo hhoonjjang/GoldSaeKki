@@ -10,8 +10,8 @@ const UserOutContainer = () => {
 
   const signOutBtn = () => {
     console.log(currUser);
-    axios.post("http://localhost:8080/api/user/signOut", currUser).then(() => {
-      axios.post("http://localhost:8080/api/user/logout").then(() => {
+    axios.post("/api/user/signOut", currUser).then(() => {
+      axios.post("/api/user/logout").then(() => {
         dispatch(action.refresh());
         dispatch(action.check());
         dispatch(action.login());

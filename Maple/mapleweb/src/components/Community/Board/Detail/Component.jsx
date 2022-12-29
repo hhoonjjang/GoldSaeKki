@@ -31,14 +31,14 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
     const { boardId } = useParams();
 
     // 해당 게시글을 가져오는 요청을 보낸다.
-    const boardReq = axios.post("http://localhost:8080/api/board/getBoard", {
+    const boardReq = axios.post("/api/board/getBoard", {
         boardId: boardId
     });
 
     // 해당 게시글의 댓글을 가져오는 요청을 보낸다.
     // 어떤 항목이 필요한지.. 댓글의 boardId가 req.body.boardId와 같은 놈을 모두?
     // 정렬은 어떤 방식으로? -> ... 댓글이 답글이 아닌 놈 기준으로 먼저 단 댓글이 위에 나온다.
-    const commentReq = axios.post("http://localhost:8080/api/comment/getComment", {
+    const commentReq = axios.post("/api/comment/getComment", {
         boardId: boardId
     });
 
@@ -64,7 +64,7 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
             dispatch(communityAction.comments(comment?.data));
 
             // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
-            axios.post("http://localhost:8080/api/board/getLikeSevenBoards", {
+            axios.post("/api/board/getLikeSevenBoards", {
             }).then((boards) => {
                 // 해당 게시글 목록을 리덕스에 저장한다.
                 console.log(boards.data);
@@ -100,7 +100,7 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
     // 리랜더링시 다시 요청하지 않기 위함
     useEffect(() => {
         // Board 조회수를 수정하는 요청도 보내줌
-        const boardReq = axios.post("http://localhost:8080/api/board/eyeCountUpdate", {
+        const boardReq = axios.post("/api/board/eyeCountUpdate", {
             boardId: boardId
         });
     }, []);
@@ -237,7 +237,7 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                     <LikeBtn onClick={async (e) => {
                         // 공감 클릭시 요청 보내기 : 보드 아이디 보내야 함 board.id
                         // useState도 사용하여 값 변한 것처럼 보이게 한다.
-                        const likeCountUpReq = await axios.post("http://localhost:8080/api/board/likeCountUpdate", {
+                        const likeCountUpReq = await axios.post("/api/board/likeCountUpdate", {
                             boardId: boardId
                         });
                         console.log(likeCountUpReq);
@@ -278,7 +278,7 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
 
                                     if (deleteConfirm) {
                                         // 보드 id를 기준으로 삭제 요청 보내기
-                                        await axios.post("http://localhost:8080/api/board/destroy", {
+                                        await axios.post("/api/board/destroy", {
                                             boardId: board.id,
                                         });
 
@@ -335,7 +335,7 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                                                 <CommentBtnItem onClick={() => {
                                                     const commentUpdateValue = prompt("수정할 댓글을 입력해주세요.", comment.text);
                                                     if (commentUpdateValue) {
-                                                        axios.post("http://localhost:8080/api/comment/update", {
+                                                        axios.post("/api/comment/update", {
                                                             commentId: comment.id,
                                                             commentText: commentUpdateValue,
                                                         }).then(() => {
@@ -358,7 +358,7 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                                                     const isDel = window.confirm("댓글을 삭제하시겠습니까?");
 
                                                     if (isDel) {
-                                                        const commentDelReq = await axios.post("http://localhost:8080/api/comment/destroy", {
+                                                        const commentDelReq = await axios.post("/api/comment/destroy", {
                                                             commentId: comment.id,
                                                             userName: userName,
                                                             boardId: board.id
@@ -366,7 +366,7 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                                                         switch (commentDelReq.data.status) {
                                                             case 200:
                                                                 alert("댓글이 삭제되었습니다.");
-                                                                const commentCountDownReq = await axios.post("http://localhost:8080/api/board/commentCountDown", {
+                                                                const commentCountDownReq = await axios.post("/api/board/commentCountDown", {
                                                                     boardId: boardId
                                                                 });
                                                                 setText(" ");
@@ -432,7 +432,7 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                                 }
 
                                 // 서버쪽에 등록 요청을 보냄
-                                const commentAddRed = await axios.post("http://localhost:8080/api/comment/create", {
+                                const commentAddRed = await axios.post("/api/comment/create", {
                                     // 댓글 등록시 보내줄 값
                                     // 1. 댓글 작성 유저 닉네임
                                     // 2. 내용 : value값을 setState한 것을 state에서 가져온다.
@@ -452,7 +452,7 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                                         // 값을 비워준다.
                                         setText("");
                                         // 게시글의 댓글 개수를 +1 해준다.
-                                        const commentCountUpReq = await axios.post("http://localhost:8080/api/board/commentCountUp", {
+                                        const commentCountUpReq = await axios.post("/api/board/commentCountUp", {
                                             boardId: boardId
                                         });
                                         console.log(commentCountUpReq);

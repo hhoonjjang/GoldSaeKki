@@ -11,7 +11,7 @@ const RegistContainer = () => {
 
   const userInfo = () => {
     axios
-      .post("http://localhost:8080/api/user/getUser")
+      .post("/api/user/getUser")
       .then((data) => {
         console.log(data);
         data?.data?.map((item) => {
@@ -177,7 +177,7 @@ const RegistContainer = () => {
       }
       userPw = crypto.SHA256(userPw).toString();
       axios
-        .post("http://localhost:8080/api/user/regist", {
+        .post("/api/user/regist", {
           userId,
           userPw,
           userName,

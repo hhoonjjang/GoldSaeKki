@@ -12,7 +12,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 // CKEditor 이미지 업로드를 위한 multer 기본 세팅
-// const API_URL = "http://localhost:8080";
+// const API_URL = "";
 // const UPLOAD_ENDPOINT = "upload_files";
 
 const EditComponent = ({ contentsValue }) => {
@@ -125,7 +125,7 @@ const EditComponent = ({ contentsValue }) => {
           <RegistBtn className="btn03_g" onClick={async (e) => {
             // 서버쪽에 수정 요청을 보낸다.
             if (!titleText.match(/\S/g)) return alert("제목을 입력해주세요.");
-            const update = await axios.post("http://localhost:8080/api/board/update", {
+            const update = await axios.post("/api/board/update", {
               title: titleText,
               world: selected,
               tags: tags,

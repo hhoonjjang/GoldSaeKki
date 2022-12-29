@@ -5,13 +5,13 @@ const DetailContainer = ({categorys, category, route}) =>{
     // console.log(category);
     const reportBoard = (id)=>{
         console.log(id)
-        axios.post("http://localhost:8080/api/board/reportboard",{id}).then((data)=>{
+        axios.post("/api/board/reportboard",{id}).then((data)=>{
             console.log(data.data)
             alert(data.data);
         })
     }
     const reportComment = (id)=>{
-        axios.post("http://localhost:8080/api/comment/reportcomment",{id}).then((data)=>{
+        axios.post("/api/comment/reportcomment",{id}).then((data)=>{
             console.log(data.data)
             alert(data.data)
         })

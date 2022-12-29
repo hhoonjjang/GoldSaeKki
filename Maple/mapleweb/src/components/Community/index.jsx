@@ -45,7 +45,7 @@ const CommunityComponet = ({ }) => {
 
     // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
     axios
-      .post("http://localhost:8080/api/board/getLikeSevenBoards", {})
+      .post("/api/board/getLikeSevenBoards", {})
       .then((boards) => {
         // 해당 게시글 목록을 리덕스에 저장한다.
         console.log(boards.data);

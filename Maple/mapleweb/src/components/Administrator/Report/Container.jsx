@@ -4,7 +4,7 @@ import UserReportComponent from "./Component"
 
 const BoardArrFun = async (setBoard) =>{
  try{
-    let boardArr = (await axios.post("http://localhost:8080/api/admin/reportboard")).data;
+    let boardArr = (await axios.post("/api/admin/reportboard")).data;
     setBoard(boardArr);
  }catch(err){
     console.error(err);

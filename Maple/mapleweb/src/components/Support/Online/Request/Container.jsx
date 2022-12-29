@@ -4,7 +4,7 @@ import axios from "axios";
 const categoryArrFun = async (setCategory) => {
   try {
     let categoryArr = (
-      await axios.post("http://localhost:8080/api/support/displaycategory")
+      await axios.post("/api/support/displaycategory")
     ).data;
     setCategory(categoryArr);
   } catch (err) {

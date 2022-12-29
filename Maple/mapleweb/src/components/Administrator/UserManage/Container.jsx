@@ -6,7 +6,7 @@ import UserManageComponent from "./Component";
 
 const tempFun = async (setReportArr) => {
   try {
-    let reportArr = (await axios.post("http://localhost:8080/api/report/bugcs"))
+    let reportArr = (await axios.post("/api/report/bugcs"))
       .data;
     setReportArr(reportArr);
     console.log(reportArr);
@@ -17,7 +17,7 @@ const tempFun = async (setReportArr) => {
 
 const BoardArrFun = async (setBoard) =>{
   try{
-     let boardArr = (await axios.post("http://localhost:8080/api/admin/reportboard")).data;
+     let boardArr = (await axios.post("/api/admin/reportboard")).data;
      setBoard(boardArr);
   }catch(err){
      console.error(err);
@@ -26,7 +26,7 @@ const BoardArrFun = async (setBoard) =>{
 
 const CommentArrFun = async (setComment) =>{
   try{
-     let commentArr = (await axios.post("http://localhost:8080/api/admin/reportcomment")).data;
+     let commentArr = (await axios.post("/api/admin/reportcomment")).data;
      setComment(commentArr);
   }catch(err){
      console.error(err);
@@ -36,7 +36,7 @@ const CommentArrFun = async (setComment) =>{
 const userArrFun = async (setUser) => {
   try {
     let userArr = (
-      await axios.post("http://localhost:8080/api/admin/displayuser")
+      await axios.post("/api/admin/displayuser")
     ).data;
     setUser(userArr);
   } catch (err) {
@@ -56,7 +56,7 @@ const UserManageContainer = ({setComment,setBoard,setReportArr}) => {
   console.log(userArr);
   const userSubmit = (user) => {
     axios
-      .post("http://localhost:8080/api/admin/searchuser", {
+      .post("/api/admin/searchuser", {
         user,
       })
       .then((data) => {
@@ -68,7 +68,7 @@ const UserManageContainer = ({setComment,setBoard,setReportArr}) => {
   const delBtn = (userName) => {
     console.log(userName);
     axios
-      .post("http://localhost:8080/api/admin/deluser", { userName })
+      .post("/api/admin/deluser", { userName })
       .then((data) => {
         alert(data.data);
         userArrFun(setUser);
@@ -80,13 +80,13 @@ const UserManageContainer = ({setComment,setBoard,setReportArr}) => {
       });
   };
   const msgSubmit = (msg, userName) => {
-    axios.post("http://localhost:8080/api/admin/sendmsg", { msg, userName });
+    axios.post("/api/admin/sendmsg", { msg, userName });
   };
   const stateName = useSelector((state) => state?.admin);
   console.log(tempUser);
   const boardDel = (id, user) => {
     axios
-      .post("http://localhost:8080/api/admin/deluserboard", { id, user })
+      .post("/api/admin/deluserboard", { id, user })
       .then((data) => {
         alert(data.data.msg);
         setTemp(data.data.tempUser);
@@ -96,7 +96,7 @@ const UserManageContainer = ({setComment,setBoard,setReportArr}) => {
   };
   const commentDel = (id, user) => {
     axios
-      .post("http://localhost:8080/api/admin/delusercomment", { id, user })
+      .post("/api/admin/delusercomment", { id, user })
       .then((data) => {
         alert(data.data.msg);
         setTemp(data.data.tempUser);

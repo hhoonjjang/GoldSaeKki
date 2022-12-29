@@ -165,7 +165,7 @@ const UserImgBox = ({ item }) => {
   return (
     <>
       <li className="user-img">
-        <img src={`http://localhost:8080/api/download${item.profileImg}`}></img>
+        <img src={`/api/download${item.profileImg}`}></img>
         <div>{item.tempUserName}</div>
       </li>
     </>

@@ -4,7 +4,7 @@ import UserReportComponent from "./Component"
 
 const CommentArrFun = async (setComment) =>{
  try{
-    let commentArr = (await axios.post("http://localhost:8080/api/admin/reportcomment")).data;
+    let commentArr = (await axios.post("/api/admin/reportcomment")).data;
     setComment(commentArr);
  }catch(err){
     console.error(err);

@@ -3,7 +3,7 @@ import BugCSComponent from "./Component";
 import { useEffect, useState } from "react";
 const tempFun = async (setReportArr) => {
   try {
-    let reportArr = (await axios.post("http://localhost:8080/api/report/bugcs"))
+    let reportArr = (await axios.post("/api/report/bugcs"))
       .data;
     setReportArr(reportArr);
     console.log(reportArr);
@@ -29,7 +29,7 @@ const BugCSContainer = ({reportArr, setReportArr}) => {
     console.log(idx);
     const data = { answer: answer, id: idx };
     console.log(data);
-    axios.post("http://localhost:8080/api/report/buganswer", data).then(
+    axios.post("/api/report/buganswer", data).then(
       function (data) {
         console.log(data.data)
         tempFun(setReportArr);

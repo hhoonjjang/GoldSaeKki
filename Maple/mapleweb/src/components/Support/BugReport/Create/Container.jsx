@@ -33,7 +33,7 @@ const CreateContainer = () => {
     );
     axios
       .post(
-        "http://localhost:8080/api/report/uploadBugReport",
+        "/api/report/uploadBugReport",
 
         // formData
         formData

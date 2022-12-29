@@ -15,7 +15,7 @@ import { Helmet } from 'react-helmet';
 
 
 // CKEditor 이미지 업로드를 위한 multer 기본 세팅
-// const API_URL = "http://localhost:8080";
+// const API_URL = "";
 // const UPLOAD_ENDPOINT = "upload_files";
 
 // 어댑터 연결 함수
@@ -56,7 +56,7 @@ const AddComponent = ({ }) => {
     window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
 
     // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
-    axios.post("http://localhost:8080/api/board/getLikeSevenBoards", {
+    axios.post("/api/board/getLikeSevenBoards", {
     }).then((boards) => {
       // 해당 게시글 목록을 리덕스에 저장한다.
       console.log(boards.data);
@@ -148,7 +148,7 @@ const AddComponent = ({ }) => {
           <RegistBtn className="btn03_g" onClick={async (e) => {
             if (!titleText.match(/\S/g)) return alert("제목을 입력해주세요.");
             // 서버쪽에 등록 요청을 보낸다.
-            const regist = await axios.post("http://localhost:8080/api/board/create", {
+            const regist = await axios.post("/api/board/create", {
               title: titleText,
               world: selected,
               category: category,

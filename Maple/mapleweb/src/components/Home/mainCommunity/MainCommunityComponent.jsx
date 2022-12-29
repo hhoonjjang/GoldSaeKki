@@ -179,7 +179,7 @@ const MainCommunityComponent = ({
                 >
                   <Link to="/Ranking" element={<RankComponent />}>
                     <img
-                      src={`http://localhost:8080/api/download${item.profileImg}`}
+                      src={`/api/download${item.profileImg}`}
                     />
                   </Link>
                 </div>

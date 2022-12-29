@@ -1,7 +1,7 @@
 # 박혜림
 |순번|내용|기간|
 |:------:|:---:|:---:|
-|TEAM|**회의 및 팀 노션 생성** https://www.notion.so/624ec8c54d584bbf9dad21c5d491e380|2022.12.09.|
+|TEAM|**회의 및 팀 노션 생성** https://handsomely-carp-676.notion.site/624ec8c54d584bbf9dad21c5d491e380|2022.12.09.|
 |TEAM|**Git Branch 생성 및 깃허브 데스크탑 연결**|2022.12.09.|
 |TEAM|**React 폴더 생성 및 기본 설정**|2022.12.09.|
 |TEAM|**Node.js express 서버 세팅**|2022.12.13.|

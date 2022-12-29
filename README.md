@@ -24,7 +24,6 @@
 > 　　<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/264491c07402a.png">
 > 　　<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/7be58594809eb.png">
 > 　　<img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/4555c8ecca382.png">
-
 > * 카테고리 이름과 라우터 주소만 설정해 props로 보내주면 카테고리 클릭시 현재 링크의 해당 라우터로 이동 가능하게 구현하였다.
 > ```
 >    export const CATEGORY = [

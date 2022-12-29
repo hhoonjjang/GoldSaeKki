@@ -6,16 +6,15 @@ import searchBtn from "../Img/main_search_btn.png";
 import exclamationIcon from "../Img/main_search_noneResult.png";
 
 const MainSearchResultComponent = ({
-  searchType,
-  searchData,
-  searchResultData,
+  setResearch,
   researchType,
   researchData,
   setResearchType,
   setResearchData,
-  navigateToSearch,
-  navigate,
   dispatch,
+  searchType,
+  searchData,
+  searchResultData,
 }) => {
   const [searchDropdown, setSearchDropdown] = useState("false");
   const toggleSearchDropdown = () => {
@@ -62,7 +61,6 @@ const MainSearchResultComponent = ({
                       key={`mainSearchResult_innerBox_research_selectType_item_${index}`}
                       onClick={() => {
                         toggleSearchDropdown();
-
                         setResearchType(item);
                       }}
                     >
@@ -83,12 +81,7 @@ const MainSearchResultComponent = ({
                   onKeyUp={() => {
                     if (window.event.keyCode == 13) {
                       if (researchData.match(/\S/g)) {
-                        navigateToSearch(
-                          researchType,
-                          researchData,
-                          navigate,
-                          dispatch
-                        );
+                        setResearch((state) => !state);
                         return;
                       } else {
                         console.log("researchData가 공백입니다.");
@@ -101,12 +94,7 @@ const MainSearchResultComponent = ({
                   className="mainSearchResult_innerBox_research_inputBox_img"
                   onClick={() => {
                     if (researchData.match(/\S/g)) {
-                      navigateToSearch(
-                        researchType,
-                        researchData,
-                        navigate,
-                        dispatch
-                      );
+                      setResearch((state) => !state);
                       return;
                     } else {
                       console.log("researchData가 공백입니다.");

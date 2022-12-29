@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { action } from "../../../modules/search";
 
 import searchBtn from "../Img/main_search_btn.png";
 import exclamationIcon from "../Img/main_search_noneResult.png";
 
 const MainSearchResultComponent = ({
+  research,
   setResearch,
   researchType,
   researchData,
@@ -15,6 +18,7 @@ const MainSearchResultComponent = ({
   searchType,
   searchData,
   searchResultData,
+  reGetSearchList,
 }) => {
   const [searchDropdown, setSearchDropdown] = useState("false");
   const toggleSearchDropdown = () => {
@@ -26,6 +30,15 @@ const MainSearchResultComponent = ({
     console.log(searchResultData);
     console.log(searchResultData.length);
   }, [searchResultData]);
+
+  const searchTypeRedux = useSelector((state) => state.search.searchType);
+  const searchDataRedux = useSelector((state) => state.search.searchData);
+  const [searchType2, setSearchType2] = useState(searchTypeRedux || searchType);
+  const [searchData2, setSearchDate] = useState(searchDataRedux || searchData);
+  useEffect(() => {
+    setSearchType2(searchTypeRedux);
+    setSearchDate(searchDataRedux);
+  }, [research]);
 
   return (
     <MainSearchResult>
@@ -82,6 +95,7 @@ const MainSearchResultComponent = ({
                     if (window.event.keyCode == 13) {
                       if (researchData.match(/\S/g)) {
                         setResearch((state) => !state);
+                        dispatch(action.search(researchType, researchData));
                         return;
                       } else {
                         console.log("researchData가 공백입니다.");
@@ -95,6 +109,7 @@ const MainSearchResultComponent = ({
                   onClick={() => {
                     if (researchData.match(/\S/g)) {
                       setResearch((state) => !state);
+                      dispatch(action.search(researchType, researchData));
                       return;
                     } else {
                       console.log("researchData가 공백입니다.");
@@ -115,7 +130,7 @@ const MainSearchResultComponent = ({
           </div>
         </div>
         <div className="mainSearchResult_innerBox_summaryBox">
-          '<span>{searchData}</span>'(으)로 '<span>{searchType}</span>' 검색한
+          '<span>{searchType2}</span>'(으)로 '<span>{searchData2}</span>' 검색한
           결과입니다.
         </div>
         <table className="mainSearchResult_innerBox_resultTable">

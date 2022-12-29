@@ -51,13 +51,7 @@ const Menubar = () => {
   ];
 
   window.onscroll = () => {
-    console.log("스크롤 내림");
     if (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1) {
-      console.log("document.body.scrollTop : ", document.body.scrollTop);
-      console.log(
-        "document.documentElement.scrollTop : ",
-        document.documentElement.scrollTop
-      );
       setHeaderScroll(true);
     } else {
       setHeaderScroll(false);

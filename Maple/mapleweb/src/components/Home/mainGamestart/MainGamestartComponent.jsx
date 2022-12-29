@@ -139,7 +139,6 @@ export default MainGamestartComponent;
 
 const MainGamestart = styled.div`
   background-image: url(${(props) => props.bgImg});
-  overflow-x: hidden;
   display: flex;
   justify-content: center;
 

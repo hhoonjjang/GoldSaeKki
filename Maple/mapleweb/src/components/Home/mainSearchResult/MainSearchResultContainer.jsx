@@ -26,6 +26,22 @@ const getSearchList = async (searchType, searchData, setSearchResultData) => {
   setSearchResultData(searchResult);
 };
 
+// const reGetSearchList = async (searchType, searchData, setSearchResultData) => {
+//   const data = await axios.post("/api/search/mainSearch", {
+//     searchType: searchType,
+//     searchData: searchData,
+//   });
+//   const searchResult = data.data.searchResult;
+//   for (let i = 0; i < searchResult.length; i++) {
+//     const year = searchResult[i].createdAt.slice(0, 4);
+//     const month = searchResult[i].createdAt.slice(5, 7);
+//     const date = searchResult[i].createdAt.slice(8, 10);
+//     searchResult[i].createdAt = `${year}.${month}.${date}`;
+//   }
+//   dispatch(action.search(searchType, searchData));
+//   setSearchResultData(searchResult);
+// };
+
 const MainSearchResultContainer = () => {
   const onlyResearchUpdate = useRef(false);
   const location = useLocation();
@@ -58,6 +74,7 @@ const MainSearchResultContainer = () => {
   }, [searchResultData]);
   return (
     <MainSearchResultComponent
+      research={research}
       setResearch={setResearch}
       researchType={researchType}
       researchData={researchData}
@@ -67,6 +84,7 @@ const MainSearchResultContainer = () => {
       searchType={location.state.searchType}
       searchData={location.state.searchData}
       searchResultData={searchResultData}
+      // reGetSearchList={reGetSearchList}
     ></MainSearchResultComponent>
   );
 };

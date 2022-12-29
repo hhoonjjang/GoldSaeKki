@@ -32,7 +32,12 @@ const TotalRankingComponent = ({
 
   const RankingArr = useMemo(() => {
     if (route.sword) {
-      if (searchList.length) return searchList;
+      if (searchList.length) {
+        let tempAry = [...searchList];
+        if (server != "서버 선택")
+          tempAry = tempAry.filter((item) => item.userWorld == server);
+        return tempAry;
+      }
       return [];
     } else if (server === "서버 선택") {
       return commentData;

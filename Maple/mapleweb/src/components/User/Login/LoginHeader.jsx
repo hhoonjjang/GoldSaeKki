@@ -6,20 +6,20 @@ const LoginHeadComp = () => {
     <HeadDiv>
       <HeadList>
         <ul className="head-title">
-          <Link to={"/News/Notice"}>
+          <Link to={"/Error"}>
             <div>뉴스</div>
           </Link>
           <div className="link-list">
-            <Link to={"/News/Notice"}>
+            <Link to={"/Error"}>
               <li>공지사항</li>
             </Link>
-            <Link to={"/News/Update"}>
+            <Link to={"/Error"}>
               <li>업데이트</li>
             </Link>
-            <Link to={"/News/Event"}>
+            <Link to={"/Error"}>
               <li>이벤트</li>
             </Link>
-            <Link to={"/News/CashShop"}>
+            <Link to={"/Error"}>
               <li>캐시샵 공지</li>
             </Link>
           </div>

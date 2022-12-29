@@ -16,13 +16,14 @@
 
 * 카테고리 이름과 라우터 주소만 설정해 props로 보내주면 카테고리 클릭시 현재 링크의 해당 라우터로 이동 가능하게 구현하였다.
 <img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/2ba4afb10ffce.png">
+
+* 유저가 마우스를 댄 카테고리 이름의 길이에 맞게 네비게이션 바의 너비가 자동으로 길어지게 하였음
 <img src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/27840ed401ba3.png">
 
 ### - 구현 사항
 * 마우스를 따라 네비게이션 바의 위치가 이동하게 하였다.
-<img style="width : 100%" src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/c0a943d178a64.gif">
+<img style="width : 600px" src = "https://cdn.imweb.me/upload/S2020090710444c43a5dc5/c0a943d178a64.gif">
 
-* 유저가 마우스를 댄 카테고리 이름의 길이에 맞게 네비게이션 바의 너비가 자동으로 길어지게 하였음
 ### - 이슈 사항 
 * 귀여워야 하는데 그렇지 못함 -> 내가귀여워서 해결됨 :smile:
 

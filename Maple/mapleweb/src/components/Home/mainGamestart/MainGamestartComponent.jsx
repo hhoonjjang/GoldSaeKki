@@ -149,6 +149,7 @@ const MainGamestart = styled.div`
   @media only screen and (max-width: 1150px) {
     padding-top: 20px;
     padding-bottom: 20px;
+    height: 360px;
   }
 
   .mainGamestart {
@@ -238,17 +239,30 @@ const MainGamestart = styled.div`
       border: none;
       padding-top: 16px;
       padding-bottom: 16px;
-      padding-left: 40px;
-      padding-right: 40px;
+
+      @media only screen and (min-width: 1151px) {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
       white-space: nowrap;
     }
   }
   .mainGamestart_user_loginButton {
     background-color: rgb(59, 117, 210);
     margin-right: 8px;
+    
+    @media only screen and (max-width: 1150px) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
   .mainGamestart_user_registButton {
     background-color: rgb(246, 133, 0);
+
+    @media only screen and (max-width: 1150px) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
   }
   .mainGamestart_logged {
     position: absolute;

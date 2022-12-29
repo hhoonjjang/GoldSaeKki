@@ -8,7 +8,6 @@ const tempChildFun = async (setCategory) => {
     let categoryArr = (
       await axios.post("/api/admin/addtext")
     ).data;
-
     setCategory(categoryArr);
   } catch (err) {
     console.error(err);
@@ -25,7 +24,6 @@ const FirstContainer = () => {
     tempChildFun(setCategory);
   }, []);
   useEffect(() => {}, [categoryArr]);
-
   const textSubmit = async (category, text) => {
     if(!text.match(/\S/g)) return alert("내용을 입력하세요")
     axios
@@ -65,30 +63,17 @@ const FirstContainer = () => {
       });
   };
   const changeFromBtn = (id,category) =>{
-    console.log("체인지")
     setChangeFrom({category,id})
   }
   const changeToBtn = (id,category)=>{
-    
     setChangeTo({category,id})
-    console.log("프롬")
-    console.log(changeFromArr)
-    console.log("투")
-    console.log(changeToArr.length)
   }
-  console.log(changeToArr)
-  console.log(changeToArr.length)
   useEffect(()=>{ 
-    
-
     if(changeToArr){
-      console.log(changeFromArr)
-    console.log(changeToArr)
     if(changeToArr.id){
       axios.post("/api/admin/changefirst", {changeFromArr,changeToArr}).then((data)=>{
         alert(data.data);
         tempChildFun(setCategory);
-
       })
     }}
   },[changeToArr])

@@ -8,7 +8,6 @@ const UserReportComponent = ({arr,a,c,d}) =>{
     <col width={"30%"}/>
     <col width={"30%"}/>
     <col width={"10%"}/>
-    
     </colgroup><thead><tr><th>번호</th>
     <th>작성자</th>
     <th>{a}</th>
@@ -28,11 +27,9 @@ const UserReportComponent = ({arr,a,c,d}) =>{
                 <td key={`boardArrReport-${idx}`}>{item.report}</td>
                 </>
                 }
-                
             </tr>
         ))}
         </tbody></table>
-        
         </ReportBox>
 }
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
 import UserReportComponent from "./Component"
 
 const CommentArrFun = async (setComment) =>{
@@ -16,7 +16,6 @@ const UserReportContainerComment=({commentArr,setComment})=>{
 
     useEffect(()=>{CommentArrFun(setComment)},[])
     useEffect(()=>{CommentArrFun(setComment)},[])
-    console.log(commentArr)
     return <UserReportComponent arr={commentArr} a="댓글" c="text" d="boardId"/>
 }
 

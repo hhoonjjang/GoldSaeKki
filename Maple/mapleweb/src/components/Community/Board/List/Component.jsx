@@ -5,14 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import moment from "moment";
 import Pagination from "react-js-pagination";
-// import './Paging.css';
 
 import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 import eyeImg from "../../images/info_eye_new.png";
 import heartImg from "../../images/info_heart2_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
 import searchImg from "../../images/search.png";
-// import DetailContainer from "../Detail/Container";
 
 const tempArr = [
   { text: 1, img: "heart2_new" },
@@ -23,41 +21,30 @@ const tempArr = [
 
 const ListComponent = () => {
 
-  // 리덕스를 사용하기 위한 라이브러리
   const dispatch = useDispatch();
 
-  // 현재 주소의 카테고리 라우터를 가져옴
   const location = useLocation();
   const nowParam = useParams(location).category;
 
-  // 주소의 값으로 카테고리 이름을 찾아 기본값으로 저장
   const [category, setCategory] = useState(CATEGORY.find(item => item.label == nowParam));
   const [_, render] = useState(false);
 
-  // 페이징 처리 : 현재 페이지
   const [nowPage, setNowPage] = useState(1);
-  // 페이지 변경 함수
   const handlePageChange = (page) => {
     setNowPage(page);
   };
 
-  // 현재 유저 닉네임
   const userName = useSelector((state) => state.user.currUserName);
 
-  // 전체 월드 버튼 엘리먼트
   const allWorldRef = useRef();
   const noRef = useRef();
-  // 현재 선택된 월드
   const [nowWorld, setNowWorld] = useState("전체월드");
 
-  // 현재 주소가 바뀌면 카테고리 이름 바꿈
   useEffect(() => {
     setCategory(CATEGORY.find(item => item.label == nowParam));
 
-    // 스크롤도 올려줌
     window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
 
-    // 월드 초기화
     const active2 = document.querySelectorAll(".active2");
     for (let i = 0; i < active2.length; i++) {
       active2[i].classList.remove("active2");
@@ -67,35 +54,22 @@ const ListComponent = () => {
   }, [nowParam]);
 
 
-  // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
   let boards = useSelector((state) => state.community.list);
-  // 월드 필터에 해당하는 보드들
   let worldBoards = [];
 
-  // 현재 월드가 바뀔 때 // 여기부터
   useEffect(() => {
-    // console.log(nowWorld);
-    // console.log(boards);
-    // boards에서 world이름이 nowWorld이름과 같은 것만 다시 boards에 저장 -> 리덕스에도 재저장
 
     if (nowWorld == "전체월드") {
-      console.log("전체월드임");
 
-      // 리덕스에 전체 카테고리들을 저장해준다.
-      // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
       axios.post("/api/board/getList", {
         category: category.name,
       }).then((boards) => {
-        // DB에 값이 없으면 에러가 뜨지 않게 해준다.
         if (boards.data.name == "SequelizeDatabaseError") {
           return;
         }
 
-        // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
         axios.post("/api/board/getLikeSevenBoards", {
         }).then((boards) => {
-          // 해당 게시글 목록을 리덕스에 저장한다.
-          console.log(boards.data);
           const boardsData = boards.data;
           let likeTagBoards = [];
           boardsData.map((board, index) => {
@@ -106,36 +80,23 @@ const ListComponent = () => {
           dispatch(action.tags(likeTagBoards));
         });
 
-        // 해당 게시글 목록을 리덕스에 저장한다.
-        // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
         dispatch(action.list(boards.data));
       });
 
       return;
     } else {
-      console.log("전체월드아님" + nowWorld + "임");
 
-      // 리덕스에 해당 카테고리들만 저장해준다. (item)
-      // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
       axios.post("/api/board/getWorldList", {
         category: category.name,
-        // 여기부터
         world: nowWorld,
       }).then((boards) => {
-        console.log(boards);
-        // DB에 값이 없으면 에러가 뜨지 않게 해준다.
         if (boards.data.name == "SequelizeDatabaseError") {
           return;
         }
-        // 해당 게시글 목록을 리덕스에 저장한다.
-        // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
         dispatch(action.list(boards.data));
 
-        // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
         axios.post("/api/board/getLikeSevenBoards", {
         }).then((boards) => {
-          // 해당 게시글 목록을 리덕스에 저장한다.
-          console.log(boards.data);
           const boardsData = boards.data;
           let likeTagBoards = [];
           boardsData.map((board, index) => {
@@ -151,7 +112,6 @@ const ListComponent = () => {
     }
   }, [nowWorld]);
 
-  // 페이지에 맞는 게시글들을 띄우기 위해 개수만큼 잘라줌
   let newBoards = [];
   if (boards) {
     boards.map((item, idx) => {
@@ -160,32 +120,22 @@ const ListComponent = () => {
       }
     });
   }
-
-  // 보드 배열이 바뀔 때마다 댓글 개수를 가져온다.
   let commentCounts = [];
 
-  // 계속된 리랜더링 문제로 useEffect(()=>{},[카테고리])로 감싸주었다.
   useEffect(() => {
     setNowPage(1);
 
-    // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
     axios.post("/api/board/getList", {
       category: category.name,
     }).then((boards) => {
-      // DB에 값이 없으면 에러가 뜨지 않게 해준다.
       if (boards.data.name == "SequelizeDatabaseError") {
         return;
       }
-      // 해당 게시글 목록을 리덕스에 저장한다.
-      // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
       dispatch(action.list(boards.data));
 
 
-      // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
       axios.post("/api/board/getLikeSevenBoards", {
       }).then((boards) => {
-        // 해당 게시글 목록을 리덕스에 저장한다.
-        console.log(boards.data);
         const boardsData = boards.data;
         let likeTagBoards = [];
         boardsData.map((board, index) => {
@@ -199,22 +149,15 @@ const ListComponent = () => {
     }).catch((err) => {
       console.log(err);
     }).finally(() => {
-      // 무조건 실행한다.
     });
 
 
   }, [category, dispatch]);
 
 
-  // 게시글 가져오는 부분에서 관계형으로 값을 가져온다.
-  // 보드 배열이 바뀔 때마다 댓글 개수를 가져온다.
-  // 일단 이 놈은 안 쓰이는 놈들이다.
-  // let commentCounts = [];
   useEffect(() => {
-    console.log("안녕");
     newBoards.map(async (item, idx) => {
 
-      // 해당 게시글의 댓글 개수를 가져오는 요청을 보낸다.
       await axios.post("/api/comment/count", {
         boardId: item.id,
       }).then((item) => {
@@ -224,10 +167,6 @@ const ListComponent = () => {
 
     });
   }, [category, dispatch]);
-  // }, []);
-
-
-  // 페이지 스크롤 높이 변경
   useEffect(() => {
     window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
   }, [nowPage]);
@@ -236,29 +175,17 @@ const ListComponent = () => {
 
   return (
     <AllWrap>
-      {/* 현재 게시판 이름을 가져와 띄운다. */}
-      {/* <CategoryTitle>{category?.name}</CategoryTitle> */}
       <CategoryTitle>{category?.name}</CategoryTitle>
       <ContentBox>
-        {/* 월드 선택 */}
         <WorldBox>
           {WORLDLIST.map((item, idx) => {
             return (
-              // 현재 선택된 월드 allWorldRef
               <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active2" : ""}`} ref={idx === 0 ? allWorldRef : noRef} onClick={(e) => {
-                // console.log("하이");
-                // 해당 클래스를 가진 놈들
                 const active2 = document.querySelectorAll(".active2");
-                // 다 삭제해버림
                 for (let i = 0; i < active2.length; i++) {
                   active2[i].classList.remove("active2");
                 }
-                // 내가 클릭한 놈한테 active 클래스 추가
                 e.target.classList.add("active2");
-                // 현재 액티브 클래스를 가진 놈 확인
-                // console.log(document.querySelectorAll(".active2"));
-
-                // 현재 월드 재설정
                 setNowWorld(item.name);
               }}>
                 <WorldImg
@@ -274,9 +201,7 @@ const ListComponent = () => {
           })}
         </WorldBox>
 
-        {/* 게시글 목록 */}
         <ListBox>
-          {/* 여기서 map 돌리기 */}
           {newBoards?.length ? "" : <OneBoardList style={{ fontSize: "13px", color: "#666" }}>
             <div style={{ display: "flex", alignItems: "center" }}><img src={searchImg} alt={"게시글 없음 표시"} />{" "} <span style={{ marginLeft: "10px", color: "#8b8b8b" }}>해당 게시글 목록이 존재하지 않습니다.</span></div>
           </OneBoardList>}
@@ -295,10 +220,7 @@ const ListComponent = () => {
                       <span key={`boardTitleName-${idx}`} className="title">
                         {board?.title}
                       </span>{" "}
-                      {/* <CommentCount>({board.commentCount})</CommentCount> */}
                       {board.commentCount == 0 ? "" : <CommentCount>({board.commentCount})</CommentCount>}
-                      {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
-                      {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
                     </BoardTitle>
                     <OtherBoardInfo>
                       {WORLDLIST.map((world, idx) => {
@@ -322,27 +244,15 @@ const ListComponent = () => {
                         <IconInfo key={`likeCount-${idx}`} className="heart">
                           {board?.likeCount}
                         </IconInfo>
-                        {/* 이놈 예외처리 하기(오늘이면 시간만, 어제면 날짜만 출력, 작년이면 년도~일까지 출력) */}
                         <IconInfo key={`createDate-${idx}`} className="date">
-                          {/* 현재 시간 */}
-                          {/* {console.log(moment().toDate().toLocaleString())} */}
-                          {/* DB에서 가져온 시간 */}
-                          {/* {console.log(moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString())} */}
-
-                          {/* 현재 시간 앞자리 */}
-                          {/* {console.log(moment().toDate().toLocaleString().substr(0, 13))} */}
-                          {/* DB 시간 앞자리 */}
-                          {/* {console.log(moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13))} */}
 
                           {
-                            // 현재 시간 앞자리와 DB 시간 앞자리가 다르면 다른 날이므로 날짜를 띄운다.
-                            // 같으면 DB 뒷자리 시간을 출력한다.
                             moment().toDate().toLocaleString().substr(0, 13) !==
                               moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ")
                                 .toDate()
                                 .toLocaleString()
                                 .substr(0, 13)
-                              ? // `${moment(board.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().substr(0, 13)}`
+                              ?
                               `${moment(
                                 board?.createdAt,
                                 "YYYY-MM-DDTHH:mm:ssZ"
@@ -351,7 +261,6 @@ const ListComponent = () => {
                                 .toLocaleString()
                                 .substring(0, moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().indexOf("오"))
                               }`
-                              // 위 : 오늘이 아닐 때, 아래 : 오늘일 때
                               : `${moment(
                                 board?.createdAt,
                                 "YYYY-MM-DDTHH:mm:ssZ"
@@ -372,20 +281,16 @@ const ListComponent = () => {
                 </Link>
               );
             })}
-          {/* 여기까지 map 돌림 */}
         </ListBox>
 
-        {/* 취소, 글작성 버튼 */}
         <ButtonBox>
           <div></div>
 
-          {/* 로그인 유저 있으면 띄우고 없으면 로그인 페이지로 이동하는 Link to 띄우기 */}
 
           {userName ? (
             <Link to={`/Community/${category.label}/BoardAdd`}>
               <RegistBtn
                 onClick={(e) => {
-                  // 글 작성 버튼 클릭시 해당 요청 보내도록 코드 추가하기
                 }}
               >
                 글작성
@@ -407,22 +312,14 @@ const ListComponent = () => {
           )}
         </ButtonBox>
 
-        {/* 페이지 */}
         <PagenationWrap>
           <Pagination
-            // 현재 페이지
             activePage={nowPage}
-            // 띄울 게시글 개수
             itemsCountPerPage={10}
-            // 총 게시글 개수
             totalItemsCount={boards?.length || 0}
-            // 표시할 개수 
             pageRangeDisplayed={10}
-            // 이전을 나타낼 아이콘
             prevPageText={"‹"}
-            // 다음을 나타낼 아이콘
             nextPageText={"›"}
-            // 페이지네이션 함수
             onChange={handlePageChange}
           />
         </PagenationWrap>

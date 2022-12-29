@@ -62,16 +62,12 @@ const NavigationComponent = ({ categorys }) => {
     }
   });
 
-  // 유동적 네비게이션 바
-  // 기본값은 선택된 width로 해주기..
   const [naviWidth, setNaviWidth] = useState(20);
 
-  // 네비게이션 바 크기 변경되었을 때
   useEffect(() => {
     console.log(`네비게이션 바 크기 ${naviWidth}으로 바뀜`);
   }, [naviWidth]);
 
-  // 네비게이션 바 left값 변경시키기
   const [naviLeft, setNaviLeft] = useState(0);
 
   return (
@@ -82,27 +78,18 @@ const NavigationComponent = ({ categorys }) => {
             <LiBox className="liBox" key={`listbox-${item.label}`}>
               <Link
                 key={`list-${item.label}`}
-                // to : 해당 카테고리 라우터로 이동한다.
                 to={`./${item.label}`}
-                // className : 내가 선택한 카테고리(라우터에서 가져옴)랑 같으면 띄우도록 해야한다.
                 className={`${idx === nowRouterIdx.current ? "active" : ""}`}
-                // onClick={()=>{
-                //     return dispatch(action.category(`${item.label}`));
-                // }}
               >
                 <CategoryLi
                   key={`category-${item.label}`}
                   onMouseOver={(e) => {
-                    // 현재 width를 변경시킨다
                     setNaviWidth(e.target.offsetWidth);
-                    // setNowElem(e.target);
-                    // 현재 놈의 왼쪽 공간을 구한다.
                     setNaviLeft(e.target.offsetLeft);
                     console.log(e.target.offsetLeft);
                     console.log(naviLeft);
                   }}
                   onMouseLeave={(e) => {
-                    // setNaviLeft(naviLeft - e.target.offsetLeft);
                   }}
                 >
                   {item.name}
@@ -112,7 +99,6 @@ const NavigationComponent = ({ categorys }) => {
           );
         })}
 
-        {/* 계산해서 width, left값 변경하기 */}
         <CategoryLine
           className="mnb_line"
           style={{ width: `${naviWidth}px`, left: `${naviLeft}px` }}

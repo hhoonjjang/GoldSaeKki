@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import HelpCategoryDisplayComponent from "./Component";
 const CommentArrFun = async (setComment) =>{
   try{
-     let commentArr = (await axios.post("/api/admin/reportcomment")).data;
+     let commentArr = (await axios.post("http://localhost:8080/api/admin/reportcomment")).data;
      setComment(commentArr);
   }catch(err){
      console.error(err);
@@ -13,7 +13,7 @@ const CommentArrFun = async (setComment) =>{
 
 const tempArrFun = async (setText) => {
   try {
-    let textArr = (await axios.post("/api/admin/addchild"))
+    let textArr = (await axios.post("http://localhost:8080/api/admin/addchild"))
       .data;
     setText(textArr);
   } catch (err) {
@@ -23,7 +23,7 @@ const tempArrFun = async (setText) => {
 
 const tempChildFun = async (setChildText) => {
   let childArr = (
-    await axios.post("/api/admin/displaychild")
+    await axios.post("http://localhost:8080/api/admin/displaychild")
   ).data;
   setChildText(childArr);
 };
@@ -47,10 +47,10 @@ const ThirdContainer = ({ propsArr }) => {
 
   const textSubmit = (category, text) => {
     if (!category || category=="선택하시오") return alert("카테고리를 선택하세요");
-    if(!text.match(/\S/g)) return alert("내용을 입력하세요");
+    if (!text) return alert("내용을 입력하세요");
     console.log(category)
     axios
-      .post("/api/admin/addchildtext", {
+      .post("http://localhost:8080/api/admin/addchildtext", {
         category,
         text,
       })
@@ -61,7 +61,7 @@ const ThirdContainer = ({ propsArr }) => {
   };
   const delBtn = (text) => {
     axios
-      .post("/api/admin/delchild", { text })
+      .post("http://localhost:8080/api/admin/delchild", { text })
       .then(() => {
         alert("삭제되었습니다");
         tempChildFun(setChildText);
@@ -78,7 +78,7 @@ const ThirdContainer = ({ propsArr }) => {
     if (!text) return setBool(-1);
     setBool(-1);
     axios
-      .post("/api/admin/editchild", { text, id })
+      .post("http://localhost:8080/api/admin/editchild", { text, id })
       .then(() => {
         tempChildFun(setChildText);
       });
@@ -105,7 +105,7 @@ const ThirdContainer = ({ propsArr }) => {
       console.log(changeFromArr)
     console.log(changeToArr)
     if(changeToArr.id){
-      axios.post("/api/admin/changethird", {changeFromArr,changeToArr}).then((data)=>{
+      axios.post("http://localhost:8080/api/admin/changethird", {changeFromArr,changeToArr}).then((data)=>{
         alert(data.data);
         tempChildFun(setChildText);
 

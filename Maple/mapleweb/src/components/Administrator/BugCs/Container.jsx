@@ -6,7 +6,6 @@ const tempFun = async (setReportArr) => {
     let reportArr = (await axios.post("/api/report/bugcs"))
       .data;
     setReportArr(reportArr);
-    console.log(reportArr);
   } catch (err) {
     console.error(err);
   }
@@ -18,20 +17,14 @@ const BugCSContainer = ({reportArr, setReportArr}) => {
   useEffect(() => {
     tempFun(setReportArr);
   }, []);
-  //   tempFun(setReportArr);
   const onClick = (idx) => {
     if (idx + 1 == isBoolen) setBoolen(-1);
     else setBoolen(idx + 1);
-    console.log(idx + 1);
   };
   const onAnswer = (answer, idx) => {
-    console.log(answer);
-    console.log(idx);
     const data = { answer: answer, id: idx };
-    console.log(data);
     axios.post("/api/report/buganswer", data).then(
       function (data) {
-        console.log(data.data)
         tempFun(setReportArr);
         setBoolen(-1);
       },

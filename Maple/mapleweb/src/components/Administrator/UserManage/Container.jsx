@@ -9,7 +9,6 @@ const tempFun = async (setReportArr) => {
     let reportArr = (await axios.post("/api/report/bugcs"))
       .data;
     setReportArr(reportArr);
-    console.log(reportArr);
   } catch (err) {
     console.error(err);
   }
@@ -51,22 +50,18 @@ const UserManageContainer = ({setComment,setBoard,setReportArr}) => {
     userArrFun(setUser);
   }, []);
   useEffect(() => {
-    console.log(tempUser);
   }, [tempUser]);
-  console.log(userArr);
   const userSubmit = (user) => {
     axios
       .post("/api/admin/searchuser", {
         user,
       })
       .then((data) => {
-        console.log(data.data);
         if (!data.data.userName) return alert("존재하지않는 회원입니다.");
         setTemp(data.data);
       });
   };
   const delBtn = (userName) => {
-    console.log(userName);
     axios
       .post("/api/admin/deluser", { userName })
       .then((data) => {
@@ -83,7 +78,6 @@ const UserManageContainer = ({setComment,setBoard,setReportArr}) => {
     axios.post("/api/admin/sendmsg", { msg, userName });
   };
   const stateName = useSelector((state) => state?.admin);
-  console.log(tempUser);
   const boardDel = (id, user) => {
     axios
       .post("/api/admin/deluserboard", { id, user })

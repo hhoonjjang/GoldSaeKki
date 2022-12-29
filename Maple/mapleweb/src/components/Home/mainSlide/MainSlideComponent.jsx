@@ -184,6 +184,10 @@ const MainSlide = styled.div`
   position: relative;
   height: 560px;
   width: 100%;
+  
+  @media only screen and (max-width: 1150px) {
+    display: none;
+  }
 `;
 
 const CarouselBackground = styled.div`
@@ -195,6 +199,9 @@ const CarouselBackground = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
+  @media only screen and (max-width: 1150px) {
+    display: none;
+  }
 
   .CarouselBackground_innerBox {
     position: relative;
@@ -224,7 +231,7 @@ const Carousel = styled.div`
   display: flex;
   justify-content: center;
 
-  @media only screen and (max-width: 1100px) {
+  @media only screen and (max-width: 1150px) {
     display: none;
   }
 

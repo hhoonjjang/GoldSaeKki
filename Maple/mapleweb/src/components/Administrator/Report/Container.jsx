@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import UserReportComponent from "./Component"
 
 const BoardArrFun = async (setBoard) =>{
@@ -13,7 +13,6 @@ const BoardArrFun = async (setBoard) =>{
 
 const UserReportContainer=({boardArr,setBoard})=>{
     useEffect(()=>{BoardArrFun(setBoard)},[])
-    console.log(boardArr)
     return <UserReportComponent arr={boardArr} a="게시글" c="title" d="id"/>
 }
 

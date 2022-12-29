@@ -1,6 +1,6 @@
 import { useState } from "react";
-
 import styled from "styled-components";
+
 const HelpCategoryDisplayComponent = ({
   categoryArr,
   childArr,
@@ -67,7 +67,6 @@ const HelpCategoryDisplayComponent = ({
                 type={text}
                 defaultValue={editText}
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setEdit(e.target.value);
                 }}
               />
@@ -115,7 +114,6 @@ const HelpCategoryDisplayComponent = ({
               >
                 삭제
               </button>
-             
             </Blank>
           )}
         </Blank>
@@ -132,7 +130,6 @@ const DisplayBox = styled.div`
   margin-top: 30px;
   font-size: 28px;
   font-weight:bold;
- 
 }`;
 const Blank = styled.div`
   display: flex;
@@ -140,5 +137,4 @@ const Blank = styled.div`
   button {
     margin-left: 10px;
   }
-  
 `;

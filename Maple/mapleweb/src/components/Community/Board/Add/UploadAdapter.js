@@ -13,14 +13,12 @@ class UploadAdapter {
 
     _initRequest() {
         const xhr = this.xhr = new XMLHttpRequest();
-        // xhr.open('POST', 'http://localhost:8000/api/image/upload', true);
         xhr.open('POST', '/public/Img', true);
         xhr.responseType = 'json';
     }
 
     _initListeners(resolve, reject, file) {
         const xhr = this.xhr;
-        const loader = this.loader;
         const genericErrorText = '파일을 업로드 할 수 없습니다.'
 
         xhr.addEventListener('error', () => {reject(genericErrorText)})
@@ -32,7 +30,7 @@ class UploadAdapter {
             }
 
             resolve({
-                default: response.url //업로드된 파일 주소
+                default: response.url 
             })
         })
     }

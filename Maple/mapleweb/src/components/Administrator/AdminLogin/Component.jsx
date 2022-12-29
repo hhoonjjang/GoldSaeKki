@@ -4,7 +4,6 @@ const AdminLoginComponent = ({ isCookie, onClick, tempAdmin, infoSubmit }) => {
     id: "",
     password: "",
   });
-  console.log(tempAdmin);
   const handleChange = (e) => {
     setValues({
       ...values,

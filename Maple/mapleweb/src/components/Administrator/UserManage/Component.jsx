@@ -13,14 +13,12 @@ const UserManageComponent = ({
 }) => {
   const [searchUser, setUser] = useState("");
   const [isBool, setBool] = useState(false);
-  console.log(stateName.name);
   const [stateAdmin, setState] = useState("");
   const [msg, setMsg] = useState(``);
   useEffect(() => {
     setState(stateName.name);
   }, [stateName]);
   useEffect(() => {
-    console.log(stateAdmin);
     setMsg(`안녕하세요 GM"${stateAdmin}"입니다.`);
   }, [stateAdmin]);
   return (
@@ -33,7 +31,6 @@ const UserManageComponent = ({
           <col width={"20%"} />
           <col width={"20%"} />
         </colgroup>
-
         <thead>
           <tr>
             <th>번호</th>

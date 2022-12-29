@@ -14,7 +14,6 @@ function ControlledTabsExample() {
   const [boardArr,setBoard] = useState([])
   const [reportArr,setReportArr] = useState([])
   const tempAdmin = useSelector((state) => state?.admin);
-console.log(tempAdmin.name)
   return (
     <Tabs
       id="controlled-tab-example"
@@ -25,7 +24,6 @@ console.log(tempAdmin.name)
         {tempAdmin.name =="정재훈" ? <Tab eventKey="admin" title="관리자등록">
             <AccountContainer/>
         </Tab>:<></>}
-        
         <Tab eventKey="user" title="유저관리">
         <UserManageContainer setComment={setComment} setBoard={setBoard} setReportArr={setReportArr}/>
         <UserReportContainer boardArr={boardArr} setBoard={setBoard}/>
@@ -37,7 +35,6 @@ console.log(tempAdmin.name)
       <Tab eventKey="online" title="온라인상담문의">
       <FirstContainer/>
       </Tab>
-    
     </Tabs>
   );
 }

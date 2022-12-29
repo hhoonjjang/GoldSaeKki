@@ -1,14 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { action as communityAction, CATEGORY, WORLDLIST } from '../../../../modules/community';
-// import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import LinkIcon from "../../images/link_btn.png";
 import AlarmIcon from "../../images/report_btn2.png";
 
 import eyeImg from "../../images/info_eye_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
 import lineImg from "../../images/btn_line_img.png";
-import goldImg from "../../images/goldImg.png";
 import monaImg from "../../images/mona-loading-dark.gif";
 import reportImg from "../../images/report_btn.png";
 
@@ -16,7 +14,6 @@ import moment from 'moment';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import EditContainer from '../Edit/Container';
 import NotFound from '../../NotFound';
 
 const DetailComponent = ({ reportBoard, reportComment }) => {
@@ -24,30 +21,19 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // Redux에 저장된 값을 가져온다.
     const states = useSelector((state) => state);
 
-    // 라우터 상단의 번호를 가져와 그 번호를 아래 보드 번호로 맞춰준다.
     const { boardId } = useParams();
 
-    // 해당 게시글을 가져오는 요청을 보낸다.
     const boardReq = axios.post("/api/board/getBoard", {
         boardId: boardId
     });
 
-    // 해당 게시글의 댓글을 가져오는 요청을 보낸다.
-    // 어떤 항목이 필요한지.. 댓글의 boardId가 req.body.boardId와 같은 놈을 모두?
-    // 정렬은 어떤 방식으로? -> ... 댓글이 답글이 아닌 놈 기준으로 먼저 단 댓글이 위에 나온다.
     const commentReq = axios.post("/api/comment/getComment", {
         boardId: boardId
     });
 
-    // 그냥 출력하면 Promise {<pending>} 형태로 값이 뽑아와 진다.
-    // console.log(boardReq);
-
-    // 보드 번호가 변경될 때 Redux에 서버에서 가져온 리스트를 저장해준다.
     useEffect(() => {
-        // 댓글을 한 번 비워줘야 함
         dispatch(communityAction.comments([]));
 
         boardReq.then((board) => {
@@ -57,17 +43,12 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
         commentReq.then((comment) => {
             if (comment.data.length == 0) return;
             if (comment.data.length) {
-                console.log(comment.data.length);
                 dispatch(communityAction.comments());
-                console.log(comment.data.length);
             }
             dispatch(communityAction.comments(comment?.data));
 
-            // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
             axios.post("/api/board/getLikeSevenBoards", {
             }).then((boards) => {
-                // 해당 게시글 목록을 리덕스에 저장한다.
-                console.log(boards.data);
                 const boardsData = boards.data;
                 let likeTagBoards = [];
                 boardsData.map((board, index) => {
@@ -79,7 +60,6 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
             });
         });
 
-        // 스크롤 높이 변경
         window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
 
     }, [boardId]);
@@ -89,17 +69,13 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
     let boardTagsText = "";
     let comments = [];
 
-    // 랜더링 이후 값을 집어넣어줌
     if (states.community.board) {
         board = states.community.board[0];
         boardTagsText = board?.tags;
     }
     comments = states.community.comments;
 
-    // 엄청난 요청으로 인해 밖으로 빼 useEffect로 감싸줬음
-    // 리랜더링시 다시 요청하지 않기 위함
     useEffect(() => {
-        // Board 조회수를 수정하는 요청도 보내줌
         const boardReq = axios.post("/api/board/eyeCountUpdate", {
             boardId: boardId
         });
@@ -107,7 +83,6 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
 
 
 
-    // 현재 라우터 값을 구한다.
     let route = "";
     CATEGORY.forEach((item, idx) => {
         if (item.name == board.category) {
@@ -115,29 +90,21 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
         }
     });
 
-    // 현재 로그인 유저 정보
     const userWorld = useSelector((state) => state.user.currServerName);
     const userName = useSelector((state) => state.user.currUserName);
 
-    // 삭제 확인
     let deleteConfirm;
 
-    // 태그 가공(#으로 나눈 배열)
-    // #시간 #뉴비
     let boardTags = [];
     boardTagsText.split("#").map((item, idx) => {
         if (item !== "") {
             boardTags.push("#" + item.replace(" ", ""));
-            // console.log(boardTags);
         }
     });
 
-    // 댓글 등록
     const [text, setText] = useState("");
 
-    // 온클릭 하면 render를 통해 text의 값이 hi에 저장된다.
     useEffect(() => {
-        // 댓글 불러오는 코드
         commentReq.then((comment) => {
             if (comment.data.length == 0) return;
             dispatch(communityAction.comments(comment?.data));
@@ -145,8 +112,6 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
     }, [text]);
 
 
-    // 아래 세 놈 코드 겹치니까 합치기
-    // 공감버튼 클릭시 리랜더링
     const [likeCount, setLikeCount] = useState(0);
     useEffect(() => {
         boardReq.then((board) => {
@@ -157,7 +122,6 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
             dispatch(communityAction.comments(comment?.data));
         });
     }, [likeCount]);
-    // 댓글 입력시 리랜더링
     const [commentCount, setCommentCount] = useState(0);
     useEffect(() => {
         boardReq.then((board) => {
@@ -168,7 +132,6 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
             dispatch(communityAction.comments(comment?.data));
         });
     }, [commentCount]);
-    // 댓글 수정시 리랜더링???
     const [commentValue, setCommentValue] = useState("");
     useEffect(() => {
         boardReq.then((board) => {
@@ -190,14 +153,12 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                 </CategoryRight>
             </CategoryTItleBox>
 
-            {/* 게시글 상세 페이지 내용 시작 */}
             <ContentBox>
                 <BoardTitle>
                     <BoardTitleSpan>[{board?.world}]</BoardTitleSpan>{" "}
                     <BoardTitleText>{board?.title}</BoardTitleText>
                 </BoardTitle>
 
-                {/* 게시글 상단 정보 영역 */}
                 <BoardInfoBox>
                     <BoardUserName>
                         {WORLDLIST.map((world, idx) => {
@@ -207,10 +168,8 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                         })}
                     </BoardUserName>
                     <BoardInfo>
-                        {/* 오른쪽 아이콘 영역 */}
                         <IconInfo>
                             <span style={{ margin: "0px 10px" }}><img src={eyeImg} alt={"조회 아이콘"} />{" "}{board?.eyeCount}{" "}{" "}</span>
-                            {/* <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(board?.updatedAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</span> */}
                             <span><img src={dateImg} alt={"시간 아이콘"} />{" "}{moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(board?.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</span>
                         </IconInfo><GuImg src={lineImg} alt={"구분선 이미지"} style={{ margin: "0px 10px" }} />
                         <IconBox>
@@ -228,45 +187,30 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                     </BoardInfo>
                 </BoardInfoBox>
 
-                {/* 내용 영역 : innerHTML으로 넣었다. */}
                 <BoardContent dangerouslySetInnerHTML={{ __html: board?.contents }}>
                 </BoardContent>
 
-                {/* 공감영역 */}
                 <LikeWrap>
                     <LikeBtn onClick={async (e) => {
-                        // 공감 클릭시 요청 보내기 : 보드 아이디 보내야 함 board.id
-                        // useState도 사용하여 값 변한 것처럼 보이게 한다.
                         const likeCountUpReq = await axios.post("/api/board/likeCountUpdate", {
                             boardId: boardId
                         });
-                        console.log(likeCountUpReq);
                         setLikeCount(likeCount + 1);
                     }}>
-                        {/* <span>❤ 공감하기</span></LikeBtn> */}
-                        {/* <span><HeartIcon onClick={(e) => {
-                            e.target.classList.toggle("is-active");
-                        }}>❤</HeartIcon> 공감하기</span></LikeBtn> */}
                         <span>❤ 공감하기</span></LikeBtn>
                     <LikeCheck><span>{board?.likeCount} 명</span></LikeCheck>
                 </LikeWrap>
 
-                {/* 태그 영역 */}
-                {/* 태그는 먼저 위에서 잘 가공해 예쁜 배열로 만든다음 map 돌린다. */}
-                {/* Link to로 태그검색 가능하게 해도 좋을 것 같다. */}
                 <TagWrap>
                     {boardTags.map((item, idx) => {
                         return <Tag key={`tag-${idx}`}>{item}</Tag>;
                     })}
                 </TagWrap>
 
-                {/* 수정/삭제 영역 : 로그인 유저와 보드 유저가 같으면 띄운다. */}
                 {userName == board.userName ? (
                     <>
                         <UpDelBtnWrap>
 
-                            {/* 등록 창으로 보내고, props로 현재 수정 상태임도 보내준다. */}
-                            {/* // 쿼리스트링으로 넘길수도 있을듯 */}
                             <Link to={`./edit`}>
                                 <UpDelBtn>수정</UpDelBtn>
                             </Link>
@@ -277,12 +221,10 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                                     deleteConfirm = window.confirm("정말 삭제하시겠습니까?");
 
                                     if (deleteConfirm) {
-                                        // 보드 id를 기준으로 삭제 요청 보내기
                                         await axios.post("/api/board/destroy", {
                                             boardId: board.id,
                                         });
 
-                                        // 해당 커뮤니티 리스트로 이동시키기
                                         navigate(`/Community/${route}`);
                                     }
                                 }}>삭제</UpDelBtn>
@@ -292,27 +234,17 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                 ) : ""}
 
 
-                {/* 댓글 영역 */}
-                {/* 여기서부터 댓글 컴포넌트 만들어진 이후에 작업 */}
                 <CommentInfo>
-                    {/* 몇개인지,색깔바꾸기 */}
                     댓글{" "}
                     <CommentCount>{comments?.length ? comments.length : 0}</CommentCount>
                 </CommentInfo>
 
-                {/* 댓글 목록 */}
-                {/* 댓글 findAll하는 것도 리덕스에 같이 넣어야 할 것 같다. */}
-                {/* 댓글 등록시 유저 월드도 같이 보내도록 한다. */}
                 <CommentBox>
                     <CommentWrap>
-                        {/* 댓글 개수에 맞게 map 돌린다. */}
-                        {/* 하나의 댓글 뭉텅이라고 쳐야할 듯 */}
                         {comments?.map((comment, idx) => {
                             return (
                                 <Comment key={`comment-${idx}`}>
-                                    {/* 댓글유저정보 */}
                                     <CommentUserInfo key={`commentUserInfo-${idx}`}>
-                                        {/* 유저 월드 띄우기 */}
                                         {WORLDLIST.map((item, idx) => {
                                             if (item.name == comment.userWorld) {
                                                 return (
@@ -324,13 +256,7 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                                         <CommentTimeSpan key={`createTime-${idx}`}>{moment(comment.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().slice(0, moment(comment.createdAt, "YYYY-MM-DDTHH:mm:ssZ").toDate().toLocaleString().length - 3)}</CommentTimeSpan>
 
                                         <span style={{ float: "right" }}>
-                                            {/* <CommentBtnItem onClick={() => {
-                                                alert("답글버튼 클릭");
-                                            }}>답글</CommentBtnItem> */}
-
-                                            {/* 유저 아이디가 댓글 작성 유저 아이디와 같으면 띄운다. */}
                                             {comment.userName == userName ? <>
-                                                {/* 요청 보내서 게시글과 유저에 연결된 댓글 수정/삭제하기 -> 파라노이드 처리해서 그냥 지우기? */}
 
                                                 <CommentBtnItem onClick={() => {
                                                     const commentUpdateValue = prompt("수정할 댓글을 입력해주세요.", comment.text);
@@ -349,8 +275,6 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                                                     } else {
                                                         return;
                                                     }
-                                                    // 기존 값 받아와 인풋창에 출력(oninput, useState)
-                                                    // 여기부터 다시 작업
 
                                                 }}>수정</CommentBtnItem>
 
@@ -371,7 +295,6 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                                                                 });
                                                                 setText(" ");
                                                                 dispatch(communityAction.comments(comment?.data));
-                                                                console.log(commentCountDownReq);
                                                                 setCommentCount(commentCount - 1);
                                                                 return;
                                                             case 400:
@@ -388,36 +311,28 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
 
                                             </> : ""}
 
-                                            {/* 신고할 수 있도록 보내주기 */}
                                             <img src={reportImg} alt={"신고 버튼"} onClick={() => {
                                                 reportComment(comment.id)
                                             }} style={{ cursor: "pointer" }}></img>
                                         </span>
                                     </CommentUserInfo>
-                                    {/* 댓글내용 */}
                                     <CommentValue key={`commentText-${idx}`}>{comment.text}</CommentValue>
 
-                                    {/* 답글 컴포넌트 여기에 추가(바로 아래 붙도록 출력) */}
-                                    {/* <>하이</> */}
                                 </Comment>
                             );
                         })}
                     </CommentWrap>
                 </CommentBox>
 
-                {/* 댓글 입력 */}
                 <CommentAddWrap>
                     <CommentAdd>
-                        {/* <CommentTextArea name='comment' defaultValue={text} value={text} onInput={(e)=>{ */}
                         <CommentTextArea name='comment' value={text} onInput={(e) => {
                             setText(e.target.value);
                         }}></CommentTextArea>
                         <CommentBtnWrap>
                             <div style={{ fontSize: "25px", marginLeft: "5px", display: "flex" }}>
-                                {/* <img src={goldImg} alt='금쪽이' /> */}
                                 <Link to={`/Error`} element = {NotFound}>
                                     <img src={monaImg} alt='금쪽이' style={{ width: "35px" }} onClick={() => {
-                                        // window.location.href ="/Community/board/hi";
                                     }} />
                                 </Link>
                             </div>
@@ -431,31 +346,20 @@ const DetailComponent = ({ reportBoard, reportComment }) => {
                                     return;
                                 }
 
-                                // 서버쪽에 등록 요청을 보냄
                                 const commentAddRed = await axios.post("/api/comment/create", {
-                                    // 댓글 등록시 보내줄 값
-                                    // 1. 댓글 작성 유저 닉네임
-                                    // 2. 내용 : value값을 setState한 것을 state에서 가져온다.
-                                    // 3. 해당 게시글 번호
-                                    // 4. 만약 답글이라면 해당 댓글의 댓글 번호
-                                    // 5. 만약 답글이라면 해당 댓글 작성 유저 닉네임
                                     userName: userName,
                                     text: text,
                                     boardId: board?.id,
                                     userWorld: userWorld,
                                 });
-                                console.log(commentAddRed.data);
 
                                 switch (commentAddRed.data.status) {
                                     case 200:
                                         alert("댓글이 등록되었습니다.");
-                                        // 값을 비워준다.
                                         setText("");
-                                        // 게시글의 댓글 개수를 +1 해준다.
                                         const commentCountUpReq = await axios.post("/api/board/commentCountUp", {
                                             boardId: boardId
                                         });
-                                        console.log(commentCountUpReq);
                                         setCommentCount(commentCount + 1);
                                         return;
                                     case 400:
@@ -880,7 +784,6 @@ const UpDelBtn = styled.div`
     border-radius: 2px;
 `;
 
-// 태그
 const TagWrap = styled.div`
     float: left;
     background-color: #F9F9F9;
@@ -896,12 +799,10 @@ const Tag = styled.span`
 `;
 
 
-// 댓글
 const CommentTimeSpan = styled.span`
     font-size: 13px;
     color: #888;
 `;
-// 댓글 옆의 수정, 삭제, 신고 버튼 UI
 const CommentBtnItem = styled.span`
     font-size: 13px;
     border: 1px solid #c4c4c4;

@@ -21,18 +21,15 @@ ul.pagination li {
 }
 
 ul.pagination li:first-child {
-    /* border-radius: 5px 0 0 5px; */
     border-radius: 3px 0 0 3px;
 }
 
 ul.pagination li:last-child {
-    /* border-radius: 0 5px 5px 0; */
     border-radius: 0 3px 3px 0;
 }
 
 ul.pagination li a {
     text-decoration: none;
-    /* color: #337ab7; */
     color: #DC7EB3;
     font-size: 1rem;
 }
@@ -42,19 +39,16 @@ ul.pagination li.active a {
 }
 
 ul.pagination li.active {
-    /* background-color: #337ab7; */
     background-color: #DC7EB3;
 }
 
 ul.pagination li a:hover,
 ul.pagination li a.active {
-    /* color: blue; */
     color: #CA5196;
 }
 
 .page-selection {
     width: 48px;
     height: 30px;
-    /* color: #337ab7; */
     color: #DC7EB3;
 }

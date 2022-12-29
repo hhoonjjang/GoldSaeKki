@@ -21,7 +21,7 @@ const MainCommunityComponent = ({
         <div className="mainCommunity_innerBox_community">
           <div className="mainCommunity_innerBox_community_title">
             <h1 className="mainCommunity_innerBox_community_intro">
-              금쪽이스토리 커뮤니티
+              <span>금쪽이스토리</span> <span>커뮤니티</span>
               <Link to="/Community/Free" element={<CommunityComponet />}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -258,6 +258,9 @@ const MainCommunityBox = styled.div`
           text-align: center;
           position: relative;
 
+          span {
+            white-space: nowrap;
+          }
           @media only screen and (min-width: 1024px) {
             color: white;
           }

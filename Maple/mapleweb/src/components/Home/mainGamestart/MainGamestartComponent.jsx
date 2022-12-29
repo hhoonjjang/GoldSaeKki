@@ -139,7 +139,7 @@ export default MainGamestartComponent;
 
 const MainGamestart = styled.div`
   background-image: url(${(props) => props.bgImg});
-
+  overflow-x: hidden;
   display: flex;
   justify-content: center;
 
@@ -172,8 +172,10 @@ const MainGamestart = styled.div`
   }
 
   .mainGamestart_infomationCenter_innerBox {
-    width: 450px;
     display: flex;
+    @media only screen and (min-width: 1024px) {
+      width: 450px;
+    }
     @media only screen and (max-width: 1150px) {
       justify-content: center;
     }

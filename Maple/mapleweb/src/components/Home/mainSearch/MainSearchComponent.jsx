@@ -131,7 +131,8 @@ const MainSearch = styled.div`
     }
 
     .mainSearch_innerBox_selectType {
-      width: 200px;
+      max-width: 200px;
+      width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -154,6 +155,7 @@ const MainSearch = styled.div`
       }
 
       .mainSearch_innerBox_selectType_items {
+        z-index:1;
         padding-left: 10px;
         padding-right: 10px;
         position: absolute;
@@ -210,7 +212,7 @@ const MainSearch = styled.div`
       }
 
       .mainSearch_innerBox_inputBox_input{
-        flex:1;
+        width: 85%;
         margin-left:10px;
         background-color:transparent;
         border:none;
@@ -222,6 +224,11 @@ const MainSearch = styled.div`
         cursor:pointer;
         padding-left:10px;
         padding-right:10px;
+      }
+    }
+    .mainSearch_innerBox_flex{
+      @media only screen and(max-width: 500){
+        display:none;
       }
     }
   }

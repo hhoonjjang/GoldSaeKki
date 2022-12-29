@@ -204,7 +204,8 @@ const MainNoticeComponent = styled.div`
       }
 
       .mainNotice_innerBox_top_left {
-        width: 380px;
+        max-width: 380px;
+        width: 100%;
         height: 320px;
 
         @media only screen and (max-width: 1024px) {
@@ -213,6 +214,10 @@ const MainNoticeComponent = styled.div`
           margin: 0 auto;
         }
         .mainNotice_innerBox_top_left_innerBox {
+          img {
+            max-width: 380px;
+            width: 100%;
+          }
         }
 
         .mainNoticeSlider-css {

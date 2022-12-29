@@ -209,6 +209,9 @@ const MainSearchResult = styled.div`
   .mainSearchResult_innerBox {
     width: 1200px;
 
+    @media only screen and (max-width: 500px) {
+      width: 100%;
+    }
     @media only screen and (max-width: 1280px) {
       padding-left: 20px;
       padding-right: 20px;
@@ -218,6 +221,7 @@ const MainSearchResult = styled.div`
       justify-content: end;
       padding-top: 80px;
       padding-bottom: 50px;
+      width: 100%;
 
       .mainSearchResult_innerBox_research_selectType {
         width: 200px;

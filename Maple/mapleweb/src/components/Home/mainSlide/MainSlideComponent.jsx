@@ -199,6 +199,7 @@ const CarouselBackground = styled.div`
   .CarouselBackground_innerBox {
     position: relative;
     width: 1200px;
+    overflow-x: hidden;
 
     .CarouselBackground_innerBox_title {
       color: white;
@@ -208,9 +209,6 @@ const CarouselBackground = styled.div`
       top: 35%;
       // right: 43%;
       left: 100px;
-
-      p {
-      }
     }
   }
 `;

@@ -3,10 +3,11 @@ import { useDispatch } from "react-redux";
 import { action } from "../../../modules/regist";
 import crypto from "crypto-js";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const RegistContainer = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const tempUserArr = []; // 디비안에 정보들 담을 배열
 
   const userInfo = () => {
@@ -195,6 +196,9 @@ const RegistContainer = () => {
 
       dispatch(action.regist(userId, userPw, userName, server));
       alert("회원가입에 성공하셨습니다!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 100);
     }
   };
   return (

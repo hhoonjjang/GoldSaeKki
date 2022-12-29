@@ -123,37 +123,16 @@ const RegistComponent = ({
           </select>
         </SelectBox>
         <ButtonBox>
-          {userId && userPw && userName && server != "서버 선택" ? (
-            <>
-              <Link to={"/login"}>
-                <button
-                  onClick={() => {
-                    registClick(userId, userPw, userName, server, pwReCheck);
-                  }}
-                >
-                  회원가입
-                </button>
-              </Link>
-              <Link to={"/login"}>
-                <button>취소</button>
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to={"#"}>
-                <button
-                  onClick={() => {
-                    registClick(userId, userPw, userName, server, pwReCheck);
-                  }}
-                >
-                  회원가입
-                </button>
-              </Link>
-              <Link to={"/login"}>
-                <button> 취소</button>
-              </Link>
-            </>
-          )}
+          <button
+            onClick={() => {
+              registClick(userId, userPw, userName, server, pwReCheck);
+            }}
+          >
+            회원가입
+          </button>
+          <Link to={"/login"}>
+            <button>취소</button>
+          </Link>
         </ButtonBox>
       </RegistMain>
     </RegistBox>
@@ -195,6 +174,10 @@ const RegistBox = styled.div`
       width: 100px;
       height: 40px;
     }
+    & > div > div:last-child > button {
+      width: 100px;
+      height: 40px;
+    }
   }
 
   /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
@@ -208,6 +191,11 @@ const RegistBox = styled.div`
       }
 
       &:last-child > a > button {
+        width: 80px;
+        height: 30px;
+      }
+
+      &:last-child > button {
         width: 80px;
         height: 30px;
       }
@@ -270,18 +258,16 @@ const RegistText = styled.div`
 const ButtonBox = styled.div`
   padding: 20px;
 
-  & > a:first-child {
-    & > button {
-      width: 150px;
-      height: 50px;
-      border: none;
-      background-color: rgb(246, 133, 0);
-      margin-right: 10px;
-      color: white;
-      font-weight: 600;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+  & :first-child {
+    width: 150px;
+    height: 50px;
+    border: none;
+    background-color: rgb(246, 133, 0);
+    margin-right: 10px;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
   }
 
   & > a:last-child {

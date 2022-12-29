@@ -1,43 +1,45 @@
 import { useDispatch, useSelector } from "react-redux";
 import { action } from "../../modules/header";
 import styled from "styled-components";
-import BugCSContainer from "./BugCs/Container";
 import AccountContainer from "./Account/Container";
 import AdminLoginContainer from "./AdminLogin/Container";
-import FirstContainer from "./HelpCategoryDisplay/Container1";
-import UserManageContainer from "./UserManage/Container";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
+import ControlledTabsExample from "./ControlledTabs/ControlledTabs";
+import NotFound from "../Community/NotFound";
+import { Link, useNavigate } from "react-router-dom";
+
 const AdministratorComponet = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [_render,setRender] = useState(false);
   useEffect(() => {
     dispatch(action.header("Administrator"));
   }, []);
-  const isCookie = document.cookie;
-  const tempAdmin = useSelector((state) => state?.admin);
+  useEffect(()=>{
+
+  },[_render]);
+  const isCookie = document.cookie.split("=")[0];
+  // const isCookie = document.cookie.split("="[0]);
+  // const tempAdmin = useSelector((state) => state?.admin);
+  console.log(isCookie);
+  
   return (
-    <AdminBox>
+    <div>
+    {isCookie == "login" ? <NotFound/>:<AdminBox>
       {!isCookie ? (
         <>
-          <AdminLoginContainer />
-          <AccountContainer />
+          <AdminLoginContainer setRender={setRender} _render={_render}/>
+          {/* <AccountContainer /> */}
         </>
       ) : (
         <>
-          <AdminLoginContainer />
-          {tempAdmin?.name == "정재훈" ? (
-            <>
-              <AccountContainer />
-            </>
-          ) : (
-            <></>
-          )}
-
-          <BugCSContainer />
-          <FirstContainer />
-          <UserManageContainer />
+          <AdminLoginContainer setRender={setRender} _render={_render}/>
+          <ControlledTabsExample />
         </>
       )}
-    </AdminBox>
+    </AdminBox>}
+    
+    </div>
   );
 };
 

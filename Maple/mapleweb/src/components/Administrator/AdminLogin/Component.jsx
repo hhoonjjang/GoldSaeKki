@@ -39,7 +39,7 @@ const AdminLoginComponent = ({ isCookie, onClick, tempAdmin, infoSubmit }) => {
         </form>
       ) : (
         <>
-          {tempAdmin == "정재훈" ? (
+          {tempAdmin == "정재훈"? (
             <div>"{tempAdmin}" 최고관리자님 어서오세요</div>
           ) : (
             <div>"{tempAdmin}" 관리자님 어서오세요</div>

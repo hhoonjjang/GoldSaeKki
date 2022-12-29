@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// axios.post("http://localhost:8080/api/report/request").then((data) => {
+// axios.post("/api/report/request").then((data) => {
 //   requestArr = data;
 // });
 
@@ -12,7 +12,7 @@ const tempFun = async (setRequest, navigate) => {
   if (document.cookie) {
     try {
       let requestArr = (
-        await axios.post("http://localhost:8080/api/report/request")
+        await axios.post("/api/report/request")
       ).data;
       setRequest(requestArr);
     } catch (err) {

@@ -1,7 +1,7 @@
-import MainNoticeComponent from "./MainNoticeComponent";
+import MainNotice from "./MainNoticeComponent";
 
 const MainNoticeContainer = () => {
-  return <MainNoticeComponent></MainNoticeComponent>;
+  return <MainNotice></MainNotice>;
 };
 
 export default MainNoticeContainer;

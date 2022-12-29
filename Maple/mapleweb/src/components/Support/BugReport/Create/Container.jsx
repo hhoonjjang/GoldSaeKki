@@ -8,7 +8,7 @@ const CreateContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onClick = (reportTitle, reportSelect, imgFile, contentsText) => {
-    if (!reportTitle) return alert("제목을 입력하세요");
+    if (!reportTitle.match(/\S/g)) return alert("제목을 입력하세요");
     if (!imgFile) return alert("파일을 첨부하세요");
     console.log(imgFile);
     let formData = new FormData();
@@ -33,7 +33,7 @@ const CreateContainer = () => {
     );
     axios
       .post(
-        "http://localhost:8080/api/report/uploadBugReport",
+        "/api/report/uploadBugReport",
 
         // formData
         formData

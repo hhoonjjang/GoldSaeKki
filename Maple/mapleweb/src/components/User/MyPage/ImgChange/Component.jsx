@@ -26,6 +26,8 @@ const ImgChangeComponent = ({ imgUploadSubmit }) => {
 export default ImgChangeComponent;
 
 const ImgChangeBox = styled.div`
+  border: 1px solid #5e7bcb;
+  padding: 10px;
   & > h5 {
     margin: 0;
     padding-left: 20px;
@@ -58,5 +60,14 @@ const ImgchangeBtnBox = styled.div`
     color: #5e7bcb;
     font-size: 18px;
     margin-left: 5px;
+  }
+
+  @media only screen and (max-width: 460px) {
+    & > button:first-child,
+    button:last-child {
+      width: 50px;
+      height: 40px;
+      font-size: 14px;
+    }
   }
 `;

@@ -1,16 +1,26 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import backgroundImg from "../Img/login-background.png";
 import loginChar from "../Img/login-char.png";
 
-const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
+const RegistComponent = ({
+  registClick,
+  idcheck,
+  pwcheck,
+  namecheck,
+  pwRecheckFunc,
+  userInfo,
+}) => {
   const [userId, setId] = useState("");
   const [userPw, setPw] = useState("");
+  const [pwReCheck, setPwReCheck] = useState("");
   const [userName, setName] = useState("");
   const [server, setServer] = useState("서버 선택");
-  console.log(server);
 
+  useEffect(() => {
+    userInfo();
+  }, []);
   const idMemo = useMemo(() => {
     return idcheck(userId);
   }, [userId]);
@@ -21,9 +31,14 @@ const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
     return pwcheck(userPw);
   }, [userPw]);
 
+  const checkMemo = useMemo(() => {
+    return pwRecheckFunc(pwReCheck, userPw);
+  }, [pwReCheck]);
+
   const nameMemo = useMemo(() => {
     return namecheck(userName);
   }, [userName]);
+
   return (
     <RegistBox>
       <h2>금쪽이스토리 회원 가입</h2>
@@ -54,6 +69,19 @@ const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
             }}
           />
           <p className={pwMemo.class}>{pwMemo.text}</p>
+        </RegistText>
+        <RegistText>
+          <p>비밀번호 확인</p>
+          <input
+            placeholder={"비밀번호"}
+            value={pwReCheck}
+            type={"password"}
+            onInput={(e) => {
+              setPwReCheck(e.target.value);
+              // pwcheck(userPw);
+            }}
+          />
+          <p className={checkMemo.class}>{checkMemo.text}</p>
         </RegistText>
         <RegistText>
           <p>닉네임 </p>
@@ -95,37 +123,16 @@ const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
           </select>
         </SelectBox>
         <ButtonBox>
-          {userId && userPw && userName && server != "서버 선택" ? (
-            <>
-              <Link to={"/login"}>
-                <button
-                  onClick={() => {
-                    registClick(userId, userPw, userName, server);
-                  }}
-                >
-                  회원가입
-                </button>
-              </Link>
-              <Link to={"/login"}>
-                <button>취소</button>
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to={"#"}>
-                <button
-                  onClick={() => {
-                    registClick(userId, userPw, userName, server);
-                  }}
-                >
-                  회원가입
-                </button>
-              </Link>
-              <Link to={"/login"}>
-                <button> 취소</button>
-              </Link>
-            </>
-          )}
+          <button
+            onClick={() => {
+              registClick(userId, userPw, userName, server, pwReCheck);
+            }}
+          >
+            회원가입
+          </button>
+          <Link to={"/login"}>
+            <button>취소</button>
+          </Link>
         </ButtonBox>
       </RegistMain>
     </RegistBox>
@@ -135,17 +142,70 @@ const RegistComponent = ({ registClick, idcheck, pwcheck, namecheck }) => {
 export default RegistComponent;
 
 const RegistBox = styled.div`
+  width: 100%;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   background-image: url(${backgroundImg});
   background-size: contain;
+  overflow: hidden;
 
+  .select {
+    font-size: 1rem;
+  }
   & > h2 {
     padding-top: 20px;
     text-align: center;
     margin-bottom: 20px;
     color: white;
+  }
+
+  @media only screen and (max-width: 1280px) {
+    width: 100%;
+    background-size: cover;
+    & > div {
+      width: 100%;
+      background-size: initial;
+    }
+  }
+
+  @media only screen and (max-width: 1024px) {
+    & > div > div:last-child > a > button {
+      width: 100px;
+      height: 40px;
+    }
+    & > div > div:last-child > button {
+      width: 100px;
+      height: 40px;
+    }
+  }
+
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media only screen and (max-width: 768px) {
+    & > div > div {
+      & > p:first-child {
+        font-size: 16px;
+      }
+      & > p:last-child {
+        font-size: 10px;
+      }
+
+      &:last-child > a > button {
+        width: 80px;
+        height: 30px;
+      }
+
+      &:last-child > button {
+        width: 80px;
+        height: 30px;
+      }
+      input {
+        width: 300px;
+      }
+    }
+    .select {
+      width: 100px;
+    }
   }
 `;
 
@@ -198,18 +258,16 @@ const RegistText = styled.div`
 const ButtonBox = styled.div`
   padding: 20px;
 
-  & > a:first-child {
-    & > button {
-      width: 150px;
-      height: 50px;
-      border: none;
-      background-color: rgb(246, 133, 0);
-      margin-right: 10px;
-      color: white;
-      font-weight: 600;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+  & :first-child {
+    width: 150px;
+    height: 50px;
+    border: none;
+    background-color: rgb(246, 133, 0);
+    margin-right: 10px;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
   }
 
   & > a:last-child {
@@ -228,7 +286,7 @@ const ButtonBox = styled.div`
 `;
 
 const SelectBox = styled.div`
-  .select {
+  select {
     width: 150px;
     height: 35px;
     border-radius: 3px;

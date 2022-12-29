@@ -5,9 +5,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const loginCheck = (setCurrUserName, setCurrUserWorld) => {
-  if (document.cookie) {
+  if (document.cookie.split("=")[0] == "login") {
     try {
-      axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
+      axios.post("/api/user/logincheck").then((data) => {
         console.log(data.data.userInfo.name);
         setCurrUserName(data.data.userInfo.name);
         setCurrUserWorld(data.data.userInfo.server);
@@ -22,7 +22,7 @@ const getUserImg = (currUserName, setThumbnailImg) => {
   if (document.cookie) {
     try {
       axios
-        .post("http://localhost:8080/api/user/getImg", {
+        .post("/api/user/getImg", {
           currUserName: currUserName,
         })
         .then((data) => {
@@ -37,7 +37,9 @@ const getUserImg = (currUserName, setThumbnailImg) => {
 
 const logout = () => {
   try {
-    axios.post("http://localhost:8080/api/user/logout");
+    axios.post("/api/user/logout").then(() => {
+      window.location.reload();
+    });
   } catch (error) {
     console.error(error);
   }
@@ -60,6 +62,7 @@ const MainGamestartContainer = () => {
   useEffect(() => {
     if (onlyMainLogoutUpdate.current) {
       logout();
+      setRender((state) => !state);
     } else onlyMainLogoutUpdate.current = true;
   }, [logoutState]);
 

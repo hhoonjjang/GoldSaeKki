@@ -11,6 +11,7 @@ import UserComponent from "../../User";
 import badge from "../Img/main_gamestart_badge.png";
 import MypageContainer from "../../User/MyPage/Container";
 import { useEffect, useState } from "react";
+import NotFound from "../../../NotFound";
 
 const MainGamestartComponent = ({
   currUserName,
@@ -32,16 +33,16 @@ const MainGamestartComponent = ({
         <div className="mainGamestart_infomationCenter">
           <div className="mainGamestart_infomationCenter_innerBox">
             <div>
-              <Link to="/News" element={<HomeComponet />}>
+              <Link to="/Error" element={<NotFound />}>
                 <img src={badge} alt={"뱃지"} />
               </Link>
             </div>
             <div className="mainGamestart_infomationCenter_innerBox_text">
-              <Link to="/News" element={<HomeComponet />}>
+              <Link to="/Error" element={<NotFound />}>
                 <span>업데이트 정보센터</span>
-              </Link>{" "}
+              </Link>
               <br />
-              <Link to="/News" element={<HomeComponet />}>
+              <Link to="/Error" element={<NotFound />}>
                 <span>2022.11.24 / ver.1.2.371 업데이트 미리보기</span>
               </Link>
             </div>
@@ -49,33 +50,32 @@ const MainGamestartComponent = ({
         </div>
         <div className="mainGamestart_gameStart">
           <div className="mainGamestart_gameStart_start">
-            <Link to="/" element={<HomeComponet />}>
-              <div
-                className="header_innerBox_center_start"
-                onClick={() => {
-                  alert("게임스타트");
-                }}
-              >
-                <img src={gameStart} alt="게임 스타트" />
-              </div>
-            </Link>
+            <div
+              className="header_innerBox_center_start"
+              onClick={() => {
+                alert("게임스타트");
+                window.location.href = "https://play2048.co/";
+              }}
+            >
+              <img src={gameStart} alt="게임 스타트" />
+            </div>
           </div>
           <div className="mainGamestart_gameStart_download">
-            <Link to="/" element={<HomeComponet />}>
-              <div className="header_innerBox_center_download">
-                <img src={download} alt={"다운로드"} />
-              </div>
-            </Link>
+            <div className="header_innerBox_center_download">
+              <img src={download} alt={"다운로드"} />
+            </div>
           </div>
         </div>
         {document.cookie.split("=")[0] == "login" ? (
           <div className="mainGamestart_logged">
             <div className="mainGamestart_logged_innerBox">
-              <div className="mainGamestart_logged_innerBox_hero">
-                <Link to="/Mypage" element={<MypageContainer />}>
-                  {/* <img src={""} alt="캐릭터" /> */}
-                  <img src={thumbnailImg} alt="아바타" />
-                </Link>
+              <div className="mainGamestart_logged_innerBox_hero_cover">
+                <div className="mainGamestart_logged_innerBox_hero">
+                  <Link to="/Mypage" element={<MypageContainer />}>
+                    {/* <img src={""} alt="캐릭터" /> */}
+                    <img src={thumbnailImg} alt="아바타" />
+                  </Link>
+                </div>
               </div>
               <div className="mainGamestart_logged_innerBox_briefProfile">
                 <div className="mainGamestart_logged_innerBox_briefProfile_nameLogout">
@@ -139,13 +139,28 @@ export default MainGamestartComponent;
 
 const MainGamestart = styled.div`
   background-image: url(${(props) => props.bgImg});
-  height: 180px;
   display: flex;
   justify-content: center;
 
+  @media only screen and (min-width: 1150px) {
+    height: 180px;
+  }
+
+  @media only screen and (max-width: 1150px) {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
   .mainGamestart {
-    min-width: 1200px;
     position: relative;
+    width: 1200px;
+    @media only screen and (max-width: 1150px) {
+      display: flex;
+      flex-direction: column;
+      padding-left: 20px;
+      padding-right: 20px;
+      width: 100%;
+    }
   }
 
   .mainGamestart_infomationCenter {
@@ -156,8 +171,13 @@ const MainGamestart = styled.div`
   }
 
   .mainGamestart_infomationCenter_innerBox {
-    min-width: 450px;
     display: flex;
+    @media only screen and (min-width: 1024px) {
+      width: 450px;
+    }
+    @media only screen and (max-width: 1150px) {
+      justify-content: center;
+    }
   }
 
   .mainGamestart_infomationCenter_innerBox_text {
@@ -175,6 +195,7 @@ const MainGamestart = styled.div`
 
     a:last-child {
       color: #a9a9a9;
+      white-space: normal;
     }
   }
 
@@ -190,15 +211,26 @@ const MainGamestart = styled.div`
       left: 260px;
       bottom: -12px;
     }
+    @media only screen and (max-width: 1150px) {
+      display: none;
+    }
   }
   .mainGamestart_user {
-    height: 100%;
-    position: absolute;
-    top: 0px;
-    right: -0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    div {
+      width: 100%;
+      display: flex;
+      // flex-direction: column;
+      justify-content: center;
+    }
+    @media only screen and (min-width: 1150px) {
+      position: absolute;
+      top: 50px;
+      right: -0px;
+    }
 
     button {
       color: white;
@@ -208,6 +240,7 @@ const MainGamestart = styled.div`
       padding-bottom: 16px;
       padding-left: 40px;
       padding-right: 40px;
+      white-space: nowrap;
     }
   }
   .mainGamestart_user_loginButton {
@@ -218,27 +251,47 @@ const MainGamestart = styled.div`
     background-color: rgb(246, 133, 0);
   }
   .mainGamestart_logged {
-    height: 100%;
     position: absolute;
-    top: 0px;
+    top: 30px;
     right: 0px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: end;
     color: white;
+
+    @media only screen and (max-width: 1150px) {
+      top: -670px;
+    }
 
     .mainGamestart_logged_innerBox {
       display: flex;
-
+      .mainGamestart_logged_innerBox_hero_cover {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
       .mainGamestart_logged_innerBox_hero {
         width: 124px;
         height: 96px;
-        background-color: #161617;
         margin-right: 5px;
+
+        @media only screen and (max-width: 1150px) {
+          display: flex;
+          justify-content: center;
+        }
+        a {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
       }
 
       .mainGamestart_logged_innerBox_hero img {
         width: 90%;
+        @media only screen and (max-width: 1150px) {
+          width: 100%;
+          height: 70%;
+        }
       }
 
       .mainGamestart_logged_innerBox_briefProfile {
@@ -249,17 +302,35 @@ const MainGamestart = styled.div`
         .mainGamestart_logged_innerBox_briefProfile_nameLogout {
           display: flex;
           margin-bottom: 5px;
-
+          @media only screen and (max-width: 1150px) {
+            margin-bottom: 0px;
+          }
           .mainGamestart_logged_innerBox_briefProfile_name {
             margin-top: 9px;
             margin-bottom: 10px;
             color: white;
+
+            @media only screen and (max-width: 1150px) {
+              color: #222;
+            }
+          }
+          .mainGamestart_logged_innerBox_briefProfile_Logout {
+            @media only screen and (max-width: 1150px) {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+            }
           }
           .mainGamestart_logged_innerBox_briefProfile_server {
             color: white;
             margin-top: 9px;
             margin-bottom: 10px;
             font-size: 11px;
+            white-space: nowrap;
+
+            @media only screen and (max-width: 1150px) {
+              color: #222;
+            }
           }
           .mainGamestart_logged_innerBox_briefProfile_LogoutButton {
             color: white;
@@ -270,6 +341,7 @@ const MainGamestart = styled.div`
             font-size: 11px;
             padding-top: 5px;
             padding-bottom: 5px;
+            white-space: nowrap;
           }
         }
         .mainGamestart_logged_innerBox_briefProfile_mypage_inner {
@@ -279,6 +351,10 @@ const MainGamestart = styled.div`
           border-radius: 3px;
           width: 100%;
           height: 50px;
+          white-space: nowrap;
+          @media only screen and (max-width: 1150px) {
+            height: 30px;
+          }
         }
       }
     }

@@ -22,6 +22,8 @@ import bottomRightImg1 from "../Img/main_notice_bottom_right_1.png";
 import bottomRightImg2 from "../Img/main_notice_bottom_right_2.png";
 import bottomRightImg3 from "../Img/main_notice_bottom_right_3.png";
 
+import NotFound from "../../../NotFound";
+
 import Slider from "react-slick";
 
 const MainNotice = () => {
@@ -41,43 +43,45 @@ const MainNotice = () => {
       <div className="mainNotice_innerBox">
         <div className="mainNotice_innerBox_top">
           <div className="mainNotice_innerBox_top_left">
-            <Slider {...setting} dotsClass="mainNoticeSlider-css">
-              <div>
-                <Link to="/News/cashShop">
-                  <img src={topLeftImg0} />
-                </Link>
-              </div>
-              <div>
-                <Link to="/News/cashShop">
-                  <img src={topLeftImg1} />
-                </Link>
-              </div>
-              <div>
-                <Link to="/News/cashShop">
-                  <img src={topLeftImg2} />
-                </Link>
-              </div>
-              <div>
-                <Link to="/News/cashShop">
-                  <img src={topLeftImg3} />
-                </Link>
-              </div>
-              <div>
-                <Link to="/News/cashShop">
-                  <img src={topLeftImg4} />
-                </Link>
-              </div>
-              <div>
-                <Link to="/News/cashShop">
-                  <img src={topLeftImg5} />
-                </Link>
-              </div>
-              <div>
-                <Link to="/News/cashShop">
-                  <img src={topLeftImg6} />
-                </Link>
-              </div>
-            </Slider>
+            <div className="mainNotice_innerBox_top_left_innerBox">
+              <Slider {...setting} dotsClass="mainNoticeSlider-css">
+                <div>
+                  <Link to="/Error" element={<NotFound />}>
+                    <img src={topLeftImg0} />
+                  </Link>
+                </div>
+                <div>
+                  <Link to="/Error" element={<NotFound />}>
+                    <img src={topLeftImg1} />
+                  </Link>
+                </div>
+                <div>
+                  <Link to="/Error" element={<NotFound />}>
+                    <img src={topLeftImg2} />
+                  </Link>
+                </div>
+                <div>
+                  <Link to="/Error" element={<NotFound />}>
+                    <img src={topLeftImg3} />
+                  </Link>
+                </div>
+                <div>
+                  <Link to="/Error" element={<NotFound />}>
+                    <img src={topLeftImg4} />
+                  </Link>
+                </div>
+                <div>
+                  <Link to="/Error" element={<NotFound />}>
+                    <img src={topLeftImg5} />
+                  </Link>
+                </div>
+                <div>
+                  <Link to="/Error" element={<NotFound />}>
+                    <img src={topLeftImg6} />
+                  </Link>
+                </div>
+              </Slider>
+            </div>
           </div>
           <div className="mainNotice_innerBox_top_right">
             <div className="mainNotice_innerBox_top_right_left">
@@ -86,7 +90,9 @@ const MainNotice = () => {
                   <div>공지</div>
                 </div>
                 <div className="mainNotice_innerBox_top_right_left_item_text">
-                  <Link to="/News">공지사항 텍스트</Link>
+                  <Link to="/Error" element={<NotFound />}>
+                    [점검완료] 12/22(목) 전체 월드 채널점검 (16:00~17:00)
+                  </Link>
                 </div>
               </div>
               <div className="mainNotice_innerBox_top_right_left_item">
@@ -94,7 +100,9 @@ const MainNotice = () => {
                   <div>공지</div>
                 </div>
                 <div className="mainNotice_innerBox_top_right_left_item_text">
-                  <Link to="/News">공지사항 텍스트</Link>
+                  <Link to="/Error" element={<NotFound />}>
+                    2022년 11월 확률형 아이템 검증 결과 공개
+                  </Link>
                 </div>
               </div>
               <div className="mainNotice_innerBox_top_right_left_item">
@@ -102,18 +110,20 @@ const MainNotice = () => {
                   <div>공지</div>
                 </div>
                 <div className="mainNotice_innerBox_top_right_left_item_text">
-                  <Link to="/News">공지사항 텍스트</Link>
+                  <Link to="/Error" element={<NotFound />}>
+                    12/26(월) 넥슨 고객상담실 시스템 점검 안내
+                  </Link>
                 </div>
               </div>
             </div>
             <div className="mainNotice_innerBox_top_right_right">
               <div className="mainNotice_innerBox_top_right_right_top">
-                <Link to="/Guide/gameInfomation">
+                <Link to="/Error" element={<NotFound />}>
                   <img src={topRightImg1} />
                 </Link>
               </div>
               <div className="mainNotice_innerBox_top_right_right_bottom">
-                <Link to="/Guide/gameInfomation">
+                <Link to="/Error" element={<NotFound />}>
                   <img src={topRightImg2} />
                 </Link>
               </div>
@@ -122,10 +132,10 @@ const MainNotice = () => {
         </div>
         <div className="mainNotice_innerBox_bottom">
           <div className="mainNotice_innerBox_bottom_left">
-            <Link to="/News/event" element={<HomeComponent />}>
+            <Link to="/Error" element={<NotFound />}>
               <img
                 src={bottomLeftImg}
-                className="mainNotice_innerBox_bottom_left"
+                className="mainNotice_innerBox_bottom_left_img"
               />
             </Link>
           </div>
@@ -155,25 +165,60 @@ export default MainNotice;
 
 const MainNoticeComponent = styled.div`
   background-color: #eeeeee;
-  height: 554px;
-  display: flex;
-  justify-content: center;
+
+  @media only screen and (min-width: 1025px) {
+    height: 554px;
+    display: flex;
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: 1024px) {
+    display: block;
+  }
 
   .mainNotice_innerBox {
-    width: 1200px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    margin-top: 70px;
-    margin-bottom: 70px;
+
+    @media only screen and (min-width: 1025px) {
+      margin-top: 70px;
+      margin-bottom: 70px;
+      width: 1200px;
+    }
+
+    @media only screen and (max-width: 1024px) {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
 
     .mainNotice_innerBox_top {
-      display: flex;
-      justify-content: space-between;
+      @media only screen and (min-width: 1024px) {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 30px;
+      }
+      @media only screen and (max-width: 1024px) {
+        display: block;
+        width: 100%;
+      }
 
       .mainNotice_innerBox_top_left {
-        width: 380px;
+        max-width: 380px;
+        width: 100%;
         height: 320px;
+
+        @media only screen and (max-width: 1024px) {
+          // display: flex;
+          // justify-content: center;
+          margin: 0 auto;
+        }
+        .mainNotice_innerBox_top_left_innerBox {
+          img {
+            max-width: 380px;
+            width: 100%;
+          }
+        }
 
         .mainNoticeSlider-css {
           bottom: 10px;
@@ -229,19 +274,37 @@ const MainNoticeComponent = styled.div`
       }
 
       .mainNotice_innerBox_top_right {
-        width: 760px;
-        height: 320px;
         background-color: white;
         display: flex;
         padding: 30px;
 
+        @media only screen and (min-width: 1025px) {
+          width: 66%;
+          height: 320px;
+        }
+        @media only screen and (max-width: 1024px) {
+          width: 100%;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
         .mainNotice_innerBox_top_right_left {
-          width: 507px;
-          padding-right: 30px;
-          border-right: 1px solid gainsboro;
+          @media only screen and (min-width: 1025px) {
+            width: 66%;
+            padding-right: 30px;
+            border-right: 1px solid gainsboro;
+          }
+
+          @media only screen and (max-width: 1024px) {
+            width: 100%;
+          }
 
           .mainNotice_innerBox_top_right_left_item {
             border-bottom: 1px solid gainsboro;
+
+            @media only screen and (max-width: 1024px) {
+              width: 100%;
+            }
           }
 
           .mainNotice_innerBox_top_right_left_item:last-child {
@@ -282,28 +345,58 @@ const MainNoticeComponent = styled.div`
           }
         }
         .mainNotice_innerBox_top_right_right {
-          padding-left: 30px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
+          @media only screen and (min-width: 1024px) {
+            width: 33%;
+            padding-left: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+
+          @media only screen and (max-width: 1024px) {
+            display: none;
+          }
+          img {
+            width: 100%;
+          }
         }
       }
     }
     .mainNotice_innerBox_bottom {
-      display: flex;
-      justify-content: space-between;
+      width: 100%;
 
+      @media only screen and (min-width: 1024px) {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      @media only screen and (max-width: 1024px) {
+        display: none;
+      }
       .mainNotice_innerBox_bottom_left {
-        width: 380px;
+        @media only screen and (min-width: 1024px) {
+          width: 33%;
+        }
+        a {
+          width: 100%;
+
+          img {
+            width: 100%;
+            height: 74px;
+          }
+        }
         height: 74px;
       }
 
       .mainNotice_innerBox_bottom_right {
-        width: 760px;
         height: 74px;
         background-color: rgb(91, 91, 116);
         display: flex;
         padding: 30px;
+
+        @media only screen and (min-width: 1024px) {
+          width: 66%;
+        }
 
         .mainNotice_innerBox_bottom_right_1,
         .mainNotice_innerBox_bottom_right_2,

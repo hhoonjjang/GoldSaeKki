@@ -4,10 +4,39 @@ import { useSelector } from "react-redux";
 import { action } from "../../../modules/header";
 import UserManageComponent from "./Component";
 
+const tempFun = async (setReportArr) => {
+  try {
+    let reportArr = (await axios.post("/api/report/bugcs"))
+      .data;
+    setReportArr(reportArr);
+    console.log(reportArr);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const BoardArrFun = async (setBoard) =>{
+  try{
+     let boardArr = (await axios.post("/api/admin/reportboard")).data;
+     setBoard(boardArr);
+  }catch(err){
+     console.error(err);
+  }
+ }
+
+const CommentArrFun = async (setComment) =>{
+  try{
+     let commentArr = (await axios.post("/api/admin/reportcomment")).data;
+     setComment(commentArr);
+  }catch(err){
+     console.error(err);
+  }
+ }
+
 const userArrFun = async (setUser) => {
   try {
     let userArr = (
-      await axios.post("http://localhost:8080/api/admin/displayuser")
+      await axios.post("/api/admin/displayuser")
     ).data;
     setUser(userArr);
   } catch (err) {
@@ -15,7 +44,7 @@ const userArrFun = async (setUser) => {
   }
 };
 
-const UserManageContainer = () => {
+const UserManageContainer = ({setComment,setBoard,setReportArr}) => {
   const [userArr, setUser] = useState([]);
   const [tempUser, setTemp] = useState([]);
   useEffect(() => {
@@ -27,7 +56,7 @@ const UserManageContainer = () => {
   console.log(userArr);
   const userSubmit = (user) => {
     axios
-      .post("http://localhost:8080/api/admin/searchuser", {
+      .post("/api/admin/searchuser", {
         user,
       })
       .then((data) => {
@@ -39,32 +68,40 @@ const UserManageContainer = () => {
   const delBtn = (userName) => {
     console.log(userName);
     axios
-      .post("http://localhost:8080/api/admin/deluser", { userName })
+      .post("/api/admin/deluser", { userName })
       .then((data) => {
         alert(data.data);
         userArrFun(setUser);
         setTemp("");
+      }).then(()=>{
+        BoardArrFun(setBoard);
+        CommentArrFun(setComment);
+        tempFun(setReportArr);
       });
   };
   const msgSubmit = (msg, userName) => {
-    axios.post("http://localhost:8080/api/admin/sendmsg", { msg, userName });
+    axios.post("/api/admin/sendmsg", { msg, userName });
   };
   const stateName = useSelector((state) => state?.admin);
   console.log(tempUser);
   const boardDel = (id, user) => {
     axios
-      .post("http://localhost:8080/api/admin/deluserboard", { id, user })
+      .post("/api/admin/deluserboard", { id, user })
       .then((data) => {
         alert(data.data.msg);
         setTemp(data.data.tempUser);
+      }).then(()=>{
+        BoardArrFun(setBoard);
       });
   };
   const commentDel = (id, user) => {
     axios
-      .post("http://localhost:8080/api/admin/delusercomment", { id, user })
+      .post("/api/admin/delusercomment", { id, user })
       .then((data) => {
         alert(data.data.msg);
         setTemp(data.data.tempUser);
+      }).then(()=>{
+        CommentArrFun(setComment);
       });
   };
   return (

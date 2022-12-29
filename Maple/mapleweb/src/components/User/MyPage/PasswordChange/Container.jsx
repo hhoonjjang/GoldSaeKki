@@ -64,7 +64,7 @@ const PasswordChangeContainer = () => {
       return alert("올바른 비밀번호 형식을 적어주세요.");
     }
     axios
-      .post("http://localhost:8080/api/user/pwchange", {
+      .post("/api/user/pwchange", {
         changePw,
         currUserName,
       })

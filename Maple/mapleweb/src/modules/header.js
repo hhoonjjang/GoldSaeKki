@@ -6,6 +6,8 @@ import headerBanner5 from "../components/Home/Img/header_banner/header_banner_me
 import headerBanner6 from "../components/Home/Img/header_banner/header_banner_support.png";
 import headerBanner7 from "../components/Home/Img/header_banner/header_banner_support.png";
 import headerBanner8 from "../components/Home/Img/header_banner/header_banner_news.png";
+import headerBanner9 from "../components/Home/Img/header_banner/header_banner_search.png";
+import headerBanner10 from "../components/Home/Img/header_banner/header_banner_media.png";
 
 import headericon1 from "../components/Home/Img/header_banner/header_icon_news.png";
 import headericon2 from "../components/Home/Img/header_banner/header_icon_guide.png";
@@ -15,7 +17,8 @@ import headericon5 from "../components/Home/Img/header_banner/header_icon_media.
 import headericon6 from "../components/Home/Img/header_banner/header_icon_support.png";
 import headericon7 from "../components/Home/Img/header_banner/header_icon_support.png";
 import headericon8 from "../components/Home/Img/header_banner/header_icon_support.png";
-
+import headericon9 from "../components/Home/Img/header_banner/header_icon_search.png";
+import headericon10 from "../components/Home/Img/header_banner/header_icon_news.png";
 const TYPE = {
   HEADER: "/header",
 };
@@ -41,6 +44,7 @@ export const reducer = (state = initialize, action) => {
         case "Guide":
           return { banner: headerBanner2, icon: headericon2, text: "가이드" };
         case "Ranking":
+          console.log("액션하는중");
           return { banner: headerBanner3, icon: headericon3, text: "랭킹" };
         case "Community":
           return { banner: headerBanner4, icon: headericon4, text: "커뮤니티" };
@@ -56,6 +60,10 @@ export const reducer = (state = initialize, action) => {
             icon: headericon8,
             text: "마이 금쪽이",
           };
+        case "Search":
+          return { banner: headerBanner9, icon: headericon9, text: "검색" };
+        case "Error":
+          return { banner: headerBanner10, icon: headericon10, text: "ERROR!" };
         default:
           return state;
       }

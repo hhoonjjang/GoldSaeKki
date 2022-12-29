@@ -1,30 +1,15 @@
 import HeaderComponent from "./HeaderComponent";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-const getUserImg = (currUserName, setThumbnailImg) => {
-  if (document.cookie) {
-    try {
-      axios
-        .post("http://localhost:8080/api/user/getImg", {
-          currUserName: currUserName,
-        })
-        .then((data) => {
-          console.log(data);
-          setThumbnailImg(data.data);
-        });
-    } catch (error) {
-      console.error(error);
-    }
-  }
-};
+import { action } from "../../../modules/header";
+import { action as imgAction } from "../../../modules/onImg";
 
 const logout = () => {
   try {
-    axios.post("http://localhost:8080/api/user/logout").then((data) => {});
+    axios.post("/api/user/logout").then((data) => {});
   } catch (error) {
     console.error(error);
   }
@@ -36,11 +21,19 @@ const HeaderContainer = () => {
   const headerIcon = useSelector((state) => state.header.icon);
   const headerText = useSelector((state) => state.header.text);
   const currUserName = useSelector((state) => state.user.currUserName);
-  const [_, setRender] = useState(false);
   const navigate = useNavigate();
   const [logoutState, setLogoutState] = useState(false);
-  const [thumbnailImg, setThumbnailImg] = useState("/Img/catimg.png");
   const onlyHeaderLogoutUpdate = useRef(false);
+  const [currUserImgState, setCurrUserImgState] = useState("");
+  const dispatch = useDispatch();
+
+  const getUserImg = async (currUserName) => {
+    const data = await axios.post("/api/user/getImg", {
+      currUserName: currUserName,
+    });
+    console.log(data.data);
+    setCurrUserImgState(data.data);
+  };
 
   useEffect(() => {
     if (onlyHeaderLogoutUpdate.current) {
@@ -49,6 +42,19 @@ const HeaderContainer = () => {
     } else onlyHeaderLogoutUpdate.current = true;
   }, [logoutState]);
 
+  useEffect(() => {
+    if (!currUserName) return;
+    console.log(currUserName);
+    getUserImg(currUserName);
+  }, [currUserName]);
+
+  useEffect(() => {
+    if (currUserImgState == "") return;
+    else {
+      console.log(currUserImgState);
+      dispatch(imgAction.onImg(currUserImgState));
+    }
+  }, [currUserImgState]);
   return (
     <HeaderComponent
       paint={headerBanner}
@@ -57,9 +63,7 @@ const HeaderContainer = () => {
       currUserName={currUserName}
       logout={logout}
       setLogoutState={setLogoutState}
-      getUserImg={getUserImg}
-      thumbnailImg={thumbnailImg}
-      setThumbnailImg={setThumbnailImg}
+      currUserImgState={currUserImgState}
     ></HeaderComponent>
   );
 };

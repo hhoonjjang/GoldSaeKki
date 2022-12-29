@@ -12,7 +12,7 @@ const LoginContainer = () => {
 
   // const loginCheck = () => {
   // if (document.cookie) {
-  // axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
+  // axios.post("/api/user/logincheck").then((data) => {
   // dispatch(action.check(data.data.userInfo.name));
   // console.log("로그인정보를 받았다", data);
   // currUser = data.data.userInfo.name;
@@ -26,13 +26,12 @@ const LoginContainer = () => {
 
     loginPw = crypto.SHA256(loginPw).toString();
     axios
-      .post("http://localhost:8080/api/user/login", { loginId, loginPw })
+      .post("/api/user/login", { loginId, loginPw })
       .then((data) => {
         console.log(data.data.data);
         if (data.data.status == 200) {
           alert("로그인 성공");
           dispatch(action.login(data.data.data));
-          // loginCheck();
           navigate("/");
         } else {
           if (data.data.status == 502) {

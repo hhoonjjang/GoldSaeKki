@@ -6,14 +6,24 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { useEffect, useRef, useState } from "react";
-import { CATEGORY, WORLDLIST } from "../../../../modules/community";
+import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import UploadAdapter from './UploadAdapter';
+import { Helmet } from 'react-helmet';
+
 
 // CKEditor 이미지 업로드를 위한 multer 기본 세팅
-// const API_URL = "http://localhost:8080";
+// const API_URL = "";
 // const UPLOAD_ENDPOINT = "upload_files";
+
+// 어댑터 연결 함수
+function MyCustomUploadAdapterPlugin(editor) {
+  editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+    return new UploadAdapter(loader);
+  }
+}
 
 const AddComponent = ({ }) => {
 
@@ -39,9 +49,26 @@ const AddComponent = ({ }) => {
   const [selected, setSelected] = useState(userWorld);
   const nowSelect = (e) => { setSelected(e?.target?.value) };
 
+  const dispatch = useDispatch();
+
   // 페이지 도착시 스크롤 높이 변경
   useEffect(() => {
-    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+    window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
+
+    // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
+    axios.post("/api/board/getLikeSevenBoards", {
+    }).then((boards) => {
+      // 해당 게시글 목록을 리덕스에 저장한다.
+      console.log(boards.data);
+      const boardsData = boards.data;
+      let likeTagBoards = [];
+      boardsData.map((board, index) => {
+        if (board.tags != "") {
+          likeTagBoards.push(board);
+        }
+      });
+      dispatch(action.tags(likeTagBoards));
+    });
   }, []);
 
   if (!userName) {
@@ -56,6 +83,9 @@ const AddComponent = ({ }) => {
   return (
 
     <>
+      <Helmet>
+        {/* <script src="" type="text/javascript" /> */}
+      </Helmet>
       <CategoryTitle>{category}</CategoryTitle>
 
       <ContentBox>
@@ -116,8 +146,9 @@ const AddComponent = ({ }) => {
 
           {/* 등록 */}
           <RegistBtn className="btn03_g" onClick={async (e) => {
+            if (!titleText.match(/\S/g)) return alert("제목을 입력해주세요.");
             // 서버쪽에 등록 요청을 보낸다.
-            const regist = await axios.post("http://localhost:8080/api/board/create", {
+            const regist = await axios.post("/api/board/create", {
               title: titleText,
               world: selected,
               category: category,
@@ -136,6 +167,22 @@ const AddComponent = ({ }) => {
               case 200:
                 // 성공 알람, 게시물 상세 페이지로 리턴
                 alert("게시글 등록됨");
+
+                // 리듀서 업데이트 ㄱㄱ
+                // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
+                await axios.post("/api/board/getLikeSevenBoards", {}).then((boards) => {
+                  // 해당 게시글 목록을 리덕스에 저장한다.
+                  console.log(boards.data);
+                  const boardsData = boards.data;
+                  let likeTagBoards = [];
+                  boardsData.map((board, index) => {
+                    if (board.tags != "") {
+                      likeTagBoards.push(board);
+                    }
+                  });
+                  dispatch(action.tags(likeTagBoards));
+                });
+
                 navigate(`/Community/board/${boardId}`);
                 return;
               case 400:
@@ -175,6 +222,13 @@ const ContentBox = styled.div`
   /* ckEditor css 설정 */
   & .ck-content {
     height: 560px;
+
+    /* 게시글 등록 반응형 : CK-EDITOR 높이 */
+    /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+    @media all and (max-width: 479px) {
+      height : 400px;
+    }
+
   }
   & .ck-rounded-corners {
     width: 100%;
@@ -184,6 +238,29 @@ const ContentBox = styled.div`
   }
   & .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
     border: 1px solid #ccced1;
+  }
+
+  /* 게시글 등록 반응형 : 전체너비 */
+  @media screen and (max-width: 1280px) {
+    width: 700px;
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+    width: 620px;
+  }
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+    width: 650px;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
+    width: 440px;
+    margin: 0 auto;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    width: 310px;
+    margin-left: 20px;
   }
 `;
 
@@ -201,6 +278,13 @@ const TitleWrap = styled.div`
   border-top: 1px solid #7e7e7e;
   /* border-bottom: 1px solid #CCCED1; */
   /* border-bottom: 1px solid #CCCED1; */
+
+  /* 게시글 등록 반응형 : 제목 영역 */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    padding : 0 10px;
+  }
+
 `;
 const CategorySelector = styled.select`
   font-size: 13px;
@@ -209,6 +293,14 @@ const CategorySelector = styled.select`
   margin-right: 10px;
   border: 1px solid #ccced1;
   cursor: pointer;
+
+  /* 게시글 등록 반응형 : 월드 선택 */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    margin-right: 5px;
+    padding: 0 0 0 5px;
+  }
+
 `;
 const TitleInput = styled.input`
   height: 32px;
@@ -216,6 +308,13 @@ const TitleInput = styled.input`
   padding: 0 10px;
   font-size: 15px;
   border: 1px solid #ccced1;
+
+  /* 게시글 등록 반응형 : 월드 선택 */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    width: 310px;
+    padding: 0 10px;
+  }
 `;
 
 const CategoryTitle = styled.h1`
@@ -226,7 +325,7 @@ const CategoryTitle = styled.h1`
   width: 100%;
   float: left;
   height: 40px;
-  margin-bottom: 80px;
+  margin-bottom: 50px; /* 이놈이 맞음 */
   cursor: default;
 `;
 
@@ -239,6 +338,7 @@ const TagWrap = styled.div`
   border-top: none;
   display: flex;
   align-items: center;
+
 `;
 const TagSpan = styled.span`
   line-height: 50px;
@@ -249,6 +349,20 @@ const TagSpan = styled.span`
   padding-right: 21px;
   background: url(https://ssl.nexon.com/s2/game/maplestory/renewal/common/tag_title_bg.png)
     right 17px no-repeat;
+
+  /* 게시글 등록 반응형 : 태그 달기 */
+  /* 게시글 등록 반응형 : 전체너비 */
+  @media screen and (max-width: 1280px) {
+    white-space: nowrap;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    width: 140px;
+    margin-left: 12px;
+    font-size: 10px;
+    padding-right: 0px;
+  }
+
 `;
 const TagInput = styled.input`
   margin-left: 20px;
@@ -258,6 +372,20 @@ const TagInput = styled.input`
   border: 1px solid #ccced1;
   font-size: 15px;
   padding: 0 10px;
+
+  /* 게시글 등록 반응형 : 태그 입력창 */
+  /* 게시글 등록 반응형 : 전체너비 */
+  @media screen and (max-width: 1280px) {
+    margin-right: 15px;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    margin: 0 5px;
+    font-size: 12px;
+    padding-right: 0px;
+    margin-right: 5px;
+  }
+
 `;
 
 const ButtonBox = styled.div`
@@ -267,7 +395,7 @@ const ButtonBox = styled.div`
   display: flex;
   justify-content: center;
 `;
-const CancelBtn = styled.a`
+const CancelBtn = styled.span`
   min-width: 53px;
   font-size: 15px;
   color: #fff;
@@ -284,7 +412,7 @@ const CancelBtn = styled.a`
     background-color: #636872;
   }
 `;
-const RegistBtn = styled.a`
+const RegistBtn = styled.span`
   min-width: 53px;
   font-size: 15px;
   color: #fff;

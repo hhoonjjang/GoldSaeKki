@@ -15,167 +15,175 @@ const MainSlideComponent = ({
 }) => {
   const [currSlide, setCurrSlide] = useState(0);
   // 현재 바라보는 곳
-  const [_, setRender] = useState(false);
   const [currSlideTranslate, setCurrSlideTranslate] = useState(0);
 
   const [bool, setBool] = useState(true);
   // 왼쪽 버튼인지 오른쪽 버튼인지 판별한다.
 
-  const [allSlide] = useState(9);
-  // 원래는 서버에 연결해서 SlideContainer에서 적당히 받아오지만 임시로 9를 주었다.
-
   const container = useRef();
 
   const onlyUpdateCurrSlide = useRef(true);
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     setCurrSlide((state) => state + 1);
-  //   }, 5000);
-  // }, []);
+  useEffect(() => {
+    setInterval(() => {
+      setBool(true);
+      setCurrSlide((state) => (state + 1) % carouselImgArr.length);
+    }, 5000);
+  }, []);
 
   useEffect(() => {
     if (onlyUpdateCurrSlide.current) {
       onlyUpdateCurrSlide.current = false;
       // 마운트 될 때 실행되지 않게
     } else {
-      console.log(currSlide);
       if (bool) {
-        console.log("bool : ", bool);
-        console.log(currSlide, "이동한다이");
         if (currSlide == 0) {
           // 마지막에서 뒤로 갔을 때
           container.current.style.transform = `translate(0px)`;
           setCurrSlideTranslate(0);
-          console.log("");
         } else {
           if (currSlide % 4 == 0) {
             container.current.style.transform = `translate(${
               currSlideTranslate - 1100
             }px)`;
             setCurrSlideTranslate(currSlideTranslate - 1100);
-            console.log(currSlideTranslate);
-            console.log("");
           }
         }
       } else if (!bool) {
-        if (currSlide % 4 == 3) {
+        if (currSlide + 1 == carouselImgArr.length) {
           container.current.style.transform = `translate(${
-            currSlideTranslate + 1100
+            // parseInt((carouselImgArr.length / 4 - 1) * -1100)
+            parseInt((carouselImgArr.length - 1) / 4) * -1100
           }px)`;
-          setCurrSlideTranslate(currSlideTranslate + 1100);
-          console.log(currSlideTranslate);
-          console.log("");
+          setCurrSlideTranslate(
+            parseInt((carouselImgArr.length - 1) / 4) * -1100
+          );
+        } else {
+          if (currSlide % 4 == 3) {
+            container.current.style.transform = `translate(${
+              currSlideTranslate + 1100
+            }px)`;
+            setCurrSlideTranslate(currSlideTranslate + 1100);
+          }
         }
       }
     }
   }, [currSlide]);
 
   return (
-    <MainSlide>
-      <Link to="/News/Event">
-        <CarouselBackground bgImg={carouselBackgroundArr[currSlide]}>
-          <div className="CarouselBackground_innerBox">
-            <h2
-              className="CarouselBackground_innerBox_title"
-              dangerouslySetInnerHTML={{
-                __html: carouselTitleArr[currSlide],
-              }}
-            ></h2>
-          </div>
-        </CarouselBackground>
-      </Link>
-      <Carousel>
-        <div className="carousel_innerBox">
-          <div className="carousel_pageBox">
-            <div className="carousel_pageBox_innerBox">
-              <div className="carousel_pageBox_innerBox_textBox">
-                &nbsp;&nbsp;
-                <div className="carousel_pageBox_innerBox_textBox_currNum">
-                  {currSlide + 1}
+    <Cover>
+      <MainSlide>
+        <Link to="/Error">
+          <CarouselBackground bgImg={carouselBackgroundArr[currSlide]}>
+            <div className="CarouselBackground_innerBox">
+              <h2
+                className="CarouselBackground_innerBox_title"
+                dangerouslySetInnerHTML={{
+                  __html: carouselTitleArr[currSlide],
+                }}
+              ></h2>
+            </div>
+          </CarouselBackground>
+        </Link>
+        <Carousel>
+          <div className="carousel_innerBox">
+            <div className="carousel_pageBox">
+              <div className="carousel_pageBox_innerBox">
+                <div className="carousel_pageBox_innerBox_textBox">
+                  &nbsp;&nbsp;
+                  <div className="carousel_pageBox_innerBox_textBox_currNum">
+                    {currSlide + 1}
+                  </div>
+                  &nbsp;<span>/</span>&nbsp;
+                  <div className="carousel_pageBox_innerBox_textBox_AllNum">
+                    {carouselImgArr.length}
+                  </div>
+                  &nbsp;&nbsp;
                 </div>
-                &nbsp;<span>/</span>&nbsp;
-                <div className="carousel_pageBox_innerBox_textBox_AllNum">
-                  {carouselImgArr.length}
-                </div>
-                &nbsp;&nbsp;
               </div>
             </div>
-          </div>
-          <div className="carousel_slide">
-            <div className="carousel_slide_innerBox">
-              <div
-                className="carousel_slide_innerBox_prevBtn"
-                onClick={() => {
-                  setBool(false);
-                  setCurrSlide(
-                    (state) =>
-                      (state + carouselImgArr.length - 1) %
-                      carouselImgArr.length
-                  );
-                }}
-              >
-                <svg width="20px" height="20px" fill="gainsboro">
-                  <polyline
-                    points="20,0 0,10 20,20"
-                    file="none"
-                    stroke="black"
-                    strokeWidth="1"
-                  />
-                </svg>
-              </div>
-              <div className="carousel_slide_itemBox_cover">
-                <div className="carousel_slide_itemBox" ref={container}>
-                  {
-                    // const tempCount = parseInt((carouselImgArr.length - 1) / 4) + 1;
-                    carouselImgArr.map((item, index) => {
-                      return (
-                        <div
-                          key={`slideItem-${index}`}
-                          className={`carousel_slide_item 
+            <div className="carousel_slide">
+              <div className="carousel_slide_innerBox">
+                <div
+                  className="carousel_slide_innerBox_prevBtn"
+                  onClick={() => {
+                    setBool(false);
+                    setCurrSlide(
+                      (state) =>
+                        (state + carouselImgArr.length - 1) %
+                        carouselImgArr.length
+                    );
+                  }}
+                >
+                  <svg width="20px" height="20px" fill="gainsboro">
+                    <polyline
+                      points="20,0 0,10 20,20"
+                      file="none"
+                      stroke="black"
+                      strokeWidth="1"
+                    />
+                  </svg>
+                </div>
+                <div className="carousel_slide_itemBox_cover">
+                  <div className="carousel_slide_itemBox" ref={container}>
+                    {
+                      // const tempCount = parseInt((carouselImgArr.length - 1) / 4) + 1;
+                      carouselImgArr.map((item, index) => {
+                        return (
+                          <div
+                            key={`slideItem-${index}`}
+                            className={`carousel_slide_item 
                           ${currSlide == index ? "on" : ""} 
                           ${(index - 1) % 4 == 0 ? "interval" : ""}`}
-                          onClick={() => {
-                            setCurrSlide(index);
-                          }}
-                        >
-                          <img key={`img-${index}`} src={item} alt="" />
-                          <span>{carouselTextArr[index]}</span>
-                        </div>
-                      );
-                    })
-                  }
+                            onClick={() => {
+                              setCurrSlide(index);
+                            }}
+                          >
+                            <img key={`img-${index}`} src={item} alt="" />
+                            <span>{carouselTextArr[index]}</span>
+                          </div>
+                        );
+                      })
+                    }
+                  </div>
                 </div>
-              </div>
-              <div
-                className="carousel_slide_innerBox_nextBtn"
-                onClick={() => {
-                  setBool(true);
-                  setCurrSlide((state) => (state + 1) % carouselImgArr.length);
-                }}
-              >
-                <svg width="20px" height="20px" fill="gainsboro">
-                  <polyline
-                    points="0,0 20,10 0,20"
-                    file="none"
-                    stroke="black"
-                    strokeWidth="1"
-                  />
-                </svg>
+                <div
+                  className="carousel_slide_innerBox_nextBtn"
+                  onClick={() => {
+                    setBool(true);
+                    setCurrSlide(
+                      (state) => (state + 1) % carouselImgArr.length
+                    );
+                  }}
+                >
+                  <svg width="20px" height="20px" fill="gainsboro">
+                    <polyline
+                      points="0,0 20,10 0,20"
+                      file="none"
+                      stroke="black"
+                      strokeWidth="1"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Carousel>
-    </MainSlide>
+        </Carousel>
+      </MainSlide>
+    </Cover>
   );
 };
 
 export default MainSlideComponent;
 
+const Cover = styled.div`
+  width: 100%;
+`;
+
 const MainSlide = styled.div`
   position: relative;
   height: 560px;
+  width: 100%;
 `;
 
 const CarouselBackground = styled.div`
@@ -185,18 +193,22 @@ const CarouselBackground = styled.div`
   transition: background 200ms linear;
   width: 100%;
   height: 100%;
-  position: relative;
+  display: flex;
+  justify-content: center;
 
   .CarouselBackground_innerBox {
-    position: absolute;
-    top: 35%;
-    right: 43%;
-    left: 100x;
+    position: relative;
+    width: 1200px;
+    overflow-x: hidden;
 
     .CarouselBackground_innerBox_title {
       color: white;
       font-size: 60px;
       white-space: nowrap;
+      position: absolute;
+      top: 35%;
+      // right: 43%;
+      left: 100px;
     }
   }
 `;
@@ -212,8 +224,12 @@ const Carousel = styled.div`
   display: flex;
   justify-content: center;
 
+  @media only screen and (max-width: 1100px) {
+    display: none;
+  }
+
   .carousel_innerBox {
-    width: 1200px;
+    min-width: 1200px;
     padding-top: 20px;
     position: relative;
 
@@ -256,7 +272,6 @@ const Carousel = styled.div`
       .carousel_slide_innerBox {
         display: flex;
         justify-content: space-between;
-        width: 100%;
         position: relative;
 
         .carousel_slide_innerBox_prevBtn {
@@ -267,7 +282,7 @@ const Carousel = styled.div`
         }
 
         .carousel_slide_itemBox_cover {
-          width: 1100px;
+          min-width: 1100px;
           margin-left: 50px;
           margin-right: 50px;
           overflow: hidden;

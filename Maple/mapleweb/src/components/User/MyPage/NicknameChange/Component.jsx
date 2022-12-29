@@ -1,9 +1,13 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const NicknameChangeComponent = ({ namecheck, changeClick }) => {
+const NicknameChangeComponent = ({ namecheck, changeClick, userInfo }) => {
   const [changeName, setChangeName] = useState("");
+
+  useEffect(() => {
+    userInfo();
+  }, []);
 
   const nameMemo = useMemo(() => {
     return namecheck(changeName);
@@ -19,17 +23,19 @@ const NicknameChangeComponent = ({ namecheck, changeClick }) => {
           setChangeName(e.target.value);
         }}
       />
-      <button
-        className="change-btn"
-        onClick={() => {
-          changeClick(changeName);
-        }}
-      >
-        변경
-      </button>
-      <Link to={"/mypage"}>
-        <button className="cancel-btn">취소</button>
-      </Link>
+      <div className="btn-box">
+        <button
+          className="change-btn"
+          onClick={() => {
+            changeClick(changeName);
+          }}
+        >
+          변경
+        </button>
+        <Link to={"/mypage"}>
+          <button className="cancel-btn">취소</button>
+        </Link>
+      </div>
       <p className={nameMemo.class}>{nameMemo.text}</p>
     </NicknameBox>
   );
@@ -40,7 +46,7 @@ export default NicknameChangeComponent;
 const NicknameBox = styled.div`
   border: 1px solid #5e7bcb;
   & > input {
-    width: 250px;
+    width: 60%;
     margin: 10px;
     border: none;
     background-color: lightblue;
@@ -77,6 +83,18 @@ const NicknameBox = styled.div`
     background-color: #5e7bcb;
     color: white;
     font-size: 18px;
+
+    @media only screen and (max-width: 570px) {
+      width: 50px;
+      font-size: 14px;
+      height: 40px;
+    }
+
+    @media only screen and (max-width: 400px) {
+      width: 40px;
+      height: 30px;
+      font-size: 13px;
+    }
   }
 
   .cancel-btn {
@@ -87,6 +105,26 @@ const NicknameBox = styled.div`
     background-color: white;
     color: #5e7bcb;
     font-size: 18px;
+    margin-left: 5px;
+
+    @media only screen and (max-width: 570px) {
+      width: 50px;
+      height: 40px;
+      font-size: 14px;
+    }
+
+    @media only screen and (max-width: 400px) {
+      width: 40px;
+      height: 30px;
+      font-size: 13px;
+    }
+  }
+
+  .btn-box {
+    margin: 0 0 10px 10px;
+  }
+
+  & > p {
     margin-left: 5px;
   }
 `;

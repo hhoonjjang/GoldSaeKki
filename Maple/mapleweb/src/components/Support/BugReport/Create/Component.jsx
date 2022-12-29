@@ -19,7 +19,7 @@ const CreateComponent = ({ onClick }) => {
         <form id="submit-form" encType="multipart/form-data">
           <div>
             {" "}
-            <span>신고종류</span>
+            <span className="span-text">신고종류</span>
             <span>
               <select
                 value={reportSelect}
@@ -43,7 +43,7 @@ const CreateComponent = ({ onClick }) => {
               />
             </span>
           </div>
-          <span>첨부파일</span>
+          <span className="span-text">첨부파일</span>
           <input
             name="reportFile"
             type="file"
@@ -217,4 +217,35 @@ const CreateBox = styled.div`
       background-color: #453333;
     }
   }
+
+  @media screen and (max-width:1280px){
+    width:80%;
+    .span-text {
+      display:none;
+    }
+    .ck.ck-editor {
+      width: 100%;
+    }
+    form > div:first-child select{
+      width:20%;
+    }
+    form > div:first-child input{
+      width:78%;
+    }
+  }
+  @media screen and (max-width:1023px){
+
+  }
+  @media screen and (max-width:768px){
+    width:90%;
+    form > div:first-child input{
+      margin-left:0;
+    }
+  }
+  @media screen and (max-width:480px){
+    .describe{
+    flex-direction: column;
+    }
+  }
+
 `;

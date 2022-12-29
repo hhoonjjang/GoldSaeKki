@@ -10,11 +10,12 @@ import MyRequestContainer from "../MyRequest/Container";
 import OnlineContainer from "../Online/Container";
 function LeftTabsExample() {
   return (
+    <TabsBox>
+
     <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-      <TabsBox>
         {" "}
         <Row>
-          <Col sm={3}>
+          <Col sm={3} className="tab1">
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
                 <Nav.Link eventKey="first">온라인상담</Nav.Link>
@@ -27,14 +28,14 @@ function LeftTabsExample() {
               </Nav.Item>
             </Nav>
           </Col>
-          <Col sm={9}>
+          <Col sm={9} className="tab2">
             <Tab.Content>
               <Tab.Pane eventKey="first">
                 <div>
                   <OnlineContainer />
                 </div>
               </Tab.Pane>
-              {document.cookie == "admin" ? (
+              {document.cookie.split("=")[0] == "admin" ? (
                 <></>
               ) : (
                 <>
@@ -54,15 +55,52 @@ function LeftTabsExample() {
             </Tab.Content>
           </Col>
         </Row>
-      </TabsBox>
     </Tab.Container>
+    </TabsBox>
+
   );
 }
 
 export default LeftTabsExample;
 
 const TabsBox = styled.div`
-  .flex-column .nav-pills .nav-link.active {
-    color: black;
-  }
+ width:1200px;
+ margin:auto;
+ margin-top:40px;
+ .flex-column{
+  width:fit-content;
+  flex-direction:row;
+
+  background-color:gray;
+  // display:flex;
+  min-width:120px;
+  // margin-right:150px;
+  // border-radius: 20px 20px
+ }
+ .tab1{
+  width:15%;
+  // background-color:red;
+ }
+ .tab2{
+  width:85%;
+ }
+
+ @media screen and (max-width:1280px){
+
+ }
+ @media screen and (max-width:1023px){
+  width:100%;
+ margin:0px;
+ .tab2{
+  width:80%;
+  text-align:center;
+ }
+
+ }
+ @media screen and (max-width:768px){
+
+ }
+ @media screen and (max-width:480px){
+
+ }
 `;

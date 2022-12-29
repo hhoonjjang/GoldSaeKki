@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import MypageContainer from "../../User/MyPage/Container";
+import { useSelector } from "react-redux";
 
 const Header = ({
   paint,
@@ -18,14 +19,9 @@ const Header = ({
   currUserName,
   logout,
   setLogoutState,
-  getUserImg,
-  thumbnailImg,
-  setThumbnailImg,
+  currUserImgState,
 }) => {
-  useEffect(() => {
-    if (currUserName == undefined) return;
-    getUserImg(currUserName, setThumbnailImg);
-  }, [currUserName]);
+  const currImg = useSelector((state) => state.onImg);
 
   return (
     <HeaderComponent paint={paint} icon={icon} text={text}>
@@ -53,7 +49,7 @@ const Header = ({
                     className="header_innerBox_center_loggedin_Mypage"
                   >
                     <div className="header_innerBox_center_loggedin_logo">
-                      <img src={thumbnailImg} alt="아바타" />
+                      <img src={currImg} alt="아바타" />
                     </div>
                   </Link>
                   <div className="header_innerBox_center_loggedin_text">
@@ -100,6 +96,7 @@ const Header = ({
                 className="header_innerBox_center_start"
                 onClick={() => {
                   alert("게임 스타트");
+                  window.location.href="https://play2048.co/";
                 }}
               >
                 <img src={gameStart} />
@@ -120,8 +117,7 @@ export default Header;
 const HeaderComponent = styled.div`
   position: relative;
   height: 310px;
-  background-image: url(${(props) =>
-    props.paint || "../Img/header_banner/header_banner_community.png"});
+  background-image: url(${(props) => props.paint});
   background-repeat: no-repeat;
   background-position: center;
 
@@ -136,7 +132,7 @@ const HeaderComponent = styled.div`
     position: relative;
     display: flex;
     justify-content: space-between;
-    min-width: 1200px;
+    width: 1200px;
   }
   .header_innerBox_iconAndText {
     position: absolute;
@@ -165,18 +161,32 @@ const HeaderComponent = styled.div`
 
   .header_innerBox_center_login_background {
     position: absolute;
-    right: -70px;
     bottom: 0;
     z-index: 0;
+
+    @media only screen and (min-width: 1024px) {
+      right: 0px;
+    }
+
+    @media only screen and (max-width: 1024px) {
+      display: none;
+    }
   }
 
   .header_innerBox_center_login_Link {
     height: 90px;
     width: 135px;
     position: absolute;
-    bottom: 0px;
-    left: -127px;
+
     cursor: pointer;
+    @media only screen and (min-width: 1024px) {
+      left: -180px;
+      top: -90px;
+    }
+    @media only screen and (max-width: 1024px) {
+      bottom: 295px;
+      left: 90px;
+    }
   }
 
   .header_innerBox_center_login_innerBox {
@@ -204,6 +214,11 @@ const HeaderComponent = styled.div`
     /* bottom: 20px; */
     /* left: -140px; */
     z-index: 4;
+
+    @media only screen and (max-width: 1024px) {
+      left: 40px;
+      top: -345px;
+    }
   }
 
   .header_innerBox_center_login_logo img {
@@ -226,7 +241,13 @@ const HeaderComponent = styled.div`
 
   .header_innerBox_center_login_text > span:first-child {
     font-size: 14px;
-    color: white;
+
+    @media only screen and (min-width: 1024px) {
+      color: white;
+    }
+    @media only screen and (max-width: 1024px) {
+      color: #222;
+    }
   }
 
   .header_innerBox_center_login_text > span:last-child {
@@ -273,12 +294,20 @@ const HeaderComponent = styled.div`
   .header_innerBox_center_loggedin_logo {
     position: absolute;
     bottom: 0px;
-    left: -140px;
+
     z-index: 4;
+    @media only screen and (min-width: 1024px) {
+      left: -200px;
+    }
+    @media only screen and (max-width: 1024px) {
+      left: 40px;
+      top: -345px;
+    }
   }
 
   .header_innerBox_center_loggedin_logo img {
     width: 50px;
+    height: 50px;
     border: 1px solid white;
     border-radius: 50%;
   }
@@ -289,12 +318,24 @@ const HeaderComponent = styled.div`
     justify-content: center;
     z-index: 4;
     bottom: 0px;
-    left: -70px;
+
+    @media only screen and (min-width: 1024px) {
+      left: -130px;
+    }
+    @media only screen and (max-width: 1024px) {
+      top: -635px;
+      left: 110px;
+    }
   }
 
   .header_innerBox_center_loggedin_text span {
     font-size: 14px;
     color: white;
+    white-space: nowrap;
+
+    @media only screen and (max-width: 1024px) {
+      color: #222;
+    }
   }
 
   .header_innerBox_center_loggedin_name {
@@ -307,6 +348,9 @@ const HeaderComponent = styled.div`
 
   .header_innerBox_center_startDownload {
     position: relative;
+    @media only screen and (max-width: 1024px) {
+      display: none;
+    }
   }
   .header_innerBox_center_start {
     position: absolute;

@@ -4,29 +4,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { action } from "../../../../modules/user";
 import { useNavigate } from "react-router-dom";
 
-const tempUserArr = [];
-
-// 닉네임 변경하기 전에 디비에 있는 내용 가져와서 temp에 저장. 추후 닉네임 중복 비교를 위해 쓸 예정
-axios
-  .post("http://localhost:8080/api/user/getUser")
-  .then((data) => {
-    console.log(data);
-    data?.data?.map((item) => {
-      tempUserArr.push(item);
-    });
-    console.log(tempUserArr);
-
-    // data.data.userId, data.data.userName
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
 const NicknameChangeContainer = () => {
+  const tempUserArr = [];
+
   const dispacth = useDispatch();
   const navigate = useNavigate();
   const currUserName = useSelector((state) => state.user.currUserName);
 
+  const userInfo = () => {
+    // 닉네임 변경하기 전에 디비에 있는 내용 가져와서 temp에 저장. 추후 닉네임 중복 비교를 위해 쓸 예정
+    axios
+      .post("/api/user/getUser")
+      .then((data) => {
+        console.log(data);
+        data?.data?.map((item) => {
+          tempUserArr.push(item);
+        });
+        console.log(tempUserArr);
+
+        // data.data.userId, data.data.userName
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const namecheck = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,10}$/;
 
   const namecheckFunc = (changeName) => {
@@ -66,7 +67,7 @@ const NicknameChangeContainer = () => {
       return alert("정보를 입력해주십쇼");
     }
     axios
-      .post("http://localhost:8080/api/user/clearCookie", {
+      .post("/api/user/clearCookie", {
         changeName,
         currUserName,
       })
@@ -82,25 +83,23 @@ const NicknameChangeContainer = () => {
       //   // changeName, serverName 받아옴
       // });
       .then((userInfo) => {
-        axios
-          .post("http://localhost:8080/api/user/changename", userInfo)
-          .then((data) => {
-            console.log("바뀐닉네임", data.data);
-            dispacth(
-              action.check({
-                server: data.data.data.currServerName,
-                name: data.data.data.currUserName,
-              })
-            );
-            dispacth(
-              action.login({
-                currServerName: data.data.data.currServerName,
-                currUserName: data.data.data.currUserName,
-              })
-            );
-            alert("성공적으로 닉네임을 변경했습니다.");
-            navigate("/mypage");
-          });
+        axios.post("/api/user/changename", userInfo).then((data) => {
+          console.log("바뀐닉네임", data.data);
+          dispacth(
+            action.check({
+              server: data.data.data.currServerName,
+              name: data.data.data.currUserName,
+            })
+          );
+          dispacth(
+            action.login({
+              currServerName: data.data.data.currServerName,
+              currUserName: data.data.data.currUserName,
+            })
+          );
+          alert("성공적으로 닉네임을 변경했습니다.");
+          navigate("/mypage");
+        });
       });
   };
 
@@ -108,6 +107,7 @@ const NicknameChangeContainer = () => {
     <NicknameChangeComponent
       namecheck={namecheckFunc}
       changeClick={changeNameClick}
+      userInfo={userInfo}
     />
   );
 };

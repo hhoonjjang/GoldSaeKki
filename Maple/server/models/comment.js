@@ -28,6 +28,11 @@ export default class Comment extends Sequelize.Model {
           allowNull: false,
           defaultValue: "리부트2",
         },
+        report:{
+          type:Sequelize.INTEGER,
+          defaultValue: 0,
+      }
+
       },
       {
         sequelize,
@@ -35,7 +40,7 @@ export default class Comment extends Sequelize.Model {
         underscored: true,
         modelName: "Comment",
         tableName: "comments",
-        paranoid: true,
+        paranoid: false,
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci",
       }

@@ -6,7 +6,7 @@ import SecondContainer from "./Container2";
 const tempChildFun = async (setCategory) => {
   try {
     let categoryArr = (
-      await axios.post("http://localhost:8080/api/admin/addtext")
+      await axios.post("/api/admin/addtext")
     ).data;
 
     setCategory(categoryArr);
@@ -19,14 +19,17 @@ const FirstContainer = () => {
   const [categoryArr, setCategory] = useState([]);
   const [editText, setEdit] = useState("");
   const [isBool, setBool] = useState(-1);
+  const [changeToArr,setChangeTo] = useState([]);
+  const [changeFromArr,setChangeFrom] =useState([])
   useEffect(() => {
     tempChildFun(setCategory);
   }, []);
   useEffect(() => {}, [categoryArr]);
 
   const textSubmit = async (category, text) => {
+    if(!text.match(/\S/g)) return alert("내용을 입력하세요")
     axios
-      .post("http://localhost:8080/api/admin/category", { category, text })
+      .post("/api/admin/category", { category, text })
       .then(() => {
         alert("추가되었습니다");
         tempChildFun(setCategory);
@@ -34,7 +37,7 @@ const FirstContainer = () => {
   };
   const delBtn = (category) => {
     axios
-      .post("http://localhost:8080/api/admin/delcategory", { category })
+      .post("/api/admin/delcategory", { category })
       .then(() => {
         alert("삭제되었습니다");
         tempChildFun(setCategory);
@@ -55,12 +58,40 @@ const FirstContainer = () => {
     if (!category) return setBool(-1);
     setBool(-1);
     axios
-      .post("http://localhost:8080/api/admin/editcategory", { category, id })
+      .post("/api/admin/editcategory", { category, id })
       .then(() => {
         alert("수정되었습니다gd");
         tempChildFun(setCategory);
       });
   };
+  const changeFromBtn = (id,category) =>{
+    console.log("체인지")
+    setChangeFrom({category,id})
+  }
+  const changeToBtn = (id,category)=>{
+    
+    setChangeTo({category,id})
+    console.log("프롬")
+    console.log(changeFromArr)
+    console.log("투")
+    console.log(changeToArr.length)
+  }
+  console.log(changeToArr)
+  console.log(changeToArr.length)
+  useEffect(()=>{ 
+    
+
+    if(changeToArr){
+      console.log(changeFromArr)
+    console.log(changeToArr)
+    if(changeToArr.id){
+      axios.post("/api/admin/changefirst", {changeFromArr,changeToArr}).then((data)=>{
+        alert(data.data);
+        tempChildFun(setCategory);
+
+      })
+    }}
+  },[changeToArr])
   return (
     <HelpCategoryDisplayComponent
       categoryArr={""}
@@ -75,6 +106,9 @@ const FirstContainer = () => {
       a="category"
       b=""
       c=""
+      d="문의유형"
+      changeToBtn={changeToBtn}
+      changeFromBtn={changeFromBtn}
     >
       <SecondContainer propsArr={categoryArr} />
     </HelpCategoryDisplayComponent>

@@ -9,20 +9,29 @@ import archive from "./Img/main_archive.png";
 
 import styled from "styled-components";
 import MainCommunityContainer from "./mainCommunity/MainCommunityContainer";
-import { useEffect } from "react";
+import MainSearchContainer from "./mainSearch/MainSearchContainer";
+import NotFound from "../../NotFound";
+import { Link } from "react-router-dom";
 
 const HomeComponet = () => {
   return (
     <div>
-      {/* <MainSlide></MainSlide> */}
-      {/* 임시로 배너를 채워넣었습니다 */}
       <MainSlideContainer></MainSlideContainer>
-      {/* <TempSlide></TempSlide> */}
       <MainGamestartContainer></MainGamestartContainer>
       <MainNoticeContainer></MainNoticeContainer>
+      <MainSearchContainer></MainSearchContainer>
       <MainCommunityContainer></MainCommunityContainer>
       <MainArchive>
-        <img src={archive} />
+        <div className="marinArchive_innerBox">
+          <Link
+            to="/Error"
+            element={<NotFound />}
+            rel="noopener noreferrer"
+            target="_blink"
+          >
+            <img src={archive} />
+          </Link>
+        </div>
       </MainArchive>
       <MainInfo></MainInfo>
       <Shortcut></Shortcut>
@@ -32,11 +41,21 @@ const HomeComponet = () => {
 
 export default HomeComponet;
 
-const TempSlide = styled.div``;
-
 const MainArchive = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 60px;
-  padding-bottom: 60px;
+  .marinArchive_innerBox {
+    width: 1200px;
+
+    img {
+      width: 100%;
+    }
+  }
+  @media only screen and (min-width: 1024px) {
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  @media only screen and (max-width: 1024px) {
+    display: none;
+  }
 `;

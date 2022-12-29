@@ -10,14 +10,18 @@ import UserOutContainer from "./UserOut/Container";
 import { useSelector } from "react-redux";
 import MyCommentEditContainer from "./MyCommentEdit/Container";
 import PasswordChangeContainer from "./PasswordChange/Container";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
+const MypageComponent = ({ getUserImg, checkLogin }) => {
   const dispatch = useDispatch();
   const route = useParams();
   const currUserName = useSelector((state) => state.user.currUserName);
   const currUserWorld = useSelector((state) => state.user.currServerName);
-  dispatch(action.header("Mypage"));
+
+  useEffect(() => {
+    dispatch(action.header("Mypage"));
+  }, []);
+  const currImg = useSelector((state) => state.onImg);
   const CATEGORY = [
     {
       name: "내정보 관리",
@@ -25,6 +29,11 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
       link: "/mypage",
     },
   ];
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
+
   useEffect(() => {
     console.log(currUserName, "asdf");
     if (currUserName == undefined) return;
@@ -33,43 +42,43 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
 
   const myDiv = () => {
     switch (route.route) {
-      case "userInfo1":
-        return <ImgChangeContainer setThumbnailImg={setThumbnailImg} />;
+      case "ImgChange":
+        return <ImgChangeContainer />;
 
-      case "userInfo2":
+      case "NickChange":
         return <NicknameChangeContainer />;
 
-      case "userInfo3":
+      case "MyBoard":
         return <MyBoardEditContainer />;
 
-      case "userInfo4":
+      case "MyComment":
         return <MyCommentEditContainer />;
 
-      case "userInfo5":
+      case "PasswordChange":
         return <PasswordChangeContainer />;
 
-      case "userInfo6":
+      case "UserOut":
         return <UserOutContainer />;
 
       default:
         return (
           <ul>
-            <Link to={"/mypage/userInfo1"}>
+            <Link to={"/mypage/ImgChange"}>
               <li>- 대표이미지 변경</li>
             </Link>
-            <Link to={"/mypage/userInfo2"}>
+            <Link to={"/mypage/NickChange"}>
               <li>- 닉네임 변경</li>
             </Link>
-            <Link to={"/mypage/userInfo3"}>
+            <Link to={"/mypage/MyBoard"}>
               <li>- 내가 쓴 글 관리</li>
             </Link>
-            <Link to={"/mypage/userInfo4"}>
+            <Link to={"/mypage/MyComment"}>
               <li>- 내가 쓴 댓글 관리</li>
             </Link>
-            <Link to={"/mypage/userInfo5"}>
+            <Link to={"/mypage/PasswordChange"}>
               <li>- 비밀번호 변경</li>
             </Link>
-            <Link to={"/mypage/userInfo6"}>
+            <Link to={"/mypage/UserOut"}>
               <li>- 회원탈퇴</li>
             </Link>
           </ul>
@@ -78,12 +87,12 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
   };
 
   return (
-    <>
+    <MediaMypage>
       <NavigateComp categorys={CATEGORY} />
       <MypageBox>
         <MypageContents>
           <LeftContent>
-            <img src={thumbnailImg} alt="프로필사진" />
+            <img src={currImg} alt="프로필사진" className="cat_img" />
             <p>닉네임 : {currUserName}</p>
             <p> 월드 : {currUserWorld}</p>
           </LeftContent>
@@ -95,37 +104,69 @@ const MypageComponent = ({ getUserImg, thumbnailImg, setThumbnailImg }) => {
           </RightContent>
         </MypageContents>
       </MypageBox>
-      :<></>
-    </>
+    </MediaMypage>
   );
 };
 export default MypageComponent;
 
-const MypageBox = styled.div`
+const MediaMypage = styled.div`
   width: 1200px;
+  margin: 0 auto;
+`;
+
+const MypageBox = styled.div`
   min-height: 500px;
   margin: 0 auto;
 `;
 const MypageContents = styled.div`
   width: 100%;
   display: flex;
-  float: left;
+
+  @media only screen and (max-width: 960px) {
+    width: 100vw;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    & img.cat_img {
+      width: 200px;
+    }
+
+    & > div {
+      width: 90%;
+    }
+  }
 `;
 
 const LeftContent = styled.div`
+  width: 20%;
   padding: 20px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   & > img {
-    width: 200px;
+    width: 100%;
+    height: 200px;
   }
 
   & > p {
     text-align: center;
+    font-weight: bold;
   }
 `;
 
 const RightContent = styled.div`
   padding: 20px;
-  width: 100%;
+  width: 80%;
+
+  @media only screen and (max-width: 1200px) {
+    width: 70%;
+  }
+
+  @media only screen and (max-width: 1080px) {
+    width: 60%;
+  }
 
   & > div:first-child {
     background-color: #5e7bcb;

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import multer from "multer";
 import db from "../models/index.js";
 import crypto from "crypto-js";
+import fs from "fs";
 
 const router = Router();
 
@@ -35,21 +36,21 @@ router.post("/imgchange", (req, res) => {
         res.end(data);
       });
     });
-    res.send(`http://localhost:8080/api/download${req.body.currImg}`);
+    res.send(`/api/download${req.body.currImg}`);
   });
 });
 
 router.post("/getImg", (req, res) => {
   console.log("요청", req.body.currUserName);
-  console.log("req.body?.currUserName", req.body?.currUserName);
-  if (req.body?.currUserName)
-    db.User.findOne({ where: { userName: req.body?.currUserName } }).then(
+  console.log("req.body.currUserName", req.body.currUserName);
+  if (req.body.currUserName)
+    db.User.findOne({ where: { userName: req.body.currUserName } }).then(
       (data) => {
         console.log("data : ", data);
-        console.log("data?.profileImg : ", data?.profileImg);
-        if (data?.profileImg) {
+        console.log("data.profileImg : ", data.profileImg);
+        if (data.profileImg) {
           console.log("이미지 정보", data.profileImg);
-          res.send(`http://localhost:8080/api/download${data.profileImg}`);
+          res.send(`/api/download${data.profileImg}`);
         } else {
           res.send("/Img/catimg.png");
         }
@@ -79,6 +80,7 @@ router.post("/regist", (req, res) => {
 });
 
 router.post("/logincheck", (req, res) => {
+  console.log("쿠키다", req.cookies);
   const decodeToken = jwt.verify(req.cookies.login, process.env.JWT_KEY);
   res.send({
     userInfo: decodeToken,
@@ -94,7 +96,7 @@ router.post("/findId", (req, res) => {
 
 router.post("/findPw", (req, res) => {
   db.User.update(
-    { userPw: crypto.SHA256("goldsaekki!").toString() },
+    { userPw: crypto.SHA256(req.body.findId + "12!@").toString() },
     {
       where: { userId: req.body.findId },
     }
@@ -103,7 +105,7 @@ router.post("/findPw", (req, res) => {
     if (data[0] === 0) {
       res.send({ message: 504 });
     } else {
-      res.send({ pw: "goldsaekki!" });
+      res.send({ pw: req.body.findId + "12!@" });
     }
   });
 });
@@ -114,7 +116,7 @@ router.post("/login", (req, res) => {
   })
     .then((data) => {
       console.log("data??", data);
-      console.log("data.userPw", data?.userPw);
+      console.log("data.userPw", data.userPw);
       console.log("req.body.loginPw", req.body.loginPw);
       if (data) {
         if (data.userPw === req.body.loginPw) {
@@ -142,7 +144,7 @@ router.post("/login", (req, res) => {
               currUserName: userName,
             },
           });
-          consoNamele.log("로그인 완료");
+          console.log("로그인 완료");
         } else {
           res.send({ message: "잘못된 비밀번호입니다.", status: 501 });
         }
@@ -210,6 +212,54 @@ router.post("/signOut", (req, res) => {
   db.User.destroy({ where: { userName: req.body.currUserName } }).then(() => {
     res.send();
   });
+});
+
+router.post("/board", (req, res) => {
+  console.log("현재 닉네임", req.body.currUser);
+  db.Board.findAll({ where: { userName: req.body.currUser } }).then((data) => {
+    console.log("찾아온 데이터", data);
+    res.send(data);
+  });
+});
+
+router.post("/comment", (req, res) => {
+  console.log("현재 닉네임", req.body.currUser);
+  db.Comment.findAll({ where: { userName: req.body.currUser } }).then(
+    (data) => {
+      console.log("찾아온 데이터", data);
+      res.send(data);
+    }
+  );
+});
+
+router.post("/pwchange", (req, res) => {
+  db.User.update(
+    { userPw: crypto.SHA256(req.body.changePw).toString() },
+    { where: { userName: req.body.currUserName } }
+  ).then(() => {
+    res.clearCookie("login");
+    res.send({ message: "비밀번호 잘 바꾸고 쿠키 초기화함" });
+  });
+});
+
+fs.readFile("./user.json", "utf-8", async function (err, data) {
+  const count = await db.User.count();
+  if (err) {
+    console.error(err.message);
+  } else {
+    console.log(data && JSON.parse(data).length);
+    console.log(count);
+    if (data && JSON.parse(data).length > count) {
+      console.log("실행");
+      JSON.parse(data).forEach((item) => {
+        try {
+          db.User.create(item);
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
+  }
 });
 
 export default router;

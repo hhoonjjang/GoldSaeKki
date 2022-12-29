@@ -1,10 +1,19 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import HelpCategoryDisplayComponent from "./Component";
+const CommentArrFun = async (setComment) =>{
+  try{
+     let commentArr = (await axios.post("/api/admin/reportcomment")).data;
+     setComment(commentArr);
+  }catch(err){
+     console.error(err);
+  }
+ }
+ 
 
 const tempArrFun = async (setText) => {
   try {
-    let textArr = (await axios.post("http://localhost:8080/api/admin/addchild"))
+    let textArr = (await axios.post("/api/admin/addchild"))
       .data;
     setText(textArr);
   } catch (err) {
@@ -14,7 +23,7 @@ const tempArrFun = async (setText) => {
 
 const tempChildFun = async (setChildText) => {
   let childArr = (
-    await axios.post("http://localhost:8080/api/admin/displaychild")
+    await axios.post("/api/admin/displaychild")
   ).data;
   setChildText(childArr);
 };
@@ -24,17 +33,24 @@ const ThirdContainer = ({ propsArr }) => {
   const [childArr, setChildText] = useState([]);
   const [isBool, setBool] = useState(-1);
   const [editText, setEdit] = useState("");
-
+  const [changeToArr,setChangeTo] = useState([]);
+  const [changeFromArr,setChangeFrom] =useState([])
   useEffect(() => {
     tempArrFun(setText);
     tempChildFun(setChildText);
   }, []);
 
+  useEffect(()=>{
+    tempChildFun(setChildText);
+
+  },[propsArr])
+
   const textSubmit = (category, text) => {
-    if (!category) return alert("카테고리를 선택하세요");
-    if (!text) return alert("내용을 입력하세요");
+    if (!category || category=="선택하시오") return alert("카테고리를 선택하세요");
+    if(!text.match(/\S/g)) return alert("내용을 입력하세요");
+    console.log(category)
     axios
-      .post("http://localhost:8080/api/admin/addchildtext", {
+      .post("/api/admin/addchildtext", {
         category,
         text,
       })
@@ -45,11 +61,12 @@ const ThirdContainer = ({ propsArr }) => {
   };
   const delBtn = (text) => {
     axios
-      .post("http://localhost:8080/api/admin/delchild", { text })
+      .post("/api/admin/delchild", { text })
       .then(() => {
         alert("삭제되었습니다");
         tempChildFun(setChildText);
-      });
+        
+      })
   };
   const editBtn = (idx, text) => {
     if (idx == isBool) {
@@ -61,7 +78,7 @@ const ThirdContainer = ({ propsArr }) => {
     if (!text) return setBool(-1);
     setBool(-1);
     axios
-      .post("http://localhost:8080/api/admin/editchild", { text, id })
+      .post("/api/admin/editchild", { text, id })
       .then(() => {
         tempChildFun(setChildText);
       });
@@ -69,6 +86,32 @@ const ThirdContainer = ({ propsArr }) => {
   const cancel = () => {
     setBool(-1);
   };
+  const changeFromBtn = (id,category) =>{
+    console.log("체인지")
+    setChangeFrom({category,id})
+  }
+  const changeToBtn = (id,category)=>{
+    
+    setChangeTo({category,id})
+    console.log("프롬")
+    console.log(changeFromArr)
+    console.log("투")
+    console.log(changeToArr.length)
+  }
+  useEffect(()=>{ 
+    
+
+    if(changeToArr){
+      console.log(changeFromArr)
+    console.log(changeToArr)
+    if(changeToArr.id){
+      axios.post("/api/admin/changethird", {changeFromArr,changeToArr}).then((data)=>{
+        alert(data.data);
+        tempChildFun(setChildText);
+
+      })
+    }}
+  },[changeToArr])
   return (
     <HelpCategoryDisplayComponent
       categoryArr={propsArr}
@@ -83,6 +126,9 @@ const ThirdContainer = ({ propsArr }) => {
       a="textChild"
       b="textCategory"
       c="text"
+      d="텍스트"
+      changeToBtn={changeToBtn}
+      changeFromBtn={changeFromBtn}
     />
   );
 };

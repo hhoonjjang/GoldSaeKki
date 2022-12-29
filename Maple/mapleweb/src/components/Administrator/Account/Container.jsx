@@ -6,7 +6,7 @@ import { action } from "../../../modules/admin";
 
 const tempListFun = async (setList) => {
   try {
-    let listArr = (await axios.post("http://localhost:8080/api/admin/list"))
+    let listArr = (await axios.post("/api/admin/list"))
       .data;
     setList(listArr);
   } catch (err) {
@@ -18,8 +18,10 @@ const AccountContainer = () => {
   const dispatch = useDispatch();
   const [listArr, setList] = useState([]);
   const onSubmit = async (value) => {
+    if(!value.id.match(/\S/g) || !value.password.match(/\S/g) ||!value.adminName.match(/\S/g))
+    return alert("공간채워라잉");
     axios
-      .post("http://localhost:8080/api/admin/regist", value)
+      .post("/api/admin/regist", value)
       .then(({ data }) => {
         console.log(data);
         if (data.errors) return alert("중복되었다.");
@@ -34,7 +36,7 @@ const AccountContainer = () => {
 
   const onClick = async (idx) => {
     console.log(idx);
-    axios.post("http://localhost:8080/api/admin/delete", { idx }).then(() => {
+    axios.post("/api/admin/delete", { idx }).then(() => {
       alert("삭제됐습니다.");
       tempListFun(setList);
     });

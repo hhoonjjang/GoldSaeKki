@@ -1,13 +1,15 @@
 import styled from "styled-components";
 // import { Link, Routes, Route } from "react-router-dom";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { action } from "../../modules/header";
+import { action as communityAction } from "../../modules/community";
+import { action as searchAction } from "../../modules/search";
 
 import NavigationComponent from "./Navigation/Component";
 import ListContainer from "./Board/List/Container";
@@ -20,8 +22,12 @@ import three from "./images/3.png";
 import four from "./images/4.png";
 import prev from "./images/prev.png";
 import next from "./images/next.png";
+import smile from "./images/smile.png";
+import heart from "./images/heart.png";
+import tasty from "./images/tasty.png";
+import happiness from "./images/happiness.png";
 import AddContainer from "./Board/Add/Container";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // 모듈에서 가져온 커뮤니티 카테고리 메뉴바 리스트
 // import { action as communityAction, CATEGORY, CATEGORY2 } from "../../modules/community";
@@ -29,11 +35,27 @@ import { CATEGORY, CATEGORY2 } from "../../modules/community";
 import CommentContainer from "./Pagination/Container";
 import DetailContainer from "./Board/Detail/Container";
 import EditContainer from "./Board/Edit/Container";
+import NotFound from "./NotFound";
+import axios from "axios";
 
-const CommunityComponet = () => {
+const CommunityComponet = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(action.header("Administrator"));
+    dispatch(action.header("Community"));
+
+    // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
+    axios.post("/api/board/getLikeSevenBoards", {}).then((boards) => {
+      // 해당 게시글 목록을 리덕스에 저장한다.
+      console.log(boards.data);
+      const boardsData = boards.data;
+      let likeTagBoards = [];
+      boardsData.map((board, index) => {
+        if (board.tags != "") {
+          likeTagBoards.push(board);
+        }
+      });
+      dispatch(communityAction.tags(likeTagBoards));
+    });
   }, []);
 
   // 사이드 슬라이드 라이브러리 세팅 : 슬라이드의 기능 조정
@@ -46,6 +68,30 @@ const CommunityComponet = () => {
     autoplaySpeed: 4000, //4초마다 자동 넘김
     slidesToShow: 1, //1장씩 보이게 해줌
     slidesToScroll: 1, //1장씩 넘어가게 해줌
+  };
+
+  // 이슈 게시글 정보를 리덕스에서 가져온다.
+  const boardTags = useSelector((state) => state?.community?.tags);
+  console.log(boardTags);
+
+  // 태그 검색
+  const [searchType, setSearchType] = useState("태그");
+  const [searchData, setSearchData] = useState("");
+  const navigate = useNavigate();
+  // 검색 함수
+  const navigateToSearch = async (
+    searchType,
+    searchData,
+    navigate,
+    dispatch
+  ) => {
+    dispatch(searchAction.search(searchType, searchData));
+    navigate("/Search", {
+      state: {
+        searchType: searchType,
+        searchData: searchData,
+      },
+    });
   };
 
   return (
@@ -73,6 +119,7 @@ const CommunityComponet = () => {
                 path="/board/:boardId"
                 element={<DetailContainer />}
               ></Route>
+              {/* <Route path="/board/hi" element={<NotFound />} /> */}
 
               {/* 수정 페이지 */}
               <Route
@@ -97,28 +144,36 @@ const CommunityComponet = () => {
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  버그악용/불법프로그램 신고 보상 지급 안내
+                  <Link to="/Error" element={<NotFound />}>
+                    버그악용/불법프로그램 신고 보상 지급 안내
+                  </Link>
                 </NewsItem>
                 <NewsItem className="newsItem">
                   {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  12/9(금) 운영정책위반 단속결과
+                  <Link to="/Error" element={<NotFound />}>
+                    12/9(금) 운영정책위반 단속결과
+                  </Link>
                 </NewsItem>
                 <NewsItem className="newsItem">
                   {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  넥슨플레이 "게임 접속 이벤트" 진행 안내
+                  <Link to="/Error" element={<NotFound />}>
+                    넥슨플레이 "게임 접속 이벤트" 진행 안내
+                  </Link>
                 </NewsItem>
                 <NewsItem className="newsItem">
                   {/* 내용 Link로 감싸기 */}
                   <NewsItemTitle className="newsItemTitle">
                     공지
                   </NewsItemTitle>{" "}
-                  12월 지속 가능한 보안캠페인 진행 안내
+                  <Link to="/Error" element={<NotFound />}>
+                    12월 지속 가능한 보안캠페인 진행 안내
+                  </Link>
                 </NewsItem>
               </NewsContent>
             </NewsContentWrap>
@@ -129,24 +184,32 @@ const CommunityComponet = () => {
                 {/* 슬라이더 라이브러리 사용 */}
                 <StyledSlide {...settings}>
                   <div>
-                    <BannerImg
-                      src={one}
-                      alt="현생 용사를 위한 겨울 버전 메꾸 패키지"
-                    />
+                    <Link to="/Error" element={<NotFound />}>
+                      <BannerImg
+                        src={one}
+                        alt="현생 용사를 위한 겨울 버전 메꾸 패키지"
+                      />
+                    </Link>
                     <BannerText>
                       현생 용사를 위한 겨울 버전 메꾸 패키지
                     </BannerText>
                   </div>
                   <div>
-                    <BannerImg src={two} alt="썬데이 메이플" />
+                    <Link to="/Error" element={<NotFound />}>
+                      <BannerImg src={two} alt="썬데이 메이플" />
+                    </Link>
                     <BannerText>썬데이 메이플</BannerText>
                   </div>
                   <div>
-                    <BannerImg src={three} alt="돌의 정령을 키워달람!" />
+                    <Link to="/Error" element={<NotFound />}>
+                      <BannerImg src={three} alt="돌의 정령을 키워달람!" />
+                    </Link>
                     <BannerText>돌의 정령을 키워달람!</BannerText>
                   </div>
                   <div>
-                    <BannerImg src={four} alt="페어리 브로의 황금마차" />
+                    <Link to="/Error" element={<NotFound />}>
+                      <BannerImg src={four} alt="페어리 브로의 황금마차" />
+                    </Link>
                     <BannerText>페어리 브로의 황금마차</BannerText>
                   </div>
                 </StyledSlide>
@@ -158,7 +221,29 @@ const CommunityComponet = () => {
               <TagContentBox>
                 {/* 태그 검색 인풋 영역 */}
                 <TagInputWrap>
-                  <TagInput />
+                  {/* 여기부터~~ */}
+                  <TagInput
+                    type={"text"}
+                    onInput={(e) => {
+                      setSearchData(e.target.value);
+                    }}
+                    onKeyUp={() => {
+                      if (window.event.keyCode == 13) {
+                        if (searchData.match(/\S/g)) {
+                          navigateToSearch(
+                            searchType,
+                            searchData,
+                            navigate,
+                            dispatch
+                          );
+                          return;
+                        } else {
+                          console.log("searchData가 공백입니다.");
+                          alert("검색어를 입력하세요");
+                        }
+                      }
+                    }}
+                  />
                   <TagSerachBtnSpan>
                     {/* a 태그 :나중에 Link to로 바꾸기(중요) */}
                     {/* <a href="/Community/Free">
@@ -172,55 +257,42 @@ const CommunityComponet = () => {
                 {/* 태그들이 들어있는 영역 : 태그는 게시물의 하트가 많은 게시물 안에서 맨처음 한개만 가져온다.(시간이 된다면) */}
                 <TagListBox>
                   {/* 여기서 이 놈(IssueTag)을 map 돌리면 된다. 태그 개수는 최대 10개까지만 */}
-                  <IssueTag>
-                    {/* a 태그 : 나중에 Link to로 바꾸기 */}
-                    {/* <a href="/Common/Search?t=어쩌구저쩌구#$23#$" title="메이플스토리"></a> */}
-                    {/* <a href="/" title="검색어"> */}
-                    <Link to={"/"}>
-                      {/* 텍스트 앞의 #은 map에서 돌려 붙여줘야 한다. */}
-                      #던파모바일
-                    </Link>
-                    {/* </a> */}
-                  </IssueTag>
-
-                  <IssueTag>
-                    <Link to={`/Community/Free`}>
-                      {/* <a href="/Community/Free" title="검색어"> */}
-                      #메이플스토리
-                      {/* </a> */}
-                    </Link>
-                  </IssueTag>
-                  <IssueTag>
-                    <Link to={`/Community/Free`}>
-                      {/* <a href="/Community/Free" title="검색어"> */}
-                      #데미지스킨끄기
-                      {/* </a> */}
-                    </Link>
-                  </IssueTag>
-                  <IssueTag>
-                    <Link to={`/Community/Free`}>
-                      {/* <a href="/Community/Free" title="검색어"> */}
-                      #정재훈
-                      {/* </a> */}
-                    </Link>
-                  </IssueTag>
-                  <IssueTag>
-                    <Link to={`/Community/Free`}>
-                      {/* <a href="/Community/Free" title="검색어"> */}
-                      #월드리프
-                      {/* </a> */}
-                    </Link>
-                  </IssueTag>
-                  <IssueTag>
-                    <Link to={`/Community/Free`}>
-                      {/* <a href="/Community/Free" title="검색어"> */}
-                      #반뉴비
-                      {/* </a> */}
-                    </Link>
-                  </IssueTag>
+                  {boardTags?.map((board, idx) => {
+                    return (
+                      <div key={`tagDiv-${idx}`}>
+                        <Link
+                          to={`/Community/board/${board.id}`}
+                          key={`tagLink-${idx}`}
+                        >
+                          <IssueTag key={`issueTag-${idx}`}>
+                            {/* 태그 가공 및 출력 */}
+                            {board.tags.split("#").length == 1
+                              ? "#" + board.tags
+                              : "#" + board.tags.split("#")[1]}
+                          </IssueTag>
+                        </Link>
+                      </div>
+                    );
+                  })}
                 </TagListBox>
               </TagContentBox>
             </TagSearchBox>
+
+            {/* 하트 아이콘 */}
+            <HeartIcon
+              onClick={(e) => {
+                e.target.classList.toggle("is-active");
+              }}
+            ></HeartIcon>
+            <HeartIcon
+              style={{ marginLeft: "30px" }}
+              onClick={(e) => {
+                e.target.classList.toggle("is-active");
+              }}
+            ></HeartIcon>
+            {/* <SmileImg src={smile} alt="웃음"></SmileImg> */}
+            {/* <SmileImg src={tasty} alt="웃음"></SmileImg> */}
+            <SmileImg src={happiness} alt="웃음"></SmileImg>
           </NewsBox>
         </AllBox>
       </AllWrap>
@@ -230,15 +302,19 @@ const CommunityComponet = () => {
 export default CommunityComponet;
 
 const CommunityBox = styled.div`
-  min-height: 1600px;
+  /* min-height: 1600px; */
+  *::selection {
+    background-color: #ffebf6cc;
+    /* color: white; */
+  }
 `;
 
 const AllWrap = styled.div`
-  min-height: 1165px;
+  /* min-height: 1165px; */
+  margin-bottom: 100px;
   width: 100%;
-
   border-top: 1px solid #ebebeb;
-  border-bottom: 1px solid #ebebeb;
+  /* border-bottom: 1px solid #ebebeb; */
 `;
 
 const AllBox = styled.div`
@@ -247,21 +323,85 @@ const AllBox = styled.div`
   width: 1200px;
   min-height: inherit;
 
-  margin-top: 64px;
   display: flex;
   justify-content: space-between;
+
+  /* 게시글 목록 반응형 : 전체너비 */
+  @media screen and (max-width: 1280px) {
+    margin: 0 auto;
+    width: 1050px;
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+    width: 780px;
+  }
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+    width: 720px;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
+    width: 500px;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    width: 300px;
+  }
 `;
 
 const ContentBox = styled.div`
   min-height: inherit;
   display: inline-block;
   width: 930px;
+
+  /* 게시글 목록 반응형 : 내용영역 */
+  @media screen and (max-width: 1280px) {
+    /* margin: 0 55px; */
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+    margin: 0 55px;
+    margin: 0 auto;
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+  }
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+  }
 `;
 
 const NewsBox = styled.div`
   min-height: inherit;
   display: inline-block;
   width: 230px;
+
+  /* 게시글 목록 반응형 : 뉴스전체 */
+  @media screen and (max-width: 1280px) {
+    margin-right: 55px;
+    margin-left: 40px;
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+  }
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+    display: none;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
+    display: none;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/
+  @media all and (max-width: 479px) {
+    display: none;
+  }
 `;
 
 const NewsContentWrap = styled.div`
@@ -279,6 +419,13 @@ const NewsTitle = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 62px;
+
+  /* 드래그 금지 */
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 `;
 const NewsH2 = styled.h2`
   font-size: 18px;
@@ -312,6 +459,10 @@ const NewsItem = styled.div`
 
   &:hover {
     text-decoration: underline;
+  }
+
+  & > a {
+    color: #333;
   }
 `;
 const NewsItemTitle = styled.span`
@@ -470,6 +621,15 @@ const IssueTag = styled.span`
   background-color: #f1b4d1;
   margin-right: 6px;
   margin-bottom: 6px;
+  cursor: pointer;
+
+  /* 드래그 금지 */
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+
   & > a {
     color: white;
     width: 100%;
@@ -481,4 +641,37 @@ const IssueTag = styled.span`
     color: #edf1f3;
     border: none;
   }
+`;
+
+const HeartIcon = styled.div`
+  background-color: #ff00003d;
+  width: 100px;
+  height: 100px;
+  background: url("https://cssanimation.rocks/images/posts/steps/heart.png")
+    no-repeat;
+  background-position: 0 0;
+  cursor: pointer;
+  transition: background-position 1s steps(28);
+  transition-duration: 0s;
+  display: inline-block;
+  /* margin-top: 300px; */
+  /* margin-top: 10px; */
+
+  &.is-active {
+    transition-duration: 1s;
+    background-position: -2800px 0;
+  }
+`;
+
+const SmileImg = styled.img`
+  width: 130px;
+  height: 50px;
+  margin-left: 50px;
+
+  /* 드래그 금지 */
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 `;

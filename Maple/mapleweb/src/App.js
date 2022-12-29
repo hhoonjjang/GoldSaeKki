@@ -9,15 +9,19 @@ import CommunityComponet from "./components/Community";
 import SupportComponet from "./components/Support";
 import { Link, Routes, Route, useLocation } from "react-router-dom";
 import UserComponent from "./components/User";
-import BugReportContainer from "./components/Support/BugReport/Container";
+import MainSearchResultContainer from "./components/Home/mainSearchResult/MainSearchResultContainer";
+// import NotFound from "./components/Community/NotFound";
 import Footer from "./components/Home/footer/Footer";
 import Menubar from "./components/Home/menubar/Menubar";
-import { useEffect } from "react";
-import MypageContainer from "./components/User/MyPage/Container";
 import axios from "axios";
 import { action } from "./modules/user";
 import { useDispatch } from "react-redux";
 import { action as adminaction } from "./modules/admin";
+import RankComponent from "./components/Ranking";
+import NotFound from "./NotFound";
+import NewsComponet from "./components/News";
+import TopLogoContainer from "./components/Home/topLogo/TopLogoContainer";
+
 function App() {
   // const location = useLocation();
   // useEffect(() => {
@@ -29,7 +33,7 @@ function App() {
   const adminLogin = () => {
     if (document.cookie) {
       axios
-        .post("http://localhost:8080/api/admin/admincheck")
+        .post("/api/admin/admincheck")
         .then(function (data) {
           console.log(data);
           // window.location.reload();
@@ -38,39 +42,43 @@ function App() {
         });
     }
   };
-
+  console.log(document.cookie.split("=")[0]);
   const loginCheck = () => {
-    if (document.cookie) {
-      axios.post("http://localhost:8080/api/user/logincheck").then((data) => {
-        dispatch(action.check(data.data.userInfo));
-        console.log("로그인정보를 받았다", data);
-        // currUser = data.data.userInfo.name;
-        // console.log(currUser);
-      });
+    if (document.cookie.split("=")[0] == "login") {
+      console.log("쿠키 들어왔다.");
+      axios
+        .post("/api/user/logincheck")
+        .then((data) => {
+          dispatch(action.check(data.data.userInfo));
+          console.log("로그인정보를 받았다", data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   };
   console.log(location);
   document.cookie.split("=")[0] == "admin" ? adminLogin() : loginCheck();
+
   return (
     <div id="body_wrapper">
       <div id="body_content">
         {/* {(location.pathname = "/Adminstrator" ? <></> : <Menubar />)} */}
-        {location.pathname == "/regist" || location.pathname == "/login" ? (
+        <TopLogoContainer></TopLogoContainer>
+        {location.pathname == "/regist" || location.pathname == "/login" || location.pathname =="/Error" ? (
           <></>
         ) : (
           <Menubar />
         )}
-
         <Routes>
           {/* 메인페이지 헤더 */}
           <Route path="/News/*" element={<HeaderContainer />}></Route>
-          <Route path="/Guide/*" element={<HeaderContainer />}></Route>
           <Route path="/Ranking/*" element={<HeaderContainer />}></Route>
           <Route path="/Community/*" element={<HeaderContainer />}></Route>
-          <Route path="/Media/*" element={<HeaderContainer />}></Route>
           <Route path="/Support/*" element={<HeaderContainer />}></Route>
           <Route path="/Administrator/*" element={<HeaderContainer />}></Route>
           <Route path="/Mypage/*" element={<HeaderContainer />}></Route>
+          <Route path="/Search/*" element={<HeaderContainer />}></Route>
           {/* 기타 등등 헤더 */}
         </Routes>
         <UserComponent />
@@ -84,10 +92,10 @@ function App() {
 
       <Link to={"/Support"}>고객지원</Link> */}
 
-        <Link to={"/Administrator"}>관리자</Link>
+        {/* <Link to={"/Administrator"}>관리자</Link> */}
         <Routes>
           <Route path="/" element={<HomeComponet />}></Route>
-          <Route path="/news"></Route>
+          <Route path="/News/*" element={<NewsComponet />}></Route>
           <Route path="/Support/*" element={<SupportComponet />}></Route>
           <Route
             path="/Administrator/*"
@@ -95,9 +103,21 @@ function App() {
           ></Route>
           {/* <Route path="/Mypage/*" element={<MypageContainer />}></Route> */}
           <Route path="/Community/*" element={<CommunityComponet />}></Route>
+          <Route path="/Ranking/*" element={<RankComponent />}></Route>
+          <Route
+            path="/Search/*"
+            element={<MainSearchResultContainer />}
+          ></Route>
+
+          {/* <Route path="/*" element={<NotFound />} /> */}
         </Routes>
       </div>
-      <Footer></Footer>
+      {location.pathname =="/Error" ? (
+          <></>
+        ) : (
+          <Footer></Footer>
+        )}
+      
     </div>
   );
 }

@@ -1,16 +1,17 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import moment from "moment";
 import Pagination from "react-js-pagination";
-import './Paging.css';
+// import './Paging.css';
 
 import { action, CATEGORY, WORLDLIST } from "../../../../modules/community";
 import eyeImg from "../../images/info_eye_new.png";
 import heartImg from "../../images/info_heart2_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
+import searchImg from "../../images/search.png";
 // import DetailContainer from "../Detail/Container";
 
 const tempArr = [
@@ -25,17 +26,13 @@ const ListComponent = () => {
   // 리덕스를 사용하기 위한 라이브러리
   const dispatch = useDispatch();
 
-  // 현재 주소의 카테고리 라우터를 가져온다.
+  // 현재 주소의 카테고리 라우터를 가져옴
   const location = useLocation();
   const nowParam = useParams(location).category;
 
-  // 주소에서 카테고리 이름을 가져와 기본값으로 저장한다.
+  // 주소의 값으로 카테고리 이름을 찾아 기본값으로 저장
   const [category, setCategory] = useState(CATEGORY.find(item => item.label == nowParam));
-
-  // 페이징 처리 라이브러리
-  // https://velog.io/@dltmdwls15/pagination-Library%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%AA%A9%EB%A1%9D-%EA%B5%AC%ED%98%84
-  // const [page, setPage] = useState(1);
-  // const handlePageChange = (page) => { setPage(page); };
+  const [_, render] = useState(false);
 
   // 페이징 처리 : 현재 페이지
   const [nowPage, setNowPage] = useState(1);
@@ -44,46 +41,117 @@ const ListComponent = () => {
     setNowPage(page);
   };
 
-
-
-  // 현재 유저 닉네임을 가져온다.
+  // 현재 유저 닉네임
   const userName = useSelector((state) => state.user.currUserName);
 
-  // 현재 주소가 바뀌면 카테고리가 바뀌도록 한다.
+  // 전체 월드 버튼 엘리먼트
+  const allWorldRef = useRef();
+  const noRef = useRef();
+  // 현재 선택된 월드
+  const [nowWorld, setNowWorld] = useState("전체월드");
+
+  // 현재 주소가 바뀌면 카테고리 이름 바꿈
   useEffect(() => {
     setCategory(CATEGORY.find(item => item.label == nowParam));
 
-    // 스크롤도 올려줌?
-    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
-  }, [nowParam]);
+    // 스크롤도 올려줌
+    window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
 
-  // 계속된 리랜더링 문제로 useEffect(()=>{},[카테고리])로 감싸주었다.
-  useEffect(() => {
-    setNowPage(1);
-    // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
-    axios.post("http://localhost:8080/api/board/getList", {
-      category: category.name,
-    }).then((boards) => {
-      // DB에 값이 없으면 에러가 뜨지 않게 해준다.
-      if (boards.data.name == "SequelizeDatabaseError") {
-        return;
-      }
-      // 해당 게시글 목록을 리덕스에 저장한다.
-      // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
-      dispatch(action.list(boards.data));
-    }).catch((err) => {
-      console.log(err);
-    }).finally(() => {
-      // 무조건 실행한다.
-    });
-  }, [category, dispatch]);
+    // 월드 초기화
+    const active2 = document.querySelectorAll(".active2");
+    for (let i = 0; i < active2.length; i++) {
+      active2[i].classList.remove("active2");
+    }
+    allWorldRef.current.classList.add("active2");
+
+  }, [nowParam]);
 
 
   // Redux에 저장된 상태값인 해당 게시물들을 가져와준다.
-  const boards = useSelector((state) => state.community.list);
+  let boards = useSelector((state) => state.community.list);
+  // 월드 필터에 해당하는 보드들
+  let worldBoards = [];
 
-  // 띄워야 하는 것 : 해당 페이지의 번호에 맞는 목록을 띄움
-  // 1페이지면 0~10개 boards에서 자름
+  // 현재 월드가 바뀔 때 // 여기부터
+  useEffect(() => {
+    // console.log(nowWorld);
+    // console.log(boards);
+    // boards에서 world이름이 nowWorld이름과 같은 것만 다시 boards에 저장 -> 리덕스에도 재저장
+
+    if (nowWorld == "전체월드") {
+      console.log("전체월드임");
+
+      // 리덕스에 전체 카테고리들을 저장해준다.
+      // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
+      axios.post("/api/board/getList", {
+        category: category.name,
+      }).then((boards) => {
+        // DB에 값이 없으면 에러가 뜨지 않게 해준다.
+        if (boards.data.name == "SequelizeDatabaseError") {
+          return;
+        }
+
+        // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
+        axios.post("/api/board/getLikeSevenBoards", {
+        }).then((boards) => {
+          // 해당 게시글 목록을 리덕스에 저장한다.
+          console.log(boards.data);
+          const boardsData = boards.data;
+          let likeTagBoards = [];
+          boardsData.map((board, index) => {
+            if (board.tags != "") {
+              likeTagBoards.push(board);
+            }
+          });
+          dispatch(action.tags(likeTagBoards));
+        });
+
+        // 해당 게시글 목록을 리덕스에 저장한다.
+        // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
+        dispatch(action.list(boards.data));
+      });
+
+      return;
+    } else {
+      console.log("전체월드아님" + nowWorld + "임");
+
+      // 리덕스에 해당 카테고리들만 저장해준다. (item)
+      // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
+      axios.post("/api/board/getWorldList", {
+        category: category.name,
+        // 여기부터
+        world: nowWorld,
+      }).then((boards) => {
+        console.log(boards);
+        // DB에 값이 없으면 에러가 뜨지 않게 해준다.
+        if (boards.data.name == "SequelizeDatabaseError") {
+          return;
+        }
+        // 해당 게시글 목록을 리덕스에 저장한다.
+        // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
+        dispatch(action.list(boards.data));
+
+        // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
+        axios.post("/api/board/getLikeSevenBoards", {
+        }).then((boards) => {
+          // 해당 게시글 목록을 리덕스에 저장한다.
+          console.log(boards.data);
+          const boardsData = boards.data;
+          let likeTagBoards = [];
+          boardsData.map((board, index) => {
+            if (board.tags != "") {
+              likeTagBoards.push(board);
+            }
+          });
+          dispatch(action.tags(likeTagBoards));
+        });
+
+      });
+
+    }
+  }, [nowWorld]);
+
+  // 페이지에 맞는 게시글들을 띄우기 위해 개수만큼 잘라줌
   let newBoards = [];
   if (boards) {
     boards.map((item, idx) => {
@@ -93,22 +161,106 @@ const ListComponent = () => {
     });
   }
 
+  // 보드 배열이 바뀔 때마다 댓글 개수를 가져온다.
+  let commentCounts = [];
 
-  // 페이지 높이 변경
+  // 계속된 리랜더링 문제로 useEffect(()=>{},[카테고리])로 감싸주었다.
   useEffect(() => {
-    window.scrollTo({ left: 0, top: 300, behavior: "smooth" });
+    setNowPage(1);
+
+    // 해당 카테고리의 게시글 목록을 가져오는 요청을 보낸다.
+    axios.post("/api/board/getList", {
+      category: category.name,
+    }).then((boards) => {
+      // DB에 값이 없으면 에러가 뜨지 않게 해준다.
+      if (boards.data.name == "SequelizeDatabaseError") {
+        return;
+      }
+      // 해당 게시글 목록을 리덕스에 저장한다.
+      // 나중에 페이징 처리 이후 첫번째 페이지를 불러오게 하기
+      dispatch(action.list(boards.data));
+
+
+      // 공감수가 높은 게시글들을 가져오는 요청 : 이슈 태그에 사용
+      axios.post("/api/board/getLikeSevenBoards", {
+      }).then((boards) => {
+        // 해당 게시글 목록을 리덕스에 저장한다.
+        console.log(boards.data);
+        const boardsData = boards.data;
+        let likeTagBoards = [];
+        boardsData.map((board, index) => {
+          if (board.tags != "") {
+            likeTagBoards.push(board);
+          }
+        });
+        dispatch(action.tags(likeTagBoards));
+      });
+
+    }).catch((err) => {
+      console.log(err);
+    }).finally(() => {
+      // 무조건 실행한다.
+    });
+
+
+  }, [category, dispatch]);
+
+
+  // 게시글 가져오는 부분에서 관계형으로 값을 가져온다.
+  // 보드 배열이 바뀔 때마다 댓글 개수를 가져온다.
+  // 일단 이 놈은 안 쓰이는 놈들이다.
+  // let commentCounts = [];
+  useEffect(() => {
+    console.log("안녕");
+    newBoards.map(async (item, idx) => {
+
+      // 해당 게시글의 댓글 개수를 가져오는 요청을 보낸다.
+      await axios.post("/api/comment/count", {
+        boardId: item.id,
+      }).then((item) => {
+        commentCounts.push(item.data.number);
+        dispatch(action.commentCounts(commentCounts));
+      });
+
+    });
+  }, [category, dispatch]);
+  // }, []);
+
+
+  // 페이지 스크롤 높이 변경
+  useEffect(() => {
+    window.scrollTo({ left: 0, top: 270, behavior: "smooth" });
   }, [nowPage]);
 
+
+
   return (
-    <>
+    <AllWrap>
       {/* 현재 게시판 이름을 가져와 띄운다. */}
+      {/* <CategoryTitle>{category?.name}</CategoryTitle> */}
       <CategoryTitle>{category?.name}</CategoryTitle>
       <ContentBox>
         {/* 월드 선택 */}
         <WorldBox>
           {WORLDLIST.map((item, idx) => {
             return (
-              <WorldSpan key={`world-${idx}`}>
+              // 현재 선택된 월드 allWorldRef
+              <WorldSpan key={`world-${idx}`} className={`${idx == 0 ? "active2" : ""}`} ref={idx === 0 ? allWorldRef : noRef} onClick={(e) => {
+                // console.log("하이");
+                // 해당 클래스를 가진 놈들
+                const active2 = document.querySelectorAll(".active2");
+                // 다 삭제해버림
+                for (let i = 0; i < active2.length; i++) {
+                  active2[i].classList.remove("active2");
+                }
+                // 내가 클릭한 놈한테 active 클래스 추가
+                e.target.classList.add("active2");
+                // 현재 액티브 클래스를 가진 놈 확인
+                // console.log(document.querySelectorAll(".active2"));
+
+                // 현재 월드 재설정
+                setNowWorld(item.name);
+              }}>
                 <WorldImg
                   key={`worldImg-${idx}`}
                   src={item.img}
@@ -125,6 +277,9 @@ const ListComponent = () => {
         {/* 게시글 목록 */}
         <ListBox>
           {/* 여기서 map 돌리기 */}
+          {newBoards?.length ? "" : <OneBoardList style={{ fontSize: "13px", color: "#666" }}>
+            <div style={{ display: "flex", alignItems: "center" }}><img src={searchImg} alt={"게시글 없음 표시"} />{" "} <span style={{ marginLeft: "10px", color: "#8b8b8b" }}>해당 게시글 목록이 존재하지 않습니다.</span></div>
+          </OneBoardList>}
           {newBoards &&
             newBoards?.map((board, idx) => {
               return (
@@ -139,7 +294,9 @@ const ListComponent = () => {
                       </span>{" "}
                       <span key={`boardTitleName-${idx}`} className="title">
                         {board?.title}
-                      </span>
+                      </span>{" "}
+                      {/* <CommentCount>({board.commentCount})</CommentCount> */}
+                      {board.commentCount == 0 ? "" : <CommentCount>({board.commentCount})</CommentCount>}
                       {/* 새로 올라온 게시물인지, 이미지가 있는지 여부에 따라 옆에 이미지 아이콘을 띄운다. : 일단 모두 없앰 */}
                       {/* <img className="new" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/new.png" alt="" /> */}
                     </BoardTitle>
@@ -235,14 +392,18 @@ const ListComponent = () => {
               </RegistBtn>
             </Link>
           ) : (
-            <RegistBtn
-              onClick={(e) => {
-                alert("로그인이 필요합니다.");
-                return;
-              }}
-            >
-              글작성
-            </RegistBtn>
+            <>
+              <Link to={`/login`}>
+                <RegistBtn
+                  onClick={(e) => {
+                    alert("로그인이 필요합니다.");
+                    return;
+                  }}
+                >
+                  글작성
+                </RegistBtn>
+              </Link>
+            </>
           )}
         </ButtonBox>
 
@@ -267,26 +428,104 @@ const ListComponent = () => {
         </PagenationWrap>
 
       </ContentBox>
-    </>
+    </AllWrap>
   );
 };
 
 export default ListComponent;
 
 const AllWrap = styled.div`
-  & > div {
+  /* & > div {
     float: left;
+  } */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  
+    /* 드래그 금지 */
+    -webkit-touch-callout: none;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+  }
+  ul {
+      list-style: none;
+      padding: 0;
+      cursor: pointer;
+  }
+  ul.pagination li {
+      display: inline-block;
+      width: 35px;
+      height: 35px;
+      border: 1px solid #e2e2e2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1rem;
+  }
+  ul.pagination li:first-child {
+      /* border-radius: 5px 0 0 5px; */
+      border-radius: 3px 0 0 3px;
+  }
+  ul.pagination li:last-child {
+      /* border-radius: 0 5px 5px 0; */
+      border-radius: 0 3px 3px 0;
+  }
+  ul.pagination li a {
+      text-decoration: none;
+      /* color: #337ab7; */
+      color: #DC7EB3;
+      font-size: 1rem;
+  }
+
+  ul.pagination li.active a {
+      color: white;
+  }
+
+  ul.pagination li.active {
+      /* background-color: #337ab7; */
+      background-color: #DC7EB3;
+  }
+  ul.pagination li a:hover,
+  ul.pagination li a.active {
+      /* color: blue; */
+      color: #CA5196;
+  }
+  .page-selection {
+      width: 48px;
+      height: 30px;
+      /* color: #337ab7; */
+      color: #DC7EB3;
   }
 `;
 const CategoryTitle = styled.h1`
-  font-size: 28px;
+  /* font-size: 28px;
   color: #333;
   margin-top: 60px;
   font-weight: 600;
   width: 100%;
   height: 40px;
   margin-bottom: 40px;
+  cursor: default; */
+  font-size: 28px;
+  color: #333;
+  margin-top: 20px;
+  font-weight: 600;
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
   cursor: default;
+  margin-bottom: 20px;
+
+  /* 게시글 목록 반응형 : 카테고리 */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
+  @media all and (max-width:479px) {
+    font-size: 22px;
+    margin-bottom: 0px;
+  }
+
 `;
 
 const ContentBox = styled.div`
@@ -305,7 +544,17 @@ const WorldBox = styled.div`
   border: 1px solid #e9eaee;
   background-color: #fbf9fa;
   margin-bottom: 30px;
-  padding: 26px 0 0 26px;
+  padding: 26px 0 20px 26px;
+
+  /* 게시글 목록 반응형 : 월드박스 */
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/
+  @media all and (min-width: 480px) and (max-width: 767px) {
+    display: none;
+  }
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
+  @media all and (max-width:479px) {
+    display: none;
+  }
 `;
 const WorldSpan = styled.span`
   float: left;
@@ -323,7 +572,19 @@ const WorldSpan = styled.span`
   position: relative;
   cursor: pointer;
   padding-left: 8px;
-  &.active,
+  /* 드래그 금지 */
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  
+  /* 이놈 : 자식 전부를 뜻함 */
+  *{
+    pointer-events: none;
+  }
+  
+  &.active2,
   &:hover {
     transition: all 0.2s;
     background-color: #ca5196;
@@ -334,10 +595,12 @@ const WorldSpan = styled.span`
 const WorldImg = styled.img`
   position: absolute;
   top: 10px;
+  
 `;
 const WorldNameSpan = styled.span`
   position: absolute;
   left: 27px;
+  height: 0;
 `;
 
 const ListBox = styled.div`
@@ -350,19 +613,74 @@ const OneBoardList = styled.div`
   float: left;
   padding-left: 27px;
   padding-right: 20px;
-  height: 68px;
+  min-height: 68px;
   border-bottom: 1px solid #e3e3e3;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+
+  /* 게시글 목록 반응형 : 게시글 */
+  @media screen and (max-width: 1280px) {
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+  } 
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
+  @media all and (min-width:480px) and (max-width:767px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px 12px 10px 27px;
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
+  @media all and (max-width:479px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px 12px 10px 27px;
+  }
+
 `;
 const BoardTitle = styled.div`
   font-size: 16px;
   color: #333;
   float: left;
   max-width: 500px;
+
+  /* 게시글 목록 반응형 : 타이틀 */
+  @media screen and (max-width: 1280px) {
+    /* max-width: 250px; */
+    max-width: 300px;
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+    max-width: 320px;
+  } 
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+    max-width: 320px;
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
+  @media all and (min-width:480px) and (max-width:767px) {
+    max-width: 600px;
+    margin-bottom: 5px;
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
+  @media all and (max-width:479px) {
+    margin-bottom: 5px;
+    max-width: 285px;
+
+    font-size: 15px;
+    /* max-width: 320px; */
+    max-width: 300px;
+  }
+
+
   & > span:first-child {
     color: #ca5196;
   }
@@ -382,6 +700,8 @@ const BoardTitle = styled.div`
     white-space: nowrap;
     overflow: hidden;
   }
+
+
 `;
 const OtherBoardInfo = styled.div`
   float: right;
@@ -391,6 +711,40 @@ const OtherBoardInfo = styled.div`
   margin-right: 0;
   min-width: 324px;
   max-width: 380px;
+  
+  /* 드래그 금지 */
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+
+  /* 게시글 목록 반응형 : 다른정보 */
+  @media screen and (max-width: 1280px) {
+  }
+  /* PC , 테블릿 가로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+  } 
+  /* 테블릿 세로 (해상도 768px ~ 1023px)*/ 
+  @media all and (min-width:768px) and (max-width:1023px) { 
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 480px ~ 767px)*/ 
+  @media all and (min-width:480px) and (max-width:767px) {
+    display: flex;
+    align-items: flex-start;
+    max-width: 475px;
+    width: 420px;
+    justify-content: space-between;
+  } 
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
+  @media all and (max-width:479px) {
+    display: flex;
+    align-items: flex-start;
+    max-width: 475px;
+    width: 200px;
+    justify-content: space-between;
+  }
+
 `;
 const UserName = styled.span`
   float: left;
@@ -414,6 +768,15 @@ const IconInfoWrap = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+
+  /* 게시글 목록 반응형 : 아이콘DIV */
+  /* 모바일 가로, 테블릿 세로 (해상도 ~ 479px)*/ 
+  @media all and (max-width:479px) {
+    max-width: 220px;
+    &>div{
+      margin: 0px 5px;
+    }
+  }
 `;
 const IconInfo = styled.div`
   float: left;
@@ -424,7 +787,6 @@ const IconInfo = styled.div`
   white-space: nowrap;
   overflow: hidden;
   padding-left: 18px;
-
   /* 보통은 그냥 바로 안띄우고 예외처리도 해준다(ex. 이미지가 안 들어왔을 때 무엇을 띄울 것인지) */
   /* 이놈 뭔지 모르겠는데 조금 수정해야 할듯? */
   background: url("https://ssl.nexon.com/s2/game/maplestory/renewal/common/${(props) => props.iconImg}.png") left 0px no-repeat;
@@ -461,7 +823,7 @@ const ButtonBox = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const RegistBtn = styled.a`
+const RegistBtn = styled.span`
   min-width: 53px;
   font-size: 15px;
   color: #fff;
@@ -484,4 +846,9 @@ const UserWorldImg = styled.img``;
 const PagenationWrap = styled.div`
   float: left;
   width: 100%;
+`;
+
+const CommentCount = styled.span`
+  font-size: 15px;
+  color: #e69fc7;
 `;

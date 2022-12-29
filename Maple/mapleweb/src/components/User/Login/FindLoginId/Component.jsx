@@ -66,10 +66,69 @@ const FindDiv = styled.div`
     background-image: url(${findImg});
     opacity: 0.8;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 100% 100%;
     position: absolute;
     border-radius: 20px;
     z-index: -1;
+  }
+
+  @media only screen and (max-width: 1024px) {
+    top: -40px;
+    height: 40vh;
+
+    & > div > h4 {
+      font-size: 20px;
+    }
+    & > div > div {
+      flex-direction: column;
+    }
+    & > div > div > input {
+      margin: 0;
+    }
+  }
+
+  @media only screen and (max-width: 802px) {
+    & > div > div > input {
+      width: 300px;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    top: -60px;
+    & > div > h4 {
+      font-size: 16px;
+    }
+
+    & > div > p {
+      font-size: 16px;
+    }
+
+    & > div > div > div > button {
+      width: 60px;
+      height: 30px;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    & > div > div > input {
+      width: 200px;
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    top: -90px;
+    & > div > h4 {
+      font-size: 14px;
+    }
+    & > div > p {
+      font-size: 14px;
+    }
+  }
+
+  @media only screen and (max-width: 410px) {
+    & > div > div > input {
+      width: 150px;
+    }
   }
 `;
 

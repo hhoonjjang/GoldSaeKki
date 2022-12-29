@@ -7,7 +7,7 @@ router.post("/viewBoard", (req, res) => {
   const tempArr = [];
   let tempUserName = "";
   db.Board.findAll({ order: [["userName", "DESC"]] }).then((data) => {
-    data?.map((item) => {
+    data.map((item) => {
       if (tempUserName != item.dataValues.userName) {
         tempUserName = item.dataValues.userName;
         tempArr.push({
@@ -46,7 +46,7 @@ router.post("/viewComment", (req, res) => {
   const tempArr = [];
   let tempUserName = "";
   db.Comment.findAll({ order: [["userName", "DESC"]] }).then((data) => {
-    data?.map((item) => {
+    data.map((item) => {
       if (tempUserName != item.dataValues.userName) {
         tempUserName = item.dataValues.userName;
         tempArr.push({
@@ -86,7 +86,7 @@ router.post("/total", (req, res) => {
   let tempUserName = "";
   db.Board.findAll({ order: [["userName", "DESC"]] })
     .then((data) => {
-      data?.map((item) => {
+      data.map((item) => {
         if (tempUserName != item.dataValues.userName) {
           tempUserName = item.dataValues.userName;
           tempArr.push({
@@ -157,7 +157,7 @@ router.post("/totalServer", (req, res) => {
   })
     .then((data) => {
       console.log("서버선택한 배열", data);
-      data?.map((item) => {
+      data.map((item) => {
         if (tempUserName != item.dataValues.userName) {
           tempUserName = item.dataValues.userName;
           tempArr.push({
@@ -230,7 +230,7 @@ router.post("/searchTotal", (req, res) => {
     order: [["userName", "DESC"]],
   })
     .then((data) => {
-      data?.map((item) => {
+      data.map((item) => {
         if (tempUserName != item.dataValues.userName) {
           tempUserName = item.dataValues.userName;
           tempArr.push({
@@ -299,7 +299,7 @@ router.post("/boardServer", (req, res) => {
     where: { userWorld: req.body.server },
     order: [["userName", "DESC"]],
   }).then((data) => {
-    data?.map((item) => {
+    data.map((item) => {
       if (tempUserName != item.dataValues.userName) {
         tempUserName = item.dataValues.userName;
         tempArr.push({
@@ -341,7 +341,7 @@ router.post("/searchBoard", (req, res) => {
     where: { userName: req.body.searchData },
     order: [["userName", "DESC"]],
   }).then((data) => {
-    data?.map((item) => {
+    data.map((item) => {
       if (tempUserName != item.dataValues.userName) {
         tempUserName = item.dataValues.userName;
         tempArr.push({
@@ -383,7 +383,7 @@ router.post("/commentServer", (req, res) => {
     where: { userWorld: req.body.server },
     order: [["userName", "DESC"]],
   }).then((data) => {
-    data?.map((item) => {
+    data.map((item) => {
       if (tempUserName != item.dataValues.userName) {
         tempUserName = item.dataValues.userName;
         tempArr.push({
@@ -423,7 +423,7 @@ router.post("/searchComment", (req, res) => {
     where: { userName: req.body.searchData },
     order: [["userName", "DESC"]],
   }).then((data) => {
-    data?.map((item) => {
+    data.map((item) => {
       if (tempUserName != item.dataValues.userName) {
         tempUserName = item.dataValues.userName;
         tempArr.push({

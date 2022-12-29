@@ -168,7 +168,7 @@ router.post("/eyeCountUpdate", async (req, res) => {
     },
   });
   // 1 증가시키고
-  const tempEyeCount = tempBoard?.dataValues?.eyeCount;
+  const tempEyeCount = tempBoard.dataValues.eyeCount;
   const newEyeCount = tempEyeCount + 1;
   // 그 값을 해당 게시글에 다시 업데이트 해준다.
   db.Board.update(
@@ -191,7 +191,7 @@ router.post("/likeCountUpdate", async (req, res) => {
     },
   });
   // 1 증가시키고
-  const tempLikeCount = tempBoard?.dataValues?.likeCount;
+  const tempLikeCount = tempBoard.dataValues.likeCount;
   const newLikeCount = tempLikeCount + 1;
   // 그 값을 해당 게시글에 다시 업데이트 해준다.
   db.Board.update(
@@ -214,7 +214,7 @@ router.post("/commentCountUp", async (req, res) => {
     },
   });
   // 1 증가시키고
-  const tempCommentCount = tempBoard?.dataValues?.commentCount;
+  const tempCommentCount = tempBoard.dataValues.commentCount;
   const newCommentCount = tempCommentCount + 1;
   // 그 값을 해당 게시글에 다시 업데이트 해준다.
   db.Board.update(
@@ -236,7 +236,7 @@ router.post("/commentCountDown", async (req, res) => {
     },
   });
   // 1 감소시키고
-  const tempCommentCount = tempBoard?.dataValues?.commentCount;
+  const tempCommentCount = tempBoard.dataValues.commentCount;
   const newCommentCount = tempCommentCount - 1;
   // 그 값을 해당 게시글에 다시 업데이트 해준다.
   db.Board.update(

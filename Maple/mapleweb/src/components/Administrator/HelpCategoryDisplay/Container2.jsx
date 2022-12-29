@@ -41,7 +41,7 @@ const SecondContainer = ({ propsArr }) => {
   }, [propsArr]);
   const textSubmit = (category, text) => {
     if (!category || category=="선택하시오") return alert("카테고리를 선택하세요");
-    if (!text) return alert("내용을 입력하세요");
+    if(!text.match(/\S/g)) return alert("내용을 입력하세요");
 
     console.log("category:" + category);
     console.log("text:" + text);

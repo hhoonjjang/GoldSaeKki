@@ -18,6 +18,8 @@ const AccountContainer = () => {
   const dispatch = useDispatch();
   const [listArr, setList] = useState([]);
   const onSubmit = async (value) => {
+    if(!value.id.match(/\S/g) || !value.password.match(/\S/g) ||!value.adminName.match(/\S/g))
+    return alert("공간채워라잉");
     axios
       .post("/api/admin/regist", value)
       .then(({ data }) => {

@@ -27,7 +27,7 @@ const FirstContainer = () => {
   useEffect(() => {}, [categoryArr]);
 
   const textSubmit = async (category, text) => {
-    if(text == "") return alert("내용을 입력하세요")
+    if(!text.match(/\S/g)) return alert("내용을 입력하세요")
     axios
       .post("/api/admin/category", { category, text })
       .then(() => {

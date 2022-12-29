@@ -12,12 +12,6 @@ import heartImg from "../../images/info_heart2_new.png";
 import dateImg from "../../images/info_sub_date_new.png";
 import searchImg from "../../images/search.png";
 
-const tempArr = [
-  { text: 1, img: "heart2_new" },
-  { text: "날짜디비", img: "sub_date_new" },
-  { text: "2222", img: "eye_new" },
-];
-
 
 const ListComponent = () => {
 
@@ -27,7 +21,6 @@ const ListComponent = () => {
   const nowParam = useParams(location).category;
 
   const [category, setCategory] = useState(CATEGORY.find(item => item.label == nowParam));
-  const [_, render] = useState(false);
 
   const [nowPage, setNowPage] = useState(1);
   const handlePageChange = (page) => {
@@ -55,7 +48,6 @@ const ListComponent = () => {
 
 
   let boards = useSelector((state) => state.community.list);
-  let worldBoards = [];
 
   useEffect(() => {
 

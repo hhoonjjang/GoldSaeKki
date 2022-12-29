@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { action } from "../../modules/header";
 
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ServiceContainer from "./Service/Container";
 import BugReportContainer from "./BugReport/Container";
 import { useEffect } from "react";
@@ -36,7 +36,6 @@ const SupportBox = styled.div`
 .category-title {
   font-size: 28px;
   font-weight:bold;
-
 }
 `;
 

@@ -51,5 +51,3 @@ a {
     color:black;
 }
 `;
-
-const Blank = styled.div``;

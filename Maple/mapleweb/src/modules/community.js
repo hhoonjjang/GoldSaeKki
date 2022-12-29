@@ -15,7 +15,6 @@ import world14Img from "../components/Community/images/worlds/icon_14.png";
 import world15Img from "../components/Community/images/worlds/icon_15.png";
 import world16Img from "../components/Community/images/worlds/icon_16.png";
 
-
 export const CATEGORY = [
     { name: '자유게시판', label: "Free" },
     { name: '정보게시판', label: "Information" },
@@ -35,7 +34,6 @@ export const CATEGORY2 = [
     { name: '/댓글 수정', label: "CommentUpdate", link: "/CommentUpdate" },
     { name: '<페이징 처리>', label: "Pagination", link: "/Pagination" },
 ];
-
 
 export const WORLDLIST = [
     { name: '전체월드', img: world1Img, label : "All" },
@@ -57,7 +55,6 @@ export const WORLDLIST = [
     { name: '버닝2', img: world16Img, label : "Burning2" },
     { name: '버닝3', img: world16Img, label : "Burning3" },
 ];
-
 
 const TYPE = {
     TAGS : "community/tags",

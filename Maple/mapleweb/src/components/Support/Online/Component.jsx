@@ -52,7 +52,5 @@ const OnlineBox = styled.div`
     
   } 
 
-
-
 }
 `;

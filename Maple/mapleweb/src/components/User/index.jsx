@@ -2,7 +2,7 @@ import RegistContainer from "../User/Regist/Container";
 import LoginContainer from "../User/Login/Container";
 
 import MypageContainer from "./MyPage/Container";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import NotFound from "../Community/NotFound";
 const UserComponent = () => {
 

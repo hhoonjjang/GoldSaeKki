@@ -391,8 +391,6 @@ const MainCommunityBox = styled.div`
       }
 
       .mainCommunity_innerBox_ranking_ranking {
-        // display: flex;
-        // justify-content: center;
         margin-top: 20px;
         position: relative;
 

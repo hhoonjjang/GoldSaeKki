@@ -2,8 +2,6 @@ import NavigationComponent from "./Component";
 
 const NavigationContainer = () =>{
     
-    
-
     return (
         <NavigationComponent />
     );

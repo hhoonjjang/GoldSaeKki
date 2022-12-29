@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { action } from "../../../modules/header";
 import UserManageComponent from "./Component";
 
 const tempFun = async (setReportArr) => {

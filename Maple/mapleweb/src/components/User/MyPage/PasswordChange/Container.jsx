@@ -1,6 +1,6 @@
 import PasswordChangeComponent from "./Component";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const PasswordChangeContainer = () => {

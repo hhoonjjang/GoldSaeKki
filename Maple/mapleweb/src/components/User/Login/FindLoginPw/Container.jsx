@@ -6,7 +6,6 @@ const FindPwContainer = ({ findPw, setFindPw }) => {
     axios
       .post("/api/user/findPw", { findId: findIdData })
       .then((data) => {
-        console.log(data);
         if (data.data.message === 504) {
           alert("존재하지 않는 아이디입니다.");
         } else {

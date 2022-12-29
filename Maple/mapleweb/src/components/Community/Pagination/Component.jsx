@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import { Link, Routes, Route } from "react-router-dom";
 
 const CommentComponent = () => {
 

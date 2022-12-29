@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { action as actionHeader } from "../../../modules/header";
 
 import MainSearchResultComponent from "./MainSearchResultComponent";

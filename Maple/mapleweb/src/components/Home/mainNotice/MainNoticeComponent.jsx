@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import HomeComponent from "..";
 
 import topLeftImg0 from "../Img/main_notice/main_notice_0.png";
 import topLeftImg1 from "../Img/main_notice/main_notice_1.png";
@@ -209,8 +208,6 @@ const MainNoticeComponent = styled.div`
         height: 320px;
 
         @media only screen and (max-width: 1024px) {
-          // display: flex;
-          // justify-content: center;
           margin: 0 auto;
         }
         .mainNotice_innerBox_top_left_innerBox {

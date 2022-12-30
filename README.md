@@ -67,11 +67,11 @@
 # 이슈사항
 > ### 재훈 : AWS 로 연동 시 기존의 로컬호스트 연동이 안됌. -> 프록시 설정을 통해 해결하였다.
 > ### 가원 : 로그인 성공 시 개발자도구의 application 부분에 쿠키 생성이 안되는 이슈발생 -> 서버 index.js에서 cores 부분에 credentials : true를 설정하고 src index.js에서 axios.defaults.withCredentials = true; 설정 후 cookie를 정상적으로 확인할 수 있었다.
-```
-    // server index.js cors
-    app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-    // web src index.js
-    axios.defaults.withCredentials = true;
-```
+>```
+>    // server index.js cors
+>    app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+>    // web src index.js
+>    axios.defaults.withCredentials = true;
+>```
 > ### 우석 : 메인 페이지의 Carousel 이동 시 범위를 아예 벗어나는 오류가 있었다. -> 이동할 때 길이를 퍼센트로 계산하는데 Carousel 전체 칸 개수가 홀수일 경우 소수점이   깨지는 오류였다. 퍼센트가 아니라 px로 계산하여 해결하였다.
 > ### 혜림 : Database 및 게시글의 시간이 현재 시간의 -9시간 으로 저장되어 출력됨 -> config.json에 timezone을 "+09:00"으로 설정해 db에 정상적인 날짜가 들어가도록 하였고 moment.js를 이용해 db의 값을 정상적으로 띄우도록 하였다.

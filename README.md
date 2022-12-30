@@ -68,8 +68,8 @@
 > ### 재훈 : AWS 로 연동 시 기존의 로컬호스트 연동이 안됌. -> 프록시 설정을 통해 해결하였다.
 > ### 가원 : 로그인 성공 시 개발자도구의 application 부분에 쿠키 생성이 안되는 이슈발생 -> 서버 index.js에서 cores 부분에 credentials : true를 설정하고 src index.js에서 axios.defaults.withCredentials = true; 설정 후 cookie를 정상적으로 확인할 수 있었다.
 ```
-    // server index.js cores
-    credentials : true
+    // server index.js cors
+    app.use(cors({ origin: "http://localhost:3000", credentials: true }));
     // web src index.js
     axios.defaults.withCredentials = true;
 ```

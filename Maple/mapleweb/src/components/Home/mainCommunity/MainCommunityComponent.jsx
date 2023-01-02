@@ -111,14 +111,14 @@ const MainCommunityComponent = ({
                             "mainCommunity_innerBox_community_item_bottom_innerBox_userName"
                           }
                         >
-                          {item?.user_name}
+                          {item?.userName}
                         </span>
                         <span
                           className={
                             "mainCommunity_innerBox_community_item_bottom_innerBox_createdAt"
                           }
                         >
-                          {item?.created_at}
+                          {item?.createdAt}
                         </span>
                       </div>
                     </div>

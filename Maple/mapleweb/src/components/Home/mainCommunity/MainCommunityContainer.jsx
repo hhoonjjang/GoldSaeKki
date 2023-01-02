@@ -9,12 +9,12 @@ const getCommunityList = async (setCommunityNewestPost) => {
     )
       const result = data.data.result
       for (let i = 0; i < result.length; i++) {
-        const year = result[i].created_at.slice(0, 4);
-        const month = result[i].created_at.slice(5, 7);
-        const date = result[i].created_at.slice(8, 10);
-        result[i].created_at = `${year}.${month}.${date}`;
+        const year = result[i].createdAt.slice(0, 4);
+        const month = result[i].createdAt.slice(5, 7);
+        const date = result[i].createdAt.slice(8, 10);
+        result[i].createdAt = `${year}.${month}.${date}`;
       }
-      
+
       setCommunityNewestPost(result);
    
   } catch (error) {

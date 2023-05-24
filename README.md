@@ -7,7 +7,7 @@
 - Maple
 - 기간 : 2022. 12. 09. ~ 2022. 12. 30. (3주간)
 - Notion : notion([https://handsomely-carp-676.notion.site/1-3a9f2b7ba5244360be142649f731b57d](https://handsomely-carp-676.notion.site/624ec8c54d584bbf9dad21c5d491e380))
-- AWS connect Domain : http://jaetube.errorcode.help
+- AWS connect Domain : www.hhoonjjang.com
 
 # 개발환경
 - FrontEnd : HTML5, CSS3 ,React, Redux, node.js, react-bootstrap
